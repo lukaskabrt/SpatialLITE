@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<osm>
+	<node id="1" lat="50.4" lon="16.2" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629" />
+	<node id="2" lat="50.41" lon="16.21" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629" />
+
+	<way id="10" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629">
+		<nd ref="1" />
+		<nd ref="2" />
+		<nd ref="3" />
+	</way>
+</osm>

@@ -1,0 +1,7 @@
+syntax: glob
+help/Help/
+*obj/
+*bin/
+*.cache
+*.suo
+src/SpatialLite.crunchsolution.local.xml

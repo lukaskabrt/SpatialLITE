@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="collection_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_multi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-multi.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_nested" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-nested.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collection_pt_ls_poly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\collection-pt-ls-poly.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linestring_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\linestring-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linestring_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\linestring-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linestring_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\linestring-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linestring_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\linestring-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linestring_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\linestring-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multilinestring_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multilinestring-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multilinestring_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multilinestring-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multilinestring_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multilinestring-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multilinestring_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multilinestring-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multilinestring_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multilinestring-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipoint_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipoint-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipoint_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipoint-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipoint_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipoint-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipoint_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipoint-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipoint_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipoint-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipolygon_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipolygon-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipolygon_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipolygon-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipolygon_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipolygon-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipolygon_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipolygon-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="multipolygon_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\multipolygon-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="point_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\point-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="point_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\point-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="point_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\point-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="point_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\point-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-empty.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_ext_2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-ext-2D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_ext_2DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-ext-2DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_ext_3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-ext-3D.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="polygon_ext_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\polygon-ext-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="two_points_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\two-points-3DM.wkb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_geometry_collection_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-geometry-collection-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_linestring_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-linestring-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_multilinestring_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-multilinestring-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_multipoint_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-multipoint-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_multipolygon_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-multipolygon-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_point_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>io\wkt-point-3dm.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_point_and_linestring_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-point-and-linestring-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wkt_polygon_3DM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>IO\wkt-polygon-3DM.wkt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

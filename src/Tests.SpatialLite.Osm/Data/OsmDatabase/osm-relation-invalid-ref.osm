@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<osm>
+	<relation id="100" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629">
+		<member ref="1" type="relation" role="forward-reference" />
+	</relation>
+
+	<relation id="101" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629">
+	</relation>
+</osm>

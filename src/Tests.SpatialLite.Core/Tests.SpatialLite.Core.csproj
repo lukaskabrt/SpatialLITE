@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CD3CF3EE-64FF-42D2-A103-8CFCF75DBEB2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tests.SpatialLite.Core</RootNamespace>
+    <AssemblyName>Tests.SpatialLite.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\xunit.extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithms\Euclidean2DCalculatorTests.cs" />
+    <Compile Include="Algorithms\Euclidean2DLocatorTests.cs" />
+    <Compile Include="Algorithms\Sphere2DCalculatorTests.cs" />
+    <Compile Include="API\CoordinateTests.cs" />
+    <Compile Include="API\EnvelopeTests.cs" />
+    <Compile Include="Data\IOTestData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IOTestData.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MeasurementsTests.cs" />
+    <Compile Include="Geometries\CoordinateListTests.cs" />
+    <Compile Include="Geometries\GeometryCollectionTests.cs" />
+    <Compile Include="Geometries\GeometryTests.cs" />
+    <Compile Include="Geometries\LineStringTests.cs" />
+    <Compile Include="Geometries\MultiLineStringTests.cs" />
+    <Compile Include="Geometries\MultiPointTests.cs" />
+    <Compile Include="Geometries\MultiPolygonTests.cs" />
+    <Compile Include="Geometries\PointTests.cs" />
+    <Compile Include="Geometries\PolygonTests.cs" />
+    <Compile Include="IO\WkbReaderTests.cs" />
+    <Compile Include="IO\WkbWriterSettingsTests.cs" />
+    <Compile Include="IO\WkbWriterTests.cs" />
+    <Compile Include="IO\WktReaderTests.cs" />
+    <Compile Include="IO\WktTokenizerTests.cs" />
+    <Compile Include="IO\WktTokensBufferTests.cs" />
+    <Compile Include="IO\WktWriterSettingsTests.cs" />
+    <Compile Include="IO\WktWriterTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopologyTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj">
+      <Project>{423F0A2F-0B12-4AEA-8177-4A5D4238AA81}</Project>
+      <Name>SpatialLite.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\IO\collection-2D.wkb" />
+    <None Include="Data\IO\collection-2DM.wkb" />
+    <None Include="Data\IO\collection-3D.wkb" />
+    <None Include="Data\IO\collection-3DM.wkb" />
+    <None Include="Data\IO\collection-empty.wkb" />
+    <None Include="Data\IO\collection-multi.wkb" />
+    <None Include="Data\IO\collection-nested.wkb" />
+    <None Include="Data\IO\collection-pt-ls-poly.wkb" />
+    <None Include="Data\IO\linestring-2D.wkb" />
+    <None Include="Data\IO\linestring-2DM.wkb" />
+    <None Include="Data\IO\linestring-3D.wkb" />
+    <None Include="Data\IO\linestring-3DM.wkb" />
+    <None Include="Data\IO\linestring-empty.wkb" />
+    <None Include="Data\IO\multilinestring-2D.wkb" />
+    <None Include="Data\IO\multilinestring-2DM.wkb" />
+    <None Include="Data\IO\multilinestring-3D.wkb" />
+    <None Include="Data\IO\multilinestring-3DM.wkb" />
+    <None Include="Data\IO\multilinestring-empty.wkb" />
+    <None Include="Data\IO\multipoint-2D.wkb" />
+    <None Include="Data\IO\multipoint-2DM.wkb" />
+    <None Include="Data\IO\multipoint-3D.wkb" />
+    <None Include="Data\IO\multipoint-3DM.wkb" />
+    <None Include="Data\IO\multipoint-empty.wkb" />
+    <None Include="Data\IO\multipolygon-2D.wkb" />
+    <None Include="Data\IO\multipolygon-2DM.wkb" />
+    <None Include="Data\IO\multipolygon-3D.wkb" />
+    <None Include="Data\IO\multipolygon-3DM.wkb" />
+    <None Include="Data\IO\multipolygon-empty.wkb" />
+    <None Include="Data\IO\point-2D.wkb" />
+    <None Include="Data\IO\point-2DM.wkb" />
+    <None Include="Data\IO\point-3D.wkb" />
+    <None Include="Data\IO\point-3DM.wkb" />
+    <None Include="Data\IO\wkt-geometry-collection-3DM.wkt" />
+    <None Include="Data\IO\wkt-linestring-3DM.wkt" />
+    <None Include="Data\IO\wkt-multilinestring-3DM.wkt" />
+    <None Include="Data\IO\wkt-multipoint-3DM.wkt" />
+    <None Include="Data\IO\wkt-multipolygon-3DM.wkt" />
+    <None Include="Data\IO\wkt-point-3DM.wkt" />
+    <None Include="Data\IO\polygon-3DM.wkb" />
+    <None Include="Data\IO\polygon-empty.wkb" />
+    <None Include="Data\IO\polygon-ext-2D.wkb" />
+    <None Include="Data\IO\polygon-ext-2DM.wkb" />
+    <None Include="Data\IO\polygon-ext-3D.wkb" />
+    <None Include="Data\IO\polygon-ext-3DM.wkb" />
+    <None Include="Data\IO\two-points-3DM.wkb" />
+    <None Include="Data\IO\wkt-point-and-linestring-3DM.wkt" />
+    <None Include="Data\IO\wkt-polygon-3DM.wkt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\IOTestData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IOTestData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
