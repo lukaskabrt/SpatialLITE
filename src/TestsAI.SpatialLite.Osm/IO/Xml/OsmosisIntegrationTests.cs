@@ -16,7 +16,7 @@ using SpatialLite.Osm.Geometries;
 
 namespace TestsAI.SpatialLite.Osm.IO.Xml {
 	public class OsmosisIntegrationTests {
-		public const string OsmosisPath = "..\\..\\..\\Utils\\Osmosis\\bin\\osmosis.bat";
+		public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
 
 		private const string TestFilePath = "..\\..\\src\\TestsAI.SpatialLite.Osm\\Data\\IO\\pbf-real-test-file-1.pbf";
 		private const int TestFileNodesCount = 129337;
@@ -31,7 +31,7 @@ namespace TestsAI.SpatialLite.Osm.IO.Xml {
 			string osmosisArguments = string.Format("--read-pbf file={0} --write-xml file={1}", Path.GetFullPath(TestFilePath), xmlFile);
 			this.CallOsmosis(osmosisArguments);
 
-			using (OsmXmlReader reader = new OsmXmlReader(xmlFile, new OsmXmlReaderSettings() { ReadMetadata = true })) {
+			using (OsmXmlReader reader = new OsmXmlReader(xmlFile, new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false })) {
 				this.TestReader(reader);
 			}
 		}

@@ -15,7 +15,7 @@ using SpatialLite.Osm.Geometries;
 
 namespace TestsAI.SpatialLite.Osm.IO.Pbf {
 	public class OsmosisIntegrationTests {
-		public const string OsmosisPath = "..\\..\\..\\Utils\\Osmosis\\bin\\osmosis.bat";
+		public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
 
 		private const string TestFilePath = "..\\..\\src\\TestsAI.SpatialLite.Osm\\Data\\IO\\pbf-real-test-file-1.pbf";
 		private const int TestFileNodesCount = 129337;

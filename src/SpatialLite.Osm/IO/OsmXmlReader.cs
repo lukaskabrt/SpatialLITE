@@ -390,8 +390,10 @@ namespace SpatialLite.Osm.IO.Xml {
 
 			// visible
 			string attVisible = _xmlReader.GetAttribute("visible");
-			if (attVisible == null && this.Settings.StrictMode) {
-				result.Visible = true;
+			if (attVisible == null) {
+				if (this.Settings.StrictMode) {
+					result.Visible = true;
+				}
 			}
 			else {
 				result.Visible = bool.Parse(attVisible);
