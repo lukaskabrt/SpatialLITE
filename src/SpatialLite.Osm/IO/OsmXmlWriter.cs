@@ -184,7 +184,7 @@ namespace SpatialLite.Osm.IO.Xml {
 		/// Writes way to the output stream
 		/// </summary>
 		/// <param name="info">The Way to be written</param>
-		public void WriteWay(WayInfo info) {
+		private void WriteWay(WayInfo info) {
 			_writer.WriteStartElement("way");
 			_writer.WriteAttributeString("id", info.ID.ToString(_culture));
 
@@ -207,7 +207,7 @@ namespace SpatialLite.Osm.IO.Xml {
 		/// Writes relation to the output stream.
 		/// </summary>
 		/// <param name="info">The relation to be written.</param>
-		public void WriteRelation(RelationInfo info) {
+		private void WriteRelation(RelationInfo info) {
 			_writer.WriteStartElement("relation");
 			_writer.WriteAttributeString("id", info.ID.ToString(_culture));
 
