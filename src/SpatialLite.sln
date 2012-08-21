@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.Core", "SpatialLite.Core\SpatialLite.Core.csproj", "{423F0A2F-0B12-4AEA-8177-4A5D4238AA81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SpatialLite.Core", "Tests.SpatialLite.Core\Tests.SpatialLite.Core.csproj", "{CD3CF3EE-64FF-42D2-A103-8CFCF75DBEB2}"
@@ -12,6 +12,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsAI.SpatialLite.Osm", "TestsAI.SpatialLite.Osm\TestsAI.SpatialLite.Osm.csproj", "{76A644D4-FCE9-474B-9E26-86CEA9F05E9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark.SpatialLite.Osm.IO", "Benchmark.SpatialLite.Osm.IO\Benchmark.SpatialLite.Osm.IO.csproj", "{B45ED6D0-A186-4F28-AF11-A79BE80ADC70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C325474-937D-4C04-98E8-BF44259E4AC0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

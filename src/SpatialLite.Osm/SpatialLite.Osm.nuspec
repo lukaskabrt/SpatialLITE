@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SpatialLite.Osm</id>
+    <version>1.0.0</version>
+    <title>SpatialLite - OpenStreetMap</title>
+    <authors>Lukas Kabrt</authors>
+    <owners>Lukas Kabrt</owners>
+    <projectUrl>http://spatial.litesolutions.net/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Add-on for the SpatialLite library that adds support for OpenStreetMap data formats.</description>
+    <copyright>(c) 2012</copyright>
+    <tags>Spatial OSM OpenStreetMap</tags>
+<dependencies>
+      <dependency id="SpatialLite" version="1.0.0" />
+    </dependencies>
+  </metadata>
+</package>
