@@ -6,3 +6,4 @@ help/Help/
 *.suo
 src/SpatialLite.crunchsolution.local.xml
 src/TestResults/*
+src/packages/*
