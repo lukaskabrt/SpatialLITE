@@ -7,7 +7,7 @@ using Sys = System.Xml;
 
 using SpatialLite.Osm.Geometries;
 
-namespace SpatialLite.Osm.IO.Xml {
+namespace SpatialLite.Osm.IO {
 	/// <summary>
 	/// Represents a OsmReader, that can read OSM entities saved in the XML format.
 	/// </summary>

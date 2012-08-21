@@ -9,7 +9,6 @@ using Moq;
 
 using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
-using SpatialLite.Osm.IO.Xml;
 using SpatialLite.Osm.Geometries;
 
 using Tests.SpatialLite.Osm.Data;

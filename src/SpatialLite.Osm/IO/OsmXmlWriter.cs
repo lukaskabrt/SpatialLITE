@@ -7,7 +7,7 @@ using System.Xml;
 
 using SpatialLite.Osm.Geometries;
 
-namespace SpatialLite.Osm.IO.Xml {
+namespace SpatialLite.Osm.IO {
 	/// <summary>
 	/// Represents an IOsmWriter, that can write OSM entities to XML format.
 	/// </summary>

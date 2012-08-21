@@ -10,7 +10,6 @@ using Xunit;
 using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm.IO.Pbf;
-using SpatialLite.Osm.IO.Xml;
 using SpatialLite.Osm.Geometries;
 
 namespace TestsAI.SpatialLite.Osm.IO.Pbf {

@@ -8,7 +8,6 @@ using System.IO;
 using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm.IO.Pbf;
-using SpatialLite.Osm.IO.Xml;
 using SpatialLite.Osm.Geometries;
 
 namespace Benchmark.SpatialLite.Osm.IO {

@@ -7,7 +7,6 @@ using System.IO;
 using Xunit;
 
 using SpatialLite.Osm.Geometries;
-using SpatialLite.Osm.IO.Xml;
 using System.Xml.Linq;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm;
