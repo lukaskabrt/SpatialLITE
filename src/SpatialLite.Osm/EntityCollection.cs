@@ -10,7 +10,7 @@ namespace SpatialLite.Osm {
 	/// Represents collection of the OSM enities that optimized for access speed.
 	/// </summary>
 	/// <typeparam name="T">The type of the entities in the collection.</typeparam>
-	public class EntityCollection<T> : IEntityCollection<T> where T : IOsmEntity {
+	public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntity {
 		#region Private Fields
 
 		private Dictionary<int, T> _storage = null;

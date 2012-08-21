@@ -107,7 +107,7 @@ namespace SpatialLite.Osm.Geometries {
 
 			result.Nodes = new List<Node>(info.Nodes.Count);
 			foreach (var nodeID in info.Nodes) {
-				Node node = entities[nodeID] as Node;
+				Node node = entities[nodeID, EntityType.Node] as Node;
 				if (node != null) {
 					result.Nodes.Add(node);
 				}

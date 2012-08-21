@@ -47,6 +47,7 @@
     <Compile Include="EntityCollection.cs" />
     <Compile Include="Geometries\IOsmGeometry.cs" />
     <Compile Include="Geometries\OsmGeometryDatabase.cs" />
+    <Compile Include="IEntityCollection.cs" />
     <Compile Include="IOsmEntity.cs" />
     <Compile Include="Geometries\Node.cs" />
     <Compile Include="Geometries\Relation.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Geometries\Way.cs" />
     <Compile Include="EntityType.cs" />
     <Compile Include="IEntityInfo.cs" />
-    <Compile Include="IEntityCollection.cs" />
+    <Compile Include="ITypedEntityCollection.cs" />
     <Compile Include="IO\IOsmReader.cs" />
     <Compile Include="IO\IOsmWriter.cs" />
     <Compile Include="IO\OsmReaderSettings.cs" />

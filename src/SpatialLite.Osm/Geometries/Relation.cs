@@ -78,7 +78,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="entities">The collection of entities that can be referenced by the relation.</param>
 		/// <param name="throwOnMissing">bool value indicating whether references to the missing entities should cause exception.</param>
 		/// <returns>The Relation object created from RelationInfo or null if referenced entity is missing.</returns>
-		public static Relation FromRelationInfo(RelationInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing) {
+        public static Relation FromRelationInfo(RelationInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing) {
 			Relation result = new Relation(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
 
 			result.Geometries.Capacity = info.Members.Count;

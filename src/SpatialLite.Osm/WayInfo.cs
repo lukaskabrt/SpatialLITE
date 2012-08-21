@@ -29,6 +29,10 @@ namespace SpatialLite.Osm {
 			this.Metadata = additionalInfo;
 		}
 
+        /// <summary>
+        /// Initializes a new instance of the WayInfo class with data from specific Way
+        /// </summary>
+        /// <param name="way">The way to get data from</param>
 		public WayInfo(Way way) {
 			if (way == null) {
 				throw new ArgumentNullException("Way parameter cannot be null", "way");

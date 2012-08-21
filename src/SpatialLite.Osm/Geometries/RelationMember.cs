@@ -97,21 +97,21 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="entities">The entities that can be referenced by RelationMember.</param>
 		/// <param name="throwOnMissing">bool value indicating whether references to the missing entity should cause exception.</param>
 		/// <returns>The RelationMember object created from RelationMemberInfo or null if referenced node is missing.</returns>
-		public static RelationMember FromRelationMemberInfo(RelationMemberInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing) {
+        public static RelationMember FromRelationMemberInfo(RelationMemberInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing) {
 			if (info.MemberType == EntityType.Unknown) {
 				throw new ArgumentException("info.MemberType cannot be EntityType.Unknown");
 			}
 
-			if (entities.Contains(info.Reference) == false) {
+			if (entities.Contains(info.Reference, info.MemberType) == false) {
 				if (throwOnMissing) {
-					throw new ArgumentException(string.Format("Referenced Entity (ID = {0}) not found in entities collection.", info.Reference), "info.Reference");
+					throw new ArgumentException(string.Format("Referenced Entity (ID = {0}, type = {1}) not found in entities collection.", info.Reference, info.MemberType), "info.Reference");
 				}
 				else {
 					return null;
 				}
 			}
 
-			RelationMember result = new RelationMember(entities[info.Reference], info.Role) { MemberType = info.MemberType };
+			RelationMember result = new RelationMember(entities[info.Reference, info.MemberType], info.Role) { MemberType = info.MemberType };
 			if (result.Member.EntityType != info.MemberType) {
 				throw new ArgumentException("Type of the referenced entity doesn't match type of the entity in the collection.");
 			}

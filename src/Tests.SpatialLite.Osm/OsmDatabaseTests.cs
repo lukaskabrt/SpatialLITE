@@ -28,12 +28,12 @@ namespace Tests.SpatialLite.Osm {
 			_nodeData[2] = new Node(3);
 
 			_wayData = new Way[2];
-			_wayData[0] = new Way(10, _nodeData);
-			_wayData[1] = new Way(11, _nodeData.Skip(1));
+			_wayData[0] = new Way(1, _nodeData);
+			_wayData[1] = new Way(2, _nodeData.Skip(1));
 
 			_relationData = new Relation[2];
-			_relationData[0] = new Relation(100, new RelationMember[] { new RelationMember(_wayData[0], "way"), new RelationMember(_nodeData[0], "node") });
-			_relationData[1] = new Relation(101, new RelationMember[] { new RelationMember(_relationData[0], "relation"), new RelationMember(_nodeData[0], "node") });
+			_relationData[0] = new Relation(1, new RelationMember[] { new RelationMember(_wayData[0], "way"), new RelationMember(_nodeData[0], "node") });
+			_relationData[1] = new Relation(2, new RelationMember[] { new RelationMember(_relationData[0], "relation"), new RelationMember(_nodeData[0], "node") });
 
 			_data = _nodeData.Concat<IOsmGeometry>(_wayData).Concat<IOsmGeometry>(_relationData).ToArray();
 		}
@@ -64,7 +64,7 @@ namespace Tests.SpatialLite.Osm {
 		}
 
 		[Fact]
-		public void Constructor_IEnumerable_AddEnittiesToCorrextCollections() {
+		public void Constructor_IEnumerable_AddEnittiesToCorrectCollections() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
 			for (int i = 0; i < _nodeData.Length; i++) {
@@ -105,19 +105,19 @@ namespace Tests.SpatialLite.Osm {
 
 		#endregion
 
-		#region Item[ID] tests
+		#region Item[ID, EntityType] tests
 
 		[Fact]
 		public void Item_ReturnsNullIfIDIsNotPresentInCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.Null(target[10000]);
+			Assert.Null(target[10000, EntityType.Node]);
 		}
 
 		[Fact]
 		public void Item_ReturnsNodeWithSpecificID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
-			IOsmGeometry entity = target[_nodeData[0].ID];
+			IOsmGeometry entity = target[_nodeData[0].ID, EntityType.Node];
 
 			Assert.Same(_nodeData[0], entity);
 		}
@@ -125,7 +125,7 @@ namespace Tests.SpatialLite.Osm {
 		[Fact]
 		public void Item_ReturnsWayWithSpecificID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
-			IOsmGeometry entity = target[_wayData[0].ID];
+			IOsmGeometry entity = target[_wayData[0].ID, EntityType.Way];
 
 			Assert.Same(_wayData[0], entity);
 		}
@@ -133,7 +133,7 @@ namespace Tests.SpatialLite.Osm {
 		[Fact]
 		public void Item_ReturnsRelationWithSpecificID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
-			IOsmGeometry entity = target[_relationData[0].ID];
+			IOsmGeometry entity = target[_relationData[0].ID, EntityType.Relation];
 
 			Assert.Same(_relationData[0], entity);
 		}
@@ -259,42 +259,42 @@ namespace Tests.SpatialLite.Osm {
 		public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainNodeID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(10000));
+			Assert.False(target.Contains(10000, EntityType.Node));
 		}
 
 		[Fact]
 		public void Contains_ID_ReturnsTrueIfCollectionContainsNodeID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_nodeData[0].ID));
+            Assert.True(target.Contains(_nodeData[0].ID, EntityType.Node));
 		}
 
 		[Fact]
 		public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainWayID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(10000));
+            Assert.False(target.Contains(10000, EntityType.Way));
 		}
 
 		[Fact]
 		public void Contains_ID_ReturnsTrueIfCollectionContainsWayID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_wayData[0].ID));
+            Assert.True(target.Contains(_wayData[0].ID, EntityType.Way));
 		}
 
 		[Fact]
 		public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainRelationID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(10000));
+			Assert.False(target.Contains(10000, EntityType.Relation));
 		}
 
 		[Fact]
 		public void Contains_ID_ReturnsTrueIfCollectionContainsRelationID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_relationData[0].ID));
+			Assert.True(target.Contains(_relationData[0].ID, EntityType.Relation));
 		}
 
 		#endregion
@@ -383,7 +383,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfNodeIsNotPresent() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_nodeData.Skip(1));
 
-			bool callResult = target.Remove(_nodeData[0].ID);
+			bool callResult = target.Remove(_nodeData[0].ID, EntityType.Node);
 
 			Assert.False(callResult);
 			Assert.Contains(_nodeData[1], target);
@@ -394,7 +394,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsTrueAndRemovesNodeFromCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_nodeData);
 
-			bool callResult = target.Remove(_data[0].ID);
+			bool callResult = target.Remove(_data[0].ID, EntityType.Node);
 
 			Assert.True(callResult);
 			Assert.DoesNotContain(_nodeData[0], target);
@@ -406,7 +406,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfWayIsNotPresent() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_wayData.Skip(1));
 
-			bool callResult = target.Remove(_wayData[0].ID);
+			bool callResult = target.Remove(_wayData[0].ID, EntityType.Way);
 
 			Assert.False(callResult);
 			Assert.Contains(_wayData[1], target);
@@ -416,7 +416,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsTrueAndRemovesWayFromCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_wayData);
 
-			bool callResult = target.Remove(_wayData[0].ID);
+			bool callResult = target.Remove(_wayData[0].ID, EntityType.Way);
 
 			Assert.True(callResult);
 			Assert.DoesNotContain(_wayData[0], target);
@@ -427,7 +427,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfRelationIsNotPresent() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_relationData.Skip(1));
 
-			bool callResult = target.Remove(_relationData[0].ID);
+			bool callResult = target.Remove(_relationData[0].ID, EntityType.Relation);
 
 			Assert.False(callResult);
 			Assert.Contains(_relationData[1], target);
@@ -437,7 +437,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Remove_ID_ReturnsTrueAndRemovesRelationFromCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_relationData);
 
-			bool callResult = target.Remove(_relationData[0].ID);
+			bool callResult = target.Remove(_relationData[0].ID, EntityType.Relation);
 
 			Assert.True(callResult);
 			Assert.DoesNotContain(_relationData[0], target);

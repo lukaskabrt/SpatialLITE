@@ -44,17 +44,17 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets collection of nodes in the database.
 		/// </summary>
-		public IEntityCollection<N> Nodes { get; private set; }
+		public ITypedEntityCollection<N> Nodes { get; private set; }
 
 		/// <summary>
 		/// Gets collection of ways in the database.
 		/// </summary>
-		public IEntityCollection<W> Ways { get; private set; }
+		public ITypedEntityCollection<W> Ways { get; private set; }
 
 		/// <summary>
 		/// Gets collection of relations in the database.
 		/// </summary>
-		public IEntityCollection<R> Relations { get; private set; }
+		public ITypedEntityCollection<R> Relations { get; private set; }
 
 		/// <summary>
 		/// Gets the number of entities in the collection.
@@ -78,18 +78,19 @@ namespace SpatialLite.Osm {
 		/// Gets an entity with specific ID from the collection.
 		/// </summary>
 		/// <param name="id">The ID of the entity to get.</param>
+        /// <param name="type">The type of the entity to get.</param>
 		/// <returns>entity with the specific ID or null if such entity is not present in the collection.</returns>
-		public T this[int id] {
+		public T this[int id, EntityType type] {
 			get {
-				if (this.Nodes.Contains(id)) {
+                if (type == EntityType.Node && this.Nodes.Contains(id)) {
 					return (T)this.Nodes[id];
 				}
 
-				if (this.Ways.Contains(id)) {
+				if (type == EntityType.Way && this.Ways.Contains(id)) {
 					return (T)this.Ways[id];
 				}
 
-				if (this.Relations.Contains(id)) {
+				if (type == EntityType.Relation && this.Relations.Contains(id)) {
 					return (T)this.Relations[id];
 				}
 
@@ -112,8 +113,9 @@ namespace SpatialLite.Osm {
 		/// Removes an entity with the specific ID from the collection.
 		/// </summary>
 		/// <param name="id">The ID of the entity to remove from the collection.</param>
+        /// <param name="type">The type of the entity to remove from the collection.</param>
 		/// <returns>true if entity was successfully removed from the ICollection; otherwise, false. This method also returns false if entity is not found in the original collection.</returns>
-		public bool Remove(int id) {
+		public bool Remove(int id, EntityType type) {
 			if (this.Nodes.Contains(id)) {
 				return this.Nodes.Remove(id);
 			}
@@ -133,9 +135,16 @@ namespace SpatialLite.Osm {
 		/// Determines whether the EntityICollection contains an entity with specific ID.
 		/// </summary>
 		/// <param name="id">The ID of the entity to locate in the EntityCollection.</param>
+        /// <param name="type">The type of the entity to locate in the EntityCollection</param>
 		/// <returns>true if entity is found in the collection, otherwise false.</returns>
-		public bool Contains(int id) {
-			return this.Nodes.Contains(id) || this.Ways.Contains(id) || this.Relations.Contains(id);
+		public bool Contains(int id, EntityType type) {
+            switch (type) {
+                case EntityType.Node: return this.Nodes.Contains(id);
+                case EntityType.Way: return this.Ways.Contains(id);
+                case EntityType.Relation: return this.Relations.Contains(id);
+            }
+
+            throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -147,7 +156,7 @@ namespace SpatialLite.Osm {
 				throw new ArgumentNullException("entity", "Cannot add null to EntityCollection");
 			}
 
-			if (this.Contains(entity.ID)) {
+			if (this.Contains(entity.ID, entity.EntityType)) {
 				throw new ArgumentException("An entity with the same ID has already been added.");
 			}
 
@@ -177,7 +186,7 @@ namespace SpatialLite.Osm {
 				return false;
 			}
 
-			return this.Contains(item.ID);
+			return this.Contains(item.ID, item.EntityType);
 		}
 
 		/// <summary>
@@ -201,7 +210,7 @@ namespace SpatialLite.Osm {
 				return false;
 			}
 
-			return this.Remove(entity.ID);
+			return this.Remove(entity.ID, entity.EntityType);
 		}
 
 		/// <summary>
@@ -231,5 +240,5 @@ namespace SpatialLite.Osm {
 		}
 
 		#endregion
-	}
+    }
 }
