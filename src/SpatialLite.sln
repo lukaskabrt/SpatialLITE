@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C3254
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.Gps", "SpatialLite.Gps\SpatialLite.Gps.csproj", "{881C085A-A494-4953-BFA6-7A94BC0E4B21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SpatialLite.Gps", "Tests.SpatialLite.Gps\Tests.SpatialLite.Gps.csproj", "{AA21E6B6-4B82-4BB5-8950-FABCA453974D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +90,25 @@ Global
 		{B45ED6D0-A186-4F28-AF11-A79BE80ADC70}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B45ED6D0-A186-4F28-AF11-A79BE80ADC70}.Release|x86.ActiveCfg = Release|x86
 		{B45ED6D0-A186-4F28-AF11-A79BE80ADC70}.Release|x86.Build.0 = Release|x86
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{881C085A-A494-4953-BFA6-7A94BC0E4B21}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AA21E6B6-4B82-4BB5-8950-FABCA453974D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
