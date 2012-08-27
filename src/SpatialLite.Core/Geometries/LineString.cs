@@ -7,7 +7,7 @@ using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
 	/// <summary>
-	/// Represents a curve with linear interpolation between consecutive points.  
+	/// Represents a curve with linear interpolation between consecutive vertices.  
 	/// </summary>
 	public class LineString : Geometry, ILineString {
 		#region Private Fields
