@@ -9,7 +9,7 @@ namespace SpatialLite.Core.Geometries {
     /// <summary>
     /// Provides read-only ICoordinateList wrapper around collection of points
     /// </summary>
-    public class ReadOnlyCoordinateList<T> : ICoordinateListWrapper<T> where T : IPoint {
+    public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint {
         #region Constructors
 
         /// <summary>

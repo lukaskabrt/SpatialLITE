@@ -60,7 +60,6 @@
     <Compile Include="API\IMultiPolygon.cs" />
     <Compile Include="API\IPoint.cs" />
     <Compile Include="API\IPolygon.cs" />
-    <Compile Include="Geometries\ICoordinateListWrapper.cs" />
     <Compile Include="Geometries\ReadOnlyCoordinateList.cs" />
     <Compile Include="Measurements.cs" />
     <Compile Include="Geometries\CoordinateList.cs" />

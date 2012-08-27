@@ -55,6 +55,12 @@
   <ItemGroup>
     <Compile Include="Geometries\GpsPointTests.cs" />
     <Compile Include="Geometries\GpsTrackBaseTests.cs" />
+    <Compile Include="Geometries\GpxLinkTests.cs" />
+    <Compile Include="Geometries\GpxMetadataTests.cs" />
+    <Compile Include="Geometries\GpxPointTests.cs" />
+    <Compile Include="Geometries\GpxRouteTests.cs" />
+    <Compile Include="Geometries\GpxTrackSegmentTests.cs" />
+    <Compile Include="Geometries\GpxTrackTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,15 @@
   <ItemGroup>
     <Compile Include="Geometries\GpsPoint.cs" />
     <Compile Include="Geometries\GpsTrackBase.cs" />
+    <Compile Include="Geometries\GpxFix.cs" />
+    <Compile Include="Geometries\GpxLink.cs" />
+    <Compile Include="Geometries\GpxMetadata.cs" />
+    <Compile Include="Geometries\GpxPoint.cs" />
+    <Compile Include="Geometries\GpxPointMetadata.cs" />
+    <Compile Include="Geometries\GpxRoute.cs" />
+    <Compile Include="Geometries\GpxTrack.cs" />
+    <Compile Include="Geometries\GpxTrackMetadata.cs" />
+    <Compile Include="Geometries\GpxTrackSegment.cs" />
     <Compile Include="IGpsPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

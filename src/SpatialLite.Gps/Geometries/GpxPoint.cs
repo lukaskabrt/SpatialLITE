@@ -2,48 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Gps.Geometries {
     /// <summary>
-    /// Represents location on the earth surface with timestamp that defines time when the point was recorded 
+    /// Represents a Gpx point
     /// </summary>
-    public class GpsPoint : Point, IGpsPoint {
+    public class GpxPoint : GpsPoint {
         #region Constructors
 
         /// <summary>
-        /// Creates a new, empty instance of the GpsPoint
+        /// Creates a new, empty instance of the GpxPoint
         /// </summary>
-        public GpsPoint() {
+        public GpxPoint() {
         }
 
         /// <summary>
-        /// Creates a new instance of the GpsPoint with given position
+        /// Creates a new instance of the GpxPoint with given position
         /// </summary>
         /// <param name="position">The position of the point</param>
-        public GpsPoint(Coordinate position)
+        public GpxPoint(Coordinate position)
             : base(position) {
         }
 
         /// <summary>
-        /// Creates a new instance of the GpsPoint with given coordinates and timestamp
+        /// Creates a new instance of the GpxPoint with given coordinates and timestamp
         /// </summary>
         /// <param name="longitude">The longitude of the point</param>
         /// <param name="latitude">The latitude of the point</param>
         /// <param name="elevation">The elevation of the point</param>
         /// <param name="time">The time when the point was recorded</param>
-        public GpsPoint(double longitude, double latitude, double elevation, DateTime time)
-            : base(longitude, latitude, elevation) {
-            Timestamp = time;
+        public GpxPoint(double longitude, double latitude, double elevation, DateTime time)
+            : base(longitude, latitude, elevation, time) {
         }
 
         /// <summary>
-        /// Creates a new instance of the GpsPoint with given position and time
+        /// Creates a new instance of the GpxPoint with given position and time
         /// </summary>
         /// <param name="position">The position of the point</param>
         /// <param name="time">The time when the point was recorded</param>
-        public GpsPoint(Coordinate position, DateTime time)
+        public GpxPoint(Coordinate position, DateTime time)
             : base(position) {
             Timestamp = time;
         }
@@ -53,10 +52,10 @@ namespace SpatialLite.Gps.Geometries {
         #region Public properties
 
         /// <summary>
-        /// Gets or sets time when the point was recorded.
+        /// Gets or sets additional information about point
         /// </summary>
-        public DateTime? Timestamp { get; set; }
-        
+        GpxPointMetadata Metadata { get; set; }
+
         #endregion
     }
 }
