@@ -54,7 +54,7 @@ namespace SpatialLite.Gps.Geometries {
         /// <summary>
         /// Gets or sets additional information about point
         /// </summary>
-        GpxPointMetadata Metadata { get; set; }
+        public GpxPointMetadata Metadata { get; set; }
 
         #endregion
     }
