@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="SpatialLite.Gps" xmlns="http://www.topografix.com/GPX/1/0">
+<wpt lat="42.438878" lon="-71.119277">
+ <ele>44.586548</ele>
+ <time>2001-11-28T21:05:28Z</time>
+</wpt>
+<wpt lat="42.439227" lon="-71.119689">
+ <ele>57.607200</ele>
+ <time>2001-06-02T03:26:55Z</time>
+</wpt>
+<wpt lat="42.438917" lon="-71.116146">
+ <ele>44.826904</ele>
+ <time>2001-11-16T23:03:38Z</time>
+</wpt>
+</gpx>

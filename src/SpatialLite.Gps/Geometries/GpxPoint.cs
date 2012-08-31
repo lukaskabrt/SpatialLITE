@@ -9,7 +9,7 @@ namespace SpatialLite.Gps.Geometries {
     /// <summary>
     /// Represents a Gpx point
     /// </summary>
-    public class GpxPoint : GpsPoint {
+    public class GpxPoint : GpsPoint, IGpxGeometry {
         #region Constructors
 
         /// <summary>
@@ -55,6 +55,13 @@ namespace SpatialLite.Gps.Geometries {
         /// Gets or sets additional information about point
         /// </summary>
         public GpxPointMetadata Metadata { get; set; }
+
+        /// <summary>
+        /// Get the type of geometry
+        /// </summary>
+        public GpxGeometryType GeometryType {
+            get { return GpxGeometryType.Waypoint; }
+        }
 
         #endregion
     }

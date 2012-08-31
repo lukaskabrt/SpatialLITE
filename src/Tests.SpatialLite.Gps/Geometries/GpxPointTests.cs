@@ -8,6 +8,7 @@ using Xunit;
 
 using SpatialLite.Gps.Geometries;
 using SpatialLite.Core.API;
+using SpatialLite.Gps;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxPointTests {
@@ -77,6 +78,17 @@ namespace Tests.SpatialLite.Gps.Geometries {
         }
 
         #endregion
+
+        #endregion
+
+        #region GeometryType tests
+
+        [Fact]
+        public void GeometryType_ReturnsWaypoint() {
+            GpxPoint target = new GpxPoint();
+
+            Assert.Equal(GpxGeometryType.Waypoint, target.GeometryType);
+        }
 
         #endregion
     }

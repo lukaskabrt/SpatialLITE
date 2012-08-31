@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpatialLite.Gps;
 using SpatialLite.Gps.Geometries;
 using Xunit;
 
@@ -36,6 +37,17 @@ namespace Tests.SpatialLite.Gps.Geometries {
         }
 
         #endregion
+
+        #endregion
+
+        #region GeometryType tests
+
+        [Fact]
+        public void GeometryType_ReturnsTrack() {
+            GpxTrack target = new GpxTrack();
+
+            Assert.Equal(GpxGeometryType.Track, target.GeometryType);
+        }
 
         #endregion
     }

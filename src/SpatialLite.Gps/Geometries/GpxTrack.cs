@@ -9,7 +9,7 @@ namespace SpatialLite.Gps.Geometries {
     /// <summary>
     /// Represents a track - an ordered list of points describing a path. Points can be gouped in more GpxTrackSegments.
     /// </summary>
-    public class GpxTrack : GeometryCollection<GpxTrackSegment> {
+    public class GpxTrack : GeometryCollection<GpxTrackSegment>, IGpxGeometry {
         #region Constructors
 
         /// <summary>
@@ -35,6 +35,13 @@ namespace SpatialLite.Gps.Geometries {
         /// Get or sets additional info about GPX entity
         /// </summary>
         public GpxTrackMetadata Metadata { get; set; }
+
+        /// <summary>
+        /// Get the type of geometry
+        /// </summary>
+        public GpxGeometryType GeometryType {
+            get { return GpxGeometryType.Track; }
+        }
 
         #endregion
     }
