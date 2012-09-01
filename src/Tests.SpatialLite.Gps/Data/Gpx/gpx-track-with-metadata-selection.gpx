@@ -16,7 +16,6 @@
 		<name>TRK Name</name>
 		<cmt>TRK Comment</cmt>
 		<desc>TRK Description</desc>
-		<src>TRK Source</src>
 		<link href="http://www.topografix.com">
 			<text>Link text</text>
 			<type>plain/text</type>

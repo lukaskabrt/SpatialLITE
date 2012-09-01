@@ -69,9 +69,13 @@
     <Compile Include="Geometries\GpxTrackTests.cs" />
     <Compile Include="IO\GpxReaderSettingsTests.cs" />
     <Compile Include="IO\GpxReaderTests.cs" />
+    <Compile Include="IO\GpxWriterSettingsTests.cs" />
+    <Compile Include="IO\GpxWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XDocumentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Gpx\gpx-empty-file.gpx" />
     <None Include="Data\Gpx\gpx-invalid-root-element.gpx" />
     <None Include="Data\Gpx\gpx-real-file.gpx" />
     <None Include="Data\Gpx\gpx-route-empty.gpx" />
@@ -79,6 +83,7 @@
     <None Include="Data\Gpx\gpx-route-single-route.gpx" />
     <None Include="Data\Gpx\gpx-route-with-additional-data.gpx" />
     <None Include="Data\Gpx\gpx-route-with-metadata-and-extensions.gpx" />
+    <None Include="Data\Gpx\gpx-route-with-metadata-selection.gpx" />
     <None Include="Data\Gpx\gpx-route-with-metadata.gpx" />
     <None Include="Data\Gpx\gpx-track-2-track-segments.gpx" />
     <None Include="Data\Gpx\gpx-track-empty-track-segment.gpx" />
@@ -86,12 +91,14 @@
     <None Include="Data\Gpx\gpx-track-multiple-tracks.gpx" />
     <None Include="Data\Gpx\gpx-track-single-track-segment.gpx" />
     <None Include="Data\Gpx\gpx-track-with-extension.gpx" />
+    <None Include="Data\Gpx\gpx-track-with-metadata-selection.gpx" />
     <None Include="Data\Gpx\gpx-track-with-metadata.gpx" />
     <None Include="Data\Gpx\gpx-version-1_0.gpx" />
     <None Include="Data\Gpx\gpx-version-2_0.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-extensions.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-multiple.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-simple.gpx" />
+    <None Include="Data\Gpx\gpx-waypoint-with-metadata-selection.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-with-metadata.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-with-unsorted-metadata.gpx" />
     <None Include="Data\Gpx\gpx-waypoint-without-lat.gpx" />

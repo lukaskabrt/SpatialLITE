@@ -63,6 +63,16 @@ namespace Tests.SpatialLite.Gps.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] gpx_empty_file {
+            get {
+                object obj = ResourceManager.GetObject("gpx_empty_file", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] gpx_invalid_root_element {
             get {
                 object obj = ResourceManager.GetObject("gpx_invalid_root_element", resourceCulture);
@@ -126,6 +136,16 @@ namespace Tests.SpatialLite.Gps.Data {
         internal static byte[] gpx_route_with_metadata_and_extensions {
             get {
                 object obj = ResourceManager.GetObject("gpx_route_with_metadata_and_extensions", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gpx_route_with_metadata_selection {
+            get {
+                object obj = ResourceManager.GetObject("gpx_route_with_metadata_selection", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -203,6 +223,16 @@ namespace Tests.SpatialLite.Gps.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] gpx_track_with_metadata_selection {
+            get {
+                object obj = ResourceManager.GetObject("gpx_track_with_metadata_selection", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] gpx_version_1_0 {
             get {
                 object obj = ResourceManager.GetObject("gpx_version_1_0", resourceCulture);
@@ -256,6 +286,16 @@ namespace Tests.SpatialLite.Gps.Data {
         internal static byte[] gpx_waypoint_with_metadata {
             get {
                 object obj = ResourceManager.GetObject("gpx_waypoint_with_metadata", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gpx_waypoint_with_metadata_selection {
+            get {
+                object obj = ResourceManager.GetObject("gpx_waypoint_with_metadata_selection", resourceCulture);
                 return ((byte[])(obj));
             }
         }

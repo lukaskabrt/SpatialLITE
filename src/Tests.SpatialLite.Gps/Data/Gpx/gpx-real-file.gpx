@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gpx
-  version="1.0"
+  version="1.1"
   creator="GPSBabel - http://www.gpsbabel.org"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.topografix.com/GPX/1/0"
+  xmlns="http://www.topografix.com/GPX/1/1"
   xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 	<time>2011-03-16T20:01:37Z</time>
 	<bounds minlat="39.371582866" minlon="-76.742323637" maxlat="39.449270368" maxlon="-76.633753181"/>

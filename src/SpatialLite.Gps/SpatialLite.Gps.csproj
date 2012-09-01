@@ -59,6 +59,8 @@
     <Compile Include="IGpxGeometry.cs" />
     <Compile Include="IO\GpxReader.cs" />
     <Compile Include="IO\GpxReaderSettings.cs" />
+    <Compile Include="IO\GpxWriter.cs" />
+    <Compile Include="IO\GpxWriterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

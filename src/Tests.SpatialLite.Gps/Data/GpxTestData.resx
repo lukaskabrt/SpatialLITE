@@ -118,11 +118,56 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="gpx_empty_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-empty-file.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gpx_invalid_root_element" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Gpx\gpx-invalid-root-element.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="gpx_real_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Gpx\gpx-real-file.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-empty.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_multiple_routes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-multiple-routes.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_single_route" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-single-route.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_with_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-with-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_with_metadata_and_extensions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-with-metadata-and-extensions.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_route_with_metadata_selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-route-with-metadata-selection.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_2_track_segments" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-2-track-segments.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-empty.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_empty_track_segment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-empty-track-segment.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_multiple_tracks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-multiple-tracks.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_single_track_segment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-single-track-segment.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_with_extension" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-with-extension.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_with_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-with-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gpx_track_with_metadata_selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-track-with-metadata-selection.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="gpx_version_1_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Gpx\gpx-version-1_0.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -148,43 +193,10 @@
   <data name="gpx_waypoint_with_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Gpx\gpx-waypoint-with-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="gpx_waypoint_with_metadata_selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Gpx\gpx-waypoint-with-metadata-selection.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gpx_waypoint_with_unsorted_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Gpx\gpx-waypoint-with-unsorted-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_2_track_segments" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-2-track-segments.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-empty.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_empty_track_segment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-empty-track-segment.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_multiple_tracks" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-multiple-tracks.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_single_track_segment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-single-track-segment.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_with_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-with-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_track_with_extension" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-track-with-extension.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_route_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-route-empty.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_route_multiple_routes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-route-multiple-routes.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_route_single_route" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-route-single-route.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_route_with_metadata" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-route-with-metadata.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="gpx_route_with_metadata_and_extensions" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Gpx\gpx-route-with-metadata-and-extensions.gpx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

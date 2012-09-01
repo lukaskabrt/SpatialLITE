@@ -72,18 +72,6 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesWaypointWitLatAndLon() {
-            // <wpt lat="42.438878" lon="-71.119277"></wpt>
-            var data = new MemoryStream(GpxTestData.gpx_waypoint_simple);
-            var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
-
-            GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
-            var result = target.Read() as GpxPoint;
-
-            Assert.Equal(result.Position, expectedCoordinate);
-        }
-
-        [Fact]
         public void Read_SetsMetadataIfReadMetadataIsTrue() {
             var data = new MemoryStream(GpxTestData.gpx_waypoint_simple);
             var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
@@ -157,7 +145,7 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Equal(12.5, result.Metadata.GeoidHeight);
             Assert.Equal(GpsFix.Fix3D, result.Metadata.Fix);
             Assert.Equal(8, result.Metadata.SatellitesCount);
-            Assert.Equal(5, result.Metadata.Hdop);
+            Assert.Equal(5.1, result.Metadata.Hdop);
             Assert.Equal(8.1, result.Metadata.Vdop);
             Assert.Equal(10.8, result.Metadata.Pdop);
             Assert.Equal(45, result.Metadata.AgeOfDgpsData);
@@ -186,7 +174,7 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Equal(12.5, result.Metadata.GeoidHeight);
             Assert.Equal(GpsFix.Fix3D, result.Metadata.Fix);
             Assert.Equal(8, result.Metadata.SatellitesCount);
-            Assert.Equal(5, result.Metadata.Hdop);
+            Assert.Equal(5.1, result.Metadata.Hdop);
             Assert.Equal(8.1, result.Metadata.Vdop);
             Assert.Equal(10.8, result.Metadata.Pdop);
             Assert.Equal(45, result.Metadata.AgeOfDgpsData);
