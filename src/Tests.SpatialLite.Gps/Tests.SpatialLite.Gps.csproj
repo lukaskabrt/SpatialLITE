@@ -67,6 +67,7 @@
     <Compile Include="Geometries\GpxRouteTests.cs" />
     <Compile Include="Geometries\GpxTrackSegmentTests.cs" />
     <Compile Include="Geometries\GpxTrackTests.cs" />
+    <Compile Include="GpxDocumentTests.cs" />
     <Compile Include="IO\GpxReaderSettingsTests.cs" />
     <Compile Include="IO\GpxReaderTests.cs" />
     <Compile Include="IO\GpxWriterSettingsTests.cs" />

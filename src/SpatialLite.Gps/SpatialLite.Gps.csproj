@@ -54,6 +54,7 @@
     <Compile Include="Geometries\GpxTrack.cs" />
     <Compile Include="Geometries\GpxTrackMetadata.cs" />
     <Compile Include="Geometries\GpxTrackSegment.cs" />
+    <Compile Include="GpxDocument.cs" />
     <Compile Include="GpxGeometryType.cs" />
     <Compile Include="IGpsPoint.cs" />
     <Compile Include="IGpxGeometry.cs" />
