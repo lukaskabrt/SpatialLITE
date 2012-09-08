@@ -64,16 +64,47 @@ namespace SpatialLite.Gps {
         /// <param name="path">Path to the file.</param>
         public void Save(string path) {
             using (GpxWriter writer = new GpxWriter(path, new GpxWriterSettings() {WriteMetadata = true})) {
-                foreach (var waypoint in this.Waypoints) {
-                    writer.Write(waypoint);
-                }
+                this.Save(writer);
+            }
+        }
 
-                foreach (var route in this.Routes) {
-                    writer.Write(route);
-                }
+        /// <summary>
+        /// Saves content of the GpxDocument using suplied writer.
+        /// </summary>
+        /// <param name="writer">GpxWriter to be used</param>
+        public void Save(IGpxWriter writer) {
+            if (writer == null) {
+                throw new ArgumentNullException("writer");
+            }
 
-                foreach (var track in this.Tracks) {
-                    writer.Write(track);
+            foreach (var waypoint in this.Waypoints) {
+                writer.Write(waypoint);
+            }
+
+            foreach (var route in this.Routes) {
+                writer.Write(route);
+            }
+
+            foreach (var track in this.Tracks) {
+                writer.Write(track);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Loads Gpx data from reader to this instance of the GpxDocument class
+        /// </summary>
+        /// <param name="reader">The reader to read data from</param>
+        private void LoadFromReader(IGpxReader reader) {
+            IGpxGeometry geometry = null;
+            while ((geometry = reader.Read()) != null) {
+                switch (geometry.GeometryType) {
+                    case GpxGeometryType.Waypoint: this.Waypoints.Add((GpxPoint)geometry); break;
+                    case GpxGeometryType.Route: this.Routes.Add((GpxRoute)geometry); break;
+                    case GpxGeometryType.Track: this.Tracks.Add((GpxTrack)geometry); break;
                 }
             }
         }
@@ -89,16 +120,24 @@ namespace SpatialLite.Gps {
             GpxDocument result = new GpxDocument();
 
             using (GpxReader reader = new GpxReader(path, new GpxReaderSettings() { ReadMetadata = true })) {
-                IGpxGeometry geometry = null;
-                while ((geometry = reader.Read()) != null) {
-                    switch (geometry.GeometryType) {
-                        case GpxGeometryType.Waypoint: result.Waypoints.Add((GpxPoint)geometry); break;
-                        case GpxGeometryType.Route: result.Routes.Add((GpxRoute)geometry); break;
-                        case GpxGeometryType.Track: result.Tracks.Add((GpxTrack)geometry); break;
-                    }
-                }
+                result.LoadFromReader(reader);
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Loads Gpx data from IGpxReader
+        /// </summary>
+        /// <param name="reader">The reader to read data from</param>
+        /// <returnsGpxDocument instance eith data from GpxReader></returns>
+        public static GpxDocument Load(IGpxReader reader) {
+            if (reader == null) {
+                throw new ArgumentNullException("reader");
+            }
+
+            GpxDocument result = new GpxDocument();
+            result.LoadFromReader(reader);
             return result;
         }
     }

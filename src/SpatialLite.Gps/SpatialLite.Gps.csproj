@@ -62,6 +62,8 @@
     <Compile Include="IO\GpxReaderSettings.cs" />
     <Compile Include="IO\GpxWriter.cs" />
     <Compile Include="IO\GpxWriterSettings.cs" />
+    <Compile Include="IO\IGpxReader.cs" />
+    <Compile Include="IO\IGpxWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

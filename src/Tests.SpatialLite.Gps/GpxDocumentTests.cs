@@ -11,6 +11,8 @@ using SpatialLite.Gps;
 using SpatialLite.Gps.Geometries;
 using System.IO;
 using System.Xml.Linq;
+using Tests.SpatialLite.Gps.Data;
+using Moq;
 
 namespace Tests.SpatialLite.Gps {
     public class GpxDocumentTests {
@@ -72,6 +74,28 @@ namespace Tests.SpatialLite.Gps {
 
         #endregion
 
+        #region static Load(IGpxReader) tests
+
+        [Fact]
+        public void Load_IGpxReader_ThrowsExceptionIfReaderIsNull() {
+            IGpxReader reader = null;
+
+            Assert.Throws<ArgumentNullException>(() => GpxDocument.Load(reader));
+        }
+
+        [Fact]
+        public void Load_IGpxReader_LoadsEntitiesFromReader() {
+            using (var reader = new GpxReader(new MemoryStream(GpxTestData.gpx_real_file), new GpxReaderSettings() { ReadMetadata = true })) {
+                var target = GpxDocument.Load(reader);
+
+                Assert.Equal(3, target.Waypoints.Count);
+                Assert.Equal(2, target.Routes.Count);
+                Assert.Equal(1, target.Tracks.Count);
+            }
+        }
+
+        #endregion
+
         #region static Load(string) tests
 
         [Fact]
@@ -94,10 +118,40 @@ namespace Tests.SpatialLite.Gps {
 
             var target = GpxDocument.Load(path);
 
-
             Assert.Equal(3, target.Waypoints.Count);
             Assert.Equal(2, target.Routes.Count);
             Assert.Equal(1, target.Tracks.Count);
+        }
+
+        #endregion
+
+        #region Save(IGpxWriter) tests
+
+        [Fact]
+        public void Save_IGpxWriter_ThrowsExceptionIfWriterIsNull() {
+            IGpxWriter writer = null;
+
+            var target = new GpxDocument();
+            Assert.Throws<ArgumentNullException>(() => target.Save(writer));
+        }
+
+        [Fact]
+        public void Save_IGpxWriter_WritesDataToWriter() {
+            var waypoint = new GpxPoint();
+            var route = new GpxRoute();
+            var track = new GpxTrack();
+
+            Mock<IGpxWriter> writerM = new Mock<IGpxWriter>();
+            writerM.Setup(w => w.Write(waypoint)).Verifiable();
+            writerM.Setup(w => w.Write(route)).Verifiable();
+            writerM.Setup(w => w.Write(track)).Verifiable();
+
+            var target = new GpxDocument(new[] { waypoint }, new[] { route }, new[] { track });
+            target.Save(writerM.Object);
+
+            writerM.Verify(w => w.Write(waypoint), Times.Once());
+            writerM.Verify(w => w.Write(route), Times.Once());
+            writerM.Verify(w => w.Write(track), Times.Once());
         }
 
         #endregion

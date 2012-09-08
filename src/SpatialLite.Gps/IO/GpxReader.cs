@@ -11,7 +11,7 @@ namespace SpatialLite.Gps.IO {
     /// <summary>
     /// Implements data reader that can read GPX data from streams and files.
     /// </summary>
-    public class GpxReader : IDisposable {
+    public class GpxReader : IGpxReader, IDisposable {
         #region Private Fields
 
         private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;

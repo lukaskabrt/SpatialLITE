@@ -11,7 +11,7 @@ namespace SpatialLite.Gps.IO {
     /// <summary>
     /// Implements data writer that can write GPX data to streams and files.
     /// </summary>
-    public class GpxWriter : IDisposable {
+    public class GpxWriter : IDisposable, IGpxWriter {
         private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
         private XmlWriter _xmlWriter;
