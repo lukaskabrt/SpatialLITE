@@ -20,7 +20,9 @@
     <Language>en-US</Language>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\src\SpatialLite.Core\SpatialLite.Core.csproj" />
-<DocumentationSource sourceFile="..\src\SpatialLite.Osm\SpatialLite.Osm.csproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\src\SpatialLite.Osm\SpatialLite.Osm.csproj" />
+      <DocumentationSource sourceFile="..\src\SpatialLite.Gps\SpatialLite.Gps.csproj" />
+    </DocumentationSources>
     <HelpFileFormat>MSHelpViewer, Website</HelpFileFormat>
     <HelpTitle>SpatialLITE Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
@@ -28,7 +30,7 @@
     <FooterText>
     </FooterText>
     <NamingMethod>Guid</NamingMethod>
-    <Preliminary>True</Preliminary>
+    <Preliminary>False</Preliminary>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <ProductTitle>SpatialLITE</ProductTitle>
     <VendorName>LITE Solutions</VendorName>
@@ -44,6 +46,10 @@
         <configuration />
       </PlugInConfig>
     </PlugInConfigurations>
+    <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
+    <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
+    <IncludeFavorites>False</IncludeFavorites>
+    <BinaryTOC>True</BinaryTOC>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
