@@ -105,7 +105,7 @@ namespace SpatialLite.Osm.Geometries {
 		public static Way FromWayInfo(WayInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing) {
 			Way result = new Way(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
 
-			result.Nodes = new List<Node>(info.Nodes.Count);
+			result.Nodes.Capacity = info.Nodes.Count;
 			foreach (var nodeID in info.Nodes) {
 				Node node = entities[nodeID, EntityType.Node] as Node;
 				if (node != null) {

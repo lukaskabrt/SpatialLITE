@@ -125,6 +125,17 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Assert.Null(Way.FromWayInfo(_wayInfo, _nodesEntityCollection, false));
         }
 
+		[Fact]
+		public void WhenWayIsInitializedFromWayInfo_CoordinatesReturnsNodesCoordinates() {
+			Way target = Way.FromWayInfo(_wayInfo, _nodesEntityCollection, true);
+
+			Assert.Equal(_wayInfo.Nodes.Count, target.Nodes.Count);
+
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+		}
+
         #endregion
 
         #region Coordinates property tests
