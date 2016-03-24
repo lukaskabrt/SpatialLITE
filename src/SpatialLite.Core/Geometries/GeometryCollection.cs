@@ -130,6 +130,16 @@ namespace SpatialLite.Core.Geometries {
 			return boundary;
 		}
 
-		#endregion
-	}
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.Geometries.SelectMany(o => o.GetCoordinates());
+        }
+
+        public override void Apply(ICoordinateFilter filter) {
+            foreach (var geometry in this.Geometries) {
+                geometry.Apply(filter);
+            }
+        }
+
+        #endregion
+    }
 }

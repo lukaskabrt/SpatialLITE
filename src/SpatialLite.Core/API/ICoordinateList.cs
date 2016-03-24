@@ -50,5 +50,7 @@ namespace SpatialLite.Core.API {
 		/// Removes all Coordinates from the collection.
 		/// </summary>
 		void Clear();
+
+        void Apply(ICoordinateFilter filter);
 	}
 }

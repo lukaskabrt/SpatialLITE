@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/bin
+/src/Benchmark.SpatialLite.Osm.IO/obj/x86
+*.suo
+/src/packages
+/src/SpatialLite.Core/obj
+*.user
+/src/SpatialLite.Gps/obj
+/src/SpatialLite.Osm/obj
+/src/Tests.SpatialLite.Core/obj
+/src/Tests.SpatialLite.Gps/obj
+/src/Tests.SpatialLite.Osm/obj
+/src/TestsAI.SpatialLite.Osm/obj/Debug
+/src/TestsAI.SpatialLite.Osm/obj/Release/TempPE
+/src/TestsAI.SpatialLite.Osm/obj/Release

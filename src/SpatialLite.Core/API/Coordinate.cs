@@ -25,10 +25,10 @@ namespace SpatialLite.Core.API {
 
 		#region Private Fields
 
-		private readonly double _x;
-		private readonly double _y;
-		private readonly double _z;
-		private readonly double _m;
+		private double _x;
+		private double _y;
+		private double _z;
+		private double _m;
 
 		#endregion
 
@@ -82,6 +82,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		public double X {
 			get { return _x; }
+            set { _x = value; }
 		}
 
 		/// <summary>
@@ -89,6 +90,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		public double Y {
 			get { return _y; }
+            set { _y = value; }
 		}
 
 		/// <summary>
@@ -96,6 +98,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		public double Z {
 			get { return _z; }
+            set { _z = value; }
 		}
 
 		/// <summary>
@@ -103,6 +106,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		public double M {
 			get { return _m; }
+            set { _m = value; }
 		}
 
 		/// <summary>

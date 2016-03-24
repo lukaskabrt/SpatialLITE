@@ -67,7 +67,9 @@
     <Compile Include="IO\IGpxWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="SpatialLite.Gps.nuspec" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj">
       <Project>{423f0a2f-0b12-4aea-8177-4a5d4238aa81}</Project>

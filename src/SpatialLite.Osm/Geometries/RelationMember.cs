@@ -141,6 +141,14 @@ namespace SpatialLite.Osm.Geometries {
 			return this.Member.GetBoundary();
 		}
 
-		#endregion
-	}
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.Member.GetCoordinates();
+        }
+
+        public override void Apply(ICoordinateFilter filter) {
+            this.Member.Apply(filter);
+        }
+
+        #endregion
+    }
 }

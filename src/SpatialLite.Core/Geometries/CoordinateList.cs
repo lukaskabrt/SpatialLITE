@@ -122,6 +122,14 @@ namespace SpatialLite.Core.Geometries {
 			return ((IEnumerable)_storage).GetEnumerator();
 		}
 
+        public void Apply(ICoordinateFilter filter) {
+            for (int i = 0; i < _storage.Count; i++) {
+                var coordinate = _storage[i];
+                filter.Filter(ref coordinate);
+                _storage[i] = coordinate;
+            }
+        }
+
 		#endregion
 	}
 }

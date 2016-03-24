@@ -162,6 +162,14 @@ namespace SpatialLite.Core.Geometries {
 			}
 		}
 
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.Coordinates;
+        }
+
+        public override void  Apply(ICoordinateFilter filter) {
+            this.Coordinates.Apply(filter);
+        }
+
 		#endregion
 	}
 }

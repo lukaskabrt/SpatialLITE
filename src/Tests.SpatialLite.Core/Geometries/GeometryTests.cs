@@ -38,7 +38,15 @@ namespace Tests.SpatialLite.Core.Geometries {
 			public override IGeometry GetBoundary() {
 				throw new NotImplementedException();
 			}
-		}
+
+            public override IEnumerable<Coordinate> GetCoordinates() {
+                throw new NotImplementedException();
+            }
+
+            public override void Apply(ICoordinateFilter filter) {
+                throw new NotImplementedException();
+            }
+        }
 
 		#endregion
 

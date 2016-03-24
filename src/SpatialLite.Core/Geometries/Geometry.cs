@@ -64,6 +64,10 @@ namespace SpatialLite.Core.Geometries {
 		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  geometric  object</returns>
 		public abstract IGeometry GetBoundary();
 
-		#endregion
+        public abstract IEnumerable<Coordinate> GetCoordinates();
+
+        public abstract void Apply(ICoordinateFilter filter);
+		
+        #endregion
 	}
 }

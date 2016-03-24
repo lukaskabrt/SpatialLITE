@@ -115,6 +115,10 @@ namespace SpatialLite.Core.Geometries {
             return this.GetEnumerator();
         }
 
+        public void Apply(ICoordinateFilter filter) {
+            throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
+        }
+
         #endregion
     }
 }

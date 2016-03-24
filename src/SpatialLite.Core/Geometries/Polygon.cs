@@ -129,6 +129,18 @@ namespace SpatialLite.Core.Geometries {
 			return boundary;
 		}
 
-		#endregion
-	}
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.ExteriorRing.Concat(this.InteriorRings.SelectMany(o => o));
+        }
+
+        public override void Apply(ICoordinateFilter filter) {
+            this.ExteriorRing.Apply(filter);
+
+            foreach (var ring in this.InteriorRings) {
+                ring.Apply(filter);
+            }
+        }
+
+        #endregion
+    }
 }

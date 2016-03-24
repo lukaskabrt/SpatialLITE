@@ -51,6 +51,7 @@
     <Compile Include="Algorithms\Euclidean2DLocator.cs" />
     <Compile Include="Algorithms\Sphere2DCalculator.cs" />
     <Compile Include="API\Coordinate.cs" />
+    <Compile Include="API\ICoordinateFilter.cs" />
     <Compile Include="API\ICoordinateList.cs" />
     <Compile Include="API\IGeometry.cs" />
     <Compile Include="API\IGeometryCollection.cs" />
@@ -90,7 +91,9 @@
     <Compile Include="SRIDList.cs" />
     <Compile Include="Topology.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="SpatialLite.Core.nuspec" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

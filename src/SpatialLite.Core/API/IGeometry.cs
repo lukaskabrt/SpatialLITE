@@ -22,7 +22,8 @@ namespace SpatialLite.Core.API {
 		/// Gets a value indicating whether the <c>IGeometry</c> object has M values.
 		/// </summary>
 		bool IsMeasured { get; }
-		
+
+
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
@@ -36,5 +37,11 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  geometric  object</returns>
 		IGeometry GetBoundary();
+
+        IEnumerable<Coordinate> GetCoordinates();
+
+        void Apply(ICoordinateFilter filter);
+
+
 	}
 }
