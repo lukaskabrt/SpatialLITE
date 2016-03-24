@@ -25,7 +25,7 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="stream">The Stream to write GPX entities to.</param>
         /// <param name="settings">The settings defining behaviour of the writer.</param>
-        public GpxWriter(System.IO.MemoryStream stream, GpxWriterSettings settings) {
+        public GpxWriter(Stream stream, GpxWriterSettings settings) {
             this.Settings = settings;
             settings.IsReadOnly = true;
 
