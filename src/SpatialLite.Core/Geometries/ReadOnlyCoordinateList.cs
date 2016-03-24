@@ -116,7 +116,9 @@ namespace SpatialLite.Core.Geometries {
         }
 
         public void Apply(ICoordinateFilter filter) {
-            throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
+            for (int i = 0; i < this.Source.Count; i++) {
+                this.Source[i].Apply(filter);
+            }
         }
 
         #endregion
