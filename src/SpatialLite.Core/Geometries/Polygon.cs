@@ -46,7 +46,7 @@ namespace SpatialLite.Core.Geometries {
 		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
 		/// <param name="exteriorRing">The exterior boundary of the polygon.</param>
 		/// <param name="interiorRings">The collection of interior boundaries defining holes in the polygon.</param>
-		public Polygon(int srid, CoordinateList exteriorRing, IEnumerable<ICoordinateList> interiorRings)
+		public Polygon(int srid, ICoordinateList exteriorRing, IEnumerable<ICoordinateList> interiorRings)
 			: base(srid) {
 			this.ExteriorRing = exteriorRing;
 			this.InteriorRings = interiorRings.ToList();
