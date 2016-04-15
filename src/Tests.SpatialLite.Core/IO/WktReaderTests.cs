@@ -69,7 +69,7 @@ namespace Tests.SpatialLite.Core.IO {
 			target.Dispose();
 
 			FileStream testStream = null;
-			Assert.DoesNotThrow(() => testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
 		}
 
@@ -100,7 +100,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Read_ReadsAllGeometryTypesTestData")]
+		[MemberData("Read_ReadsAllGeometryTypesTestData")]
 		public void Read_ReadsAllGeometryTypes(byte[] data) {
 			using (WktReader target = new WktReader(new MemoryStream(data))) {
 				IGeometry readGeometry = target.Read();
@@ -254,7 +254,7 @@ namespace Tests.SpatialLite.Core.IO {
 		[InlineData("multipolygon\n\r (((-10.1\t 15.5,  20.2 -25.5,  30.3 35.5)),((-10.1  15.5, 20.2 -25.5, 30.3 35.5)))")]
 		[InlineData("geometrycollection \t\n\r(point  (-10.1  15.5))")]
 		public void Parse_ParsesGeometriesWithMultipleWhitespacesInsteadOneSpace(string wkt) {
-			Assert.DoesNotThrow(() => WktReader.Parse(wkt));
+			WktReader.Parse(wkt);
 		}
 
 		[Theory]
@@ -266,7 +266,7 @@ namespace Tests.SpatialLite.Core.IO {
 		[InlineData("multipolygon ( ( ( -10.1 15.5 , 20.2 -25.5 ,  30.3 35.5 ) ) , ( ( -10.1  15.5 , 20.2 -25.5 , 30.3 35.5 ) ) )")]
 		[InlineData("geometrycollection ( point ( -10.1  15.5 ) )")]
 		public void Parse_ParsesGeometriesWithWhitespacesAtPlacesWhereTheyAreNotExpected(string wkt) {
-			Assert.DoesNotThrow(() => WktReader.Parse(wkt));
+			WktReader.Parse(wkt);
 		}
 
 		#endregion

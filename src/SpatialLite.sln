@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.Core", "SpatialLite.Core\SpatialLite.Core.csproj", "{423F0A2F-0B12-4AEA-8177-4A5D4238AA81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SpatialLite.Core", "Tests.SpatialLite.Core\Tests.SpatialLite.Core.csproj", "{CD3CF3EE-64FF-42D2-A103-8CFCF75DBEB2}"

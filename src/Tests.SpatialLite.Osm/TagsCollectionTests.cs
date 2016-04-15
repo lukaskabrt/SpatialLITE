@@ -75,7 +75,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Clear_DoesNothingOnEmptyCollection() {
 			TagsCollection target = new TagsCollection();
 
-			Assert.DoesNotThrow(() => target.Clear());
+			target.Clear();
 		}
 
 		[Fact]

@@ -16,6 +16,12 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WkbWriterTests {
+        public WkbWriterTests() {
+            if(!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
+
 		#region Constructor(Stream, Settings) tests
 
 		[Fact]
@@ -98,7 +104,7 @@ namespace Tests.SpatialLite.Core.IO {
 			target.Dispose();
 
 			FileStream testStream = null;
-			Assert.DoesNotThrow(() => testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
 		}
 
@@ -678,7 +684,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("WriteToArrayTestData")]
+		[MemberData("WriteToArrayTestData")]
 		public void WriteToArray_WritesAllGeometryTypes(string wkt, byte[] expectedWkb) {
 			IGeometry geometry = this.ParseWKT(wkt);
 

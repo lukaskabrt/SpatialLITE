@@ -49,11 +49,15 @@ namespace Tests.SpatialLite.Osm.IO {
 				new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
 				new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
 			_relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
-		}
 
-		#region Constructor(Filename, Settings) tests
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
 
-		[Fact]
+        #region Constructor(Filename, Settings) tests
+
+        [Fact]
 		public void Constructor_FilenameSettings_SetsSettingsAndMakesThemReadOnly() {
 			string filename = "TestFiles\\pbfwriter-constructor-test.pbf";
 			File.Delete(filename);
@@ -129,7 +133,7 @@ namespace Tests.SpatialLite.Osm.IO {
 			PbfWriter target = new PbfWriter(filename, settings);
 			target.Dispose();
 
-			Assert.DoesNotThrow(() => new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+			new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 		}
 
 		[Fact]

@@ -21,9 +21,15 @@ namespace TestsAI.SpatialLite.Osm.IO.Pbf {
 		private const int TestFileWaysCount = 14461;
 		private const int TestFileRelationsCount = 124;
 
-		#region PbfReader tests
+        public OsmosisIntegrationTests() {
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
 
-		[Fact]
+        #region PbfReader tests
+
+        [Fact]
 		public void PbfReaderReadsFilesCreatedByOsmosis_NoDenseNoCompression() {
 			string pbfFile = Path.GetFullPath("TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file.pbf");
 			if (File.Exists(pbfFile)) {

@@ -16,6 +16,13 @@ using Moq;
 
 namespace Tests.SpatialLite.Gps {
     public class GpxDocumentTests {
+
+        public GpxDocumentTests() {
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
+
         #region Constructors tests
 
         #region Constructor() tests

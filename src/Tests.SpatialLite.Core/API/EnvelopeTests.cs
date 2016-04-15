@@ -267,7 +267,7 @@ namespace Tests.SpatialLite.Core.API {
 		}
 
 		[Theory]
-		[PropertyData("_XYZEnvelopeDifferentBounds")]
+		[MemberData("_XYZEnvelopeDifferentBounds")]
 		public void Equals_ReturnsFalseForTheEnvelopeWithDifferentBounds(Coordinate[] corners) {
 			Envelope target = new Envelope(_coordinates);
 			Envelope other = new Envelope(corners);

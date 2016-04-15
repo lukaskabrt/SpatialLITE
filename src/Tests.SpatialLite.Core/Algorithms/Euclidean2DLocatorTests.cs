@@ -37,7 +37,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[PropertyData("PointsBetweenAB")]
+		[MemberData("PointsBetweenAB")]
 		public void IsOnLine_ReturnsTrueIfPointLiesBetweenAAndB(Coordinate c, Coordinate a, Coordinate b, LineMode mode) {
 			Euclidean2DLocator target = new Euclidean2DLocator();
 
@@ -52,7 +52,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[PropertyData("PointsOnAB")]
+		[MemberData("PointsOnAB")]
 		public void IsOnLine_ReturnsTrueIfPointLiesOnABAndModeIsLine(Coordinate c, Coordinate a, Coordinate b) {
 			Euclidean2DLocator target = new Euclidean2DLocator();
 
@@ -60,7 +60,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[PropertyData("PointsOnAB")]
+		[MemberData("PointsOnAB")]
 		public void IsOnLine_ReturnsFalseIfPointLiesOnABAndModeIsLineSegment(Coordinate c, Coordinate a, Coordinate b) {
 			Euclidean2DLocator target = new Euclidean2DLocator();
 
@@ -79,7 +79,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[PropertyData("PointsNotOnAB")]
+		[MemberData("PointsNotOnAB")]
 		public void IsOnLine_ReturnsFalseIfPointDoEsNotLieOnAB(Coordinate c, Coordinate a, Coordinate b, LineMode mode) {
 			Euclidean2DLocator target = new Euclidean2DLocator();
 			Assert.False(target.IsOnLine(c, a, b, mode));

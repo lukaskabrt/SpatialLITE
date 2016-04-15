@@ -14,101 +14,107 @@ using SpatialLite.Osm.IO.Pbf;
 using SpatialLite.Osm.Geometries;
 
 namespace TestsAI.SpatialLite.Osm.IO.Xml {
-	public class OsmosisIntegrationTests {
-		public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
+    public class OsmosisIntegrationTests {
+        public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
 
-		private const string TestFilePath = "..\\..\\src\\TestsAI.SpatialLite.Osm\\Data\\IO\\pbf-real-test-file-1.pbf";
-		private const int TestFileNodesCount = 129337;
-		private const int TestFileWaysCount = 14461;
-		private const int TestFileRelationsCount = 124;
+        private const string TestFilePath = "..\\..\\src\\TestsAI.SpatialLite.Osm\\Data\\IO\\pbf-real-test-file-1.pbf";
+        private const int TestFileNodesCount = 129337;
+        private const int TestFileWaysCount = 14461;
+        private const int TestFileRelationsCount = 124;
 
-		#region OsmXmlReader Tests
+        public OsmosisIntegrationTests() {
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
 
-		[Fact]
-		public void XmlOsmReaderReadsFilesCreatedByOsmosis() {
-			string xmlFile = Path.GetFullPath("TestFiles\\xmlreader-osmosis-compatibility-test-osmosis-real-file.osm");
-			string osmosisArguments = string.Format("--read-pbf file={0} --write-xml file={1}", Path.GetFullPath(TestFilePath), xmlFile);
-			this.CallOsmosis(osmosisArguments);
+        #region OsmXmlReader Tests
 
-			using (OsmXmlReader reader = new OsmXmlReader(xmlFile, new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false })) {
-				this.TestReader(reader);
-			}
-		}
+        [Fact]
+        public void XmlOsmReaderReadsFilesCreatedByOsmosis() {
+            string xmlFile = Path.GetFullPath("TestFiles\\xmlreader-osmosis-compatibility-test-osmosis-real-file.osm");
+            string osmosisArguments = string.Format("--read-pbf file={0} --write-xml file={1}", Path.GetFullPath(TestFilePath), xmlFile);
+            this.CallOsmosis(osmosisArguments);
 
-		#endregion
+            using (OsmXmlReader reader = new OsmXmlReader(xmlFile, new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false })) {
+                this.TestReader(reader);
+            }
+        }
 
-		#region OsmXmlWriter Tests
+        #endregion
 
-		[Fact]
-		public void XmlOsmWriterWritesFilesCompatibleWithOsmosis() {
-			string xmlFile = Path.GetFullPath("TestFiles\\xmlwriter-osmosis-compatibility-test-xmlwriter-real-file.osm");
-			if (File.Exists(xmlFile)) {
-				File.Delete(xmlFile);
-			}
+        #region OsmXmlWriter Tests
 
-			using (OsmXmlWriter writer = new OsmXmlWriter(xmlFile, new OsmWriterSettings() { WriteMetadata = true })) {
-				foreach (var entityInfo in this.GetTestData()) {
-					writer.Write(entityInfo);
-				}
-			}
+        [Fact]
+        public void XmlOsmWriterWritesFilesCompatibleWithOsmosis() {
+            string xmlFile = Path.GetFullPath("TestFiles\\xmlwriter-osmosis-compatibility-test-xmlwriter-real-file.osm");
+            if (File.Exists(xmlFile)) {
+                File.Delete(xmlFile);
+            }
 
-			string osmosisXmlFile = Path.GetFullPath("TestFiles\\xmlwriter-osmosis-compatibility-test-test-file.osm");
-			if (File.Exists(osmosisXmlFile)) {
-				File.Delete(osmosisXmlFile);
-			}
+            using (OsmXmlWriter writer = new OsmXmlWriter(xmlFile, new OsmWriterSettings() { WriteMetadata = true })) {
+                foreach (var entityInfo in this.GetTestData()) {
+                    writer.Write(entityInfo);
+                }
+            }
 
-			string osmosisArguments = string.Format("--read-xml file={0} --write-xml file={1}", xmlFile, osmosisXmlFile);
-			this.CallOsmosis(osmosisArguments);
+            string osmosisXmlFile = Path.GetFullPath("TestFiles\\xmlwriter-osmosis-compatibility-test-test-file.osm");
+            if (File.Exists(osmosisXmlFile)) {
+                File.Delete(osmosisXmlFile);
+            }
 
-			Assert.True(File.Exists(osmosisXmlFile));
-			Assert.True(new FileInfo(osmosisXmlFile).Length > 0);
-		}
+            string osmosisArguments = string.Format("--read-xml file={0} --write-xml file={1}", xmlFile, osmosisXmlFile);
+            this.CallOsmosis(osmosisArguments);
 
-		#endregion
+            Assert.True(File.Exists(osmosisXmlFile));
+            Assert.True(new FileInfo(osmosisXmlFile).Length > 0);
+        }
 
-		#region Helper functions
+        #endregion
 
-		private IEnumerable<IEntityInfo> GetTestData() {
-			List<IEntityInfo> data = new List<IEntityInfo>();
+        #region Helper functions
 
-			using (MemoryStream stream = new MemoryStream(Data.IOTestData.pbf_real_test_file_1)) {
-				using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true })) {
-					IEntityInfo info = null;
-					while ((info = reader.Read()) != null) {
-						data.Add(info);
-					}
-				}
-			}
+        private IEnumerable<IEntityInfo> GetTestData() {
+            List<IEntityInfo> data = new List<IEntityInfo>();
 
-			return data;
-		}
+            using (MemoryStream stream = new MemoryStream(Data.IOTestData.pbf_real_test_file_1)) {
+                using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true })) {
+                    IEntityInfo info = null;
+                    while ((info = reader.Read()) != null) {
+                        data.Add(info);
+                    }
+                }
+            }
 
-		private void CallOsmosis(string arguments) {
-			ProcessStartInfo osmosisInfo = new ProcessStartInfo(Path.GetFullPath(OsmosisPath));
-			osmosisInfo.Arguments = arguments;
+            return data;
+        }
 
-			Process osmosis = Process.Start(osmosisInfo);
-			osmosis.WaitForExit();
+        private void CallOsmosis(string arguments) {
+            ProcessStartInfo osmosisInfo = new ProcessStartInfo(Path.GetFullPath(OsmosisPath));
+            osmosisInfo.Arguments = arguments;
 
-			Assert.Equal(0, osmosis.ExitCode);
-		}
+            Process osmosis = Process.Start(osmosisInfo);
+            osmosis.WaitForExit();
 
-		private void TestReader(IOsmReader reader) {
-			IEntityInfo info = null;
-			int nodesCount = 0, waysCount = 0, relationsCount = 0;
-			while ((info = reader.Read()) != null) {
-				switch (info.EntityType) {
-					case EntityType.Node: nodesCount++; break;
-					case EntityType.Way: waysCount++; break;
-					case EntityType.Relation: relationsCount++; break;
-				}
-			}
+            Assert.Equal(0, osmosis.ExitCode);
+        }
 
-			Assert.Equal(TestFileNodesCount, nodesCount);
-			Assert.Equal(TestFileWaysCount, waysCount);
-			Assert.Equal(TestFileRelationsCount, relationsCount);
-		}
+        private void TestReader(IOsmReader reader) {
+            IEntityInfo info = null;
+            int nodesCount = 0, waysCount = 0, relationsCount = 0;
+            while ((info = reader.Read()) != null) {
+                switch (info.EntityType) {
+                    case EntityType.Node: nodesCount++; break;
+                    case EntityType.Way: waysCount++; break;
+                    case EntityType.Relation: relationsCount++; break;
+                }
+            }
 
-		#endregion
-	}
+            Assert.Equal(TestFileNodesCount, nodesCount);
+            Assert.Equal(TestFileWaysCount, waysCount);
+            Assert.Equal(TestFileRelationsCount, relationsCount);
+        }
+
+        #endregion
+    }
 }

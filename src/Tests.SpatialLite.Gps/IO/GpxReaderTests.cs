@@ -403,7 +403,7 @@ namespace Tests.SpatialLite.Gps.IO {
             target.Dispose();
 
             FileStream testStream = null;
-            Assert.DoesNotThrow(() => testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+            testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
             testStream.Dispose();
         }
 

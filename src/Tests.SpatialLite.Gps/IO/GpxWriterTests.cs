@@ -81,6 +81,10 @@ namespace Tests.SpatialLite.Gps.IO {
             _track = new GpxTrack(new GpxTrackSegment[] { _segment });
             _trackWithMetadata = new GpxTrack(new GpxTrackSegment[] { _segment });
             _trackWithMetadata.Metadata = _trackMetadata;
+
+            if(!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }        
         }
 
         #region Constructor(Stream, Settings) tests
@@ -348,7 +352,7 @@ namespace Tests.SpatialLite.Gps.IO {
             target.Dispose();
 
             FileStream testStream = null;
-            Assert.DoesNotThrow(() => testStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite));
+            testStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
             testStream.Dispose();
         }
 

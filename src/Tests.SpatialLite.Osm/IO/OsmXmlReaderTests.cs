@@ -116,7 +116,7 @@ namespace Tests.SpatialLite.Osm.IO {
 		[Fact]
 		public void Read_DoesNotThrowExceptionIPieceOffMetadataIsMissingAndStrictModeIsFalse() {
 			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_missing_timestamp), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
-			Assert.DoesNotThrow(() => target.Read());
+			target.Read();
 		}
 
 		#endregion
@@ -330,7 +330,7 @@ namespace Tests.SpatialLite.Osm.IO {
 			target.Dispose();
 
 			FileStream testStream = null;
-			Assert.DoesNotThrow(() => testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
 		}
 

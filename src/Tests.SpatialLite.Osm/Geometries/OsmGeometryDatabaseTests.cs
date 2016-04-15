@@ -142,7 +142,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		public void Load_DoesNotThrowExceptionIfIgnoreMissingIsTrueAndWaysNodeIsMissing() {
 			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_way_invalid_ref), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = null;
-			Assert.DoesNotThrow(() => target = OsmGeometryDatabase.Load(reader, true));
+			target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(2, target.Nodes.Count);
 			Assert.Equal(0, target.Ways.Count);
@@ -152,7 +152,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		public void Load_DoesNotThrowExceptionIfIgnoreMissingIsTrueAndRelationMemberIsMissing() {
 			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_relation_invalid_ref), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = null;
-			Assert.DoesNotThrow(() => target = OsmGeometryDatabase.Load(reader, true));
+			target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(1, target.Relations.Count);
 		}
