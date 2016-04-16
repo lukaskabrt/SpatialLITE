@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using SpatialLite.Core.API;
+using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core.API {
     /// <summary>
@@ -157,6 +158,9 @@ namespace SpatialLite.Core.API {
             }
         }
 
+        /// <summary>
+        /// Checks if this Envelope equals the empty Envelope.
+        /// </summary>
         public bool IsEmpty {
             get {
                 return this.Equals(Envelope.Empty);

@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Geometries\GpsPoint.cs" />
     <Compile Include="Geometries\GpsTrackBase.cs" />
-    <Compile Include="Geometries\GpxFix.cs" />
+    <Compile Include="Geometries\GpsFix.cs" />
     <Compile Include="Geometries\GpxFixHelper.cs" />
     <Compile Include="Geometries\GpxLink.cs" />
     <Compile Include="Geometries\GpxMetadata.cs" />

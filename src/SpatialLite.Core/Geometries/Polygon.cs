@@ -129,10 +129,18 @@ namespace SpatialLite.Core.Geometries {
 			return boundary;
 		}
 
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.ExteriorRing.Concat(this.InteriorRings.SelectMany(o => o));
         }
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         public override void Apply(ICoordinateFilter filter) {
             this.ExteriorRing.Apply(filter);
 

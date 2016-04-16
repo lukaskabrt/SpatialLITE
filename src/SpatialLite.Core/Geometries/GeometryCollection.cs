@@ -61,7 +61,7 @@ namespace SpatialLite.Core.Geometries {
 		#region Public Properties
 
 		/// <summary>
-		/// Gets a value indicating whether the this <see cref="GeometryCollectionBase"/> has Z ordinates set.
+		/// Gets a value indicating whether the this <see cref="GeometryCollection{T}"/>"/> has Z ordinates set.
 		/// </summary>
 		/// <remarks>
 		/// Is3D returns <c>true</c> if any of the geometries contained in this <c>GeometryCollection</c> has Z ordinate set.
@@ -130,10 +130,18 @@ namespace SpatialLite.Core.Geometries {
 			return boundary;
 		}
 
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Geometries.SelectMany(o => o.GetCoordinates());
         }
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         public override void Apply(ICoordinateFilter filter) {
             foreach (var geometry in this.Geometries) {
                 geometry.Apply(filter);

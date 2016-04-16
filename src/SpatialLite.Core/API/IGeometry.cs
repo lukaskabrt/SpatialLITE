@@ -38,10 +38,16 @@ namespace SpatialLite.Core.API {
 		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  geometric  object</returns>
 		IGeometry GetBoundary();
 
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         IEnumerable<Coordinate> GetCoordinates();
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         void Apply(ICoordinateFilter filter);
-
-
 	}
 }

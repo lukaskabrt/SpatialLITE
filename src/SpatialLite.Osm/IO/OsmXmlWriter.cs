@@ -111,7 +111,7 @@ namespace SpatialLite.Osm.IO {
 		/// <summary>
 		/// Writes specified entity data-transfer object in XML format to the underlaying stream.
 		/// </summary>
-		/// <param name="entity">Entity data-transfer object to write.</param>
+		/// <param name="info">Entity data-transfer object to write.</param>
 		public void Write(IEntityInfo info) {
 			if (this.Settings.WriteMetadata) {
 				if (info.Metadata == null) {

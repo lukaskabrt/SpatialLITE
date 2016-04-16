@@ -129,10 +129,18 @@ namespace SpatialLite.Core.Geometries {
 			return new GeometryCollection<Geometry>(this.Srid);
 		}
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         public override void Apply(ICoordinateFilter filter) {
             filter.Filter(ref _position);
         }
 
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             yield return this.Position;
         }

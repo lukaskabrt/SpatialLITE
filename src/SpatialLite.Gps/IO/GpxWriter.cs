@@ -71,6 +71,9 @@ namespace SpatialLite.Gps.IO {
 
         #region Public properties
 
+        /// <summary>
+        /// Gets settings of the writer
+        /// </summary>
         public GpxWriterSettings Settings { get; private set; }
 
         #endregion
@@ -245,7 +248,7 @@ namespace SpatialLite.Gps.IO {
         /// <summary>
         /// Writes the given link to the output stream
         /// </summary>
-        /// <param name="waypoint">The link to be written</param>
+        /// <param name="link">The link to be written</param>
         private void WriteLink(GpxLink link) {
             _xmlWriter.WriteStartElement("link");
             _xmlWriter.WriteAttributeString("href", link.Url.OriginalString);

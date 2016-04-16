@@ -118,13 +118,13 @@ namespace SpatialLite.Core.Geometries {
 			}
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether this <c>LineString</c> is closed.
-		/// </summary>
-		/// <remarks>
-		/// The LineStringBase is closed if <see cref="StartPoint"/> and <see cref="EndPoint"/> are identical.
-		/// </remarks>
-		public virtual bool IsClosed {
+        /// <summary>
+        /// Gets a value indicating whether this <c>LineString</c> is closed.
+        /// </summary>
+        /// <remarks>
+        /// The LineStringBase is closed if <see cref="Start"/> and <see cref="End"/> are identical.
+        /// </remarks>
+        public virtual bool IsClosed {
 			get {
 				if (_coordinates.Count == 0) {
 					return false;
@@ -162,10 +162,18 @@ namespace SpatialLite.Core.Geometries {
 			}
 		}
 
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Coordinates;
         }
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         public override void  Apply(ICoordinateFilter filter) {
             this.Coordinates.Apply(filter);
         }

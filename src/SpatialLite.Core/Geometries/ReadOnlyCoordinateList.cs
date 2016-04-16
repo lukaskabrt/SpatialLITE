@@ -115,6 +115,10 @@ namespace SpatialLite.Core.Geometries {
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
         public void Apply(ICoordinateFilter filter) {
             for (int i = 0; i < this.Source.Count; i++) {
                 this.Source[i].Apply(filter);

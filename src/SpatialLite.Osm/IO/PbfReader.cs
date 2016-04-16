@@ -206,7 +206,7 @@ namespace SpatialLite.Osm.IO {
                 try {
                     return Serializer.Deserialize<OsmHeader>(blobContentStream);
                 } catch (ProtoException ex) {
-                    throw new InvalidDataException("Invalid OSMData block");
+                    throw new InvalidDataException("Invalid OSMData block", ex);
                 }
             } else {
                 return null;

@@ -9,7 +9,7 @@ namespace SpatialLite.Gps.Geometries {
     /// Contains additional information about Gpx point
     /// </summary>
     public class GpxPointMetadata : GpxMetadata {
-        // <summary>
+        /// <summary>
         /// Gets or sets magnetic variation (in degrees) at the point
         /// </summary>
         public double? MagVar { get; set; }
