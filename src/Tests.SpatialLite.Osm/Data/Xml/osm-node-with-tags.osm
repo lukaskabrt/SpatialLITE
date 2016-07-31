@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<osm>
-	<node id="2" lat="50.4" lon="16.2">
-		<tag k="name" v="test" />
-		<tag k="name-2" v="test-2" />
-	</node>
-</osm>

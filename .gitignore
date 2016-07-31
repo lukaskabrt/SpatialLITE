@@ -17,3 +17,6 @@
 /src/TestsAI.SpatialLite.Osm/obj/Release/TempPE
 /src/TestsAI.SpatialLite.Osm/obj/Release
 /nuget
+/src/SpatialLite.Core/bin/Debug
+/src/SpatialLite.Core/project.lock.json
+/.vs

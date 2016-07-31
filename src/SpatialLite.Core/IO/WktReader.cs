@@ -665,7 +665,7 @@ namespace SpatialLite.Core.IO {
 		private static WktToken Expect(string value, WktTokensBuffer tokens) {
 			WktToken t = tokens.GetToken(true);
 
-			if (t.Type != TokenType.STRING || string.Equals(value, t.Value, StringComparison.InvariantCultureIgnoreCase) == false) {
+			if (t.Type != TokenType.STRING || string.Equals(value, t.Value, StringComparison.OrdinalIgnoreCase) == false) {
 				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}", value, t.Value));
 			}
 
@@ -713,7 +713,7 @@ namespace SpatialLite.Core.IO {
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
 				if (disposing) {
-					_inputReader.Close();
+					_inputReader.Dispose();
 
 					if (_inputFileStream != null) {
 						_inputFileStream.Dispose();

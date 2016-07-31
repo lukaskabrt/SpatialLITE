@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SpatialLite</id>
-    <version>1.2.4</version>
+    <version>2.0.0-beta</version>
     <title>SpatialLite library</title>
     <authors>Lukas Kabrt</authors>
     <owners>Lukas Kabrt</owners>

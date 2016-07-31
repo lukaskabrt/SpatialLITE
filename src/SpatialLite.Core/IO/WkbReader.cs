@@ -367,7 +367,7 @@ namespace SpatialLite.Core.IO {
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
 				if (disposing) {
-					_inputReader.Close();
+					_inputReader.Dispose();
 
 					if (_inputFileStream != null) {
 						_inputFileStream.Dispose();

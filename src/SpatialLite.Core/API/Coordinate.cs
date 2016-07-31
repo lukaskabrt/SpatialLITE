@@ -10,7 +10,6 @@ namespace SpatialLite.Core.API {
 	/// <remarks>
 	/// A Coordinate may include a M value. The M value allows an application to associate some measure with the <c>Coordinate</c>. 
 	/// </remarks>
-    [Serializable]
 	public struct Coordinate : IEquatable<Coordinate> {
 		#region Public Static Fields
 
