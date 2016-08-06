@@ -80,7 +80,7 @@ namespace SpatialLite.Osm {
 		/// <param name="id">The ID of the entity to get.</param>
         /// <param name="type">The type of the entity to get.</param>
 		/// <returns>entity with the specific ID or null if such entity is not present in the collection.</returns>
-		public T this[int id, EntityType type] {
+		public T this[long id, EntityType type] {
 			get {
                 if (type == EntityType.Node && this.Nodes.Contains(id)) {
 					return (T)this.Nodes[id];
@@ -103,7 +103,7 @@ namespace SpatialLite.Osm {
 		#region Public Methods
 
 		/// <summary>
-		/// When overriden in derived class, saves entities from the database to specific writer.
+		/// When overridden in derived class, saves entities from the database to specific writer.
 		/// </summary>
 		/// <param name="writer">IOsmWriter to save entities to.</param>
 		public virtual void Save(IOsmWriter writer) {
@@ -115,7 +115,7 @@ namespace SpatialLite.Osm {
 		/// <param name="id">The ID of the entity to remove from the collection.</param>
         /// <param name="type">The type of the entity to remove from the collection.</param>
 		/// <returns>true if entity was successfully removed from the ICollection; otherwise, false. This method also returns false if entity is not found in the original collection.</returns>
-		public bool Remove(int id, EntityType type) {
+		public bool Remove(long id, EntityType type) {
 			if (this.Nodes.Contains(id)) {
 				return this.Nodes.Remove(id);
 			}
@@ -137,7 +137,7 @@ namespace SpatialLite.Osm {
 		/// <param name="id">The ID of the entity to locate in the EntityCollection.</param>
         /// <param name="type">The type of the entity to locate in the EntityCollection</param>
 		/// <returns>true if entity is found in the collection, otherwise false.</returns>
-		public bool Contains(int id, EntityType type) {
+		public bool Contains(long id, EntityType type) {
             switch (type) {
                 case EntityType.Node: return this.Nodes.Contains(id);
                 case EntityType.Way: return this.Ways.Contains(id);

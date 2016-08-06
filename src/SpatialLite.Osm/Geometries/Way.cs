@@ -23,7 +23,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// Initializes a new instance of the Way class with specified ID.
 		/// </summary>
 		/// <param name="id">The ID of the Way.</param>
-		public Way(int id)
+		public Way(long id)
 			: this(id, new Node[] { }, new TagsCollection()) {
 		}
 
@@ -32,7 +32,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// </summary>
 		/// <param name="id">The ID of the Way.</param>
 		/// <param name="nodes">The colection of Nodes to add to this Way.</param>
-		public Way(int id, IEnumerable<Node> nodes)
+		public Way(long id, IEnumerable<Node> nodes)
 			: this(id, nodes, new TagsCollection()) {
 		}
 
@@ -42,7 +42,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="id">The ID of the Way.</param>
 		/// <param name="nodes">The colection of Nodes to add to this Way.</param> 
 		/// <param name="tags">The collection of tags associated with the way.</param>
-		public Way(int id, IEnumerable<Node> nodes, TagsCollection tags)
+		public Way(long id, IEnumerable<Node> nodes, TagsCollection tags)
 			: base() {
 			this.ID = id;
 			this.Tags = tags;
@@ -58,7 +58,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <summary>
 		/// Gets or sets ID of the Node.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the collection of tags associated with the Node.

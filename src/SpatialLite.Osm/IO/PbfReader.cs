@@ -346,7 +346,7 @@ namespace SpatialLite.Osm.IO {
 
             foreach (var way in group.Ways) {
                 int refStore = 0;
-                List<int> refs = new List<int>(way.Refs.Count);
+                List<long> refs = new List<long>(way.Refs.Count);
 
                 for (int i = 0; i < way.Refs.Count; i++) {
                     refStore += (int)way.Refs[i];
