@@ -122,7 +122,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			int nodeId = int.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			long nodeId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			// latitude
 			string attLat = _xmlReader.GetAttribute("lat");
@@ -181,7 +181,7 @@ namespace SpatialLite.Osm.IO {
 				additionalInfo = this.ReadMetadata();
 			}
 
-			WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<int>(), additionalInfo);
+			WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<long>(), additionalInfo);
 
 			if (_xmlReader.IsEmptyElement == false) {
 				_xmlReader.Read();

@@ -25,7 +25,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// The ID of the member entity
 		/// </summary>
-		public int Reference;
+		public long Reference;
 
 		#endregion
 
