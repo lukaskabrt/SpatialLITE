@@ -21,3 +21,4 @@
 /src/SpatialLite.Core/project.lock.json
 /.vs
 /src/SpatialLite.Osm/bin/Debug
+/src/Tests.SpatialLite.Core/bin/Debug/netcoreapp1.0
