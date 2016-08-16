@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Core.API {
-	/// <summary>
-	/// Represents a location in the coordinate space.
-	/// </summary>
-	/// <remarks>
-	/// A Coordinate may include a M value. The M value allows an application to associate some measure with the <c>Coordinate</c>. 
-	/// </remarks>
-	public struct Coordinate : IEquatable<Coordinate> {
+    /// <summary>
+    /// Represents a location in the coordinate space.
+    /// </summary>
+    /// <remarks>
+    /// A Coordinate may include a M value. The M value allows an application to associate some measure with the <c>Coordinate</c>. 
+    /// </remarks>
+    public struct Coordinate : IEquatable<Coordinate> {
 		#region Public Static Fields
 
 		/// <summary>

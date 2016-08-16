@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Algorithms {
-	/// <summary>
-	/// Defines methods that a class providing distance and area calculations capabilities must implement
-	/// </summary>
-	public interface IDimensionsCalculator {
+    /// <summary>
+    /// Defines methods that a class providing distance and area calculations capabilities must implement
+    /// </summary>
+    public interface IDimensionsCalculator {
 		/// <summary>
 		/// Calculates distance between two points
 		/// </summary>

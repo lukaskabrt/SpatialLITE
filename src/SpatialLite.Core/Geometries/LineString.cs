@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a curve with linear interpolation between consecutive vertices.  
-	/// </summary>
-	public class LineString : Geometry, ILineString {
+    /// <summary>
+    /// Represents a curve with linear interpolation between consecutive vertices.  
+    /// </summary>
+    public class LineString : Geometry, ILineString {
 		#region Private Fields
 
 		private CoordinateList _coordinates;

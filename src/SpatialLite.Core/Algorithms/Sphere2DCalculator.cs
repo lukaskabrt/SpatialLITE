@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Algorithms {
-	/// <summary>
-	/// Provides methods for calculating distance and area on the surface of a sphere.
-	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// All calulations ignore <see cref="Coordinate.Z"/> coordinate.
-	/// </para>
-	/// All coordinate are expected to be a long/lat pairs in degrees.
-	/// </remarks>
-	public class Sphere2DCalculator : IDimensionsCalculator {
+    /// <summary>
+    /// Provides methods for calculating distance and area on the surface of a sphere.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// All calulations ignore <see cref="Coordinate.Z"/> coordinate.
+    /// </para>
+    /// All coordinate are expected to be a long/lat pairs in degrees.
+    /// </remarks>
+    public class Sphere2DCalculator : IDimensionsCalculator {
 		#region Public Constants
 
 		/// <summary>

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
+using System.Linq;
 using System.IO;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Provides functions for reading and parsing geometries from WKT format.
-	/// </summary>
-	public class WktReader : IDisposable {
+    /// <summary>
+    /// Provides functions for reading and parsing geometries from WKT format.
+    /// </summary>
+    public class WktReader : IDisposable {
 		#region Private Fields
 
 		private static CultureInfo _invarianCulture = CultureInfo.InvariantCulture;

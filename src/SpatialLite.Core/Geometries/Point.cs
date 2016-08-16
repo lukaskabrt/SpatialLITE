@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a location in the coordinate space.
-	/// </summary>
-	public class Point : Geometry, IPoint {
+    /// <summary>
+    /// Represents a location in the coordinate space.
+    /// </summary>
+    public class Point : Geometry, IPoint {
 		#region Private Fields
 
 		private Coordinate _position = Coordinate.Empty;

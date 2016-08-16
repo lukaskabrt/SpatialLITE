@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents read-write list of Coordinates.
-	/// </summary>
-	public class CoordinateList : ICoordinateList {
+    /// <summary>
+    /// Represents read-write list of Coordinates.
+    /// </summary>
+    public class CoordinateList : ICoordinateList {
 		#region Private Fields
 
 		private List<Coordinate> _storage;

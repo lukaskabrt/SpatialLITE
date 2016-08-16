@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represetns the base class for all geometry object.
-	/// </summary>
-	public abstract class Geometry : IGeometry {
+    /// <summary>
+    /// Represetns the base class for all geometry object.
+    /// </summary>
+    public abstract class Geometry : IGeometry {
 		#region Constructors
 
 		/// <summary>

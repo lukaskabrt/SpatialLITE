@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Represents collection of WktToken obejcts with specialized methods to access it's items.
-	/// </summary>
-	internal class WktTokensBuffer : IEnumerable<WktToken> {
+    /// <summary>
+    /// Represents collection of WktToken obejcts with specialized methods to access it's items.
+    /// </summary>
+    internal class WktTokensBuffer : IEnumerable<WktToken> {
 		#region Private Fields
 
 		private List<WktToken> _buffer;

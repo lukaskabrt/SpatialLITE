@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Defines WkbGeometryType.
-	/// </summary>
-	internal enum WkbGeometryType : uint {
+﻿namespace SpatialLite.Core.IO {
+    /// <summary>
+    /// Defines WkbGeometryType.
+    /// </summary>
+    internal enum WkbGeometryType : uint {
 		Point = 1,
 		LineString = 2,
 		Polygon = 3,

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.API {
     /// <summary>

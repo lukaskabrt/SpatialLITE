@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Implemets tokenizer that splits wkt string to list of tokens.
-	/// </summary>
-	internal static class WktTokenizer {
+    /// <summary>
+    /// Implemets tokenizer that splits wkt string to list of tokens.
+    /// </summary>
+    internal static class WktTokenizer {
 		#region Public Static Methods
 
 		/// <summary>

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Algorithms {
-	/// <summary>
-	/// Defines methods that a class providing relative geometry position computation capabilities must implement.
-	/// </summary>
-	public interface  IGeometryLocator {
+    /// <summary>
+    /// Defines methods that a class providing relative geometry position computation capabilities must implement.
+    /// </summary>
+    public interface  IGeometryLocator {
 		/// <summary>
 		/// Determines whether specific coordinate is on line defined by two points.
 		/// </summary>

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Represents type of the WKT token.
-	/// </summary>
-	internal enum TokenType {
+﻿namespace SpatialLite.Core.IO {
+    /// <summary>
+    /// Represents type of the WKT token.
+    /// </summary>
+    internal enum TokenType {
 		/// <summary>
 		/// String token - it consists of a-zA-Z characters
 		/// </summary>
