@@ -13,7 +13,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets or sets ID of the object.
 		/// </summary>
-		int ID { get; set; }
+		long ID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the collection of tags associated with the IOsmGeometry.
