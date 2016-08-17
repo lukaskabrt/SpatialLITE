@@ -1,0 +1,21 @@
+﻿{
+  "version": "2.0.0-*",
+
+  "dependencies": {
+    "SpatialLite.Core": "2.0.0-*",
+    "System.Globalization": "4.0.11",
+    "System.IO": "4.1.0",
+    "System.IO.FileSystem": "4.0.1",
+    "System.Linq": "4.1.0",
+    "System.Runtime": "4.1.0",
+    "System.Runtime.Extensions": "4.1.0",
+    "System.Text.Encoding.Extensions": "4.0.11",
+    "System.Xml.ReaderWriter": "4.0.11"
+  },
+
+  "frameworks": {
+    "netstandard1.2": {
+      "imports": "dnxcore50"
+    }
+  }
+}
