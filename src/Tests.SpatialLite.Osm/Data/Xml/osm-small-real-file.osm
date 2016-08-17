@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<osm>
+	<node id="1" lat="12.4" lon="14.6" />
+	<node id="2" lat="11.4" lon="13.6" />
+
+	<way id="10">
+		<nd ref="1" />
+		<nd ref="2" />
+	</way>
+	
+	<relation id="125">
+		<member ref="2" type="node" role="center" />
+		<member ref="10" type="way" role="test" />
+	</relation>
+</osm>

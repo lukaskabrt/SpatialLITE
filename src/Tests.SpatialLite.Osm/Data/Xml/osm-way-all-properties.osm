@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<osm>
+	<way id="1" timestamp="2010-11-19T22:05:56Z" uid="127998" user="Luk@s" visible="true" version="2" changeset="6410629">
+		<nd ref="10" />
+		<nd ref="11" />
+		<nd ref="12" />
+	</way>
+</osm>

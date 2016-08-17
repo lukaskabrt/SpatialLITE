@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SpatialLite.Osm")]
+[assembly: AssemblyProduct("Tests.SpatialLite.Osm")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,6 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("81094df5-f2b1-49e1-b545-e6f0528de92b")]
-
-[assembly: InternalsVisibleTo("Tests.SpatialLite.Osm")]
+[assembly: Guid("31b15109-c9ad-428b-bd1a-6f13ea2cd852")]

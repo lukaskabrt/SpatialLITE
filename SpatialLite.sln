@@ -16,6 +16,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpatialLite.Osm", "src\Spat
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests.SpatialLite.Core", "src\Tests.SpatialLite.Core\Tests.SpatialLite.Core.xproj", "{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests.SpatialLite.Osm", "src\Tests.SpatialLite.Osm\Tests.SpatialLite.Osm.xproj", "{31B15109-C9AD-428B-BD1A-6F13EA2CD852}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B15109-C9AD-428B-BD1A-6F13EA2CD852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31B15109-C9AD-428B-BD1A-6F13EA2CD852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31B15109-C9AD-428B-BD1A-6F13EA2CD852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B15109-C9AD-428B-BD1A-6F13EA2CD852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 		{C6282A5F-E9A7-4B78-913E-D80A0B60A514} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{81094DF5-F2B1-49E1-B545-E6F0528DE92B} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6} = {440BE549-AD57-4965-AD01-A81E358E228D}
+		{31B15109-C9AD-428B-BD1A-6F13EA2CD852} = {440BE549-AD57-4965-AD01-A81E358E228D}
 	EndGlobalSection
 EndGlobal

@@ -263,6 +263,10 @@ namespace SpatialLite.Osm.IO {
 		/// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
+                if (_writer != null) {
+                    _writer.Dispose();
+                }
+
 				if (disposing) {
 					if (_streamWriter != null) {
 						_streamWriter.Dispose();

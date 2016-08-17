@@ -22,3 +22,4 @@
 /.vs
 /src/SpatialLite.Osm/bin/Debug
 /src/Tests.SpatialLite.Core/bin/Debug/netcoreapp1.0
+/src/Tests.SpatialLite.Osm/bin/Debug/netcoreapp1.0

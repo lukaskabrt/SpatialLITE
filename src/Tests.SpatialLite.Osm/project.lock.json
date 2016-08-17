@@ -689,6 +689,25 @@
           "lib/netstandard1.0/NuGet.Versioning.dll": {}
         }
       },
+      "protobuf-net/2.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1",
+          "NETStandard.Library": "1.6.0",
+          "System.Reflection.Emit": "4.0.1",
+          "System.Reflection.Emit.ILGeneration": "4.0.1",
+          "System.Reflection.Emit.Lightweight": "4.0.1",
+          "System.Reflection.TypeExtensions": "4.1.0",
+          "System.Runtime.Serialization.Primitives": "4.1.1",
+          "System.Xml.XmlSerializer": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.5/protobuf-net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.5/protobuf-net.dll": {}
+        }
+      },
       "runtime.native.System/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -2686,6 +2705,22 @@
         "runtime": {
           "netstandard1.2/SpatialLite.Core.dll": {}
         }
+      },
+      "SpatialLite.Osm/2.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.2",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "SpatialLite.Core": "2.0.0",
+          "System.Xml.ReaderWriter": "4.0.11",
+          "protobuf-net": "2.1.0"
+        },
+        "compile": {
+          "netstandard1.2/SpatialLite.Osm.dll": {}
+        },
+        "runtime": {
+          "netstandard1.2/SpatialLite.Osm.dll": {}
+        }
       }
     }
   },
@@ -3297,6 +3332,20 @@
         "lib/net45/NuGet.Versioning.xml",
         "lib/netstandard1.0/NuGet.Versioning.dll",
         "lib/netstandard1.0/NuGet.Versioning.xml"
+      ]
+    },
+    "protobuf-net/2.1.0": {
+      "sha512": "8ijiRUzGcB9SYo2ohIujk5s93MeaXF+/xd9WBGCgS1SqQyOC5gUTnCKIXZPlf8a6UROkK70McJloL4P19IvghQ==",
+      "type": "package",
+      "path": "protobuf-net/2.1.0",
+      "files": [
+        "lib/net40/protobuf-net.dll",
+        "lib/net45/protobuf-net.dll",
+        "lib/net451/protobuf-net.dll",
+        "lib/netstandard1.3/protobuf-net.dll",
+        "lib/netstandard1.5/protobuf-net.dll",
+        "protobuf-net.2.1.0.nupkg.sha512",
+        "protobuf-net.nuspec"
       ]
     },
     "runtime.native.System/4.0.0": {
@@ -7969,12 +8018,18 @@
       "type": "project",
       "path": "../SpatialLite.Core/project.json",
       "msbuildProject": "../SpatialLite.Core/SpatialLite.Core.xproj"
+    },
+    "SpatialLite.Osm/2.0.0": {
+      "type": "project",
+      "path": "../SpatialLite.Osm/project.json",
+      "msbuildProject": "../SpatialLite.Osm/SpatialLite.Osm.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Moq >= 4.6.36-alpha",
       "SpatialLite.Core >= 2.0.0-*",
+      "SpatialLite.Osm >= 2.0.0-*",
       "System.Resources.Reader >= 4.0.0",
       "dotnet-test-xunit >= 2.2.0-preview2-build1029",
       "xunit.assert >= 2.2.0-beta2-build3300",
