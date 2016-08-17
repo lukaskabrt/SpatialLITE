@@ -16,8 +16,8 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			new Node(2, 10.1, -20.2),
 			new Node(3, -30.1, 40.2) });
 
-        WayInfo _wayEmptyInfo = new WayInfo(10, new TagsCollection(), new List<int>(), new EntityMetadata());
-        WayInfo _wayInfo = new WayInfo(10, new TagsCollection(), new int[] { 1, 2, 3 }, new EntityMetadata());
+        WayInfo _wayEmptyInfo = new WayInfo(10, new TagsCollection(), new List<long>(), new EntityMetadata());
+        WayInfo _wayInfo = new WayInfo(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
 
         IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 

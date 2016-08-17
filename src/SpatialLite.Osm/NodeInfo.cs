@@ -10,14 +10,14 @@ namespace SpatialLite.Osm {
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the NodeInfo class with specified ID, latitude, longitude, collection of tags and optionaly EntityMetadata.
+		/// Initializes a new instance of the NodeInfo class with specified ID, latitude, longitude, collection of tags and optionally EntityMetadata.
 		/// </summary>
 		/// <param name="id">The id of the node.</param>
 		/// <param name="latitude">The latitude of the node.</param>
 		/// <param name="longitude">The longitude of the node.</param>
 		/// <param name="tags">The collection of thag associated with the node.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
-		public NodeInfo(int id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
+		public NodeInfo(long id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Latitude = latitude;
 			this.Longitude = longitude;
@@ -57,7 +57,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets ID of the object.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets the collection of tags associated with this node.

@@ -14,7 +14,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_PropertiesWithoutEntityDetails_SetsProperties() {
 			int id = 45;
 			TagsCollection tags = new TagsCollection();
-			List<int> nodes = new List<int>();
+			List<long> nodes = new List<long>();
 
 			WayInfo target = new WayInfo(id, tags, nodes);
 
@@ -29,7 +29,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_Properties_SetsProperties() {
 			int id = 45;
 			TagsCollection tags = new TagsCollection();
-			List<int> nodes = new List<int>();
+			List<long> nodes = new List<long>();
 			EntityMetadata details = new EntityMetadata();
 
 			WayInfo target = new WayInfo(id, tags, nodes, details);

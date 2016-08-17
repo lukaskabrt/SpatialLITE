@@ -33,10 +33,10 @@ namespace Tests.SpatialLite.Osm.IO {
             _nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
             _nodeProperties = new NodeInfo(1, 50.4, 16.2, new TagsCollection(), _details);
 
-            _way = new WayInfo(1, new TagsCollection(), new int[] { 10, 11, 12 });
-            _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new int[] { 10, 11, 12 });
-            _wayProperties = new WayInfo(1, new TagsCollection(), new int[] { 10, 11, 12 }, _details);
-            _wayWithoutNodes = new WayInfo(1, new TagsCollection(), new int[] { });
+            _way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
+            _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });
+            _wayProperties = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 }, _details);
+            _wayWithoutNodes = new WayInfo(1, new TagsCollection(), new long[] { });
 
             _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
             _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });

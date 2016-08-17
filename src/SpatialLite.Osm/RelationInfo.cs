@@ -10,13 +10,13 @@ namespace SpatialLite.Osm {
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the RelationInfo class with specified ID, Tags, Member and optionaly EntityMetadata.
+		/// Initializes a new instance of the RelationInfo class with specified ID, Tags, Member and optionally EntityMetadata.
 		/// </summary>
 		/// <param name="id">The id of the relation.</param>
 		/// <param name="tags">The collection of tags associated with the relation.</param>
 		/// <param name="members">The members of the relation.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param> 
-		public RelationInfo(int id, TagsCollection tags, IList<RelationMemberInfo> members, EntityMetadata additionalInfo = null) {
+		public RelationInfo(long id, TagsCollection tags, IList<RelationMemberInfo> members, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Tags = tags;
 			this.Members = members;
@@ -58,7 +58,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets ID of the relation.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets the collection of tags associated with the relation.

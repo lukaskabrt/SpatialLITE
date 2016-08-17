@@ -13,7 +13,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// Initializes a new instance of the Relation class with the specified ID.
 		/// </summary>
 		/// <param name="id">The ID of the Relation.</param>
-		public Relation(int id)
+		public Relation(long id)
 			: this(id, new RelationMember[] { }, new TagsCollection()) {
 		}
 
@@ -22,7 +22,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// </summary>
 		/// <param name="id">The ID of the Relation.</param>
 		/// <param name="members">The memberes of the relation.</param>
-		public Relation(int id, IEnumerable<RelationMember> members)
+		public Relation(long id, IEnumerable<RelationMember> members)
 			: this(id, members, new TagsCollection()) {
 		}
 
@@ -32,7 +32,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="id">The ID of the Relation.</param>
 		/// <param name="members">The memberes of the relation.</param>
 		/// <param name="tags">The collectoin of tags associated with the relation.</param>
-		public Relation(int id, IEnumerable<RelationMember> members, TagsCollection tags)
+		public Relation(long id, IEnumerable<RelationMember> members, TagsCollection tags)
 			: base(members) {
 			this.ID = id;
 			this.Tags = tags;
@@ -45,7 +45,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <summary>
 		/// Gets or sets ID of the Relation.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the collection of tags associated with the Relation.
