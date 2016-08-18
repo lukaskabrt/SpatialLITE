@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "dependencies": {
+    "Moq": "4.6.36-alpha",
+    "SpatialLite.Core": "2.0.0-*",
+    "SpatialLite.Gps": "2.0.0-*",
+    "xunit.core": "2.2.0-beta2-build3300",
+    "xunit.assert": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "System.Resources.Reader": "4.0.0"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "buildOptions": {
+    "embed": [
+      "Data/Gpx/*"
+    ]
+  }
+}

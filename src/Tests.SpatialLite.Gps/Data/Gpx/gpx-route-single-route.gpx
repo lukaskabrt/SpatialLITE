@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="SpatialLite"  xmlns="http://www.topografix.com/GPX/1/1">
+	<rte>
+		<rtept lat="39.449270368" lon="-76.638178825">
+			<time>1970-01-01T07:10:23Z</time>
+		</rtept>
+		<rtept lat="39.449130893" lon="-76.638012528">
+			<time>1970-01-01T07:10:28Z</time>
+		</rtept>
+		<rtept lat="39.449098706" lon="-76.637980342">
+			<time>1970-01-01T07:10:33Z</time>
+		</rtept>
+	</rte>
+</gpx>
