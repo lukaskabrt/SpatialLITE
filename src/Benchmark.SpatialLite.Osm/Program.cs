@@ -14,21 +14,21 @@ namespace Benchmark.SpatialLite.Osm {
             List<Tuple<string, Action>> benchmarks = new List<Tuple<string, Action>>();
             benchmarks.Add(new Tuple<string, Action>("XmlReader with metadata", TestXmlReaderSpeed));
             benchmarks.Add(new Tuple<string, Action>("XmlReader without metadata", TestXmlReaderSpeedWithoutMetadata));
-            benchmarks.Add(new Tuple<string, Action>("PbfReader (no compression) with metadata", TestPbfReaderSpeedNoDenseNoCompression));
-            benchmarks.Add(new Tuple<string, Action>("PbfReader (no compression) without metadata", TestPbfReaderSpeedNoDenseNoCompressionWithoutMetadata));
-            benchmarks.Add(new Tuple<string, Action>("PbfReader (dense, deflate) with metadata", TestPbfReaderSpeedDenseDeflate));
-            benchmarks.Add(new Tuple<string, Action>("PbfReader (dense, deflate) without metadata", TestPbfReaderSpeedDenseDeflateWithoutMetadata));
+            //benchmarks.Add(new Tuple<string, Action>("PbfReader (no compression) with metadata", TestPbfReaderSpeedNoDenseNoCompression));
+            //benchmarks.Add(new Tuple<string, Action>("PbfReader (no compression) without metadata", TestPbfReaderSpeedNoDenseNoCompressionWithoutMetadata));
+            //benchmarks.Add(new Tuple<string, Action>("PbfReader (dense, deflate) with metadata", TestPbfReaderSpeedDenseDeflate));
+            //benchmarks.Add(new Tuple<string, Action>("PbfReader (dense, deflate) without metadata", TestPbfReaderSpeedDenseDeflateWithoutMetadata));
 
-            LoadSourceData();
-            benchmarks.Add(new Tuple<string, Action>("XmlWriter with metadata", TestXmlWriterSpeed));
-            benchmarks.Add(new Tuple<string, Action>("XmlWriter without metadata", TestXmlWriterSpeedWithoutMetadata));
-            benchmarks.Add(new Tuple<string, Action>("PbfWriter (no compression) with metadata", TestPbfWriterSpeed));
-            benchmarks.Add(new Tuple<string, Action>("PbfWriter (no compression) without metadata", TestPbfWriterSpeedWithoutMetadata));
-            benchmarks.Add(new Tuple<string, Action>("PbfWritre (dense, deflate) with metadata", TestPbfWriterSpeedDenseDeflate));
-            benchmarks.Add(new Tuple<string, Action>("PbfWriter (dense, deflate) without metadata", TestPbfWriterSpeedDenseDeflateWithoutMetadata));
+            //LoadSourceData();
+            //benchmarks.Add(new Tuple<string, Action>("XmlWriter with metadata", TestXmlWriterSpeed));
+            //benchmarks.Add(new Tuple<string, Action>("XmlWriter without metadata", TestXmlWriterSpeedWithoutMetadata));
+            //benchmarks.Add(new Tuple<string, Action>("PbfWriter (no compression) with metadata", TestPbfWriterSpeed));
+            //benchmarks.Add(new Tuple<string, Action>("PbfWriter (no compression) without metadata", TestPbfWriterSpeedWithoutMetadata));
+            //benchmarks.Add(new Tuple<string, Action>("PbfWritre (dense, deflate) with metadata", TestPbfWriterSpeedDenseDeflate));
+            //benchmarks.Add(new Tuple<string, Action>("PbfWriter (dense, deflate) without metadata", TestPbfWriterSpeedDenseDeflateWithoutMetadata));
 
-            benchmarks.Add(new Tuple<string, Action>("OsmGeometryDatabase.Load(PbfReader)", TestOsmGeometryDatabaseLoadFromPbfReader));
-            benchmarks.Add(new Tuple<string, Action>("OsmEntityInfoDatabase.Load(PbfReader)", TestOsmEntityInfoDatabaseLoadFromPbfReader));
+            //benchmarks.Add(new Tuple<string, Action>("OsmGeometryDatabase.Load(PbfReader)", TestOsmGeometryDatabaseLoadFromPbfReader));
+            //benchmarks.Add(new Tuple<string, Action>("OsmEntityInfoDatabase.Load(PbfReader)", TestOsmEntityInfoDatabaseLoadFromPbfReader));
 
             Console.WriteLine("Benchmark.SpatialLite.Osm.IO requires 'test-file.osm', 'test-file.pbf' and 'test-file-dc.pbf' in 'TestFiles'folder");
 

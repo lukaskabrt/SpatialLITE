@@ -14,5 +14,13 @@
     "netstandard1.2": {
       "imports": "dnxcore50"
     }
+  },
+  "packOptions": {
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/lukaskabrt/spatiallite-net.git"
+    },
+    "summary": "SpatialLITE is a modern, lightweight .NET library for spatial data processing. It supports many data formats and basic topology analysis of geometry objects.",
+    "requireLicenseAcceptance": false
   }
 }

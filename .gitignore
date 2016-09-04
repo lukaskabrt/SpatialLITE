@@ -30,3 +30,6 @@
 /src/Benchmark.SpatialLite.Osm/obj/Debug/netcoreapp1.0
 /src/Benchmark.SpatialLite.Osm/TestFiles
 /src/Benchmark.SpatialLite.Osm/Benchmark.SpatialLite.Osm.IO.log
+/src/SpatialLite.Core/bin/Release/netstandard1.2
+/src/SpatialLite.Gps/bin/Release/netstandard1.2
+/src/SpatialLite.Osm/bin/Release/netstandard1.2

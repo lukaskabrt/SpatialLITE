@@ -12,5 +12,13 @@
     "netstandard1.2": {
       "imports": "dnxcore50"
     }
+  },
+  "packOptions": {
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/lukaskabrt/spatiallite-net.git"
+    },
+    "summary": "Add-on for the SpatialLite library that adds support for OpenStreetMap data formats.",
+    "requireLicenseAcceptance": false
   }
 }
