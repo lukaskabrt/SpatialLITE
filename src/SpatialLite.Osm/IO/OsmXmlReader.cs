@@ -181,7 +181,7 @@ namespace SpatialLite.Osm.IO {
 				additionalInfo = this.ReadMetadata();
 			}
 
-			WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<int>(), additionalInfo);
+			WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<long>(), additionalInfo);
 
 			if (_xmlReader.IsEmptyElement == false) {
 				_xmlReader.Read();

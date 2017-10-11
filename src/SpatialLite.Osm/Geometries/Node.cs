@@ -17,7 +17,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// Initializes a new instance of the Node class with specified ID.
 		/// </summary>
 		/// <param name="id">The  ID of the node.</param>
-		public Node(int id)
+		public Node(long id)
 			: this(id, Coordinate.Empty, new TagsCollection()) {
 		}
 
@@ -27,7 +27,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="id">The ID of the node.</param>
 		/// <param name="longitude">The longitude of the Node.</param>
 		/// <param name="latitude">The latitude of the Node.</param>
-		public Node(int id, double longitude, double latitude)
+		public Node(long id, double longitude, double latitude)
 			: this(id, new Coordinate(longitude, latitude), new TagsCollection()) {
 		}
 
@@ -38,7 +38,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="longitude">The longitude of the Node.</param>
 		/// <param name="latitude">The latitude of the Node.</param>
 		/// <param name="tags">The collection of tags associated with the Node.</param>
-		public Node(int id, double longitude, double latitude, TagsCollection tags)
+		public Node(long id, double longitude, double latitude, TagsCollection tags)
 			: this(id, new Coordinate(longitude, latitude), tags) {
 		}
 
@@ -47,7 +47,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// </summary>
 		/// <param name="id">The ID of the node.</param>
 		/// <param name="position">The position of the Node.</param>
-		public Node(int id, Coordinate position)
+		public Node(long id, Coordinate position)
 			: this(id, position, new TagsCollection()) {
 		}
 
@@ -57,7 +57,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="id">The ID of the node.</param>
 		/// <param name="position">The position of the Node.</param>
 		/// <param name="tags">The collection of tags associated with the Node.</param> 
-		public Node(int id, Coordinate position, TagsCollection tags)
+		public Node(long id, Coordinate position, TagsCollection tags)
 			: base(position) {
 			this.ID = id;
 			this.Tags = tags;
@@ -83,7 +83,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <summary>
 		/// Gets or sets ID of the Node.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the collection of tags associated with the Node.

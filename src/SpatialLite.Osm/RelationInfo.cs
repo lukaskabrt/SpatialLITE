@@ -62,7 +62,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets ID of the relation.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets the collection of tags associated with the relation.

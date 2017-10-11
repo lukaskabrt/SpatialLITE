@@ -17,3 +17,6 @@
 /src/TestsAI.SpatialLite.Osm/obj/Release/TempPE
 /src/TestsAI.SpatialLite.Osm/obj/Release
 /nuget
+/src/.vs/SpatialLite/v15/sqlite3
+/src/Benchmark.SpatialLite.Osm/Benchmark.SpatialLite.Osm.IO.log
+/src/Benchmark.SpatialLite.Osm/TestFiles/test-file.osm

@@ -13,7 +13,7 @@ namespace SpatialLite.Osm {
 	public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntity {
 		#region Private Fields
 
-		private Dictionary<int, T> _storage = null;
+		private Dictionary<long, T> _storage = null;
 
 		#endregion
 
@@ -23,7 +23,7 @@ namespace SpatialLite.Osm {
 		/// Initializes a new instance of the EntityCollection class that is empty.
 		/// </summary>
 		public EntityCollection() {
-			_storage = new Dictionary<int, T>();
+			_storage = new Dictionary<long, T>();
 		}
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace SpatialLite.Osm {
 		/// </summary>
 		/// <param name="entities">Collection of entities to be populated into this EntityCollection.</param>
 		public EntityCollection(IEnumerable<T> entities) {
-			_storage = new Dictionary<int, T>();
+			_storage = new Dictionary<long, T>();
 
 			foreach (var entity in entities) {
 				_storage.Add(entity.ID, entity);
@@ -65,7 +65,7 @@ namespace SpatialLite.Osm {
 		/// </summary>
 		/// <param name="id">The ID of the entity to get.</param>
 		/// <returns>entity with the specific ID or null if such entity is not present in the collection.</returns>
-		public T this[int id] {
+		public T this[long id] {
 			get {
 				if (_storage.ContainsKey(id)) {
 					return _storage[id];
@@ -116,7 +116,7 @@ namespace SpatialLite.Osm {
 		/// </summary>
 		/// <param name="id">The ID of the entity to locate in the EntityCollection.</param>
 		/// <returns>true if entity is found in the collection, otherwise false.</returns>
-		public bool Contains(int id) {
+		public bool Contains(long id) {
 			return _storage.ContainsKey(id);
 		}
 
@@ -147,7 +147,7 @@ namespace SpatialLite.Osm {
 		/// </summary>
 		/// <param name="id">The ID of the entity to remove from the collection.</param>
 		/// <returns>true if entity was successfully removed from the ICollection; otherwise, false. This method also returns false if entity is not found in the original collection.</returns>
-		public bool Remove(int id) {
+		public bool Remove(long id) {
 			return _storage.Remove(id);
 		}
 
