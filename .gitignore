@@ -20,3 +20,4 @@
 /src/.vs/SpatialLite/v15/sqlite3
 /src/Benchmark.SpatialLite.Osm/Benchmark.SpatialLite.Osm.IO.log
 /src/Benchmark.SpatialLite.Osm/TestFiles/test-file.osm
+/src/.vs

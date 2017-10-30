@@ -22,7 +22,7 @@ namespace SpatialLite.Osm {
 		/// <param name="tags">The collection of tags associated with the way.</param>
 		/// <param name="nodes">The nodes of the way.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
-		public WayInfo(int id, TagsCollection tags, IList<long> nodes, EntityMetadata additionalInfo = null) {
+		public WayInfo(long id, TagsCollection tags, IList<long> nodes, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Tags = tags;
 			this.Nodes = nodes;

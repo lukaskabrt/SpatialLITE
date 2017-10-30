@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SpatialLite.Osm</id>
-    <version>1.3.0</version>
+    <version>1.3.2</version>
     <title>SpatialLite - OpenStreetMap</title>
     <authors>Lukas Kabrt</authors>
     <owners>Lukas Kabrt</owners>
@@ -11,7 +11,7 @@
     <description>Add-on for the SpatialLite library that adds support for OpenStreetMap data formats.</description>
     <copyright>(c) 2012</copyright>
     <tags>Spatial OSM OpenStreetMap</tags>
-<dependencies>
+    <dependencies>
       <dependency id="SpatialLite" version="1.2.0" />
     </dependencies>
   </metadata>

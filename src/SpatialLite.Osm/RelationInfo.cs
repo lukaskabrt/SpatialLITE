@@ -20,7 +20,7 @@ namespace SpatialLite.Osm {
 		/// <param name="tags">The collection of tags associated with the relation.</param>
 		/// <param name="members">The members of the relation.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param> 
-		public RelationInfo(int id, TagsCollection tags, IList<RelationMemberInfo> members, EntityMetadata additionalInfo = null) {
+		public RelationInfo(long id, TagsCollection tags, IList<RelationMemberInfo> members, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Tags = tags;
 			this.Members = members;

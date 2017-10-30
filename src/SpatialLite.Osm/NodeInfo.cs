@@ -20,7 +20,7 @@ namespace SpatialLite.Osm {
 		/// <param name="longitude">The longitude of the node.</param>
 		/// <param name="tags">The collection of thag associated with the node.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
-		public NodeInfo(int id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
+		public NodeInfo(long id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Latitude = latitude;
 			this.Longitude = longitude;

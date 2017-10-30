@@ -122,7 +122,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			int nodeId = int.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			var nodeId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			// latitude
 			string attLat = _xmlReader.GetAttribute("lat");
@@ -174,7 +174,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			int wayId = int.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			var wayId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			EntityMetadata additionalInfo = null;
 			if (this.Settings.ReadMetadata) {
@@ -216,13 +216,13 @@ namespace SpatialLite.Osm.IO {
 		/// Reads Node reference from the currnt Way element in the _xmlReader.
 		/// </summary>
 		/// <returns>Reference to the node.</returns>
-		private int ReadWayNd() {
+		private long ReadWayNd() {
 			string attRef = _xmlReader.GetAttribute("ref");
 			if (string.IsNullOrEmpty(attRef)) {
 				throw new Sys.XmlException("Attribute 'ref' is missing.");
 			}
 
-			int nodeId = int.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
+			var nodeId = long.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
 
 			_xmlReader.Skip();
 
@@ -293,7 +293,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'ref' is missing.");
 			}
 
-			int refId = int.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
+			var refId = long.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
 
 			string attRole = _xmlReader.GetAttribute("role");
 
