@@ -1,28 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{440BE549-AD57-4965-AD01-A81E358E228D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{060F8E14-F926-440E-9E83-1AB690517FE2}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpatialLite.Core", "src\SpatialLite.Core\SpatialLite.Core.xproj", "{C6282A5F-E9A7-4B78-913E-D80A0B60A514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialLite.Core", "src\SpatialLite.Core\SpatialLite.Core.csproj", "{C6282A5F-E9A7-4B78-913E-D80A0B60A514}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpatialLite.Osm", "src\SpatialLite.Osm\SpatialLite.Osm.xproj", "{81094DF5-F2B1-49E1-B545-E6F0528DE92B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialLite.Osm", "src\SpatialLite.Osm\SpatialLite.Osm.csproj", "{81094DF5-F2B1-49E1-B545-E6F0528DE92B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests.SpatialLite.Core", "src\Tests.SpatialLite.Core\Tests.SpatialLite.Core.xproj", "{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SpatialLite.Core", "src\Tests.SpatialLite.Core\Tests.SpatialLite.Core.csproj", "{F22D4FD4-C5DE-4E97-87AA-FA5B85507EE6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests.SpatialLite.Osm", "src\Tests.SpatialLite.Osm\Tests.SpatialLite.Osm.xproj", "{31B15109-C9AD-428B-BD1A-6F13EA2CD852}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SpatialLite.Osm", "src\Tests.SpatialLite.Osm\Tests.SpatialLite.Osm.csproj", "{31B15109-C9AD-428B-BD1A-6F13EA2CD852}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpatialLite.Gps", "src\SpatialLite.Gps\SpatialLite.Gps.xproj", "{3B177BD2-A111-443D-B695-4FA9660F71D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpatialLite.Gps", "src\SpatialLite.Gps\SpatialLite.Gps.csproj", "{3B177BD2-A111-443D-B695-4FA9660F71D7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests.SpatialLite.Gps", "src\Tests.SpatialLite.Gps\Tests.SpatialLite.Gps.xproj", "{C4A5DBC7-DECA-4B13-8FA9-C5F98FD4E666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SpatialLite.Gps", "src\Tests.SpatialLite.Gps\Tests.SpatialLite.Gps.csproj", "{C4A5DBC7-DECA-4B13-8FA9-C5F98FD4E666}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Benchmark.SpatialLite.Osm", "src\Benchmark.SpatialLite.Osm\Benchmark.SpatialLite.Osm.xproj", "{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark.SpatialLite.Osm", "src\Benchmark.SpatialLite.Osm\Benchmark.SpatialLite.Osm.csproj", "{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,5 +67,8 @@ Global
 		{3B177BD2-A111-443D-B695-4FA9660F71D7} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{C4A5DBC7-DECA-4B13-8FA9-C5F98FD4E666} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720} = {440BE549-AD57-4965-AD01-A81E358E228D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F37A239-DB41-4230-B11F-B03AB1DF5322}
 	EndGlobalSection
 EndGlobal
