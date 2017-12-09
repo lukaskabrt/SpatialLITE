@@ -271,3 +271,4 @@ __pycache__/
 # tools/
 
 # End of https://www.gitignore.io/api/aspnetcore
+/src/Tests.SpatialLite.Osm/TestFiles

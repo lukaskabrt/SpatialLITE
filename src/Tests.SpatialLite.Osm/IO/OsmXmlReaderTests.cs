@@ -54,7 +54,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly() {
-			string path = "../../src/Tests.SpatialLite.Osm/Data/Xml/osm-real-file.osm";
+			string path = "../../../Data/Xml/osm-real-file.osm";
 			OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
 			using (OsmXmlReader target = new OsmXmlReader(path, settings)) {
 				Assert.Same(settings, target.Settings);
@@ -320,7 +320,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-			string filename = "../../src/Tests.SpatialLite.Osm/Data/Xml/osm-real-file.osm";
+			string filename = "../../../Data/Xml/osm-real-file.osm";
 
 			OsmXmlReader target = new OsmXmlReader(filename, new OsmXmlReaderSettings() { ReadMetadata = false });
 			target.Dispose();

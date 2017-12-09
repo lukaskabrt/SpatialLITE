@@ -10,9 +10,9 @@ using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.Integration.Pbf {
     public class OsmosisIntegrationTests {
-		public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
+		public const string OsmosisPath = "..\\..\\..\\..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
 
-		private const string TestFilePath = "..\\..\\src\\Tests.SpatialLite.Osm\\Data\\Pbf\\pbf-real-file.pbf";
+		private const string TestFilePath = "..\\..\\..\\Data\\Pbf\\pbf-real-file.pbf";
 		private const int TestFileNodesCount = 129337;
 		private const int TestFileWaysCount = 14461;
 		private const int TestFileRelationsCount = 124;
@@ -27,7 +27,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
 		public void PbfReaderReadsFilesCreatedByOsmosis_NoDenseNoCompression() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -42,7 +42,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfReaderReadsFilesCreatedByOsmosis_DenseNoCompression() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-d.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-d.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -57,7 +57,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfReaderReadsFilesCreatedByOsmosis_NoDenseDeflateCompression() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-c.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-c.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -72,7 +72,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfReaderReadsFilesCreatedByOsmosis_DenseDeflate() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-dc.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfreader-osmosis-compatibility-test-osmosis-real-file-dc.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -91,7 +91,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfWriterWritesFilesCompatibleWithOsmosis_NoDenseNoCompression() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -102,7 +102,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 				}
 			}
 
-			string osmosisXmlFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
+			string osmosisXmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
 			if (File.Exists(osmosisXmlFile)) {
 				File.Delete(osmosisXmlFile);
 			}
@@ -116,7 +116,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfWriterWritesFilesCompatibleWithOsmosis_NoDenseDeflate() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-c.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-c.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -127,7 +127,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 				}
 			}
 
-			string osmosisXmlFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
+			string osmosisXmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
 			if (File.Exists(osmosisXmlFile)) {
 				File.Delete(osmosisXmlFile);
 			}
@@ -141,7 +141,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfWriterWritesFilesCompatibleWithOsmosis_DenseNoCompression() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-d.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-d.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -152,7 +152,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 				}
 			}
 
-			string osmosisXmlFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
+			string osmosisXmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
 			if (File.Exists(osmosisXmlFile)) {
 				File.Delete(osmosisXmlFile);
 			}
@@ -166,7 +166,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfWriterWritesFilesCompatibleWithOsmosis_DenseDeflate() {
-			string pbfFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-dc.pbf");
+			string pbfFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-pbfwriter-real-file-dc.pbf");
 			if (File.Exists(pbfFile)) {
 				File.Delete(pbfFile);
 			}
@@ -177,7 +177,7 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 				}
 			}
 
-			string osmosisXmlFile = Path.GetFullPath("TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
+			string osmosisXmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\pbfwriter-osmosis-compatibility-test-test-file.osm");
 			if (File.Exists(osmosisXmlFile)) {
 				File.Delete(osmosisXmlFile);
 			}

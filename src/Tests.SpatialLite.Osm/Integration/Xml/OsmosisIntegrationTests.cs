@@ -10,9 +10,9 @@ using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.Integration.Xml {
     public class OsmosisIntegrationTests {
-        public const string OsmosisPath = "..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
+        public const string OsmosisPath = "..\\..\\..\\..\\..\\lib\\Osmosis\\bin\\osmosis.bat";
 
-        private const string TestFilePath = "..\\..\\src\\Tests.SpatialLite.Osm\\Data\\Pbf\\pbf-real-file.pbf";
+        private const string TestFilePath = "..\\..\\..\\Data\\Pbf\\pbf-real-file.pbf";
         private const int TestFileNodesCount = 129337;
         private const int TestFileWaysCount = 14461;
         private const int TestFileRelationsCount = 124;
@@ -27,7 +27,7 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void XmlOsmReaderReadsFilesCreatedByOsmosis() {
-            string xmlFile = Path.GetFullPath("TestFiles\\xmlreader-osmosis-compatibility-test-osmosis-real-file.osm");
+            string xmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\xmlreader-osmosis-compatibility-test-osmosis-real-file.osm");
             string osmosisArguments = string.Format("--read-pbf file={0} --write-xml file={1}", Path.GetFullPath(TestFilePath), xmlFile);
             this.CallOsmosis(osmosisArguments);
 
@@ -42,7 +42,7 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void XmlOsmWriterWritesFilesCompatibleWithOsmosis() {
-            string xmlFile = Path.GetFullPath("TestFiles\\xmlwriter-osmosis-compatibility-test-xmlwriter-real-file.osm");
+            string xmlFile = Path.GetFullPath("..\\..\\..\\TestFiles\\xmlwriter-osmosis-compatibility-test-xmlwriter-real-file.osm");
             if (File.Exists(xmlFile)) {
                 File.Delete(xmlFile);
             }
