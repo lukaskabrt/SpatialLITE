@@ -118,7 +118,7 @@ namespace Tests.SpatialLite.Gps {
 
         [Fact]
         public void Load_LoadsGpxEntitiesFromFile() {
-            string path = "../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx";
+            string path = "../../../Data/Gpx/gpx-real-file.gpx";
 
             var target = GpxDocument.Load(path);
 
@@ -175,10 +175,10 @@ namespace Tests.SpatialLite.Gps {
             string path = "TestFiles\\gpxdocument-save-test.gpx";
             File.Delete(path);
 
-            var target = GpxDocument.Load("../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx");
+            var target = GpxDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
             target.Save(path);
 
-            var original = XDocument.Load("../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx");
+            var original = XDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
             var saved = XDocument.Load(path);
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(original, saved));

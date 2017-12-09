@@ -37,7 +37,7 @@ namespace Tests.SpatialLite.Core.IO {
 
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-			string filename = "../../src/Tests.SpatialLite.Core/Data/IO/point-3DM.wkb";
+			string filename = "../../../Data/IO/point-3DM.wkb";
 
 			WkbReader target = new WkbReader(filename);
 			target.Dispose();

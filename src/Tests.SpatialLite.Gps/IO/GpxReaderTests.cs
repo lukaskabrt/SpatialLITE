@@ -20,7 +20,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly() {
-            string path = "../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx";
+            string path = "../../../Data/Gpx/gpx-real-file.gpx";
             var settings = new GpxReaderSettings() { ReadMetadata = false };
             using (var target = new GpxReader(path, settings)) {
                 Assert.Same(settings, target.Settings);
@@ -395,7 +395,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-            string filename = "../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx";
+            string filename = "../../../Data/Gpx/gpx-real-file.gpx";
 
             var target = new GpxReader(filename, new GpxReaderSettings() { ReadMetadata = false });
             target.Dispose();
