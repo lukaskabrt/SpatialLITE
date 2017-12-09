@@ -10,6 +10,10 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
+  <PropertyGroup Label="NuGet">
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj" />
     <ProjectReference Include="..\SpatialLite.Osm\SpatialLite.Osm.csproj" />
