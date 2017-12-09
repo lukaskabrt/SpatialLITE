@@ -256,7 +256,7 @@ namespace SpatialLite.Osm.IO {
 
                 EntityMetadata metadata = this.ProcessMetadata(node.Metadata, block);
 
-                NodeInfo parsed = new NodeInfo((int)node.ID, lat, lon, new TagsCollection(tags), metadata);
+                NodeInfo parsed = new NodeInfo((long)node.ID, lat, lon, new TagsCollection(tags), metadata);
                 _cache.Enqueue(parsed);
             }
         }
@@ -324,7 +324,7 @@ namespace SpatialLite.Osm.IO {
                     }
                 }
 
-                NodeInfo parsed = new NodeInfo((int)idStore, lat, lon, new TagsCollection(tags), metadata);
+                NodeInfo parsed = new NodeInfo((long)idStore, lat, lon, new TagsCollection(tags), metadata);
                 _cache.Enqueue(parsed);
             }
         }
@@ -340,11 +340,11 @@ namespace SpatialLite.Osm.IO {
             }
 
             foreach (var way in group.Ways) {
-                int refStore = 0;
+                long refStore = 0;
                 List<long> refs = new List<long>(way.Refs.Count);
 
                 for (int i = 0; i < way.Refs.Count; i++) {
-                    refStore += (int)way.Refs[i];
+                    refStore += (long)way.Refs[i];
                     refs.Add(refStore);
                 }
 
@@ -357,7 +357,7 @@ namespace SpatialLite.Osm.IO {
 
                 EntityMetadata metadata = this.ProcessMetadata(way.Metadata, block);
 
-                WayInfo parsed = new WayInfo((int)way.ID, new TagsCollection(tags), refs, metadata);
+                WayInfo parsed = new WayInfo((long)way.ID, new TagsCollection(tags), refs, metadata);
                 _cache.Enqueue(parsed);
             }
         }
@@ -373,11 +373,11 @@ namespace SpatialLite.Osm.IO {
             }
 
             foreach (var relation in group.Relations) {
-                int memberRefStore = 0;
+                long memberRefStore = 0;
 
                 List<RelationMemberInfo> members = new List<RelationMemberInfo>();
                 for (int i = 0; i < relation.MemberIds.Count; i++) {
-                    memberRefStore += (int)relation.MemberIds[i];
+                    memberRefStore += (long)relation.MemberIds[i];
                     string role = block.StringTable[relation.RolesIndexes[i]];
 
                     EntityType memberType = 0;
@@ -399,7 +399,7 @@ namespace SpatialLite.Osm.IO {
 
                 EntityMetadata metadata = this.ProcessMetadata(relation.Metadata, block);
 
-                RelationInfo parsed = new RelationInfo((int)relation.ID, new TagsCollection(tags), members, metadata);
+                RelationInfo parsed = new RelationInfo((long)relation.ID, new TagsCollection(tags), members, metadata);
                 _cache.Enqueue(parsed);
             }
         }

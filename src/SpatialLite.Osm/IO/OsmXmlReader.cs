@@ -118,7 +118,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			long nodeId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			var nodeId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			// latitude
 			string attLat = _xmlReader.GetAttribute("lat");
@@ -170,7 +170,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			long wayId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			var wayId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			EntityMetadata additionalInfo = null;
 			if (this.Settings.ReadMetadata) {
@@ -218,7 +218,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'ref' is missing.");
 			}
 
-			long nodeId = long.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
+			var nodeId = long.Parse(attRef, System.Globalization.CultureInfo.InvariantCulture);
 
 			_xmlReader.Skip();
 
