@@ -1,0 +1,36 @@
+queue:
+  name: Hosted
+
+steps:
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: "2.0.3"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: "restore"
+    projects: "$(Parameters.RestoreBuildProjects)"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    projects: "$(Parameters.RestoreBuildProjects)"
+    arguments: "--configuration $(BuildConfiguration) --version-suffix ci-$(Build.BuildNumber)"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: "test"
+    projects: "$(Parameters.TestProjects)"
+    arguments: "--configuration $(BuildConfiguration) --no-build"
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: "custom"
+    projects: "**\*.csproj;-:**\Tests.*.csproj;-:**\Benchmark.*csproj"
+    custom: "pack"
+    arguments: "--output $(Build.ArtifactStagingDirectory) --configuration $(BuildConfiguration) --no-build --version-suffix ci-$(Build.BuildNumber) --verbosity Detailed"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(build.artifactstagingdirectory)"
+    ArtifactName: "drop"
+    ArtifactType: "Container"
