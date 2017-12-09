@@ -272,3 +272,4 @@ __pycache__/
 
 # End of https://www.gitignore.io/api/aspnetcore
 /src/Tests.SpatialLite.Osm/TestFiles
+/src/Benchmark.SpatialLite.Osm/TestFiles/real-file.pbf

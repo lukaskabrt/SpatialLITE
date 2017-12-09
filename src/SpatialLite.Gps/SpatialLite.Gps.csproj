@@ -7,7 +7,7 @@
     <PackageId>SpatialLite.Gps</PackageId>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/lukaskabrt/spatiallite-net.git</RepositoryUrl>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
