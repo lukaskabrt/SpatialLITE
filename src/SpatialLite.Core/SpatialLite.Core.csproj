@@ -13,4 +13,15 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
+  <PropertyGroup Label="NuGet">
+    <!--<NuspecFile>SpatialLite.Core.nuspec</NuspecFile>-->
+    <PackageId>SpatialLite</PackageId>
+    <Title>SpatialLite library</Title>
+    <Authors>Lukas Kabrt</Authors>
+    <Description>SpatialLITE is a modern, lightweight .NET library for spatial data processing. It supports many data formats and basic topology analysis of geometry objects.</Description>
+    <Copyright>(c) 2017</Copyright>
+    <PackageTags>Spatial</PackageTags>
+    <PackageProjectUrl>http://spatial.litesolutions.net/</PackageProjectUrl>
+    <PackageVersionPrefix>2.0.0</PackageVersionPrefix>
+  </PropertyGroup>
 </Project>
