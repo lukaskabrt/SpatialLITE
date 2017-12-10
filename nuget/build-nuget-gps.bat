@@ -1,1 +1,0 @@
-nuget pack ..\src\SpatialLite.Gps\SpatialLite.Gps.csproj -Prop Configuration=Release
