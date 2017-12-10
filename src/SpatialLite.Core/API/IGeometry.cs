@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.API {
-	/// <summary>
-	/// Defines common properties and methods for all geometry objects.
-	/// </summary>
-	public interface IGeometry {
+    /// <summary>
+    /// Defines common properties and methods for all geometry objects.
+    /// </summary>
+    public interface IGeometry {
 		/// <summary>
 		/// Gets the Srid of the Coordinate Reference System used by the <c>IGeometry</c> object.
 		/// </summary>

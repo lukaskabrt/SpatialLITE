@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents collection of Tags that are accesible by their key.
-	/// </summary>
-	public class TagsCollection : ICollection<Tag> {
+    /// <summary>
+    /// Represents collection of Tags that are accesible by their key.
+    /// </summary>
+    public class TagsCollection : ICollection<Tag> {
 		#region Private Fields
 
 		private List<Tag> _tags;

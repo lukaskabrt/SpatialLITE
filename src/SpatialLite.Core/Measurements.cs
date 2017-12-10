@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Algorithms;
-using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core {
-	/// <summary>
-	/// Provides methods for measuring geometry objects.
-	/// </summary>
-	public class Measurements {
+    /// <summary>
+    /// Provides methods for measuring geometry objects.
+    /// </summary>
+    public class Measurements {
 		#region Private Static Fields
 
 		private static readonly Measurements _euclidean2D;

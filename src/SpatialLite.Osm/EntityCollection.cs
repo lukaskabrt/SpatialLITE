@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm {
 	/// <summary>
-	/// Represents collection of the OSM enities that optimized for access speed.
+	/// Represents collection of the OSM entities that optimized for access speed.
 	/// </summary>
 	/// <typeparam name="T">The type of the entities in the collection.</typeparam>
 	public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntity {

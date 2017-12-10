@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents generic collection of geometry objects.
-	/// </summary>
-	/// <remarks>All objects should be in the same spatial reference system, but it isn't enforced by this class.</remarks>
-	/// <typeparam name="T">The type of objects in the collection</typeparam>
-	public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : IGeometry {
+    /// <summary>
+    /// Represents generic collection of geometry objects.
+    /// </summary>
+    /// <remarks>All objects should be in the same spatial reference system, but it isn't enforced by this class.</remarks>
+    /// <typeparam name="T">The type of objects in the collection</typeparam>
+    public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : IGeometry {
 		#region Private Fields
 
 		private List<T> _geometries;

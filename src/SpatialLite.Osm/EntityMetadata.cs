@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Contains additional information about OSM entities such as Author, Version, Timesptam of the last change and others.
-	/// </summary>
-	public class EntityMetadata {
+    /// <summary>
+    /// Contains additional information about OSM entities such as Author, Version, Timesptam of the last change and others.
+    /// </summary>
+    public class EntityMetadata {
 		#region Public Properties
 
 		/// <summary>

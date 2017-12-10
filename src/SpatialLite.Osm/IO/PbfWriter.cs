@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 using ProtoBuf;
@@ -9,10 +7,10 @@ using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm.IO.Pbf;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Represents IOsmWriter that writes OSM entities to Pbf format.
-	/// </summary>
-	public class PbfWriter : IOsmWriter {
+    /// <summary>
+    /// Represents IOsmWriter that writes OSM entities to Pbf format.
+    /// </summary>
+    public class PbfWriter : IOsmWriter {
 		#region Public Constans
 
 		/// <summary>
@@ -180,10 +178,10 @@ namespace SpatialLite.Osm.IO {
 			MemoryStream primitiveBlockStream = new MemoryStream();
 			Serializer.Serialize<PrimitiveBlock>(primitiveBlockStream, primitiveBlock);
 
-			byte[] buffer = new byte[primitiveBlockStream.Length];
-			Array.Copy(primitiveBlockStream.GetBuffer(), buffer, primitiveBlockStream.Length);
+			//byte[] buffer = new byte[primitiveBlockStream.Length];
+			//Array.Copy(primitiveBlockStream.GetBuffer(), buffer, primitiveBlockStream.Length);
 
-			this.WriteBlob("OSMData", buffer);
+			this.WriteBlob("OSMData", primitiveBlockStream.ToArray());
 		}
 
 		/// <summary>
@@ -204,10 +202,10 @@ namespace SpatialLite.Osm.IO {
 			using (MemoryStream stream = new MemoryStream()) {
 				Serializer.Serialize<OsmHeader>(stream, header);
 
-				byte[] buffer = new byte[stream.Length];
-				Array.Copy(stream.GetBuffer(), buffer, stream.Length);
+				//byte[] buffer = new byte[stream.Length];
+				//Array.Copy(stream.GetBuffer(), buffer, stream.Length);
 
-				this.WriteBlob("OSMHeader", buffer);
+				this.WriteBlob("OSMHeader", stream.ToArray());
 			}
 		}
 
@@ -233,8 +231,7 @@ namespace SpatialLite.Osm.IO {
 				}
 
 				blob.RawSize = (int)blobContent.Length;
-				blob.ZlibData = new byte[zlibStream.Length];
-				Array.Copy(zlibStream.GetBuffer(), blob.ZlibData, zlibStream.Length);
+				blob.ZlibData = zlibStream.ToArray();
 			}
 
 			MemoryStream blobStream = new MemoryStream();
@@ -580,8 +577,6 @@ namespace SpatialLite.Osm.IO {
 					this.Flush();
 
 					if (_output != null) {
-						_output.Close();
-
 						if (_ownsOutputStream) {
 							_output.Dispose();
 						}

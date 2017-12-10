@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents rectangular envelope of data.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "HeaderBBox")]
+    /// <summary>
+    /// Represents rectangular envelope of data.
+    /// </summary>
+    [ProtoContract(Name = "HeaderBBox")]
 	internal class HeaderBBox {
 		#region Public Properties
 

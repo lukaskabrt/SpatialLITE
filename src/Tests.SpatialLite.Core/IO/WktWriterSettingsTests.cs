@@ -8,7 +8,7 @@ using Xunit;
 using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
-	class WktWriterSettingsTests {
+	public class WktWriterSettingsTests {
 		#region Constructor() tests
 
 		[Fact]

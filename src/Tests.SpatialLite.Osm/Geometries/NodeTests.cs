@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
+﻿using Xunit;
 
 using SpatialLite.Core;
 using SpatialLite.Core.API;
@@ -11,7 +6,7 @@ using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm.Geometry {
-	public class NodeTests {
+    public class NodeTests {
 		#region Constructor(ID) tests
 
 		[Fact]

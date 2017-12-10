@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
 
 namespace SpatialLite.Osm.Geometries {
-	/// <summary>
-	/// Represents in-memory OSM entities database that contains entities as IOsmGeometry objects.
-	/// </summary>
-	public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation> {
+    /// <summary>
+    /// Represents in-memory OSM entities database that contains entities as IOsmGeometry objects.
+    /// </summary>
+    public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation> {
 		#region Constructors
 
 		/// <summary>

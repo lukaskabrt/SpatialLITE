@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents information about node.
-	/// </summary>
-	public class NodeInfo : IEntityInfo {
+    /// <summary>
+    /// Represents information about node.
+    /// </summary>
+    public class NodeInfo : IEntityInfo {
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the NodeInfo class with specified ID, latitude, longitude, collection of tags and optionaly EntityMetadata.
+		/// Initializes a new instance of the NodeInfo class with specified ID, latitude, longitude, collection of tags and optionally EntityMetadata.
 		/// </summary>
 		/// <param name="id">The id of the node.</param>
 		/// <param name="latitude">The latitude of the node.</param>

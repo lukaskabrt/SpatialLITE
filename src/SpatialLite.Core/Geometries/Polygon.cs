@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a polygon, which may include holes.
-	/// </summary>
-	public class Polygon : Geometry, IPolygon {
+    /// <summary>
+    /// Represents a polygon, which may include holes.
+    /// </summary>
+    public class Polygon : Geometry, IPolygon {
 		#region Constructors
 
 		/// <summary>

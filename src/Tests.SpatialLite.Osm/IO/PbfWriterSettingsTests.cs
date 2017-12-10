@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 
 using SpatialLite.Osm.IO;
 
 namespace Tests.SpatialLite.Osm.IO {
-	public class PbfWriterSettingsTests {
+    public class PbfWriterSettingsTests {
 
 		#region Constructor() tests
 

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Contains settings that determine behaviour of the OsmWriterWriter.
-	/// </summary>
-	public class OsmWriterSettings {
+    /// <summary>
+    /// Contains settings that determine behaviour of the OsmWriterWriter.
+    /// </summary>
+    public class OsmWriterSettings {
 		#region Private Fields
 
 		bool _writeMetadata = true;

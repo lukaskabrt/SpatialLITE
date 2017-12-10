@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
 using Xunit;
@@ -110,16 +108,6 @@ namespace Tests.SpatialLite.Osm.IO {
             testStream.Dispose();
         }
 
-        [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToStream() {
-            MemoryStream stream = new MemoryStream();
-
-            OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings());
-            target.Dispose();
-
-            Assert.False(stream.CanRead);
-        }
-
         #endregion
 
         #region Write(IEntityInfo) tests
@@ -188,7 +176,7 @@ namespace Tests.SpatialLite.Osm.IO {
                 target.Write(_nodeProperties);
             }
 
-            stream = new MemoryStream(stream.GetBuffer());
+            stream = new MemoryStream(stream.ToArray());
 
             using (TextReader reader = new StreamReader(stream)) {
                 string line = null;
@@ -243,7 +231,7 @@ namespace Tests.SpatialLite.Osm.IO {
                 target.Write(_wayProperties);
             }
 
-            stream = new MemoryStream(stream.GetBuffer());
+            stream = new MemoryStream(stream.ToArray());
 
             using (TextReader reader = new StreamReader(stream)) {
                 string line = null;
@@ -320,7 +308,7 @@ namespace Tests.SpatialLite.Osm.IO {
                 target.Write(_relationNodeProperties);
             }
 
-            stream = new MemoryStream(stream.GetBuffer());
+            stream = new MemoryStream(stream.ToArray());
 
             using (TextReader reader = new StreamReader(stream)) {
                 string line = null;
@@ -389,7 +377,7 @@ namespace Tests.SpatialLite.Osm.IO {
             if (xmlStream.CanSeek) {
                 xmlStream.Seek(0, SeekOrigin.Begin);
             } else {
-                xmlStream = new MemoryStream(xmlStream.GetBuffer());
+                xmlStream = new MemoryStream(xmlStream.ToArray());
             }
 
             OsmXmlReader reader = new OsmXmlReader(xmlStream, new OsmXmlReaderSettings() { ReadMetadata = readMetadata });

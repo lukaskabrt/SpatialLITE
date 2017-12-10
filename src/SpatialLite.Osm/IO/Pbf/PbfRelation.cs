@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for relations.
-	/// </summary>
-	[ProtoContract(Name = "Relation")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for relations.
+    /// </summary>
+    [ProtoContract(Name = "Relation")]
 	internal class PbfRelation {
 		#region Private Fields
 

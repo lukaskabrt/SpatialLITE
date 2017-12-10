@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Osm.Geometries {
-	/// <summary>
-	/// Provides a read-only wrapper around list of Nodes that implements ICoordinateList interface.
-	/// </summary>
-	internal class WayCoordinateList : ICoordinateList {
+    /// <summary>
+    /// Provides a read-only wrapper around list of Nodes that implements ICoordinateList interface.
+    /// </summary>
+    internal class WayCoordinateList : ICoordinateList {
 		#region Constructors
 
 		/// <summary>

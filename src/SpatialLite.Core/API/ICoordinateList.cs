@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.API {
-	/// <summary>
-	/// Defines properties and methods for collection of coordinates.
-	/// </summary>
-	public interface ICoordinateList : IEnumerable<Coordinate> {
+    /// <summary>
+    /// Defines properties and methods for collection of coordinates.
+    /// </summary>
+    public interface ICoordinateList : IEnumerable<Coordinate> {
 		/// <summary>
 		/// Gets number of Coordinates in the list
 		/// </summary>

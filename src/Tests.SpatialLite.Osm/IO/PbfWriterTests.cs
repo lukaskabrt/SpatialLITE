@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
 using Xunit;
 
 using SpatialLite.Osm.IO;
-using SpatialLite.Osm.IO.Pbf;
 using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm;
-using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.IO {
-	public class PbfWriterTests {
+    public class PbfWriterTests {
 		//resolution for default granularity
 		private const double _resolution = 1E-07;
 
@@ -117,7 +113,7 @@ namespace Tests.SpatialLite.Osm.IO {
 				;
 			}
 
-			Assert.True(stream.GetBuffer().Length > 0);
+			Assert.True(stream.ToArray().Length > 0);
 		}
 
 		#endregion
@@ -134,17 +130,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			target.Dispose();
 
 			new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
-		}
-
-		[Fact]
-		public void Dispose_ClosesOutputStreamIfWritingToStream() {
-			PbfWriterSettings settings = new PbfWriterSettings();
-			MemoryStream stream = new MemoryStream();
-
-			PbfWriter target = new PbfWriter(stream, settings);
-			target.Dispose();
-
-			Assert.False(stream.CanRead);
 		}
 
 		#endregion
@@ -485,7 +470,7 @@ namespace Tests.SpatialLite.Osm.IO {
 				pbfStream.Seek(0, SeekOrigin.Begin);
 			}
 			else {
-				pbfStream = new MemoryStream(pbfStream.GetBuffer());
+				pbfStream = new MemoryStream(pbfStream.ToArray());
 			}
 
 			PbfReader reader = new PbfReader(pbfStream, new OsmReaderSettings() { ReadMetadata = true });

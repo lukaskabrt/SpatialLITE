@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xunit;
 
@@ -10,8 +6,8 @@ using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
 using System.IO;
 using System.Xml.Linq;
-using Tests.SpatialLite.Gps.Data;
 using SpatialLite.Core.API;
+using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps.IO {
     public class GpxWriterTests {
@@ -108,9 +104,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_empty_file));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-empty-file.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         #endregion
@@ -150,9 +146,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(path);
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_empty_file));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-empty-file.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         #endregion
@@ -168,9 +164,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_waypoint_simple));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-waypoint-simple.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -182,9 +178,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_waypoint_simple));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-waypoint-simple.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -196,9 +192,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_waypoint_with_metadata));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-waypoint-with-metadata.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -212,9 +208,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_waypoint_with_metadata_selection));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-waypoint-with-metadata-selection.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         #endregion
@@ -230,9 +226,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_route_single_route));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-route-single-route.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -244,9 +240,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_route_with_metadata));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-route-with-metadata.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -258,9 +254,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_route_single_route));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-route-single-route.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -273,9 +269,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_route_with_metadata_selection));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-route-with-metadata-selection.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         #endregion
@@ -291,9 +287,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_track_single_track_segment));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-track-single-track-segment.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -305,9 +301,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_track_with_metadata));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-track-with-metadata.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -319,9 +315,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_track_single_track_segment));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-track-single-track-segment.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         [Fact]
@@ -334,9 +330,9 @@ namespace Tests.SpatialLite.Gps.IO {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
-            XDocument expected = XDocument.Load(new MemoryStream(GpxTestData.gpx_track_with_metadata_selection));
+            XDocument expected = XDocument.Load(TestDataReader.Open("gpx-track-with-metadata-selection.gpx"));
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
         #endregion

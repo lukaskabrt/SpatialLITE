@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
+using System.Linq;
 using System.IO;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Provides functions for reading and parsing geometries from WKT format.
-	/// </summary>
-	public class WktReader : IDisposable {
+    /// <summary>
+    /// Provides functions for reading and parsing geometries from WKT format.
+    /// </summary>
+    public class WktReader : IDisposable {
 		#region Private Fields
 
 		private static CultureInfo _invarianCulture = CultureInfo.InvariantCulture;
@@ -665,7 +664,7 @@ namespace SpatialLite.Core.IO {
 		private static WktToken Expect(string value, WktTokensBuffer tokens) {
 			WktToken t = tokens.GetToken(true);
 
-			if (t.Type != TokenType.STRING || string.Equals(value, t.Value, StringComparison.InvariantCultureIgnoreCase) == false) {
+			if (t.Type != TokenType.STRING || string.Equals(value, t.Value, StringComparison.OrdinalIgnoreCase) == false) {
 				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}", value, t.Value));
 			}
 
@@ -713,7 +712,7 @@ namespace SpatialLite.Core.IO {
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
 				if (disposing) {
-					_inputReader.Close();
+					_inputReader.Dispose();
 
 					if (_inputFileStream != null) {
 						_inputFileStream.Dispose();

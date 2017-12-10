@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Provides function for writing geometry objects into WKB format.
-	/// </summary>
-	public class WkbWriter : IDisposable {
+    /// <summary>
+    /// Provides function for writing geometry objects into WKB format.
+    /// </summary>
+    public class WkbWriter : IDisposable {
 		#region Private Fields
 
 		private bool _disposed = false;

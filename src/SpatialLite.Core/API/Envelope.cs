@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.API {
     /// <summary>
     /// Represents minimal bounding box of a <see cref="Geometry"/> object. 
     /// </summary>
-    [Serializable]
     public class Envelope {
         #region Public Static Fields
 

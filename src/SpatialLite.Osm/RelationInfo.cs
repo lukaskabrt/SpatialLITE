@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.Geometries;
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents information about relation.
-	/// </summary>
-	public class RelationInfo : IEntityInfo {
+    /// <summary>
+    /// Represents information about relation.
+    /// </summary>
+    public class RelationInfo : IEntityInfo {
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the RelationInfo class with specified ID, Tags, Member and optionaly EntityMetadata.
+		/// Initializes a new instance of the RelationInfo class with specified ID, Tags, Member and optionally EntityMetadata.
 		/// </summary>
 		/// <param name="id">The id of the relation.</param>
 		/// <param name="tags">The collection of tags associated with the relation.</param>

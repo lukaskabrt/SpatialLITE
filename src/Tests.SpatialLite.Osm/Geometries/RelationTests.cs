@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 using Moq;
@@ -10,7 +8,7 @@ using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm.Geometries {
-	public class RelationTests {
+    public class RelationTests {
 		RelationInfo _relationEmptyInfo = new RelationInfo(100, new TagsCollection(), new List<RelationMemberInfo>(), new EntityMetadata());
 		RelationInfo _relationInfo = new RelationInfo(100, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { Reference = 1, MemberType = EntityType.Node } }, new EntityMetadata());
 

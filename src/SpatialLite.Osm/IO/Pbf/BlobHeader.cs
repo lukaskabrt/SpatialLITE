@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents header of the fileblock.
-	/// </summary>
-	[Serializable, ProtoContract]
+    /// <summary>
+    /// Represents header of the fileblock.
+    /// </summary>
+    [ProtoContract]
 	internal class BlobHeader {
 		#region Public Properties
 

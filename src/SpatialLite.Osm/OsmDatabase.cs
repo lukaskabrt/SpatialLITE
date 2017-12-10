@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm.IO;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents in-memory database of OSM entities.
-	/// </summary>
-	/// <typeparam name="T">Generic type that relresents all nodes, ways and relations</typeparam>
-	/// <typeparam name="N">The type of Nodes</typeparam>
-	/// <typeparam name="W">The type of Ways</typeparam>
-	/// <typeparam name="R">The type of Relations</typeparam>
-	public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity where N : T where W : T where R : T {
+    /// <summary>
+    /// Represents in-memory database of OSM entities.
+    /// </summary>
+    /// <typeparam name="T">Generic type that relresents all nodes, ways and relations</typeparam>
+    /// <typeparam name="N">The type of Nodes</typeparam>
+    /// <typeparam name="W">The type of Ways</typeparam>
+    /// <typeparam name="R">The type of Relations</typeparam>
+    public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity where N : T where W : T where R : T {
 		#region Constructors
 
 		/// <summary>
@@ -103,7 +99,7 @@ namespace SpatialLite.Osm {
 		#region Public Methods
 
 		/// <summary>
-		/// When overriden in derived class, saves entities from the database to specific writer.
+		/// When overridden in derived class, saves entities from the database to specific writer.
 		/// </summary>
 		/// <param name="writer">IOsmWriter to save entities to.</param>
 		public virtual void Save(IOsmWriter writer) {

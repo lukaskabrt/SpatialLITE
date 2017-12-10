@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Osm.Geometries {
-	/// <summary>
-	/// Represents OSM way.
-	/// </summary>
-	public class Way : LineString, IOsmGeometry {
+    /// <summary>
+    /// Represents OSM way.
+    /// </summary>
+    public class Way : LineString, IOsmGeometry {
 		#region Private Fields
 
 		private WayCoordinateList _coordinatesAdapter;

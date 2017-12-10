@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Osm.Geometries {
-	/// <summary>
-	/// Represents OSM relation.
-	/// </summary>
-	public class Relation : GeometryCollection<RelationMember>, IOsmGeometry {
+    /// <summary>
+    /// Represents OSM relation.
+    /// </summary>
+    public class Relation : GeometryCollection<RelationMember>, IOsmGeometry {
 		#region Constructors
 
 		/// <summary>

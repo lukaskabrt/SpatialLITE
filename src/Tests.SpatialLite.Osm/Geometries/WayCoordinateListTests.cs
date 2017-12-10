@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Xunit;
 
@@ -9,7 +8,7 @@ using SpatialLite.Core.API;
 using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm.Geometries {
-	public class WayCoordinateListTests {
+    public class WayCoordinateListTests {
 		List<Node> _nodes = new List<Node>(new Node[] { 
 			new Node(5, 1.1, 2.2),
 			new Node(6, 10.1, -20.2),

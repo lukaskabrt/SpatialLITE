@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Osm;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Stores entities to be written to output PBF.
-	/// </summary>
-	/// <typeparam name="T">The type of entities to store.</typeparam>
-	internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T : class, IEntityInfo {
+    /// <summary>
+    /// Stores entities to be written to output PBF.
+    /// </summary>
+    /// <typeparam name="T">The type of entities to store.</typeparam>
+    internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T : class, IEntityInfo {
 		#region Private Fields
 
 		private List<T> _storage = null;

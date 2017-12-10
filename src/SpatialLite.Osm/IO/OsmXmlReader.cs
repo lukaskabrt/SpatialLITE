@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using Sys = System.Xml;
 
-using SpatialLite.Osm.Geometries;
-
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Represents a OsmReader, that can read OSM entities saved in the XML format.
-	/// </summary>
-	public class OsmXmlReader : IOsmReader {
+    /// <summary>
+    /// Represents a OsmReader, that can read OSM entities saved in the XML format.
+    /// </summary>
+    public class OsmXmlReader : IOsmReader {
 		#region Private Fields
 
 		private bool _disposed = false;
@@ -239,7 +235,7 @@ namespace SpatialLite.Osm.IO {
 				throw new Sys.XmlException("Attribute 'id' is missing.");
 			}
 
-			int relationId = int.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
+			var relationId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
 			EntityMetadata additionalInfo = null;
 			if (this.Settings.ReadMetadata) {
@@ -422,7 +418,7 @@ namespace SpatialLite.Osm.IO {
 			xmlReaderSettings.IgnoreProcessingInstructions = true;
 			xmlReaderSettings.IgnoreWhitespace = true;
 
-			_xmlReader = Sys.XmlTextReader.Create(_input, xmlReaderSettings);
+			_xmlReader = Sys.XmlReader.Create(_input, xmlReaderSettings);
 
 			_xmlReader.Read();
 			while (_xmlReader.EOF == false && _insideOsm == false) {
@@ -449,9 +445,6 @@ namespace SpatialLite.Osm.IO {
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
 				if (disposing) {
-					_xmlReader.Close();
-					_input.Close();
-
 					if (_ownsInputStream) {
 						_input.Dispose();
 					}

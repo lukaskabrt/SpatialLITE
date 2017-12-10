@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for nodes.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "Node")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for nodes.
+    /// </summary>
+    [ProtoContract(Name = "Node")]
 	internal class PbfNode {
 		#region Public Properties
 

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Xml;
 
 using Xunit;
-
-using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm;
 using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.IO {
-	public class OsmXmlReaderTests {
+    public class OsmXmlReaderTests {
 		private EntityMetadata _details;
 		private NodeInfo _node, _nodeTags, _nodeProperties;
 		private WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
@@ -58,7 +54,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly() {
-			string path = "../../src/Tests.SpatialLite.Osm/Data/Xml/osm-real-file.osm";
+			string path = "../../../Data/Xml/osm-real-file.osm";
 			OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
 			using (OsmXmlReader target = new OsmXmlReader(path, settings)) {
 				Assert.Same(settings, target.Settings);
@@ -73,7 +69,7 @@ namespace Tests.SpatialLite.Osm.IO {
 		[Fact]
 		public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly() {
 			OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
-			using (OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_simple_node), settings)) {
+			using (OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-node.osm"), settings)) {
 				Assert.Same(settings, target.Settings);
 				Assert.True(settings.IsReadOnly);
 			}
@@ -85,7 +81,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_SkipsUnknownElements() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_unknown_inner_element), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-unknown-inner-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			IEntityInfo result = target.Read();
 
 			Assert.NotNull(result as NodeInfo);
@@ -94,7 +90,7 @@ namespace Tests.SpatialLite.Osm.IO {
 		//Tested only on Nodes - code for parsing Tags is shared among functions parsing Node, Way and Relation
 		[Fact]
 		public void Read_ThrowsExceptionIfTagHasNotKey() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_tag_without_key), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-tag-without-key.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
@@ -102,20 +98,20 @@ namespace Tests.SpatialLite.Osm.IO {
 		//Tested only on Nodes - code for parsing Tags is shared among functions parsing Node, Way and Relation
 		[Fact]
 		public void Read_ThrowsExceptionIfTagHasNotValue() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_tag_without_value), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-tag-without-value.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIPieceOffMetadataIsMissingAndStrictModeIsTrue() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_missing_timestamp), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = true });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = true });
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_DoesNotThrowExceptionIPieceOffMetadataIsMissingAndStrictModeIsFalse() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_missing_timestamp), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
 			target.Read();
 		}
 
@@ -125,28 +121,28 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ThrowsExceptionIfNodeHasNotID() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_without_id), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIfNodeHasNotLat() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_without_lat), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-lat.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIfNodeHasNotLon() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_without_lon), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-lon.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ReadsSimpleNode() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_simple_node), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			NodeInfo readNode = target.Read() as NodeInfo;
 
 			this.CompareNodes(_node, readNode);
@@ -154,7 +150,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsNodeWithUnknownElement() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_with_tag_and_unknown_element), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-with-tag-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			NodeInfo readNode = target.Read() as NodeInfo;
 
 			this.CompareNodes(_node, readNode);
@@ -165,7 +161,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsNodeWithTags() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_with_tags), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			NodeInfo readNode = target.Read() as NodeInfo;
 
 			this.CompareNodes(_nodeTags, readNode);
@@ -173,7 +169,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsNodeWithAllAttributes() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_node_all_properties), new OsmXmlReaderSettings() { ReadMetadata = true });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			NodeInfo readNode = target.Read() as NodeInfo;
 
 			this.CompareNodes(_nodeProperties, readNode);
@@ -185,21 +181,21 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ThrowsExceptionIfWayHasNotID() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_nd_without_ref), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIfWayNDHasNotRef() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_nd_without_ref), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ReadsWayWithoutNodes() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_without_nodes), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-without-nodes.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			WayInfo readWay = target.Read() as WayInfo;
 
 			this.CompareWays(_wayWithoutNodes, readWay);
@@ -207,7 +203,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsSimpleWay() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_simple_way), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			WayInfo readWay = target.Read() as WayInfo;
 
 			this.CompareWays(_way, readWay);
@@ -215,7 +211,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsWayWithTags() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_with_tags), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			WayInfo readWay = target.Read() as WayInfo;
 
 			this.CompareWays(_wayTags, readWay);
@@ -223,7 +219,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsWayWithUnknownElement() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_with_tags_and_unknown_element), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			WayInfo readWay = target.Read() as WayInfo;
 
 			this.CompareWays(_wayTags, readWay);
@@ -231,7 +227,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsWayWithAllAttributes() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_way_all_properties), new OsmXmlReaderSettings() { ReadMetadata = true });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			WayInfo readWay = target.Read() as WayInfo;
 
 			this.CompareWays(_wayProperties, readWay);
@@ -243,28 +239,28 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ThrowsExceptionIfRelationHasNotID() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_without_id), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIfRelationMemberHasNotRef() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_member_without_ref), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-member-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ThrowsExceptionIfRelationMemberHasNotType() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_member_without_type), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-member-without-type.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
 			Assert.Throws<XmlException>(() => target.Read());
 		}
 
 		[Fact]
 		public void Read_ReadsRelationWithoutMembers() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_without_members), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-without-members.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationWithoutMembers, readRelation);
@@ -272,7 +268,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithNodeMember() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_node), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationNode, readRelation);
@@ -280,7 +276,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithWayMember() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_way), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationWay, readRelation);
@@ -288,7 +284,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithRelationMember() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_relation), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationRelation, readRelation);
@@ -296,7 +292,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithTags() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_with_tags), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationTags, readRelation);
@@ -304,7 +300,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithTagsAndUnknownElement() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_with_tags_and_unknown_element), new OsmXmlReaderSettings() { ReadMetadata = false });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationTags, readRelation);
@@ -312,7 +308,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Read_ReadsRelationWithAllProperties() {
-			OsmXmlReader target = new OsmXmlReader(new MemoryStream(XmlTestData.osm_relation_all_properties), new OsmXmlReaderSettings() { ReadMetadata = true });
+			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			RelationInfo readRelation = target.Read() as RelationInfo;
 
 			this.CompareRelation(_relationProperties, readRelation);
@@ -324,7 +320,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-			string filename = "../../src/Tests.SpatialLite.Osm/Data/Xml/osm-real-file.osm";
+			string filename = "../../../Data/Xml/osm-real-file.osm";
 
 			OsmXmlReader target = new OsmXmlReader(filename, new OsmXmlReaderSettings() { ReadMetadata = false });
 			target.Dispose();
@@ -332,16 +328,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			FileStream testStream = null;
 			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
-		}
-
-		[Fact]
-		public void Dispose_ClosesOutputStreamIfWritingToStream() {
-			MemoryStream stream = new MemoryStream(XmlTestData.osm_real_file);
-
-			OsmXmlReader target = new OsmXmlReader(stream, new OsmXmlReaderSettings() { ReadMetadata = false });
-			target.Dispose();
-
-			Assert.False(stream.CanRead);
 		}
 
 		#endregion

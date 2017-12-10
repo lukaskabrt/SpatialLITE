@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a collection of LineStrings
-	/// </summary>
-	public class MultiLineString : GeometryCollection<LineString>, IMultiLineString {
+    /// <summary>
+    /// Represents a collection of LineStrings
+    /// </summary>
+    public class MultiLineString : GeometryCollection<LineString>, IMultiLineString {
 		#region Constructors
 
 		/// <summary>

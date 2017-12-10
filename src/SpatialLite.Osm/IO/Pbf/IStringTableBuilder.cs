@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Defines function for object that can be used to build StringTables.
-	/// </summary>
-	internal interface IStringTableBuilder {
+﻿namespace SpatialLite.Osm.IO.Pbf {
+    /// <summary>
+    /// Defines function for object that can be used to build StringTables.
+    /// </summary>
+    internal interface IStringTableBuilder {
 		/// <summary>
 		/// Gets index of the string in StringTable being constructed.
 		/// </summary>

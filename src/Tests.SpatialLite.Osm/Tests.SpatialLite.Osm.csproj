@@ -1,217 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FAAA0E56-4D5E-4054-B2CD-F6A3C136B96F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests.SpatialLite.Osm</RootNamespace>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Tests.SpatialLite.Osm</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <PackageId>Tests.SpatialLite.Osm</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <EmbeddedResource Include="Data\OsmDatabase\*;Data\Xml\*;Data\Pbf\*" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Data\OsmDatabaseTestData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OsmDatabaseTestData.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\PbfTestData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PbfTestData.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\XmlTestData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>XmlTestData.resx</DependentUpon>
-    </Compile>
-    <Compile Include="EntityCollectionTests.cs" />
-    <Compile Include="Geometries\NodeTests.cs" />
-    <Compile Include="Geometries\OsmGeometryDatabaseTests.cs" />
-    <Compile Include="Geometries\RelationMemberTests.cs" />
-    <Compile Include="Geometries\RelationTests.cs" />
-    <Compile Include="OsmEntityInfoDatabaseTests.cs" />
-    <Compile Include="TagsCollectionTests.cs" />
-    <Compile Include="TagTests.cs" />
-    <Compile Include="Geometries\WayCoordinateListTests.cs" />
-    <Compile Include="Geometries\WayTests.cs" />
-    <Compile Include="IO\OsmReaderSettingsTests.cs" />
-    <Compile Include="IO\OsmWriterSettingsTests.cs" />
-    <Compile Include="IO\PbfWriterSettingsTests.cs" />
-    <Compile Include="IO\PbfWriterTests.cs" />
-    <Compile Include="NodeInfoTests.cs" />
-    <Compile Include="IO\OsmXmlReaderTests.cs" />
-    <Compile Include="IO\OsmXmlWriterTests.cs" />
-    <Compile Include="IO\PbfReaderTests.cs" />
-    <Compile Include="OsmDatabaseTests.cs" />
-    <Compile Include="RelationInfoTests.cs" />
-    <Compile Include="RelationMemberInfoTests.cs" />
-    <Compile Include="WayInfoTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Moq" Version="4.7.145" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj">
-      <Project>{423F0A2F-0B12-4AEA-8177-4A5D4238AA81}</Project>
-      <Name>SpatialLite.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SpatialLite.Osm\SpatialLite.Osm.csproj">
-      <Project>{A8B3B172-193C-4495-AC23-62D1CE241C17}</Project>
-      <Name>SpatialLite.Osm</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj" />
+    <ProjectReference Include="..\SpatialLite.Osm\SpatialLite.Osm.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Data\OsmDatabase\osm-nodes.osm" />
-    <None Include="Data\OsmDatabase\osm-real-file.osm" />
-    <None Include="Data\OsmDatabase\osm-relation-invalid-ref.osm" />
-    <None Include="Data\OsmDatabase\osm-relation-ref-other-relation.osm" />
-    <None Include="Data\OsmDatabase\osm-relation.osm" />
-    <None Include="Data\OsmDatabase\osm-way-invalid-ref.osm" />
-    <None Include="Data\OsmDatabase\osm-way.osm" />
-    <None Include="Data\Pbf\pbf-corrupted-data-block. pbf" />
-    <None Include="Data\Pbf\pbf-corrupted-header-block. pbf" />
-    <None Include="Data\Pbf\pbf-n-node-all-properties.pbf" />
-    <None Include="Data\Pbf\pbf-n-node-tags.pbf" />
-    <None Include="Data\Pbf\pbf-n-node.pbf" />
-    <None Include="Data\Pbf\pbf-n-relation-all-properties.pbf" />
-    <None Include="Data\Pbf\pbf-n-relation-node.pbf" />
-    <None Include="Data\Pbf\pbf-n-relation-relation.pbf" />
-    <None Include="Data\Pbf\pbf-n-relation-tags.pbf" />
-    <None Include="Data\Pbf\pbf-n-relation-way.pbf" />
-    <None Include="Data\Pbf\pbf-n-way-all-properties.pbf" />
-    <None Include="Data\Pbf\pbf-n-way-tags.pbf" />
-    <None Include="Data\Pbf\pbf-n-way-without-nodes.pbf" />
-    <None Include="Data\Pbf\pbf-n-way.pbf" />
-    <None Include="Data\Pbf\pbf-nd-node-all-properties.pbf" />
-    <None Include="Data\Pbf\pbf-nd-node-tags.pbf" />
-    <None Include="Data\Pbf\pbf-nd-node.pbf" />
-    <None Include="Data\Pbf\pbf-too-large-data-block. pbf" />
-    <None Include="Data\Pbf\pbf-too-large-header-block.pbf" />
-    <None Include="Data\Pbf\pbf-unsupported-required-feature.pbf" />
-    <None Include="Data\Pbf\pbf-without-osm-header.pbf" />
-    <None Include="Data\Xml\osm-node-all-properties.osm" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\Xml\osm-invalid_root_element.osm" />
-    <None Include="Data\Xml\osm-node-missing-timestamp.osm" />
-    <None Include="Data\Xml\osm-node-tag-without-key.osm" />
-    <None Include="Data\Xml\osm-node-tag-without-value.osm" />
-    <None Include="Data\Xml\osm-node-with-tag-and-unknown-element.osm" />
-    <None Include="Data\Xml\osm-node-with-tags.osm" />
-    <None Include="Data\Xml\osm-node-without-id.osm" />
-    <None Include="Data\Xml\osm-node-without-lat.osm" />
-    <None Include="Data\Xml\osm-node-without-lon.osm" />
-    <None Include="Data\Xml\osm-real-file.osm" />
-    <None Include="Data\Xml\osm-relation-all-properties.osm" />
-    <None Include="Data\Xml\osm-relation-member-without-ref.osm" />
-    <None Include="Data\Xml\osm-relation-member-without-type.osm" />
-    <None Include="Data\Xml\osm-relation-node.osm" />
-    <None Include="Data\Xml\osm-relation-relation.osm" />
-    <None Include="Data\Xml\osm-relation-way.osm" />
-    <None Include="Data\Xml\osm-relation-with-tags-and-unknown-element.osm" />
-    <None Include="Data\Xml\osm-relation-with-tags.osm" />
-    <None Include="Data\Xml\osm-relation-without-id.osm" />
-    <None Include="Data\Xml\osm-relation-without-members.osm" />
-    <None Include="Data\Xml\osm-simple-node.osm" />
-    <None Include="Data\Xml\osm-simple-way.osm" />
-    <None Include="Data\Xml\osm-small-real-file.osm" />
-    <None Include="Data\Xml\osm-unknown_inner_element.osm" />
-    <None Include="Data\Xml\osm-way-all-properties.osm" />
-    <None Include="Data\Xml\osm-way-nd-without-ref.osm" />
-    <None Include="Data\Xml\osm-way-with-tags-and-unknown-element.osm" />
-    <None Include="Data\Xml\osm-way-with-tags.osm" />
-    <None Include="Data\Xml\osm-way-without-id.osm" />
-    <None Include="Data\Xml\osm-way-without-nodes.osm" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Data\OsmDatabaseTestData.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>OsmDatabaseTestData.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\PbfTestData.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PbfTestData.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\XmlTestData.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>XmlTestData.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

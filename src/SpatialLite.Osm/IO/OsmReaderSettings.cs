@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Contains settings that determine behaviour of OsmReaders.
-	/// </summary>
-	public class OsmReaderSettings {
+    /// <summary>
+    /// Contains settings that determine behaviour of OsmReaders.
+    /// </summary>
+    public class OsmReaderSettings {
 		#region Private Fields
 
 		bool _readMetadata = true;

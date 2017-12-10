@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Stores all strings for Primitive block.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "StringTable")]
+    /// <summary>
+    /// Stores all strings for Primitive block.
+    /// </summary>
+    [ProtoContract(Name = "StringTable")]
 	public class StringTable {
 		#region Private Fields
 
@@ -40,7 +39,7 @@ namespace SpatialLite.Osm.IO.Pbf {
 					throw new ArgumentOutOfRangeException("index");
 				}
 
-				return Encoding.UTF8.GetString(this.Storage[index]);
+				return Encoding.UTF8.GetString(this.Storage[index], 0, this.Storage[index].Length);
 			}
 			set {
 				if (index >= this.Storage.Count) {

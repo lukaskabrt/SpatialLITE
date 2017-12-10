@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
+﻿using Xunit;
 
 using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm {
-	public class RelationMemberInfoTests {
+    public class RelationMemberInfoTests {
 		#region Constructor(RelationMember)
 
 		[Fact]

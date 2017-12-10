@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents header message of the PBF file.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "HeaderBlock")]
+    /// <summary>
+    /// Represents header message of the PBF file.
+    /// </summary>
+    [ProtoContract(Name = "HeaderBlock")]
 	internal class OsmHeader {
 #region Private ImplicitFields
 		private IList<string> _optionalFeatures = new List<string>();

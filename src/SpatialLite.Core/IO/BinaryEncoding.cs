@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Specifies byte ordering in multibyte values.
-	/// </summary>
-	public enum BinaryEncoding : byte {
+﻿namespace SpatialLite.Core.IO {
+    /// <summary>
+    /// Specifies byte ordering in multibyte values.
+    /// </summary>
+    public enum BinaryEncoding : byte {
 		/// <summary>
 		/// Most significant byte first.
 		/// </summary>

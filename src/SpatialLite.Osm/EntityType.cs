@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Osm {
-	/// <summary>
-	/// Defines possible type of object that IOsmGeometryInfo can represent.
-	/// </summary>
-	public enum EntityType {
+﻿namespace SpatialLite.Osm {
+    /// <summary>
+    /// Defines possible type of object that IOsmGeometryInfo can represent.
+    /// </summary>
+    public enum EntityType {
 		/// <summary>
 		/// Unknown type of the entity.
 		/// </summary>

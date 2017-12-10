@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Osm.Geometries;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Defines methods and properties for collection of the OSM entities of single where entities can be accessed by their ID.
-	/// </summary>
-	/// <typeparam name="T">The type of the entitie in the collection.</typeparam>
-	public interface ITypedEntityCollection<T> : ICollection<T> where T : IOsmEntity {
+    /// <summary>
+    /// Defines methods and properties for collection of the OSM entities of single where entities can be accessed by their ID.
+    /// </summary>
+    /// <typeparam name="T">The type of the entitie in the collection.</typeparam>
+    public interface ITypedEntityCollection<T> : ICollection<T> where T : IOsmEntity {
 		/// <summary>
 		/// Gets an entity with specific ID from the collection.
 		/// </summary>

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using SpatialLite.Gps.Geometries;
 
@@ -33,7 +30,7 @@ namespace SpatialLite.Gps.IO {
             writerSetting.Indent = true;
 
             _streamWriter = new StreamWriter(stream, new UTF8Encoding(false));
-            _xmlWriter = XmlTextWriter.Create(_streamWriter, writerSetting);
+            _xmlWriter = XmlWriter.Create(_streamWriter, writerSetting);
 
             StartDocument();
         }
@@ -51,8 +48,9 @@ namespace SpatialLite.Gps.IO {
             XmlWriterSettings writerSetting = new XmlWriterSettings();
             writerSetting.Indent = true;
 
-            _streamWriter = new StreamWriter(path, false, new UTF8Encoding(false));
-            _xmlWriter = XmlTextWriter.Create(_streamWriter, writerSetting);
+            var fileStream = new FileStream(path, FileMode.Create);
+            _streamWriter = new StreamWriter(fileStream, new UTF8Encoding(false));
+            _xmlWriter = XmlWriter.Create(_streamWriter, writerSetting);
 
             StartDocument();
         }
@@ -268,10 +266,10 @@ namespace SpatialLite.Gps.IO {
         private void Dispose(bool disposing) {
             if (!this._disposed) {
                 if (disposing) {
-                    _xmlWriter.Close();
+                    _xmlWriter.Dispose();
 
                     if (_streamWriter != null)
-                        _streamWriter.Close();
+                        _streamWriter.Dispose();
                 }
 
                 _disposed = true;

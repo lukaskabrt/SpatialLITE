@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 using Moq;
@@ -11,7 +8,7 @@ using SpatialLite.Core.API;
 using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm.Geometries {
-	public class RelationMemberTests {
+    public class RelationMemberTests {
 		IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
 		public RelationMemberTests() {

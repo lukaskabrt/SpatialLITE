@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 
 using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
-	public class TagTests {
+    public class TagTests {
 		#region Constructors tests
 
 		[Fact]

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents information about way.
-	/// </summary>
-	/// <remarks>
-	/// Nodes are represented with their id's only.
-	/// </remarks>
-	public class WayInfo : IEntityInfo {
+    /// <summary>
+    /// Represents information about way.
+    /// </summary>
+    /// <remarks>
+    /// Nodes are represented with their id's only.
+    /// </remarks>
+    public class WayInfo : IEntityInfo {
 		#region Constructors
 
 		/// <summary>

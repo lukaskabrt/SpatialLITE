@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Xunit;
 using Moq;
@@ -10,7 +8,7 @@ using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm {
-	public class EntityCollectionTests {
+    public class EntityCollectionTests {
 		IOsmGeometry[] _data;
 
 		public EntityCollectionTests() {

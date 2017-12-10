@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Contains settings that determine behaviour of the WkbWriter
-	/// </summary>
-	public class WkbWriterSettings {
+    /// <summary>
+    /// Contains settings that determine behaviour of the WkbWriter
+    /// </summary>
+    public class WkbWriterSettings {
 		#region Private Filds
 
 		private BinaryEncoding _encoding;

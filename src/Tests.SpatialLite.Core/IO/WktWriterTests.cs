@@ -354,7 +354,7 @@ namespace Tests.SpatialLite.Core.IO {
 
 			using (TextReader tr = new StreamReader(new MemoryStream(stream.ToArray()))) {
 				string wkt = tr.ReadToEnd();
-				Assert.Equal(expectedWkt, wkt, StringComparer.InvariantCultureIgnoreCase);
+				Assert.Equal(expectedWkt, wkt, StringComparer.OrdinalIgnoreCase);
 			}
 		}
 

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	///  Contains settings that determine behaviour of the PbfWriter.
-	/// </summary>
-	public class PbfWriterSettings : OsmWriterSettings {
+    /// <summary>
+    ///  Contains settings that determine behaviour of the PbfWriter.
+    /// </summary>
+    public class PbfWriterSettings : OsmWriterSettings {
 		#region Private Fields
 
 		private bool _useDenseFormat;

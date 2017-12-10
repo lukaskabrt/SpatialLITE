@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 
@@ -9,7 +7,7 @@ using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
-	public class WayInfoTests {
+    public class WayInfoTests {
 		#region Constructor(ID, Tags, Nodes, EntityMetadata) tests
 
 		[Fact]

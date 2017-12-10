@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Osm.Geometries {
-	/// <summary>
-	/// Ecapsules member of the OSM relation and it's role in the relation.
-	/// </summary>
-	public class RelationMember : Geometry {
+    /// <summary>
+    /// Ecapsules member of the OSM relation and it's role in the relation.
+    /// </summary>
+    public class RelationMember : Geometry {
 		#region Constructors
 
 		/// <summary>

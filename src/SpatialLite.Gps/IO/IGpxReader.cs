@@ -1,5 +1,4 @@
-﻿using System;
-namespace SpatialLite.Gps.IO {
+﻿namespace SpatialLite.Gps.IO {
     /// <summary>
     /// Defines functions and properties for classes that can read GPX entities from a source.
     /// </summary>

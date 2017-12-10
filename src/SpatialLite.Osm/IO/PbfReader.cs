@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using ProtoBuf;
-
-using SpatialLite.Core.API;
-using SpatialLite.Osm;
 using SpatialLite.Osm.IO.Pbf;
-using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm.IO {
     /// <summary>
@@ -192,13 +187,13 @@ namespace SpatialLite.Osm.IO {
                 throw new NotSupportedException();
             }
 
-            if (header.Type.Equals("OSMData", StringComparison.InvariantCultureIgnoreCase)) {
+            if (header.Type.Equals("OSMData", StringComparison.OrdinalIgnoreCase)) {
                 if ((blob.RawSize.HasValue && blob.RawSize > MaxDataBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxDataBlockSize)) {
                     throw new InvalidDataException("Invalid OSMData block");
                 }
 
                 return Serializer.Deserialize<PrimitiveBlock>(blobContentStream);
-            } else if (header.Type.Equals("OSMHeader", StringComparison.InvariantCultureIgnoreCase)) {
+            } else if (header.Type.Equals("OSMHeader", StringComparison.OrdinalIgnoreCase)) {
                 if ((blob.RawSize.HasValue && blob.RawSize > MaxHeaderBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxHeaderBlockSize)) {
                     throw new InvalidDataException("Invalid OSMHeader block");
                 }
@@ -453,7 +448,7 @@ namespace SpatialLite.Osm.IO {
             if (!this._disposed) {
                 if (disposing) {
                     if (_input != null) {
-                        _input.Close();
+                        _input.Dispose();
                     }
                 }
 

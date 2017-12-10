@@ -10,6 +10,7 @@ using Xunit.Extensions;
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 using SpatialLite.Core.IO;
+using Tests.SpatialLite.Core.Data;
 
 namespace Tests.SpatialLite.Core.IO {
 
@@ -36,141 +37,141 @@ namespace Tests.SpatialLite.Core.IO {
 				new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
 		};
 
-		#endregion
+        #endregion
 
 
-		#region Constructor(Stream) tests
+        #region Constructor(Stream) tests
 
-		[Fact]
-		public void Constructor_Stream_ThrowsAgrumentNullExceptioIfStreamIsNull() {
-			Stream stream = null;
-			Assert.Throws<ArgumentNullException>(() => new WktReader(stream));
-		}
+        [Fact]
+        public void Constructor_Stream_ThrowsAgrumentNullExceptioIfStreamIsNull() {
+            Stream stream = null;
+            Assert.Throws<ArgumentNullException>(() => new WktReader(stream));
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructor(Path) tests
+        #region Constructor(Path) tests
 
-		[Fact]
-		public void Constructor_Path_ThrowsFileNotFoundExceptioIfFileDoesNotExists() {
-			Assert.Throws<FileNotFoundException>(() => new WktReader("non-existing-file.wkb"));
-		}
+        [Fact]
+        public void Constructor_Path_ThrowsFileNotFoundExceptioIfFileDoesNotExists() {
+            Assert.Throws<FileNotFoundException>(() => new WktReader("non-existing-file.wkb"));
+        }
 
-		#endregion
+        #endregion
 
 
-		#region Dispose() tests
+        #region Dispose() tests
 
-		[Fact]
-		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-			string filename = "../../src/Tests.SpatialLite.Core/Data/IO/wkt-point-3DM.wkt";
+        [Fact]
+        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+            string filename = "../../../Data/IO/wkt-point-3DM.wkt";
 
-			WktReader target = new WktReader(filename);
-			target.Dispose();
+            WktReader target = new WktReader(filename);
+            target.Dispose();
 
-			FileStream testStream = null;
-			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
-			testStream.Dispose();
-		}
+            FileStream testStream = null;
+            testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+            testStream.Dispose();
+        }
 
-		[Fact]
-		public void Dispose_ClosesOutputStreamIfWritingToStream() {
-			MemoryStream stream = new MemoryStream(Data.IOTestData.wkt_point_3DM);
+        [Fact]
+        public void Dispose_ClosesOutputStreamIfWritingToStream() {
+            var stream = TestDataReader.Open("wkt-point-3DM.wkt");
 
-			WktReader target = new WktReader(stream);
-			target.Dispose();
+            WktReader target = new WktReader(stream);
+            target.Dispose();
 
-			Assert.False(stream.CanRead);
-		}
+            Assert.False(stream.CanRead);
+        }
 
-		#endregion
+        #endregion
 
-		#region Read() tests
+        #region Read() tests
 
-		public static IEnumerable<object[]> Read_ReadsAllGeometryTypesTestData {
-			get {
-				yield return new object[] { Data.IOTestData.wkt_point_3DM };
-				yield return new object[] { Data.IOTestData.wkt_linestring_3DM };
-				yield return new object[] { Data.IOTestData.wkt_polygon_3DM };
-				yield return new object[] { Data.IOTestData.wkt_multipoint_3DM };
-				yield return new object[] { Data.IOTestData.wkt_multilinestring_3DM };
-				yield return new object[] { Data.IOTestData.wkt_multipolygon_3DM };
-				yield return new object[] { Data.IOTestData.wkt_geometry_collection_3DM };
-			}
-		}
+        public static IEnumerable<object[]> Read_ReadsAllGeometryTypesTestData {
+            get {
+                yield return new object[] { TestDataReader.Read("wkt-point-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-linestring-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-polygon-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-multipoint-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-multilinestring-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-multipolygon-3DM.wkt") };
+                yield return new object[] { TestDataReader.Read("wkt-geometry-collection-3DM.wkt") };
+            }
+        }
 
-		[Theory]
-		[MemberData("Read_ReadsAllGeometryTypesTestData")]
-		public void Read_ReadsAllGeometryTypes(byte[] data) {
-			using (WktReader target = new WktReader(new MemoryStream(data))) {
-				IGeometry readGeometry = target.Read();
-				Assert.NotNull(readGeometry);
-			}
-		}
+        [Theory]
+        [MemberData("Read_ReadsAllGeometryTypesTestData")]
+        public void Read_ReadsAllGeometryTypes(byte[] data) {
+            using (WktReader target = new WktReader(new MemoryStream(data))) {
+                IGeometry readGeometry = target.Read();
+                Assert.NotNull(readGeometry);
+            }
+        }
 
-		[Fact]
-		public void Read_ReturnsNullIfStreamIsEmpty() {
-			using (WktReader target = new WktReader(new MemoryStream())) {
-				IGeometry readGeometry = target.Read();
+        [Fact]
+        public void Read_ReturnsNullIfStreamIsEmpty() {
+            using (WktReader target = new WktReader(new MemoryStream())) {
+                IGeometry readGeometry = target.Read();
 
-				Assert.Null(readGeometry);
-			}
-		}
+                Assert.Null(readGeometry);
+            }
+        }
 
-		[Fact]
-		public void Read_ReturnsNullIfNoMoreGeometriesAreAvailableInInputStream() {
-			using (WktReader target = new WktReader(new MemoryStream(Data.IOTestData.wkt_point_3DM))) {
-				target.Read();
-				IGeometry readGeometry = target.Read();
+        [Fact]
+        public void Read_ReturnsNullIfNoMoreGeometriesAreAvailableInInputStream() {
+            using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt"))) {
+                target.Read();
+                IGeometry readGeometry = target.Read();
 
-				Assert.Null(readGeometry);
-			}
-		}
+                Assert.Null(readGeometry);
+            }
+        }
 
-		[Fact]
-		public void Read_ReadsMultipleGeometries() {
-			using (WktReader target = new WktReader(new MemoryStream(Data.IOTestData.wkt_point_and_linestring_3DM))) {
-				IGeometry readGeometry = target.Read();
-				Assert.True(readGeometry is Point);
+        [Fact]
+        public void Read_ReadsMultipleGeometries() {
+            using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-and-linestring-3DM.wkt"))) {
+                IGeometry readGeometry = target.Read();
+                Assert.True(readGeometry is Point);
 
-				readGeometry = target.Read();
-				Assert.True(readGeometry is LineString);
-			}
-		}
+                readGeometry = target.Read();
+                Assert.True(readGeometry is LineString);
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region Read<T>() tests
+        #region Read<T>() tests
 
-		[Fact]
-		public void ReadT_ReadsGeometry() {
-			using (WktReader target = new WktReader(new MemoryStream(Data.IOTestData.wkt_point_3DM))) {
-				Point read = target.Read<Point>();
-				Assert.NotNull(read);
-			}
-		}
+        [Fact]
+        public void ReadT_ReadsGeometry() {
+            using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt"))) {
+                Point read = target.Read<Point>();
+                Assert.NotNull(read);
+            }
+        }
 
-		[Fact]
-		public void ReadT_ReturnsNullIfStreamIsEmpty() {
-			using (WktReader target = new WktReader(new MemoryStream())) {
-				IGeometry readGeometry = target.Read<Point>();
+        [Fact]
+        public void ReadT_ReturnsNullIfStreamIsEmpty() {
+            using (WktReader target = new WktReader(new MemoryStream())) {
+                IGeometry readGeometry = target.Read<Point>();
 
-				Assert.Null(readGeometry);
-			}
-		}
+                Assert.Null(readGeometry);
+            }
+        }
 
-		[Fact]
-		public void ReadT_ThrowsExceptionIfWKTDoesNotRepresentGeometryOfSpecificType() {
-			using (WktReader target = new WktReader(new MemoryStream(Data.IOTestData.wkt_point_3DM))) {
-				Assert.Throws<WktParseException>(() => target.Read<LineString>());
-			}
-		}
+        [Fact]
+        public void ReadT_ThrowsExceptionIfWKTDoesNotRepresentGeometryOfSpecificType() {
+            using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt"))) {
+                Assert.Throws<WktParseException>(() => target.Read<LineString>());
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region Parse(WKT) tests
+        #region Parse(WKT) tests
 
-		[Fact]
+        [Fact]
 		public void Parse_ParsesPoint() {
 			string wkt = "point empty";
 

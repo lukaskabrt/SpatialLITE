@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
 using Xunit;
 using Moq;
-
-using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm.Geometries;
-
 using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.Geometries {
-	public class OsmGeometryDatabaseTests {
+    public class OsmGeometryDatabaseTests {
 		Node[] _nodeData;
 		Way[] _wayData;
 		Relation[] _relationData;
@@ -85,7 +81,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_LoadsNodes() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_nodes), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-nodes.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(3, target.Nodes.Count);
@@ -96,7 +92,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_LoadsWay() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_way), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(3, target.Nodes.Count);
@@ -110,7 +106,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_LoadsRelation() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_relation), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(1, target.Nodes.Count);
@@ -122,7 +118,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_CanLoadRelationsWithReferenceToRelationsNotYetCreated() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_relation_ref_other_relation), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation-ref-other-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(2, target.Relations.Count);
@@ -134,13 +130,13 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_ThrowsExceptionIfAllRelationReferencesAreNotResolvedAtTheEndOfLoadingAndIgnoreMissingIsFalse() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_relation_invalid_ref), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation-invalid-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			Assert.Throws<ArgumentException>(() => OsmGeometryDatabase.Load(reader, false));
 		}
 
 		[Fact]
 		public void Load_DoesNotThrowExceptionIfIgnoreMissingIsTrueAndWaysNodeIsMissing() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_way_invalid_ref), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-way-invalid-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = null;
 			target = OsmGeometryDatabase.Load(reader, true);
 
@@ -150,7 +146,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void Load_DoesNotThrowExceptionIfIgnoreMissingIsTrueAndRelationMemberIsMissing() {
-			IOsmReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_relation_invalid_ref), new OsmXmlReaderSettings() { ReadMetadata = true });
+			IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation-invalid-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = null;
 			target = OsmGeometryDatabase.Load(reader, true);
 
@@ -162,7 +158,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		//TODO move to acceptance tests
 		[Fact]
 		public void Load_LoadedRealFile() {
-			OsmXmlReader reader = new OsmXmlReader(new MemoryStream(OsmDatabaseTestData.osm_real_file), new OsmXmlReaderSettings() { ReadMetadata = true });
+			OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
 			OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
 			Assert.Equal(6688, target.Nodes.Count);

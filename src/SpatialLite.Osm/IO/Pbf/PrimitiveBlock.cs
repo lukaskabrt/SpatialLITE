@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents content of the fileblock's data stream.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "PrimitiveBlock")]
+    /// <summary>
+    /// Represents content of the fileblock's data stream.
+    /// </summary>
+    [ProtoContract(Name = "PrimitiveBlock")]
 	internal class PrimitiveBlock {
 		#region Private Fields
 

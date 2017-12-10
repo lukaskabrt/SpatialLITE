@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for metadata in dense format.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "DenseInfo")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for metadata in dense format.
+    /// </summary>
+    [ProtoContract(Name = "DenseInfo")]
 	internal class PbfDenseMetadata {
 		#region Private ImplicitFields
 		private IList<long> _changeset = new List<long>();
