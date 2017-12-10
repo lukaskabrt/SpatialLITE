@@ -18,7 +18,7 @@ namespace Tests.SpatialLite.Core.IO {
 			string data = string.Empty;
 			var tokens = WktTokenizer.Tokenize(data);
 
-			Assert.Equal(0, tokens.Count());
+			Assert.Empty(tokens);
 		}
 
 		[Theory]
@@ -34,7 +34,7 @@ namespace Tests.SpatialLite.Core.IO {
 		void Tokenize_String_CorrectlyRecognizesTokenTypes(string str, TokenType expectedType) {
 			var tokens = WktTokenizer.Tokenize(str).ToArray();
 
-			Assert.Equal(1, tokens.Count());
+			Assert.Single(tokens);
 
 			WktToken t = tokens.First();
 			Assert.Equal(expectedType, t.Type);

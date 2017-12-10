@@ -12,19 +12,21 @@ namespace Tests.SpatialLite.Core.IO {
 		WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "}, 
 			new WktToken() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
 
-		#region Constructor() tests
+        #region Constructor() tests
 
-		public void Constructor__CreatesEmptyBuffer() {
+        [Fact]
+        public void Constructor__CreatesEmptyBuffer() {
 			WktTokensBuffer target = new WktTokensBuffer();
 
 			Assert.Empty(target);
 		}
 
-		#endregion
+        #endregion
 
-		#region Constructor(IEnumerable<WktToken>) tests
+        #region Constructor(IEnumerable<WktToken>) tests
 
-		public void Constructor_TextReader_CreatesBufferWithSpecificTokens() {
+        [Fact]
+        public void Constructor_TextReader_CreatesBufferWithSpecificTokens() {
 			WktTokensBuffer target = new WktTokensBuffer(_testData);
 
 			Assert.Equal(_testData.Length, target.Count());
@@ -54,7 +56,7 @@ namespace Tests.SpatialLite.Core.IO {
 			WktTokensBuffer target = new WktTokensBuffer();
 			target.Add(_testData[0]);
 
-			Assert.Equal(1, target.Count());
+			Assert.Single(target);
 			Assert.Contains(_testData[0], target);
 		}
 

@@ -684,7 +684,7 @@ namespace Tests.SpatialLite.Core.IO {
         }
 
         [Theory]
-        [MemberData("WriteToArrayTestData")]
+        [MemberData(nameof(WriteToArrayTestData))]
         public void WriteToArray_WritesAllGeometryTypes(string wkt, byte[] expectedWkb) {
             IGeometry geometry = this.ParseWKT(wkt);
 

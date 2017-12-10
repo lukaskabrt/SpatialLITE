@@ -10,7 +10,7 @@ namespace Tests.SpatialLite.Gps.IO {
         public void Constructor__CreatesSettingsWithDefaultValues() {
             var target = new GpxReaderSettings();
 
-            Assert.Equal(true, target.ReadMetadata);
+            Assert.True(target.ReadMetadata);
         }
 
         #endregion

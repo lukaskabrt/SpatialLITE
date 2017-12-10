@@ -177,7 +177,7 @@ namespace Tests.SpatialLite.Osm {
 		}
 
 		#endregion
-		
+        
 		#region Clear() tests
 
 		[Fact]
@@ -199,49 +199,49 @@ namespace Tests.SpatialLite.Osm {
 		public void Contains_IOsmGeometry_ReturnsFalseForNull() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(null));
+			Assert.DoesNotContain(null, target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainNode() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(new Node(10000)));
+			Assert.DoesNotContain(new Node(10000), target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsNode() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_nodeData[0]));
+			Assert.Contains(_nodeData[0], target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainWay() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(new Way(10000)));
+			Assert.DoesNotContain(new Way(10000), target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsWay() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_wayData[0]));
+			Assert.Contains(_wayData[0], target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainRelation() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.False(target.Contains(new Relation(10000)));
+			Assert.DoesNotContain(new Relation(10000), target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsRelation() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
-			Assert.True(target.Contains(_relationData[0]));
+			Assert.Contains(_relationData[0], target);
 		}
 
 		#endregion

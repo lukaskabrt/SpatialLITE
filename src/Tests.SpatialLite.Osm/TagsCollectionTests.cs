@@ -93,7 +93,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Contains_Tag_ReturnsFalseForEmptyCollection() {
 			TagsCollection target = new TagsCollection();
 
-			Assert.False(target.Contains(new Tag("key", "value")));
+			Assert.DoesNotContain(new Tag("key", "value"), target);
 		}
 
 		[Fact]
@@ -101,14 +101,14 @@ namespace Tests.SpatialLite.Osm {
 			TagsCollection target = new TagsCollection(_tags);
 
 			Tag testTag = new Tag("test-key-1", "other-value");
-			Assert.False(target.Contains(testTag));
+			Assert.DoesNotContain(testTag, target);
 		}
 
 		[Fact]
 		public void Contains_Tag_ReturnsTrueIfCollectionContainsTag() {
 			TagsCollection target = new TagsCollection(_tags);
 
-			Assert.True(target.Contains(_tags[0]));
+			Assert.Contains(_tags[0], target);
 		}
 
 		#endregion
@@ -260,7 +260,7 @@ namespace Tests.SpatialLite.Osm {
 			TagsCollection target = new TagsCollection(tags);
 
 			Assert.True(target.Remove(tags[1].Key));
-			Assert.Equal(1, target.Count);
+			Assert.Single(target);
 			Assert.Contains(tags[0], target);
 		}
 
@@ -272,7 +272,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Count_ReturnsZeroForEmptyCollection() {
 			TagsCollection target = new TagsCollection();
 
-			Assert.Equal(0, target.Count);
+			Assert.Empty(target);
 		}
 
 		[Fact]
@@ -325,7 +325,7 @@ namespace Tests.SpatialLite.Osm {
 
 			target["test-key"] = "test-value";
 
-			Assert.Equal(1, target.Count);
+			Assert.Single(target);
 			Assert.Equal("test-value", target["test-key"]);
 		}
 

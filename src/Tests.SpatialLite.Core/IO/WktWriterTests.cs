@@ -125,7 +125,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("WriteToStringTestData")]
+		[MemberData(nameof(WriteToStringTestData))]
 		public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -174,7 +174,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesPointsOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesPointsOfAllDimensionsTestData))]
 		public void Write_WritesPointsOfAllDimensions(Point toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -194,7 +194,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesLinestringOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesLinestringOfAllDimensionsTestData))]
 		public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -214,7 +214,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesPolygonsOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesPolygonsOfAllDimensionsTestData))]
 		public void Write_WritesPolygonsOfAllDimensions(Polygon toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -244,7 +244,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesMultiPoinsOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesMultiPoinsOfAllDimensionsTestData))]
 		public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -268,7 +268,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesMultiLineStringsOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesMultiLineStringsOfAllDimensionsTestData))]
 		public void Write_WritesMultiLineStringsOfAllDimensions(MultiLineString toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -292,7 +292,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesMultiPolygonsOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesMultiPolygonsOfAllDimensionsTestData))]
 		public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -312,7 +312,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[MemberData("Write_WritesGeometryCollectionOfAllDimensionsTestData")]
+		[MemberData(nameof(Write_WritesGeometryCollectionOfAllDimensionsTestData))]
 		public void Write_WritesGeometryCollectionOfAllDimensions(GeometryCollection<Geometry> toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}

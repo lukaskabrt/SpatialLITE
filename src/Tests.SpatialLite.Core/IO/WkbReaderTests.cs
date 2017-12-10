@@ -493,7 +493,7 @@ namespace Tests.SpatialLite.Core.IO {
             GeometryCollection<Geometry> expected = (GeometryCollection<Geometry>)this.ParseWKT(wkt);
             GeometryCollection<Geometry> parsed = WkbReader.Parse<GeometryCollection<Geometry>>(TestDataReader.Read("collection-empty.wkb"));
 
-            Assert.Equal(0, parsed.Geometries.Count);
+            Assert.Empty(parsed.Geometries);
         }
 
         [Fact]

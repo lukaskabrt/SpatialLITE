@@ -13,9 +13,9 @@ namespace Tests.SpatialLite.Osm.IO {
 		public void Constructor__SetsDefaultValues() {
 			PbfWriterSettings target = new PbfWriterSettings();
 
-			Assert.Equal(true, target.UseDenseFormat);
+			Assert.True(target.UseDenseFormat);
 			Assert.Equal(CompressionMode.ZlibDeflate, target.Compression);
-			Assert.Equal(true, target.WriteMetadata);
+			Assert.True(target.WriteMetadata);
 		}
 
 		#endregion

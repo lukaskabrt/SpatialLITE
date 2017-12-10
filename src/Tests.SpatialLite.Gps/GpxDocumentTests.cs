@@ -94,7 +94,7 @@ namespace Tests.SpatialLite.Gps {
 
                 Assert.Equal(3, target.Waypoints.Count);
                 Assert.Equal(2, target.Routes.Count);
-                Assert.Equal(1, target.Tracks.Count);
+                Assert.Single(target.Tracks);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Tests.SpatialLite.Gps {
 
             Assert.Equal(3, target.Waypoints.Count);
             Assert.Equal(2, target.Routes.Count);
-            Assert.Equal(1, target.Tracks.Count);
+            Assert.Single(target.Tracks);
         }
 
         #endregion

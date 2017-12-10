@@ -188,7 +188,7 @@ namespace Tests.SpatialLite.Core.Geometries {
 			IGeometryCollection<IGeometry> boundary = target.GetBoundary() as IGeometryCollection<IGeometry>;
 
 			Assert.NotNull(boundary);
-			Assert.Equal(0, boundary.Geometries.Count());
+			Assert.Empty(boundary.Geometries);
 		}
 
 		#endregion

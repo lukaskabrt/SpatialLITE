@@ -90,7 +90,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		public void FromRelationInfo_SetsRelationMembers() {
 			Relation target = Relation.FromRelationInfo(_relationInfo, _nodesEntityCollection, true);
 
-			Assert.Equal(target.Geometries.Count, 1);
+			Assert.Single(target.Geometries);
 			Assert.Equal(_relationInfo.Members[0].Reference, target.Geometries[0].Member.ID);
 		}
 
