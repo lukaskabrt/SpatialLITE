@@ -26,4 +26,9 @@
     <ProjectReference Include="..\SpatialLite.Gps\SpatialLite.Gps.csproj" />
   </ItemGroup>
 
+  <ItemGroup Label="Data files">
+    <Content Include="Data\Gpx\gpx-real-file.gpx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

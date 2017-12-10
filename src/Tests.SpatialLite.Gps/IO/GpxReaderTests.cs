@@ -201,7 +201,7 @@ namespace Tests.SpatialLite.Gps.IO {
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
             var result = target.Read() as GpxTrack;
 
-            Assert.Equal(1, result.Geometries.Count);
+            Assert.Single(result.Geometries);
 
             GpxTrackSegment segment = result.Geometries[0];
             Assert.Equal(new Coordinate(-76.638178825, 39.449270368), segment.Points[0].Position);
@@ -219,7 +219,7 @@ namespace Tests.SpatialLite.Gps.IO {
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
             var result = target.Read() as GpxTrack;
 
-            Assert.Equal(1, result.Geometries.Count);
+            Assert.Single(result.Geometries);
 
             GpxTrackSegment segment = result.Geometries[0];
         }
@@ -253,7 +253,7 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Equal(2, result1.Geometries[1].Points.Count);
 
             //segments - second track
-            Assert.Equal(1, result2.Geometries.Count);
+            Assert.Single(result2.Geometries);
             //points in segments - second track
             Assert.Equal(2, result2.Geometries[0].Points.Count);
         }
@@ -265,7 +265,7 @@ namespace Tests.SpatialLite.Gps.IO {
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
             var result = target.Read() as GpxTrack;
 
-            Assert.Equal(0, result.Geometries.Count);
+            Assert.Empty(result.Geometries);
         }
 
         [Fact]
@@ -275,7 +275,7 @@ namespace Tests.SpatialLite.Gps.IO {
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
             var result = target.Read() as GpxTrack;
 
-            Assert.Equal(1, result.Geometries.Count);
+            Assert.Single(result.Geometries);
             Assert.Empty(result.Geometries[0].Points);
         }
 
@@ -319,7 +319,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
             var result = target.Read() as GpxRoute;
 
-            Assert.Equal(0, result.Points.Count);
+            Assert.Empty(result.Points);
         }
 
         [Fact]
@@ -428,7 +428,7 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Equal(2, parsed.Where(g => g.GeometryType == GpxGeometryType.Route).Count());
 
             // tracks
-            Assert.Equal(1, parsed.Where(g => g.GeometryType == GpxGeometryType.Track).Count());
+            Assert.Single(parsed.Where(g => g.GeometryType == GpxGeometryType.Track));
         }
 
         #endregion

@@ -24,7 +24,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("CoordinatesSameXYOrdinates")]
+		[MemberData(nameof(CoordinatesSameXYOrdinates))]
 		public void ComputeDistance_CoordinateCoordinate_ReturnsZeroForPointsWithSameXYCoordinates(Coordinate c1, Coordinate c2) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
@@ -42,7 +42,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("CoordinatesDistanceTestData")]
+		[MemberData(nameof(CoordinatesDistanceTestData))]
 		public void ComputeDistance_CoordinateCoordinate_ReturnsDistanceBetweenCoordinates(Coordinate c1, Coordinate c2, double expectedDistance) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
@@ -89,7 +89,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("LineSegmentDistanceTestData")]
+		[MemberData(nameof(LineSegmentDistanceTestData))]
 		public void ComputeDistance_CoordinateLineLineSegmentMode_ComputesPerpendicularDistanceToLineIfPointsProjectionLiesInside(Coordinate c, Coordinate A, Coordinate B, double expectedDistance) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
@@ -106,7 +106,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("LineSegmentDistanceZeroDistanceTestData")]
+		[MemberData(nameof(LineSegmentDistanceZeroDistanceTestData))]
 		public void ComputeDistance_CoordinateLineLineSegmentMode_ReturnsZeroIfPointLiesOnLineSegment(Coordinate c, Coordinate A, Coordinate B) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
@@ -119,7 +119,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			Coordinate A = new Coordinate(1, 1);
 			Coordinate B = new Coordinate(1, 1);
 			Coordinate c = new Coordinate(1, 2);
-			
+
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
 			double distance = target.CalculateDistance(c, A, B, LineMode.LineSegment);
@@ -147,7 +147,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("LineDistanceZeroDistanceTestData")]
+		[MemberData(nameof(LineDistanceZeroDistanceTestData))]
 		public void ComputeDistance_CoordinateLineLineMode_ReturnsZeroIfPointLiesOnLine(Coordinate c, Coordinate A, Coordinate B) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 
@@ -164,7 +164,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		}
 
 		[Theory]
-		[MemberData("LineDistanceTestData")]
+		[MemberData(nameof(LineDistanceTestData))]
 		public void ComputeDistance_CoordinateLineLineMode_ComputesPerpendicularDistanceToLine(Coordinate c, Coordinate A, Coordinate B, double expectedDistance) {
 			Euclidean2DCalculator target = new Euclidean2DCalculator();
 

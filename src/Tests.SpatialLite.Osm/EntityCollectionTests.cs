@@ -60,28 +60,28 @@ namespace Tests.SpatialLite.Osm {
 		public void Contains_IOsmGeometry_ReturnsFalseForEmptyCollection() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
 
-			Assert.False(target.Contains(_data[0]));
+			Assert.DoesNotContain(_data[0], target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseForNull() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
 
-			Assert.False(target.Contains(null));
+			Assert.DoesNotContain(null, target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainEntity() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
 
-			Assert.False(target.Contains(_data[0]));
+			Assert.DoesNotContain(_data[0], target);
 		}
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsEntity() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
 
-			Assert.True(target.Contains(_data[0]));
+			Assert.Contains(_data[0], target);
 		}
 
 		#endregion

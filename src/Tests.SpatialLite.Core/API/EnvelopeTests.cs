@@ -38,11 +38,11 @@ namespace Tests.SpatialLite.Core.API {
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Hepler functions
+        #region Hepler functions
 
-		public void CheckBoundaries(Envelope target, double minX, double maxX, double minY, double maxY, double minZ, double maxZ, double minM, double maxM) {
+        internal void CheckBoundaries(Envelope target, double minX, double maxX, double minY, double maxY, double minZ, double maxZ, double minM, double maxM) {
 			Assert.Equal(minX, target.MinX);
 			Assert.Equal(maxX, target.MaxX);
 			Assert.Equal(minY, target.MinY);
@@ -267,7 +267,7 @@ namespace Tests.SpatialLite.Core.API {
 		}
 
 		[Theory]
-		[MemberData("_XYZEnvelopeDifferentBounds")]
+		[MemberData(nameof(_XYZEnvelopeDifferentBounds))]
 		public void Equals_ReturnsFalseForTheEnvelopeWithDifferentBounds(Coordinate[] corners) {
 			Envelope target = new Envelope(_coordinates);
 			Envelope other = new Envelope(corners);

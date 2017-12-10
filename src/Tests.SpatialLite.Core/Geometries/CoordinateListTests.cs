@@ -184,7 +184,7 @@ namespace Tests.SpatialLite.Core.Geometries {
 			CoordinateList target = new CoordinateList(_coordinates);
 			target.Clear();
 
-			Assert.Equal(0, target.ToArray().Length);
+			Assert.Empty(target.ToArray());
 			Assert.Equal(0, target.Count);
 		}
 

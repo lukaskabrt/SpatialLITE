@@ -101,7 +101,7 @@ namespace Tests.SpatialLite.Core.IO {
         }
 
         [Theory]
-        [MemberData("Read_ReadsAllGeometryTypesTestData")]
+        [MemberData(nameof(Read_ReadsAllGeometryTypesTestData))]
         public void Read_ReadsAllGeometryTypes(byte[] data) {
             using (WktReader target = new WktReader(new MemoryStream(data))) {
                 IGeometry readGeometry = target.Read();
@@ -701,7 +701,7 @@ namespace Tests.SpatialLite.Core.IO {
 			GeometryCollection<Geometry> parsed = WktReader.Parse<GeometryCollection<Geometry>>(wkt);
 
 			Assert.NotNull(parsed);
-			Assert.Equal(1, parsed.Geometries.Count);
+			Assert.Single(parsed.Geometries);
 			this.CompareCoordinate(_coordinatesXY[0], ((Point)parsed.Geometries[0]).Position);
 		}
 
@@ -712,7 +712,7 @@ namespace Tests.SpatialLite.Core.IO {
 			GeometryCollection<Geometry> parsed = WktReader.Parse<GeometryCollection<Geometry>>(wkt);
 
 			Assert.NotNull(parsed);
-			Assert.Equal(1, parsed.Geometries.Count);
+			Assert.Single(parsed.Geometries);
 			this.CompareCoordinate(_coordinatesXYM[0], ((Point)parsed.Geometries[0]).Position);
 		}
 
@@ -723,7 +723,7 @@ namespace Tests.SpatialLite.Core.IO {
 			GeometryCollection<Geometry> parsed = WktReader.Parse<GeometryCollection<Geometry>>(wkt);
 
 			Assert.NotNull(parsed);
-			Assert.Equal(1, parsed.Geometries.Count);
+			Assert.Single(parsed.Geometries);
 			this.CompareCoordinate(_coordinatesXYZ[0], ((Point)parsed.Geometries[0]).Position);
 		}
 
@@ -734,7 +734,7 @@ namespace Tests.SpatialLite.Core.IO {
 			GeometryCollection<Geometry> parsed = WktReader.Parse<GeometryCollection<Geometry>>(wkt);
 
 			Assert.NotNull(parsed);
-			Assert.Equal(1, parsed.Geometries.Count);
+			Assert.Single(parsed.Geometries);
 			this.CompareCoordinate(_coordinatesXYZM[0], ((Point)parsed.Geometries[0]).Position);
 		}
 
@@ -758,7 +758,7 @@ namespace Tests.SpatialLite.Core.IO {
 			GeometryCollection<Geometry> parsed = WktReader.Parse<GeometryCollection<Geometry>>(wkt);
 
 			Assert.NotNull(parsed);
-			Assert.Equal(1, parsed.Geometries.Count);
+			Assert.Single(parsed.Geometries);
 			GeometryCollection<Geometry> nested = (GeometryCollection<Geometry>)parsed.Geometries[0];
 			this.CompareCoordinate(_coordinatesXY[0], ((Point)nested.Geometries[0]).Position);
 		}

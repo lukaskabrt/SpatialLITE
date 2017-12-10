@@ -13,7 +13,7 @@ namespace Tests.SpatialLite.Osm.IO {
 		public void Constructor__CreatesSettingsWithDefaultValues() {
 			OsmReaderSettings target = new OsmReaderSettings();
 
-			Assert.Equal(true, target.ReadMetadata);
+			Assert.True(target.ReadMetadata);
 		}
 
 		#endregion

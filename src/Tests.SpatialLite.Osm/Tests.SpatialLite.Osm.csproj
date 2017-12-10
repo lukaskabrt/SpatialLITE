@@ -26,4 +26,15 @@
     <ProjectReference Include="..\SpatialLite.Osm\SpatialLite.Osm.csproj" />
   </ItemGroup>
 
+  <ItemGroup Label="Osmosis">
+    <Content Include="Utils\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Label="Data files">
+    <Content Include="Data\Xml\osm-real-file.osm;Data\Pbf\pbf-real-file.pbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

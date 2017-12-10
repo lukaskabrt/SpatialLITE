@@ -45,10 +45,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
                 new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
             _relationProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
-
-            if (!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }
         }
 
         #region Constructor(Stream, Settings) tests

@@ -118,17 +118,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		#endregion
 
-		//TODO move to acceptance tests
-		[Fact]
-		public void Load_IOsmReader_LoadedRealFile() {
-			OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
-			OsmEntityInfoDatabase target = OsmEntityInfoDatabase.Load(reader);
-
-			Assert.Equal(6688, target.Nodes.Count);
-			Assert.Equal(740, target.Ways.Count);
-			Assert.Equal(75, target.Relations.Count);
-		}
-
 		#region Save(IOsmWriter) tests
 
 		[Fact]

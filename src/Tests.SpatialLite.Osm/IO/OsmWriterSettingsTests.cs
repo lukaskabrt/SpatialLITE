@@ -13,7 +13,7 @@ namespace Tests.SpatialLite.Osm.IO {
 		public void Constructor__CreatesSettingsWithDefaultValues() {
 			OsmWriterSettings target = new OsmWriterSettings();
 
-			Assert.Equal(true, target.WriteMetadata);
+			Assert.True(target.WriteMetadata);
 		}
 
 		#endregion
