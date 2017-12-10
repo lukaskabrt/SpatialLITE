@@ -16,12 +16,6 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WkbWriterTests {
-        public WkbWriterTests() {
-            if(!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }
-        }
-
         #region Constructor(Stream, Settings) tests
 
         [Fact]
@@ -59,8 +53,7 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Fact]
         public void Constructor_PathSettings_CreatesOutputFile() {
-            string filename = "TestFiles\\wkbwriter-constructor-creates-output-test.bin";
-            File.Delete(filename);
+            string filename = PathHelper.GetTempFilePath("wkbwriter-constructor-creates-output-test.bin");
 
             WkbWriterSettings settings = new WkbWriterSettings();
             using (WkbWriter target = new WkbWriter(filename, settings)) {
@@ -78,8 +71,7 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Fact]
         public void Constructor_PathSettings_ThrowsArgumentNullExceptionIfSettingsIsNull() {
-            string path = "TestFiles\\wkbwriter-constructor-test.bin";
-            File.Delete(path);
+            string path = PathHelper.GetTempFilePath("wkbwriter-constructor-test.bin");
 
             Assert.Throws<ArgumentNullException>(() => new WkbWriter(path, null));
         }
@@ -96,8 +88,7 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-            string filename = "TestFiles\\wkbwriter-closes-output-filestream-test.pbf";
-            File.Delete(filename);
+            string filename = PathHelper.GetTempFilePath("wkbwriter-closes-output-filestream-test.bin");
 
             WkbWriterSettings settings = new WkbWriterSettings();
             WkbWriter target = new WkbWriter(filename, settings);

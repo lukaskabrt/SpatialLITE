@@ -13,13 +13,6 @@ using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps {
     public class GpxDocumentTests {
-
-        public GpxDocumentTests() {
-            if (!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }
-        }
-
         #region Constructors tests
 
         #region Constructor() tests
@@ -172,13 +165,12 @@ namespace Tests.SpatialLite.Gps {
 
         [Fact]
         public void Save_SavesDataToFile() {
-            string path = "TestFiles\\gpxdocument-save-test.gpx";
-            File.Delete(path);
+            string path = PathHelper.GetTempFilePath("gpxdocument-save-test.gpx");
 
-            var target = GpxDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
+            var target = GpxDocument.Load(PathHelper.RealGpxFilePath);
             target.Save(path);
 
-            var original = XDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
+            var original = XDocument.Load(PathHelper.RealGpxFilePath);
             var saved = XDocument.Load(path);
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(original, saved));

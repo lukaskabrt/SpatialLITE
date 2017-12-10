@@ -77,10 +77,6 @@ namespace Tests.SpatialLite.Gps.IO {
             _track = new GpxTrack(new GpxTrackSegment[] { _segment });
             _trackWithMetadata = new GpxTrack(new GpxTrackSegment[] { _segment });
             _trackWithMetadata.Metadata = _trackMetadata;
-
-            if(!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }        
         }
 
         #region Constructor(Stream, Settings) tests
@@ -115,7 +111,8 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
-            string path = "TestFiles\\gpxwriter-constructor-test.gpx";
+            string path = PathHelper.GetTempFilePath("gpxwriter-constructor-test-1.gpx");
+
             var settings = new GpxWriterSettings();
             using (var target = new GpxWriter(path, settings)) {
                 Assert.Same(settings, target.Settings);
@@ -125,8 +122,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Constructor_PathSettings_CreatesOutputFile() {
-            string filename = "TestFiles\\gpxwriter-constructor-creates-output-test.gpx";
-            File.Delete(filename);
+            string filename = PathHelper.GetTempFilePath("gpxwriter-constructor-creates-output-test.gpx");
 
             var settings = new GpxWriterSettings();
             using (var target = new GpxWriter(filename, settings)) {
@@ -138,8 +134,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Constructor_PathSettings_CreatesGpxFileWithRootElement() {
-            string path = "TestFiles\\gpx-writer-constructor-test.gpx";
-            File.Delete(path);
+            string path = PathHelper.GetTempFilePath("gpxwriter-constructor-test-2.gpx");
             string generatorName = "SpatialLite";
 
             using (GpxWriter target = new GpxWriter(path, new GpxWriterSettings() { WriteMetadata = false, GeneratorName = generatorName })) {
@@ -341,8 +336,7 @@ namespace Tests.SpatialLite.Gps.IO {
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-            string path = "TestFiles\\gpxwriter-closes-output-filestream-test.osm";
-            File.Delete(path);
+            string path = PathHelper.GetTempFilePath("gpxwriter-closes-output-filestream-test.osm");
 
             var target = new GpxWriter(path, new GpxWriterSettings());
             target.Dispose();

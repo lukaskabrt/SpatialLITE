@@ -46,10 +46,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
                 new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
             _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
-
-            if (!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }
         }
 
         #region Constructor(Stream, WriteDetails)
@@ -70,7 +66,8 @@ namespace Tests.SpatialLite.Osm.IO {
 
         [Fact]
         public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
-            string path = "TestFiles\\xmlwriter-constructor-test.osm";
+            string path = PathHelper.GetTempFilePath("xmlwriter-constructor-test.osm");
+
             OsmWriterSettings settings = new OsmWriterSettings();
             using (OsmXmlWriter target = new OsmXmlWriter(path, settings)) {
                 Assert.Same(settings, target.Settings);
@@ -80,8 +77,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
         [Fact]
         public void Constructor_PathSettings_CreatesOutputFile() {
-            string filename = "TestFiles\\osmwriter-constructor-creates-output-test.pbf";
-            File.Delete(filename);
+            string filename = PathHelper.GetTempFilePath("osmwriter-constructor-creates-output-test.pbf");
 
             OsmWriterSettings settings = new OsmWriterSettings();
             using (OsmXmlWriter target = new OsmXmlWriter(filename, settings)) {
@@ -97,8 +93,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-            string path = "TestFiles\\xmlwriter-closes-output-filestream-test.osm";
-            File.Delete(path);
+            string path = PathHelper.GetTempFilePath("xmlwriter-closes-output-filestream-test.osm");
 
             OsmXmlWriter target = new OsmXmlWriter(path, new OsmWriterSettings());
             target.Dispose();

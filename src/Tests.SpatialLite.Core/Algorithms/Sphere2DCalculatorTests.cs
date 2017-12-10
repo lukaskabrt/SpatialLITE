@@ -124,7 +124,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 		#endregion
 
 		#region CalculateArea(ICoordinateList) Tests
-	
+        
 		[Fact]
 		public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointDoesNotEqualLast() {
 			Coordinate[] coordinates = new Coordinate[] { new Coordinate(0, 0), new Coordinate(90, 0), new Coordinate(0, 90) };

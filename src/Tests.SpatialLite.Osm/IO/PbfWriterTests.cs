@@ -45,18 +45,13 @@ namespace Tests.SpatialLite.Osm.IO {
 				new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
 				new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
 			_relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
-
-            if (!Directory.Exists("TestFiles")) {
-                Directory.CreateDirectory("TestFiles");
-            }
         }
 
         #region Constructor(Filename, Settings) tests
 
         [Fact]
 		public void Constructor_FilenameSettings_SetsSettingsAndMakesThemReadOnly() {
-			string filename = "TestFiles\\pbfwriter-constructor-test.pbf";
-			File.Delete(filename);
+			string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-test.pbf");
 
 			PbfWriterSettings settings = new PbfWriterSettings();
 			using (PbfWriter target = new PbfWriter(filename, settings)) {
@@ -67,8 +62,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Constructor_FilenameSettings_CreatesOutputFile() {
-			string filename = "TestFiles\\pbfwriter-constructor-creates-output-test.pbf";
-			File.Delete(filename);
+			string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-creates-output-test.pbf");
 
 			PbfWriterSettings settings = new PbfWriterSettings();
 			using (PbfWriter target = new PbfWriter(filename, settings)) {
@@ -80,8 +74,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Constructor_FilenameSettings_WritesOsmHeader() {
-			string filename = "TestFiles\\pbfwriter-constructor-writes-header-test.pbf";
-			File.Delete(filename);
+			string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-writes-header-test.pbf");
 
 			PbfWriterSettings settings = new PbfWriterSettings();
 			using (PbfWriter target = new PbfWriter(filename, settings)) {
@@ -122,8 +115,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-			string filename = "TestFiles\\pbfwriter-closes-output-filestream-test.pbf";
-			File.Delete(filename);
+			string filename = PathHelper.GetTempFilePath("pbfwriter-closes-output-filestream-test.pbf");
 
 			PbfWriterSettings settings = new PbfWriterSettings();
 			PbfWriter target = new PbfWriter(filename, settings);
