@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents information about way.
-	/// </summary>
-	/// <remarks>
-	/// Nodes are represented with their id's only.
-	/// </remarks>
-	public class WayInfo : IEntityInfo {
+    /// <summary>
+    /// Represents information about way.
+    /// </summary>
+    /// <remarks>
+    /// Nodes are represented with their id's only.
+    /// </remarks>
+    public class WayInfo : IEntityInfo {
 		#region Constructors
 
 		/// <summary>
@@ -22,7 +20,7 @@ namespace SpatialLite.Osm {
 		/// <param name="tags">The collection of tags associated with the way.</param>
 		/// <param name="nodes">The nodes of the way.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
-		public WayInfo(int id, TagsCollection tags, IList<int> nodes, EntityMetadata additionalInfo = null) {
+		public WayInfo(long id, TagsCollection tags, IList<long> nodes, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Tags = tags;
 			this.Nodes = nodes;
@@ -42,7 +40,7 @@ namespace SpatialLite.Osm {
 			this.Tags = way.Tags;
 			this.Metadata = way.Metadata;
 
-			this.Nodes = new List<int>(way.Nodes.Count);
+			this.Nodes = new List<long>(way.Nodes.Count);
 			foreach (var node in way.Nodes) {
 				this.Nodes.Add(node.ID);
 			}
@@ -64,7 +62,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets ID of the object.
 		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Gets the collection of tags associated with this WayInfo.
@@ -74,7 +72,7 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets the list of id's of this way nodes.
 		/// </summary>
-		public IList<int> Nodes { get; private set; }
+		public IList<long> Nodes { get; private set; }
 
 		/// <summary>
 		/// Gets additional information about this IOsmGeometryInfo.

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
@@ -8,10 +6,10 @@ using System.Xml;
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Represents an IOsmWriter, that can write OSM entities to XML format.
-	/// </summary>
-	public class OsmXmlWriter : IOsmWriter {
+    /// <summary>
+    /// Represents an IOsmWriter, that can write OSM entities to XML format.
+    /// </summary>
+    public class OsmXmlWriter : IOsmWriter {
 		#region Private Fields
 
 		private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.InvariantCulture;
@@ -44,7 +42,7 @@ namespace SpatialLite.Osm.IO {
 			XmlWriterSettings writerSetting = new XmlWriterSettings();
 			writerSetting.Indent = true;
 
-			_writer = XmlTextWriter.Create(stream, writerSetting);
+			_writer = XmlWriter.Create(stream, writerSetting);
 		}
 
 		/// <summary>
@@ -64,7 +62,7 @@ namespace SpatialLite.Osm.IO {
 			writerSetting.Indent = true;
 
 			_streamWriter = new StreamWriter(_output, new UTF8Encoding(false));
-			_writer = XmlTextWriter.Create(_streamWriter, writerSetting);
+			_writer = XmlWriter.Create(_streamWriter, writerSetting);
 		}
 
 		#endregion
@@ -111,7 +109,7 @@ namespace SpatialLite.Osm.IO {
 		/// <summary>
 		/// Writes specified entity data-transfer object in XML format to the underlaying stream.
 		/// </summary>
-		/// <param name="entity">Entity data-transfer object to write.</param>
+		/// <param name="info">Entity data-transfer object to write.</param>
 		public void Write(IEntityInfo info) {
 			if (this.Settings.WriteMetadata) {
 				if (info.Metadata == null) {
@@ -265,15 +263,15 @@ namespace SpatialLite.Osm.IO {
 		/// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
-				if (disposing) {
-					_writer.Close();
+                if (_writer != null) {
+                    _writer.Dispose();
+                }
 
+				if (disposing) {
 					if (_streamWriter != null) {
-						_streamWriter.Close();
 						_streamWriter.Dispose();
 					}
 
-					_output.Close();
 					if (_ownsOutputStream) {
 						_output.Dispose();
 					}

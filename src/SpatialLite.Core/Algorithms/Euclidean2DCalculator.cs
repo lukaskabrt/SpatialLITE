@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Algorithms {
-	/// <summary>
-	/// Provides methods for calculating distance and area in 2D euclidean space
-	/// </summary>
-	public class Euclidean2DCalculator : IDimensionsCalculator {
+    /// <summary>
+    /// Provides methods for calculating distance and area in 2D euclidean space
+    /// </summary>
+    public class Euclidean2DCalculator : IDimensionsCalculator {
 		#region Public methods
 
 		/// <summary>

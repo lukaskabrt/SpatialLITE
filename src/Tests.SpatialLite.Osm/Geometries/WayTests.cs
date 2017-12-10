@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Xunit;
 using Moq;
@@ -18,8 +16,8 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			new Node(2, 10.1, -20.2),
 			new Node(3, -30.1, 40.2) });
 
-        WayInfo _wayEmptyInfo = new WayInfo(10, new TagsCollection(), new List<int>(), new EntityMetadata());
-        WayInfo _wayInfo = new WayInfo(10, new TagsCollection(), new int[] { 1, 2, 3 }, new EntityMetadata());
+        WayInfo _wayEmptyInfo = new WayInfo(10, new TagsCollection(), new List<long>(), new EntityMetadata());
+        WayInfo _wayInfo = new WayInfo(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
 
         IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
@@ -124,6 +122,17 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
             Assert.Null(Way.FromWayInfo(_wayInfo, _nodesEntityCollection, false));
         }
+
+		[Fact]
+		public void WhenWayIsInitializedFromWayInfo_CoordinatesReturnsNodesCoordinates() {
+			Way target = Way.FromWayInfo(_wayInfo, _nodesEntityCollection, true);
+
+			Assert.Equal(_wayInfo.Nodes.Count, target.Nodes.Count);
+
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
+		}
 
         #endregion
 

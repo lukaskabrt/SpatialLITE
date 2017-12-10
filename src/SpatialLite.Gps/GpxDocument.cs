@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
 
@@ -130,7 +127,7 @@ namespace SpatialLite.Gps {
         /// Loads Gpx data from IGpxReader
         /// </summary>
         /// <param name="reader">The reader to read data from</param>
-        /// <returnsGpxDocument instance eith data from GpxReader></returns>
+        /// <returns>GpxDocument instance with data from GpxReader</returns>
         public static GpxDocument Load(IGpxReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException("reader");

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Algorithms {
-	/// <summary>
-	/// Provides methods for determining relative position of geometries in Euclidean 2D space.
-	/// </summary>
-	public class Euclidean2DLocator : IGeometryLocator {
+    /// <summary>
+    /// Provides methods for determining relative position of geometries in Euclidean 2D space.
+    /// </summary>
+    public class Euclidean2DLocator : IGeometryLocator {
 		#region Public methods
 
 		/// <summary>

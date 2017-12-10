@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-
 using SpatialLite.Core.API;
+using System.Linq;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Provides methods for writing Geomerty objects into WKT format.
-	/// </summary>
-	public class WktWriter : IDisposable {
+    /// <summary>
+    /// Provides methods for writing Geomerty objects into WKT format.
+    /// </summary>
+    public class WktWriter : IDisposable {
 		#region Private Fields
 
 		private static System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using SpatialLite.Gps.Geometries;
 
@@ -135,13 +131,13 @@ namespace SpatialLite.Gps.IO {
                     bool elementParsed = false;
 
                     if (_xmlReader.Name == "ele") {
-                        string eleValue = _xmlReader.ReadElementString();
+                        string eleValue = _xmlReader.ReadElementContentAsString();
                         ele = double.Parse(eleValue, _invariantCulture);
                         elementParsed = true;
                     }
 
                     if (_xmlReader.Name == "time") {
-                        string timeValue = _xmlReader.ReadElementString();
+                        string timeValue = _xmlReader.ReadElementContentAsString();
                         timestamp = DateTime.ParseExact(timeValue, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", _invariantCulture);
                         elementParsed = true;
                     }
@@ -274,7 +270,7 @@ namespace SpatialLite.Gps.IO {
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            _xmlReader = XmlTextReader.Create(_input, xmlReaderSettings);
+            _xmlReader = XmlReader.Create(_input, xmlReaderSettings);
 
             _xmlReader.Read();
             while (_xmlReader.EOF == false && _insideGpx == false) {
@@ -310,9 +306,9 @@ namespace SpatialLite.Gps.IO {
                 while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "link") == false) {
                     switch (_xmlReader.Name) {
                         case "text":
-                            linkText = _xmlReader.ReadElementString(); break;
+                            linkText = _xmlReader.ReadElementContentAsString(); break;
                         case "type":
-                            linkType = _xmlReader.ReadElementString(); break;
+                            linkType = _xmlReader.ReadElementContentAsString(); break;
                         default:
                             _xmlReader.Read();
                             break;
@@ -332,15 +328,15 @@ namespace SpatialLite.Gps.IO {
         private bool TryReadTrackMetadata(GpxTrackMetadata metadata) {
             switch (_xmlReader.Name) {
                 case "name":
-                    metadata.Name = _xmlReader.ReadElementString(); return true;
+                    metadata.Name = _xmlReader.ReadElementContentAsString(); return true;
                 case "cmt":
-                    metadata.Comment = _xmlReader.ReadElementString(); return true;
+                    metadata.Comment = _xmlReader.ReadElementContentAsString(); return true;
                 case "desc":
-                    metadata.Description = _xmlReader.ReadElementString(); return true;
+                    metadata.Description = _xmlReader.ReadElementContentAsString(); return true;
                 case "src":
-                    metadata.Source = _xmlReader.ReadElementString(); return true;
+                    metadata.Source = _xmlReader.ReadElementContentAsString(); return true;
                 case "type":
-                    metadata.Type = _xmlReader.ReadElementString(); return true;
+                    metadata.Type = _xmlReader.ReadElementContentAsString(); return true;
                 case "link":
                     metadata.Links.Add(ReadLink()); return true;
             }
@@ -356,41 +352,41 @@ namespace SpatialLite.Gps.IO {
         private bool TryReadPointMetadata(GpxPointMetadata metadata) {
             switch (_xmlReader.Name) {
                 case "name":
-                    metadata.Name = _xmlReader.ReadElementString(); return true;
+                    metadata.Name = _xmlReader.ReadElementContentAsString(); return true;
                 case "cmt":
-                    metadata.Comment = _xmlReader.ReadElementString(); return true;
+                    metadata.Comment = _xmlReader.ReadElementContentAsString(); return true;
                 case "desc":
-                    metadata.Description = _xmlReader.ReadElementString(); return true;
+                    metadata.Description = _xmlReader.ReadElementContentAsString(); return true;
                 case "src":
-                    metadata.Source = _xmlReader.ReadElementString(); return true;
+                    metadata.Source = _xmlReader.ReadElementContentAsString(); return true;
                 case "link":
                     metadata.Links.Add(ReadLink()); return true;
                 case "magvar":
-                    string magvarValue = _xmlReader.ReadElementString();
+                    string magvarValue = _xmlReader.ReadElementContentAsString();
                     metadata.MagVar = double.Parse(magvarValue, _invariantCulture); return true;
                 case "geoidheight":
-                    string geoidHeightValue = _xmlReader.ReadElementString();
+                    string geoidHeightValue = _xmlReader.ReadElementContentAsString();
                     metadata.GeoidHeight = double.Parse(geoidHeightValue, _invariantCulture); return true;
                 case "hdop":
-                    string HdopValue = _xmlReader.ReadElementString();
+                    string HdopValue = _xmlReader.ReadElementContentAsString();
                     metadata.Hdop = double.Parse(HdopValue, _invariantCulture); return true;
                 case "vdop":
-                    string vdopValue = _xmlReader.ReadElementString();
+                    string vdopValue = _xmlReader.ReadElementContentAsString();
                     metadata.Vdop = double.Parse(vdopValue, _invariantCulture); return true;
                 case "pdop":
-                    string pdopValue = _xmlReader.ReadElementString();
+                    string pdopValue = _xmlReader.ReadElementContentAsString();
                     metadata.Pdop = double.Parse(pdopValue, _invariantCulture); return true;
                 case "ageofdgpsdata":
-                    string ageValue = _xmlReader.ReadElementString();
+                    string ageValue = _xmlReader.ReadElementContentAsString();
                     metadata.AgeOfDgpsData = double.Parse(ageValue, _invariantCulture); return true;
                 case "sat":
-                    string satValue = _xmlReader.ReadElementString();
+                    string satValue = _xmlReader.ReadElementContentAsString();
                     metadata.SatellitesCount = int.Parse(satValue, _invariantCulture); return true;
                 case "dgpsid":
-                    string dgpsidValue = _xmlReader.ReadElementString();
+                    string dgpsidValue = _xmlReader.ReadElementContentAsString();
                     metadata.DgpsId = int.Parse(dgpsidValue, _invariantCulture); return true;
                 case "fix":
-                    string fixValue = _xmlReader.ReadElementString();
+                    string fixValue = _xmlReader.ReadElementContentAsString();
                     metadata.Fix = GpxFixHelper.ParseGpsFix(fixValue); return true;
             }
 
@@ -404,8 +400,7 @@ namespace SpatialLite.Gps.IO {
         private void Dispose(bool disposing) {
             if (!this._disposed) {
                 if (disposing) {
-                    _xmlReader.Close();
-                    _input.Close();
+                    _xmlReader.Dispose();
 
                     if (_ownsInputStream) {
                         _input.Dispose();

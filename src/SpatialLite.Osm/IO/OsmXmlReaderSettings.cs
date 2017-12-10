@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Contains settings that determine behaviour of the OsmXmlReader.
-	/// </summary>
-	public class OsmXmlReaderSettings : OsmReaderSettings {
+    /// <summary>
+    /// Contains settings that determine behaviour of the OsmXmlReader.
+    /// </summary>
+    public class OsmXmlReaderSettings : OsmReaderSettings {
 		#region Private Fields
 
 		private bool _strictMode = true;

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for Ways.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "Way")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for Ways.
+    /// </summary>
+    [ ProtoContract(Name = "Way")]
 	internal class PbfWay {
 		#region Private ImplicitFields
 	

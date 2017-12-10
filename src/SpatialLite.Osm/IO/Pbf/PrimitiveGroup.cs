@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents container for PBF data transfer objects for OSM entities.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "PrimitiveGroup")]
+    /// <summary>
+    /// Represents container for PBF data transfer objects for OSM entities.
+    /// </summary>
+    [ProtoContract(Name = "PrimitiveGroup")]
 	internal class PrimitiveGroup {
 		#region Public Properties
 

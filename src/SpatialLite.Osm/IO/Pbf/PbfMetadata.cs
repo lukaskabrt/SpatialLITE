@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for Entity metadata.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "Info")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for Entity metadata.
+    /// </summary>
+    [ProtoContract(Name = "Info")]
 	internal class PbfMetadata {
 		#region Public Propeties
 

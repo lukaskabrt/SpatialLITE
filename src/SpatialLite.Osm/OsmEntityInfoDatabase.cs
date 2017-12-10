@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Osm.IO;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents in-memory OSM entities database that contains entities as IEntityInfo objects.
-	/// </summary>
-	public class OsmEntityInfoDatabase : OsmDatabase<IEntityInfo, NodeInfo, WayInfo, RelationInfo> {
+    /// <summary>
+    /// Represents in-memory OSM entities database that contains entities as IEntityInfo objects.
+    /// </summary>
+    public class OsmEntityInfoDatabase : OsmDatabase<IEntityInfo, NodeInfo, WayInfo, RelationInfo> {
 		#region Constructors
 
 		/// <summary>

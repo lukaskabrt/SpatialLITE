@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Defines functions and properties for classes that can read OSM entities from various sources.
-	/// </summary>
-	public interface IOsmReader : IDisposable {
+    /// <summary>
+    /// Defines functions and properties for classes that can read OSM entities from various sources.
+    /// </summary>
+    public interface IOsmReader : IDisposable {
 		/// <summary>
 		/// Reads the next Osm entity from a source.
 		/// </summary>

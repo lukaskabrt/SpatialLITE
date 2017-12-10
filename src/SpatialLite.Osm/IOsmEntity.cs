@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Osm {
-	/// <summary>
-	/// Defines properties for all OSM entities.
-	/// </summary>
-	public interface IOsmEntity {
+﻿namespace SpatialLite.Osm {
+    /// <summary>
+    /// Defines properties for all OSM entities.
+    /// </summary>
+    public interface IOsmEntity {
 		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the object.
 		/// </summary>
-		int ID { get; set; }
+		long ID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the collection of tags associated with the IOsmGeometry.

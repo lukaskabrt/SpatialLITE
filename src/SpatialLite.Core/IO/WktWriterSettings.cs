@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Specifies settings that determine behaviour of the WkbWriter.
-	/// </summary>
-	public class WktWriterSettings {
+﻿namespace SpatialLite.Core.IO {
+    /// <summary>
+    /// Specifies settings that determine behaviour of the WkbWriter.
+    /// </summary>
+    public class WktWriterSettings {
 		#region Constructors
 
 		/// <summary>

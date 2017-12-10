@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Xunit;
 
 using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
-	public class TagsCollectionTests {
+    public class TagsCollectionTests {
 		Tag[] _tags = new Tag[] {
 			new Tag("test-key-1", "test-value-1"),
 			new Tag("test-key-2", "test-value-2"),
@@ -75,7 +74,7 @@ namespace Tests.SpatialLite.Osm {
 		public void Clear_DoesNothingOnEmptyCollection() {
 			TagsCollection target = new TagsCollection();
 
-			Assert.DoesNotThrow(() => target.Clear());
+			target.Clear();
 		}
 
 		[Fact]

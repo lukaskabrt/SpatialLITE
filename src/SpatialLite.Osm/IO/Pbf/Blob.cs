@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represents content of the file block.
-	/// </summary>
-	[Serializable, ProtoContract]
+    /// <summary>
+    /// Represents content of the file block.
+    /// </summary>
+    [ProtoContract]
 	internal class Blob {
 		#region Public Properties
 

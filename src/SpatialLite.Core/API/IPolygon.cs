@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SpatialLite.Core.API {
-	/// <summary>
-	/// Defines properties and methods for polygons.
-	/// </summary>
-	public interface IPolygon : IGeometry {
+    /// <summary>
+    /// Defines properties and methods for polygons.
+    /// </summary>
+    public interface IPolygon : IGeometry {
 		/// <summary>
 		/// Gets the exterior boundary of the polygon
 		/// </summary>

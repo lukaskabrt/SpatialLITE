@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf {
-	/// <summary>
-	/// Represetns data transfer object used by PBF serializer for changesets.
-	/// </summary>
-	[Serializable, ProtoContract(Name = "ChangeSet")]
+    /// <summary>
+    /// Represetns data transfer object used by PBF serializer for changesets.
+    /// </summary>
+    [ProtoContract(Name = "ChangeSet")]
 	public class PbfChangeset {
 		#region Public Properties
 

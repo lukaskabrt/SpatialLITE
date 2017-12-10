@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
 using Xunit;
 
 using SpatialLite.Osm.IO;
-using SpatialLite.Osm.IO.Pbf;
 using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm;
-using Tests.SpatialLite.Osm.Data;
 
 namespace Tests.SpatialLite.Osm.IO {
-	public class PbfWriterTests {
+    public class PbfWriterTests {
 		//resolution for default granularity
 		private const double _resolution = 1E-07;
 
@@ -36,10 +32,10 @@ namespace Tests.SpatialLite.Osm.IO {
 			_nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
 			_nodeProperties = new NodeInfo(1, 50.4, 16.2, new TagsCollection(), _details);
 
-			_way = new WayInfo(1, new TagsCollection(), new int[] { 10, 11, 12 });
-			_wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new int[] { 10, 11, 12 });
-			_wayProperties = new WayInfo(1, new TagsCollection(), new int[] { 10, 11, 12 }, _details);
-			_wayWithoutNodes = new WayInfo(1, new TagsCollection(), new int[] { });
+			_way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
+			_wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });
+			_wayProperties = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 }, _details);
+			_wayWithoutNodes = new WayInfo(1, new TagsCollection(), new long[] { });
 
 			_relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
 			_relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
@@ -49,11 +45,15 @@ namespace Tests.SpatialLite.Osm.IO {
 				new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
 				new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
 			_relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
-		}
 
-		#region Constructor(Filename, Settings) tests
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
 
-		[Fact]
+        #region Constructor(Filename, Settings) tests
+
+        [Fact]
 		public void Constructor_FilenameSettings_SetsSettingsAndMakesThemReadOnly() {
 			string filename = "TestFiles\\pbfwriter-constructor-test.pbf";
 			File.Delete(filename);
@@ -113,7 +113,7 @@ namespace Tests.SpatialLite.Osm.IO {
 				;
 			}
 
-			Assert.True(stream.GetBuffer().Length > 0);
+			Assert.True(stream.ToArray().Length > 0);
 		}
 
 		#endregion
@@ -129,18 +129,7 @@ namespace Tests.SpatialLite.Osm.IO {
 			PbfWriter target = new PbfWriter(filename, settings);
 			target.Dispose();
 
-			Assert.DoesNotThrow(() => new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
-		}
-
-		[Fact]
-		public void Dispose_ClosesOutputStreamIfWritingToStream() {
-			PbfWriterSettings settings = new PbfWriterSettings();
-			MemoryStream stream = new MemoryStream();
-
-			PbfWriter target = new PbfWriter(stream, settings);
-			target.Dispose();
-
-			Assert.False(stream.CanRead);
+			new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 		}
 
 		#endregion
@@ -481,7 +470,7 @@ namespace Tests.SpatialLite.Osm.IO {
 				pbfStream.Seek(0, SeekOrigin.Begin);
 			}
 			else {
-				pbfStream = new MemoryStream(pbfStream.GetBuffer());
+				pbfStream = new MemoryStream(pbfStream.ToArray());
 			}
 
 			PbfReader reader = new PbfReader(pbfStream, new OsmReaderSettings() { ReadMetadata = true });

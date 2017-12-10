@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm.IO {
-	/// <summary>
-	/// Defines functions and properties for classes that can write OSM entities to various destinations.
-	/// </summary>
-	public interface IOsmWriter : IDisposable {
+    /// <summary>
+    /// Defines functions and properties for classes that can write OSM entities to various destinations.
+    /// </summary>
+    public interface IOsmWriter : IDisposable {
 		/// <summary>
 		/// Writes entity to the destination.
 		/// </summary>

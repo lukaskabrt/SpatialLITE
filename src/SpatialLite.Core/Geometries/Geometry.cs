@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represetns the base class for all geometry object.
-	/// </summary>
-	public abstract class Geometry : IGeometry {
+    /// <summary>
+    /// Represetns the base class for all geometry object.
+    /// </summary>
+    public abstract class Geometry : IGeometry {
 		#region Constructors
 
 		/// <summary>
@@ -64,6 +61,18 @@ namespace SpatialLite.Core.Geometries {
 		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  geometric  object</returns>
 		public abstract IGeometry GetBoundary();
 
-		#endregion
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
+        public abstract IEnumerable<Coordinate> GetCoordinates();
+
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
+        public abstract void Apply(ICoordinateFilter filter);
+		
+        #endregion
 	}
 }

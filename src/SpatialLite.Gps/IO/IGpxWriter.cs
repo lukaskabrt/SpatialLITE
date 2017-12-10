@@ -1,5 +1,5 @@
-﻿using System;
-using SpatialLite.Gps.Geometries;
+﻿using SpatialLite.Gps.Geometries;
+
 namespace SpatialLite.Gps.IO {
     /// <summary>
     /// Defines functions and properties for classes that can writes GPX entities to a destination.

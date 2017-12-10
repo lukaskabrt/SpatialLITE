@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a location in the coordinate space.
-	/// </summary>
-	public class Point : Geometry, IPoint {
+    /// <summary>
+    /// Represents a location in the coordinate space.
+    /// </summary>
+    public class Point : Geometry, IPoint {
 		#region Private Fields
 
 		private Coordinate _position = Coordinate.Empty;
@@ -108,15 +105,15 @@ namespace SpatialLite.Core.Geometries {
 			get { return _position.IsMeasured; }
 		}
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		/// <summary>
-		/// Returns Envelope, that covers this Point.
-		/// </summary>
-		/// <returns>Envelope, that covers this Point.</returns>
-		public override Envelope GetEnvelope() {
+        /// <summary>
+        /// Returns Envelope, that covers this Point.
+        /// </summary>
+        /// <returns>Envelope, that covers this Point.</returns>
+        public override Envelope GetEnvelope() {
 			return new Envelope(this.Position);
 		}
 
@@ -129,6 +126,22 @@ namespace SpatialLite.Core.Geometries {
 			return new GeometryCollection<Geometry>(this.Srid);
 		}
 
-		#endregion
-	}
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
+        public override void Apply(ICoordinateFilter filter) {
+            filter.Filter(ref _position);
+        }
+
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            yield return this.Position;
+        }
+
+        #endregion
+    }
 }

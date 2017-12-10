@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Represents token of the wkt string.
-	/// </summary>
-	internal struct WktToken {
+﻿namespace SpatialLite.Core.IO {
+    /// <summary>
+    /// Represents token of the wkt string.
+    /// </summary>
+    internal struct WktToken {
 		/// <summary>
 		/// Special token that represents end of available data.
 		/// </summary>

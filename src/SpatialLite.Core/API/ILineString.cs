@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpatialLite.Core.API {
-	/// <summary>
-	/// Defiens properties and methods for line strings. A line string is a curve with linear connection between concesutive points.
-	/// </summary>
-	public interface ILineString : IGeometry {
+﻿namespace SpatialLite.Core.API {
+    /// <summary>
+    /// Defiens properties and methods for line strings. A line string is a curve with linear connection between concesutive points.
+    /// </summary>
+    public interface ILineString : IGeometry {
 		/// <summary>
 		/// Gets a value indicating whether the <c>ILineString</c> is closed.
 		/// </summary>

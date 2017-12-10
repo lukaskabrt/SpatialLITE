@@ -13,9 +13,16 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WktWriterTests {
-		#region Test data
 
-		private static Coordinate[] _coordinatesXY = new Coordinate[] {
+        public WktWriterTests() {
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
+
+        #region Test data
+
+        private static Coordinate[] _coordinatesXY = new Coordinate[] {
 				new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
 		};
 
@@ -118,7 +125,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("WriteToStringTestData")]
+		[MemberData("WriteToStringTestData")]
 		public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -137,7 +144,7 @@ namespace Tests.SpatialLite.Core.IO {
 			target.Dispose();
 
 			FileStream testStream = null;
-			Assert.DoesNotThrow(() => testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite));
+			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
 		}
 
@@ -167,7 +174,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesPointsOfAllDimensionsTestData")]
+		[MemberData("Write_WritesPointsOfAllDimensionsTestData")]
 		public void Write_WritesPointsOfAllDimensions(Point toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -187,7 +194,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesLinestringOfAllDimensionsTestData")]
+		[MemberData("Write_WritesLinestringOfAllDimensionsTestData")]
 		public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -207,7 +214,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesPolygonsOfAllDimensionsTestData")]
+		[MemberData("Write_WritesPolygonsOfAllDimensionsTestData")]
 		public void Write_WritesPolygonsOfAllDimensions(Polygon toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -237,7 +244,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesMultiPoinsOfAllDimensionsTestData")]
+		[MemberData("Write_WritesMultiPoinsOfAllDimensionsTestData")]
 		public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -261,7 +268,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesMultiLineStringsOfAllDimensionsTestData")]
+		[MemberData("Write_WritesMultiLineStringsOfAllDimensionsTestData")]
 		public void Write_WritesMultiLineStringsOfAllDimensions(MultiLineString toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -285,7 +292,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesMultiPolygonsOfAllDimensionsTestData")]
+		[MemberData("Write_WritesMultiPolygonsOfAllDimensionsTestData")]
 		public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -305,7 +312,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[PropertyData("Write_WritesGeometryCollectionOfAllDimensionsTestData")]
+		[MemberData("Write_WritesGeometryCollectionOfAllDimensionsTestData")]
 		public void Write_WritesGeometryCollectionOfAllDimensions(GeometryCollection<Geometry> toWrite, string expectedWkt) {
 			this.TestWriteGeometry(toWrite, expectedWkt);
 		}
@@ -347,7 +354,7 @@ namespace Tests.SpatialLite.Core.IO {
 
 			using (TextReader tr = new StreamReader(new MemoryStream(stream.ToArray()))) {
 				string wkt = tr.ReadToEnd();
-				Assert.Equal(expectedWkt, wkt, StringComparer.InvariantCultureIgnoreCase);
+				Assert.Equal(expectedWkt, wkt, StringComparer.OrdinalIgnoreCase);
 			}
 		}
 

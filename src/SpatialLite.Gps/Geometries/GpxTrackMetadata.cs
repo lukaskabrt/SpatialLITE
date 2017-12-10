@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpatialLite.Gps.Geometries {
+﻿namespace SpatialLite.Gps.Geometries {
     /// <summary>
     /// Contains additional information about Gpx tracks and routes
     /// </summary>

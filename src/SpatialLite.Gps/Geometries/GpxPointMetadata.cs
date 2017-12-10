@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpatialLite.Gps.Geometries {
+﻿namespace SpatialLite.Gps.Geometries {
     /// <summary>
     /// Contains additional information about Gpx point
     /// </summary>
     public class GpxPointMetadata : GpxMetadata {
-        // <summary>
+        /// <summary>
         /// Gets or sets magnetic variation (in degrees) at the point
         /// </summary>
         public double? MagVar { get; set; }

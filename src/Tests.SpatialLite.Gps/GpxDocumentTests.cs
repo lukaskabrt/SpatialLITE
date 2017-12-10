@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xunit;
 
@@ -11,11 +8,18 @@ using SpatialLite.Gps;
 using SpatialLite.Gps.Geometries;
 using System.IO;
 using System.Xml.Linq;
-using Tests.SpatialLite.Gps.Data;
 using Moq;
+using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps {
     public class GpxDocumentTests {
+
+        public GpxDocumentTests() {
+            if (!Directory.Exists("TestFiles")) {
+                Directory.CreateDirectory("TestFiles");
+            }
+        }
+
         #region Constructors tests
 
         #region Constructor() tests
@@ -85,7 +89,7 @@ namespace Tests.SpatialLite.Gps {
 
         [Fact]
         public void Load_IGpxReader_LoadsEntitiesFromReader() {
-            using (var reader = new GpxReader(new MemoryStream(GpxTestData.gpx_real_file), new GpxReaderSettings() { ReadMetadata = true })) {
+            using (var reader = new GpxReader(TestDataReader.Open("gpx-real-file.gpx"), new GpxReaderSettings() { ReadMetadata = true })) {
                 var target = GpxDocument.Load(reader);
 
                 Assert.Equal(3, target.Waypoints.Count);
@@ -114,7 +118,7 @@ namespace Tests.SpatialLite.Gps {
 
         [Fact]
         public void Load_LoadsGpxEntitiesFromFile() {
-            string path = "../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx";
+            string path = "../../../Data/Gpx/gpx-real-file.gpx";
 
             var target = GpxDocument.Load(path);
 
@@ -171,13 +175,13 @@ namespace Tests.SpatialLite.Gps {
             string path = "TestFiles\\gpxdocument-save-test.gpx";
             File.Delete(path);
 
-            var target = GpxDocument.Load("../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx");
+            var target = GpxDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
             target.Save(path);
 
-            var original = XDocument.Load("../../src/Tests.SpatialLite.Gps/Data/Gpx/gpx-real-file.gpx");
+            var original = XDocument.Load("../../../Data/Gpx/gpx-real-file.gpx");
             var saved = XDocument.Load(path);
 
-            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(original, saved, null));
+            Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(original, saved));
         }
 
         #endregion

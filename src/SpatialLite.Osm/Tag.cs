@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SpatialLite.Osm {
-	/// <summary>
-	/// Represents OSM tag and it's value.
-	/// </summary>
-	public class Tag {
+    /// <summary>
+    /// Represents OSM tag and it's value.
+    /// </summary>
+    public class Tag {
 		#region Private Fields
 
 		private string _key;

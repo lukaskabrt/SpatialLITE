@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a curve with linear interpolation between consecutive vertices.  
-	/// </summary>
-	public class LineString : Geometry, ILineString {
+    /// <summary>
+    /// Represents a curve with linear interpolation between consecutive vertices.  
+    /// </summary>
+    public class LineString : Geometry, ILineString {
 		#region Private Fields
 
 		private CoordinateList _coordinates;
@@ -118,13 +115,13 @@ namespace SpatialLite.Core.Geometries {
 			}
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether this <c>LineString</c> is closed.
-		/// </summary>
-		/// <remarks>
-		/// The LineStringBase is closed if <see cref="StartPoint"/> and <see cref="EndPoint"/> are identical.
-		/// </remarks>
-		public virtual bool IsClosed {
+        /// <summary>
+        /// Gets a value indicating whether this <c>LineString</c> is closed.
+        /// </summary>
+        /// <remarks>
+        /// The LineStringBase is closed if <see cref="Start"/> and <see cref="End"/> are identical.
+        /// </remarks>
+        public virtual bool IsClosed {
 			get {
 				if (_coordinates.Count == 0) {
 					return false;
@@ -161,6 +158,22 @@ namespace SpatialLite.Core.Geometries {
 				return new MultiPoint(this.Srid, new Point[] { new Point(this.Srid, this.Start), new Point(this.Srid, this.End) });
 			}
 		}
+
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.Coordinates;
+        }
+
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
+        public override void  Apply(ICoordinateFilter filter) {
+            this.Coordinates.Apply(filter);
+        }
 
 		#endregion
 	}

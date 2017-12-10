@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a polygon, which may include holes.
-	/// </summary>
-	public class Polygon : Geometry, IPolygon {
+    /// <summary>
+    /// Represents a polygon, which may include holes.
+    /// </summary>
+    public class Polygon : Geometry, IPolygon {
 		#region Constructors
 
 		/// <summary>
@@ -46,7 +44,7 @@ namespace SpatialLite.Core.Geometries {
 		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
 		/// <param name="exteriorRing">The exterior boundary of the polygon.</param>
 		/// <param name="interiorRings">The collection of interior boundaries defining holes in the polygon.</param>
-		public Polygon(int srid, CoordinateList exteriorRing, IEnumerable<ICoordinateList> interiorRings)
+		public Polygon(int srid, ICoordinateList exteriorRing, IEnumerable<ICoordinateList> interiorRings)
 			: base(srid) {
 			this.ExteriorRing = exteriorRing;
 			this.InteriorRings = interiorRings.ToList();
@@ -129,6 +127,26 @@ namespace SpatialLite.Core.Geometries {
 			return boundary;
 		}
 
-		#endregion
-	}
+        /// <summary>
+        /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
+        /// </summary>
+        /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
+        public override IEnumerable<Coordinate> GetCoordinates() {
+            return this.ExteriorRing.Concat(this.InteriorRings.SelectMany(o => o));
+        }
+
+        /// <summary>
+        /// Applies the specific filter on this geometry
+        /// </summary>
+        /// <param name="filter">The filter to apply</param>
+        public override void Apply(ICoordinateFilter filter) {
+            this.ExteriorRing.Apply(filter);
+
+            foreach (var ring in this.InteriorRings) {
+                ring.Apply(filter);
+            }
+        }
+
+        #endregion
+    }
 }

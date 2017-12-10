@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.Algorithms;
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core {
-	/// <summary>
-	/// Provides methods for basic topology analysis of geometry objects and relationships among them.
-	/// </summary>
-	public class Topology {
+    /// <summary>
+    /// Provides methods for basic topology analysis of geometry objects and relationships among them.
+    /// </summary>
+    public class Topology {
 		#region Private Static Fields
 	
 		private static Topology _euclidean2D;

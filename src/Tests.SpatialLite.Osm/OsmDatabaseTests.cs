@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
 
 using Xunit;
-using Moq;
 
 using SpatialLite.Osm;
-using SpatialLite.Osm.IO;
 using SpatialLite.Osm.Geometries;
 
-using Tests.SpatialLite.Osm.Data;
-
 namespace Tests.SpatialLite.Osm {
-	public class OsmDatabaseTests {
+    public class OsmDatabaseTests {
 		Node[] _nodeData;
 		Way[] _wayData;
 		Relation[] _relationData;

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries {
-	/// <summary>
-	/// Represents a collection of Polygons
-	/// </summary>
-	public class MultiPolygon : GeometryCollection<Polygon>, IMultiPolygon {
+    /// <summary>
+    /// Represents a collection of Polygons
+    /// </summary>
+    public class MultiPolygon : GeometryCollection<Polygon>, IMultiPolygon {
 		#region Constructors
 
 		/// <summary>

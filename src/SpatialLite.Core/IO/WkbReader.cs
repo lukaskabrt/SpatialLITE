@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core.IO {
-	/// <summary>
-	/// Provides functions for reading and parsing geometries from WKB format.
-	/// </summary>
-	public class WkbReader : IDisposable {
+    /// <summary>
+    /// Provides functions for reading and parsing geometries from WKB format.
+    /// </summary>
+    public class WkbReader : IDisposable {
 		#region Private Fields
 
 		private BinaryReader _inputReader;
@@ -367,7 +365,7 @@ namespace SpatialLite.Core.IO {
 		private void Dispose(bool disposing) {
 			if (!this._disposed) {
 				if (disposing) {
-					_inputReader.Close();
+					_inputReader.Dispose();
 
 					if (_inputFileStream != null) {
 						_inputFileStream.Dispose();
