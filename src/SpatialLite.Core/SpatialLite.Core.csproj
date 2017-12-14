@@ -14,12 +14,12 @@
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
-    <PackageId>SpatialLite</PackageId>
+    <PackageId>SpatialLite.Core</PackageId>
     <Title>SpatialLite library</Title>
     <Authors>Lukas Kabrt</Authors>
-    <Description>SpatialLITE is a modern, lightweight .NET library for spatial data processing. It supports many data formats and basic topology analysis of geometry objects.</Description>
+    <Description>SpatialLITE is a lightweight .NET Core library for spatial data processing.</Description>
     <Copyright>(c) 2017</Copyright>
-    <PackageTags>Spatial</PackageTags>
-    <PackageProjectUrl>http://spatial.litesolutions.net/</PackageProjectUrl>
+    <PackageTags>Spatial WKT WKB</PackageTags>
+    <PackageProjectUrl>https://github.com/lukaskabrt/SpatialLITE</PackageProjectUrl>
   </PropertyGroup>
 </Project>

@@ -20,7 +20,7 @@
     <Description>Add-on for the SpatialLite library that adds support for GPX data format.</Description>
     <Copyright>(c) 2017</Copyright>
     <PackageTags>Spatial GPS Gpx</PackageTags>
-    <PackageProjectUrl>http://spatial.litesolutions.net/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/lukaskabrt/SpatialLITE</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
