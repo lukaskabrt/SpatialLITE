@@ -2,7 +2,7 @@
 
 namespace SpatialLite.Core.API {
     /// <summary>
-    /// Represents minimal bounding box of a <see cref="Geometry"/> object. 
+    /// Represents minimal bounding box of a <see cref="IGeometry"/> object.
     /// </summary>
     public class Envelope {
         #region Public Static Fields
@@ -122,10 +122,10 @@ namespace SpatialLite.Core.API {
             get { return _bounds[MIndex][1]; }
         }
 
-        /// <summary> 
-        /// Returns the difference between the maximum and minimum x values. 
-        /// </summary> 
-        /// <returns>max x - min x, or 0 if this is a null <c>Envelope</c>.</returns> 
+        /// <summary>
+        /// Returns the difference between the maximum and minimum x values.
+        /// </summary>
+        /// <returns>max x - min x, or 0 if this is a null <c>Envelope</c>.</returns>
         public double Width {
             get {
                 if (this.IsEmpty) {
@@ -137,10 +137,10 @@ namespace SpatialLite.Core.API {
         }
 
 
-        /// <summary> 
-        /// Returns the difference between the maximum and minimum y values. 
-        /// </summary> 
-        /// <returns>max y - min y, or 0 if this is a null <c>Envelope</c>.</returns> 
+        /// <summary>
+        /// Returns the difference between the maximum and minimum y values.
+        /// </summary>
+        /// <returns>max y - min y, or 0 if this is a null <c>Envelope</c>.</returns>
         public double Height {
             get {
                 if (this.IsEmpty) {
@@ -261,16 +261,16 @@ namespace SpatialLite.Core.API {
                 ((this.MaxM == other.MaxM) || (double.IsNaN(this.MaxM) && double.IsNaN(other.MaxM)));
         }
 
-        /// <summary> 
-        /// Check if the region defined by <c>other</c> 
-        /// overlaps (intersects) the region of this <c>Envelope</c>. 
-        /// </summary> 
-        /// <param name="other"> the <c>Envelope</c> which this <c>Envelope</c> is 
-        /// being checked for overlapping. 
-        /// </param> 
-        /// <returns> 
-        /// <c>true</c> if the <c>Envelope</c>s overlap. 
-        /// </returns> 
+        /// <summary>
+        /// Check if the region defined by <c>other</c>
+        /// overlaps (intersects) the region of this <c>Envelope</c>.
+        /// </summary>
+        /// <param name="other"> the <c>Envelope</c> which this <c>Envelope</c> is
+        /// being checked for overlapping.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the <c>Envelope</c>s overlap.
+        /// </returns>
         public bool Intersects(Envelope other) {
             if (this.IsEmpty || other.IsEmpty) {
                 return false;
@@ -279,12 +279,12 @@ namespace SpatialLite.Core.API {
             return !(other.MinX > this.MaxX || other.MaxX < this.MinX || other.MinY > this.MaxY || other.MaxY < other.MinY);
         }
 
-        ///<summary> 
-        /// Tests if the given point lies in or on the envelope. 
-        ///</summary> 
-        /// <param name="x">the x-coordinate of the point which this <c>Envelope</c> is being checked for containing</param> 
-        /// <param name="y">the y-coordinate of the point which this <c>Envelope</c> is being checked for containing</param> 
-        /// <returns> <c>true</c> if <c>(x, y)</c> lies in the interior or on the boundary of this <c>Envelope</c>.</returns> 
+        ///<summary>
+        /// Tests if the given point lies in or on the envelope.
+        ///</summary>
+        /// <param name="x">the x-coordinate of the point which this <c>Envelope</c> is being checked for containing</param>
+        /// <param name="y">the y-coordinate of the point which this <c>Envelope</c> is being checked for containing</param>
+        /// <returns> <c>true</c> if <c>(x, y)</c> lies in the interior or on the boundary of this <c>Envelope</c>.</returns>
         public bool Covers(double x, double y) {
             if (this.IsEmpty) {
                 return false;
@@ -297,21 +297,21 @@ namespace SpatialLite.Core.API {
         }
 
 
-        ///<summary> 
-        /// Tests if the given point lies in or on the envelope. 
-        ///</summary> 
-        /// <param name="p">the point which this <c>Envelope</c> is being checked for containing</param> 
-        /// <returns><c>true</c> if the point lies in the interior or on the boundary of this <c>Envelope</c>.</returns> 
+        ///<summary>
+        /// Tests if the given point lies in or on the envelope.
+        ///</summary>
+        /// <param name="p">the point which this <c>Envelope</c> is being checked for containing</param>
+        /// <returns><c>true</c> if the point lies in the interior or on the boundary of this <c>Envelope</c>.</returns>
         public bool Covers(Coordinate p) {
             return Covers(p.X, p.Y);
         }
 
 
-        ///<summary> 
-        /// Tests if the <c>Envelope other</c> lies wholely inside this <c>Envelope</c> (inclusive of the boundary). 
-        ///</summary> 
-        /// <param name="other">the <c>Envelope</c> to check</param> 
-        /// <returns>true if this <c>Envelope</c> covers the <c>other</c></returns> 
+        ///<summary>
+        /// Tests if the <c>Envelope other</c> lies wholely inside this <c>Envelope</c> (inclusive of the boundary).
+        ///</summary>
+        /// <param name="other">the <c>Envelope</c> to check</param>
+        /// <returns>true if this <c>Envelope</c> covers the <c>other</c></returns>
         public bool Covers(Envelope other) {
             if (this.IsEmpty || other.IsEmpty) {
                 return false;
