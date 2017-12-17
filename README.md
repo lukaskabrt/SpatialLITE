@@ -40,6 +40,10 @@ Console.WriteLine("End point: {0}", geometry.End);
 
 SpatialLITE is distributed as a set of NuGet packages. You can install only packages, you need.
 
+## Documentation
+
+API reference and more complex examples are available at http://spatial.litesolutions.net
+
 
 ### SpatialLITE.Core [![NuGet](https://img.shields.io/nuget/v/SpatialLite.Core.svg)](https://www.nuget.org/packages/SpatialLite.Core) [![Package stats SpatialLITE](https://img.shields.io/nuget/dt/SpatialLITE.Core.svg)](https://www.nuget.org/packages/SpatialLite.Core)
 
