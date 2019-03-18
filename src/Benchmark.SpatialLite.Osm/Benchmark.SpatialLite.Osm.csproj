@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Benchmark.SpatialLite.Osm</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Benchmark.SpatialLite.Osm</PackageId>
@@ -13,6 +13,10 @@
   <PropertyGroup Label="NuGet">
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj" />

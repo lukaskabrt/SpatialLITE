@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28711.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{440BE549-AD57-4965-AD01-A81E358E228D}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SpatialLite.Gps", "src\Tests.SpatialLite.Gps\Tests.SpatialLite.Gps.csproj", "{C4A5DBC7-DECA-4B13-8FA9-C5F98FD4E666}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark.SpatialLite.Osm", "src\Benchmark.SpatialLite.Osm\Benchmark.SpatialLite.Osm.csproj", "{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workbench", "src\Workbench\Workbench.csproj", "{113BDFF7-F575-40F7-B428-597D75678297}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113BDFF7-F575-40F7-B428-597D75678297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113BDFF7-F575-40F7-B428-597D75678297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113BDFF7-F575-40F7-B428-597D75678297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113BDFF7-F575-40F7-B428-597D75678297}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{3B177BD2-A111-443D-B695-4FA9660F71D7} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{C4A5DBC7-DECA-4B13-8FA9-C5F98FD4E666} = {440BE549-AD57-4965-AD01-A81E358E228D}
 		{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720} = {440BE549-AD57-4965-AD01-A81E358E228D}
+		{113BDFF7-F575-40F7-B428-597D75678297} = {440BE549-AD57-4965-AD01-A81E358E228D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F37A239-DB41-4230-B11F-B03AB1DF5322}
