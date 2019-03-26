@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SpatialLite.Gps", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark.SpatialLite.Osm", "src\Benchmark.SpatialLite.Osm\Benchmark.SpatialLite.Osm.csproj", "{EBE5E8AF-6EDA-4967-AB80-DF979D3DD720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workbench", "src\Workbench\Workbench.csproj", "{113BDFF7-F575-40F7-B428-597D75678297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workbench", "src\Workbench\Workbench.csproj", "{113BDFF7-F575-40F7-B428-597D75678297}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

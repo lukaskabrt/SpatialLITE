@@ -8,6 +8,7 @@ using Xunit.Extensions;
 
 using SpatialLite.Core.IO;
 using System.IO;
+using System.Globalization;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WktTokenizerTests {
@@ -38,8 +39,13 @@ namespace Tests.SpatialLite.Core.IO {
 
 			WktToken t = tokens.First();
 			Assert.Equal(expectedType, t.Type);
-			Assert.Equal(str, t.Value);
-		}
+            if (t.Type == TokenType.STRING) {
+                Assert.Equal(str, t.TextValue);
+            }
+            if (t.Type == TokenType.NUMBER) {
+                Assert.Equal(str, t.NumericValue.ToString(CultureInfo.InvariantCulture));
+            }
+        }
 
 		[Fact]
 		void Tokenize_String_ProcessesComplexText() {
@@ -50,14 +56,14 @@ namespace Tests.SpatialLite.Core.IO {
 
 			WktToken t = tokens[0];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.Value);
+			Assert.Equal("point", t.TextValue);
 
 			t = tokens[1];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[2];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.Value);
+			Assert.Equal("z", t.TextValue);
 
 			t = tokens[3];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
@@ -67,21 +73,21 @@ namespace Tests.SpatialLite.Core.IO {
 
 			t = tokens[5];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-10", t.Value);
+			Assert.Equal(-10, t.NumericValue);
 
 			t = tokens[6];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[7];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-15", t.Value);
+			Assert.Equal(-15, t.NumericValue);
 
 			t = tokens[8];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[9];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-100.1", t.Value);
+			Assert.Equal(-100.1, t.NumericValue);
 
 			t = tokens[10];
 			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
@@ -101,14 +107,14 @@ namespace Tests.SpatialLite.Core.IO {
 
 			WktToken t = tokens[0];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.Value);
+			Assert.Equal("point", t.TextValue);
 
 			t = tokens[1];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[2];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.Value);
+			Assert.Equal("z", t.TextValue);
 
 			t = tokens[3];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
@@ -118,21 +124,21 @@ namespace Tests.SpatialLite.Core.IO {
 
 			t = tokens[5];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-10", t.Value);
+			Assert.Equal(-10, t.NumericValue);
 
 			t = tokens[6];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[7];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-15", t.Value);
+			Assert.Equal(-15, t.NumericValue);
 
 			t = tokens[8];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[9];
 			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-100.1", t.Value);
+			Assert.Equal(-100.1, t.NumericValue);
 
 			t = tokens[10];
 			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);

@@ -9,16 +9,18 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WktTokensBufferTests {
-		WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "}, 
-			new WktToken() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
+		WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, TextValue = "point"}, new WktToken() {Type = TokenType.WHITESPACE, TextValue=" "}, 
+			new WktToken() {Type = TokenType.LEFT_PARENTHESIS, TextValue = "("}};
 
         #region Constructor() tests
 
         [Fact]
         public void Constructor__CreatesEmptyBuffer() {
-			WktTokensBuffer target = new WktTokensBuffer();
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { });
 
-			Assert.Empty(target);
+            var result = target.Peek(false);
+
+            Assert.Equal(WktToken.EndOfDataToken, result);
 		}
 
         #endregion
@@ -29,64 +31,9 @@ namespace Tests.SpatialLite.Core.IO {
         public void Constructor_TextReader_CreatesBufferWithSpecificTokens() {
 			WktTokensBuffer target = new WktTokensBuffer(_testData);
 
-			Assert.Equal(_testData.Length, target.Count());
 			for (int i = 0; i < _testData.Length; i++) {
-				Assert.Equal(_testData[i], target.ToArray()[i]);
+				Assert.Equal(_testData[i], target.GetToken(false));
 			}
-		}
-
-		#endregion
-
-		#region Count property tests
-
-		[Fact]
-		public void Count_GetsNumberOfItemsInBufffer() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData);
-
-			Assert.Equal(_testData.Length, target.Count);
-		}
-
-		#endregion
-
-		#region Add(WktToken) tests
-
-		[Fact]
-		public void Add_WktToken_AddsItemToTheCollection() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData[0]);
-
-			Assert.Single(target);
-			Assert.Contains(_testData[0], target);
-		}
-
-		#endregion
-
-		#region Add(IEnumerable<WktToken>) tests
-
-		[Fact]
-		public void Add_IEnumerable_AddsItemsToTheCollection() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData);
-
-			Assert.Equal(_testData.Length, target.Count());
-			for (int i = 0; i < _testData.Length; i++) {
-				Assert.Equal(_testData[i], target.ToArray()[i]);
-			}
-		}
-
-		#endregion
-
-		#region Clear() tests
-
-		[Fact]
-		public void Clear_RemovesAllItemsFromCollection() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData);
-
-			target.Clear();
-
-			Assert.Empty(target);
 		}
 
 		#endregion
@@ -95,44 +42,43 @@ namespace Tests.SpatialLite.Core.IO {
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_GetsNextTokenFromBufferAndLeavesItThere() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData[0]);
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { _testData[0] });
 
 			var result = target.Peek(false);
+            var next = target.Peek(false);
 
 			Assert.Equal(_testData[0], result);
-			Assert.Contains(_testData[0], target);
-		}
+            Assert.Equal(_testData[0], next);
+        }
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_IgnoresWhitespacesBeforeTokenIfIgnoreTokenIsTrue() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
-			target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
-			target.Add(_testData[0]);
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] {
+                new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " },
+                _testData[0]
+            });
 
 			var result = target.Peek(true);
 
 			Assert.Equal(_testData[0], result);
-			Assert.Equal(3, target.Count);
 		}
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_ReturnsWhitespaceIfIgnoreWhitespaceIsFalseAndNextTokenIsWhitespace() {
-			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(whitespaceToken);
-			target.Add(_testData[0]);
+			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " };
+			WktTokensBuffer target = new WktTokensBuffer( new WktToken[] {
+                whitespaceToken,
+                _testData[0]
+            });
 
 			var result = target.Peek(false);
 
 			Assert.Equal(whitespaceToken, result);
-			Assert.Equal(2, target.Count);
 		}
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_ReturnsEndOfDataTokenIfNoMoreTokensAreAvailable() {
-			WktTokensBuffer target = new WktTokensBuffer();
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { });
 
 			var result = target.Peek(false);
 
@@ -141,9 +87,8 @@ namespace Tests.SpatialLite.Core.IO {
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_ReturnsEndOfDataTokenIfOnlyWhitespaceTokensAreAvailalbleAndIgnoreWhitespaceIsTrue() {
-			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(whitespaceToken);
+			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " };
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { whitespaceToken });
 
 			var result = target.Peek(true);
 
@@ -156,44 +101,43 @@ namespace Tests.SpatialLite.Core.IO {
 
 		[Fact]
 		public void GetToken_IgnoreWhitespace_GetsNextTokenFromBufferAndRemoveIt() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(_testData[0]);
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { _testData[0] });
 
 			var result = target.GetToken(false);
+            var next = target.GetToken(false);
 
 			Assert.Equal(_testData[0], result);
-			Assert.DoesNotContain(_testData[0], target);
+            Assert.Equal(next, WktToken.EndOfDataToken);
 		}
 
 		[Fact]
 		public void GetToken_IgnoreWhitespace_IgnoresWhitespacesBeforeTokenIfIgnoreTokenIsTrue() {
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
-			target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
-			target.Add(_testData[0]);
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] {
+                new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " },
+                _testData[0]
+            });
 
 			var result = target.GetToken(true);
 
 			Assert.Equal(_testData[0], result);
-			Assert.Equal(0, target.Count);
 		}
 
 		[Fact]
 		public void GetToken_IgnoreWhitespace_ReturnsWhitespaceIfIgnoreWhitespaceIsFalseAndNextTokenIsWhitespace() {
-			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(whitespaceToken);
-			target.Add(_testData[0]);
+			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " };
+			WktTokensBuffer target = new WktTokensBuffer( new WktToken[] {
+                whitespaceToken,
+                _testData[0]
+            });
 
 			var result = target.GetToken(false);
 
 			Assert.Equal(whitespaceToken, result);
-			Assert.Equal(1, target.Count);
 		}
 
 		[Fact]
 		public void GetToken_IgnoreWhitespace_ReturnsEndOfDataTokenIfNoMoreTokensAreAvailable() {
-			WktTokensBuffer target = new WktTokensBuffer();
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { });
 
 			var result = target.GetToken(false);
 
@@ -202,15 +146,15 @@ namespace Tests.SpatialLite.Core.IO {
 
 		[Fact]
 		public void GetToken_IgnoreWhitespace_ReturnsEndOfDataTokenIfOnlyWhitespaceTokensAreAvailalbleAndIgnoreWhitespaceIsTrue() {
-			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
-			WktTokensBuffer target = new WktTokensBuffer();
-			target.Add(whitespaceToken);
+			WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, TextValue = " " };
+			WktTokensBuffer target = new WktTokensBuffer(new WktToken[] { whitespaceToken });
 
 			var result = target.GetToken(true);
+            var next = target.GetToken(true);
 
 			Assert.Equal(WktToken.EndOfDataToken, result);
-			Assert.Empty(target);
-		}
+            Assert.Equal(WktToken.EndOfDataToken, result);
+        }
 
 		#endregion
 	}

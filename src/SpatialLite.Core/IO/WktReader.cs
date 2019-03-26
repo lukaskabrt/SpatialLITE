@@ -12,8 +12,6 @@ namespace SpatialLite.Core.IO {
     /// Provides functions for reading and parsing geometries from WKT format.
     /// </summary>
     public class WktReader : IDisposable {
-		#region Private Fields
-
 		private static CultureInfo _invarianCulture = CultureInfo.InvariantCulture;
 
 		private TextReader _inputReader;
@@ -21,10 +19,6 @@ namespace SpatialLite.Core.IO {
 		private WktTokensBuffer _tokens;
 
 		private bool _disposed = false;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WktReader class that reads data from specific stream.
@@ -48,10 +42,6 @@ namespace SpatialLite.Core.IO {
 			_inputReader = new StreamReader(_inputFileStream);
 			_tokens = new WktTokensBuffer(WktTokenizer.Tokenize(_inputReader));
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Parses a Geometry from WKT string.
@@ -84,10 +74,6 @@ namespace SpatialLite.Core.IO {
 				return null;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Reads next geometry from the input.
@@ -126,10 +112,6 @@ namespace SpatialLite.Core.IO {
 			GC.SuppressFinalize(this);
 		}
 
-		#endregion
-
-		#region Private Static Methods
-
 		/// <summary>
 		/// Parses a geometry tagged text.
 		/// </summary>
@@ -139,25 +121,25 @@ namespace SpatialLite.Core.IO {
 			WktToken t = tokens.Peek(true);
 
 			if (t.Type == TokenType.STRING) {
-				if (t.Value.ToUpperInvariant() == "POINT") {
+				if (string.Equals(t.TextValue, "POINT", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParsePointTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "LINESTRING") {
+				else if (string.Equals(t.TextValue, "LINESTRING", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParseLineStringTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "POLYGON") {
+				else if (string.Equals(t.TextValue, "POLYGON", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParsePolygonTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "MULTIPOINT") {
+				else if (string.Equals(t.TextValue, "MULTIPOINT", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParseMultiPointTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "MULTILINESTRING") {
+				else if (string.Equals(t.TextValue, "MULTILINESTRING", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParseMultiLineStringTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "MULTIPOLYGON") {
+				else if (string.Equals(t.TextValue, "MULTIPOLYGON", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParseMultiPolygonTaggedText(tokens);
 				}
-				else if (t.Value.ToUpperInvariant() == "GEOMETRYCOLLECTION") {
+				else if (string.Equals(t.TextValue, "GEOMETRYCOLLECTION", StringComparison.OrdinalIgnoreCase)) {
 					return WktReader.ParseGeometryCollectionTaggedText(tokens);
 				}
 			}
@@ -166,7 +148,7 @@ namespace SpatialLite.Core.IO {
 				return null;
 			}
 
-			throw new WktParseException(string.Format("Invalid geometry type '{0}'", t.Value));
+			throw new WktParseException(string.Format("Invalid geometry type '{0}'", t.TextValue));
 		}
 
 		/// <summary>
@@ -202,7 +184,7 @@ namespace SpatialLite.Core.IO {
 		private static Point ParsePointText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new Point();
 			}
@@ -246,12 +228,12 @@ namespace SpatialLite.Core.IO {
 		/// <remarks><![CDATA[<x> <y> {<z>} {<m>}]]></remarks>
 		private static Coordinate ParseCoordinate(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = WktReader.Expect(TokenType.NUMBER, tokens);
-			double x = double.Parse(t.Value, _invarianCulture);
+            double x = t.NumericValue;
 
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			t = WktReader.Expect(TokenType.NUMBER, tokens);
-			double y = double.Parse(t.Value, _invarianCulture);
+            double y = t.NumericValue;
 
 			double z = double.NaN;
 			double m = double.NaN;
@@ -260,14 +242,14 @@ namespace SpatialLite.Core.IO {
 				WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 				t = WktReader.Expect(TokenType.NUMBER, tokens);
-				z = double.Parse(t.Value, _invarianCulture);
+                z = t.NumericValue;
 			}
 
 			if (isMeasured) {
 				WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 				t = WktReader.Expect(TokenType.NUMBER, tokens);
-				m = double.Parse(t.Value, _invarianCulture);
+                m = t.NumericValue;
 			}
 
 			return new Coordinate(x, y, z, m);
@@ -329,7 +311,7 @@ namespace SpatialLite.Core.IO {
 		private static LineString ParseLineStringText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new LineString();
 			}
@@ -396,7 +378,7 @@ namespace SpatialLite.Core.IO {
 		private static Polygon ParsePolygonText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new Polygon();
 			}
@@ -470,7 +452,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiLineString ParseMultiLineStringText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new MultiLineString();
 			}
@@ -515,7 +497,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiPoint ParseMultiPointText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new MultiPoint();
 			}
@@ -560,7 +542,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiPolygon ParseMultiPolygonText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new MultiPolygon();
 			}
@@ -605,7 +587,7 @@ namespace SpatialLite.Core.IO {
 		private static GeometryCollection<Geometry> ParseGeometryCollectionText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && t.Value.ToUpperInvariant() == "EMPTY") {
+			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
 				tokens.GetToken(true);
 				return new GeometryCollection<Geometry>();
 			}
@@ -648,7 +630,7 @@ namespace SpatialLite.Core.IO {
 					case TokenType.NUMBER: expected = "NUMBER"; break;
 				}
 
-				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}'", expected, t.Value));
+				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}'", expected, t.TextValue));
 			}
 
 			return t;
@@ -664,8 +646,8 @@ namespace SpatialLite.Core.IO {
 		private static WktToken Expect(string value, WktTokensBuffer tokens) {
 			WktToken t = tokens.GetToken(true);
 
-			if (t.Type != TokenType.STRING || string.Equals(value, t.Value, StringComparison.OrdinalIgnoreCase) == false) {
-				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}", value, t.Value));
+			if (t.Type != TokenType.STRING || string.Equals(value, t.TextValue, StringComparison.OrdinalIgnoreCase) == false) {
+				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}", value, t.TextValue));
 			}
 
 			return t;
@@ -683,13 +665,13 @@ namespace SpatialLite.Core.IO {
 			isMeasured = false;
 
 			if (token.Type == TokenType.STRING) {
-				if (token.Value.ToUpperInvariant() == "Z") {
+				if (string.Equals(token.TextValue, "Z", StringComparison.OrdinalIgnoreCase)) {
 					is3D = true;
 				}
-				else if (token.Value.ToUpperInvariant() == "M") {
+				else if (string.Equals(token.TextValue, "M", StringComparison.OrdinalIgnoreCase)) {
 					isMeasured = true;
 				}
-				else if (token.Value.ToUpperInvariant() == "ZM") {
+				else if (string.Equals(token.TextValue, "ZM", StringComparison.OrdinalIgnoreCase)) {
 					is3D = true;
 					isMeasured = true;
 				}
@@ -700,10 +682,6 @@ namespace SpatialLite.Core.IO {
 				return false;
 			}
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		/// <summary>
 		/// Releases the unmanaged resources used by the ComponentLibrary and optionally releases the managed resources.
@@ -722,7 +700,5 @@ namespace SpatialLite.Core.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

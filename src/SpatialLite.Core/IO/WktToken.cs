@@ -6,7 +6,7 @@
 		/// <summary>
 		/// Special token that represents end of available data.
 		/// </summary>
-		public static WktToken EndOfDataToken = new WktToken() { Type = TokenType.END_OF_DATA, Value = string.Empty };
+		public static WktToken EndOfDataToken = new WktToken() { Type = TokenType.END_OF_DATA, TextValue = string.Empty };
 
 		/// <summary>
 		/// The type of the tooken.
@@ -16,6 +16,7 @@
 		/// <summary>
 		/// The string value of the token.
 		/// </summary>
-		public string Value;
+		public string TextValue;
+        public double NumericValue;
 	}
 }

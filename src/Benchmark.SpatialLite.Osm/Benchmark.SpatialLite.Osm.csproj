@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>Benchmark.SpatialLite.Osm</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Benchmark.SpatialLite.Osm</PackageId>
@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpatialLite.Core\SpatialLite.Core.csproj" />
-    <ProjectReference Include="..\SpatialLite.Osm\SpatialLite.Osm.csproj" />
   </ItemGroup>
 
 </Project>

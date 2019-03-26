@@ -3,9 +3,6 @@ using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
 using SpatialLite.Core.Geometries;
 using SpatialLite.Core.IO;
-using SpatialLite.Osm;
-using SpatialLite.Osm.Geometries;
-using SpatialLite.Osm.IO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,11 +12,13 @@ namespace Benchmark.SpatialLite.Osm {
     public class Program {
         static void Main(string[] args) {
             var summary = BenchmarkRunner.Run<WktReaderBenchmarks>();
+            //var test = new WktReaderBenchmarks();
+            //test.ReadMemory();
         }
     }
 
     [MemoryDiagnoser]
-    [SimpleJob(RunStrategy.Monitoring, targetCount: 10)]
+    [SimpleJob(RunStrategy.Monitoring, targetCount: 50)]
     public class WktReaderBenchmarks {
         private byte[] _file;
 
