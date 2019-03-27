@@ -185,7 +185,7 @@ namespace SpatialLite.Core.IO {
 		/// <param name="is3D">Bool value indicating whether coordinates has Z value.</param>
 		/// <param name="isMeasured">Bool value indicating whether coordinates has M value.</param>
 		/// <returns>Parsed Coordinate.</returns>
-		private static IEnumerable<Coordinate> ReadCoordinates(BinaryReader reader, bool is3D, bool isMeasured) {
+		private static IList<Coordinate> ReadCoordinates(BinaryReader reader, bool is3D, bool isMeasured) {
 			int pointCount = (int)reader.ReadUInt32();
 
 			List<Coordinate> result = new List<Coordinate>(pointCount);
@@ -240,7 +240,7 @@ namespace SpatialLite.Core.IO {
 		/// <param name="isMeasured">bool value indicating whether linestring beeing read has M-value.</param>
 		/// <returns>Linestring read from the input.</returns>
 		private static LineString ReadLineString(BinaryReader reader, bool is3D, bool isMeasured) {
-			IEnumerable<Coordinate> coordinates = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+			var coordinates = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
 			return new LineString(coordinates);
 		}
 
@@ -258,11 +258,11 @@ namespace SpatialLite.Core.IO {
 				return new Polygon();
 			}
 
-			IEnumerable<Coordinate> exterior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+			var exterior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
 			Polygon result = new Polygon(new CoordinateList(exterior));
 
 			for (int i = 1; i < ringsCount; i++) {
-				IEnumerable<Coordinate> interior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+				var interior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
 				result.InteriorRings.Add(new CoordinateList(interior));
 			}
 

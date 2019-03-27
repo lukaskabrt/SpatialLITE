@@ -23,7 +23,7 @@ namespace Tests.SpatialLite.Core.IO {
 		}
 
 		[Theory]
-		[InlineData("stringTOOKEN", TokenType.STRING)]
+		[InlineData("STRINGTOOKEN", TokenType.STRING)]
 		[InlineData(" ", TokenType.WHITESPACE)]
 		[InlineData("\t", TokenType.WHITESPACE)]
 		[InlineData("\n", TokenType.WHITESPACE)]
@@ -56,14 +56,14 @@ namespace Tests.SpatialLite.Core.IO {
 
 			WktToken t = tokens[0];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.TextValue);
+			Assert.Equal("POINT", t.TextValue);
 
 			t = tokens[1];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[2];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.TextValue);
+			Assert.Equal("Z", t.TextValue);
 
 			t = tokens[3];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
@@ -107,14 +107,14 @@ namespace Tests.SpatialLite.Core.IO {
 
 			WktToken t = tokens[0];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.TextValue);
+			Assert.Equal("POINT", t.TextValue);
 
 			t = tokens[1];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);
 
 			t = tokens[2];
 			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.TextValue);
+			Assert.Equal("Z", t.TextValue);
 
 			t = tokens[3];
 			Assert.Equal(TokenType.WHITESPACE, t.Type);

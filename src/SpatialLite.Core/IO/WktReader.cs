@@ -121,25 +121,25 @@ namespace SpatialLite.Core.IO {
 			WktToken t = tokens.Peek(true);
 
 			if (t.Type == TokenType.STRING) {
-				if (string.Equals(t.TextValue, "POINT", StringComparison.OrdinalIgnoreCase)) {
+				if (t.TextValue == "POINT") {
 					return WktReader.ParsePointTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "LINESTRING", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "LINESTRING") {
 					return WktReader.ParseLineStringTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "POLYGON", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "POLYGON") {
 					return WktReader.ParsePolygonTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "MULTIPOINT", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "MULTIPOINT") {
 					return WktReader.ParseMultiPointTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "MULTILINESTRING", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "MULTILINESTRING") {
 					return WktReader.ParseMultiLineStringTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "MULTIPOLYGON", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "MULTIPOLYGON") {
 					return WktReader.ParseMultiPolygonTaggedText(tokens);
 				}
-				else if (string.Equals(t.TextValue, "GEOMETRYCOLLECTION", StringComparison.OrdinalIgnoreCase)) {
+				else if (t.TextValue == "GEOMETRYCOLLECTION") {
 					return WktReader.ParseGeometryCollectionTaggedText(tokens);
 				}
 			}
@@ -158,7 +158,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A point specified by tokens.</returns>
 		/// <remarks><![CDATA[Point tagged text format: <point tagged text> ::=  point {z}{m} <point text>]]></remarks>
 		private static Point ParsePointTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("point", tokens);
+			WktReader.Expect("POINT", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -184,7 +184,7 @@ namespace SpatialLite.Core.IO {
 		private static Point ParsePointText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new Point();
 			}
@@ -262,7 +262,7 @@ namespace SpatialLite.Core.IO {
 		/// <param name="is3D">bool value indicating whether coordinate being parsed had z-coordinate.</param>
 		/// <param name="isMeasured">bool value indicating whether coordinate beeing parsed has m-value.</param>
 		/// <returns>A list of coordinates specified by tokens.</returns>
-		private static IEnumerable<Coordinate> ParseCoordinates(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
+		private static List<Coordinate> ParseCoordinates(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			List<Coordinate> coordinates = new List<Coordinate>();
 
 			coordinates.Add(WktReader.ParseCoordinate(tokens, is3D, isMeasured));
@@ -285,7 +285,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A linestring specified by tokens.</returns>
 		/// <remarks><![CDATA[<linestring tagged text> ::=  linestring {z}{m} <linestring text>]]></remarks>
 		private static LineString ParseLineStringTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("linestring", tokens);
+			WktReader.Expect("LINESTRING", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -311,13 +311,13 @@ namespace SpatialLite.Core.IO {
 		private static LineString ParseLineStringText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new LineString();
 			}
 
 			WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-			IEnumerable<Coordinate> coords = WktReader.ParseCoordinates(tokens, is3D, isMeasured);
+			var coords = WktReader.ParseCoordinates(tokens, is3D, isMeasured);
 			WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
 			return new LineString(coords);
@@ -352,7 +352,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A polygon specified by tokens.</returns>
 		/// <remarks><![CDATA[<polygon tagged text> ::=  polygon {z}{m} <polygon text>]]></remarks>
 		private static Polygon ParsePolygonTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("polygon", tokens);
+			WktReader.Expect("POLYGON", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -378,7 +378,7 @@ namespace SpatialLite.Core.IO {
 		private static Polygon ParsePolygonText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new Polygon();
 			}
@@ -426,7 +426,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A multilinestring specified by tokens.</returns>
 		/// <remarks><![CDATA[<multilinestring tagged text> ::=  multilinestring {z}{m} <multilinestring text>  ]]></remarks>
 		private static MultiLineString ParseMultiLineStringTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("multilinestring", tokens);
+			WktReader.Expect("MULTILINESTRING", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -452,7 +452,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiLineString ParseMultiLineStringText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new MultiLineString();
 			}
@@ -471,7 +471,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A multipoint specified by tokens.</returns>
 		/// <remarks><![CDATA[<multipoint tagged text> ::=  multipoint {z}{m} <multipoint text>  ]]></remarks>
 		private static MultiPoint ParseMultiPointTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("multipoint", tokens);
+			WktReader.Expect("MULTIPOINT", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -497,7 +497,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiPoint ParseMultiPointText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new MultiPoint();
 			}
@@ -516,7 +516,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A multipolygon specified by tokens.</returns>
 		/// <remarks><![CDATA[<multipolygon tagged text> ::=  multipolygon {z}{m} <multipolygon text>]]></remarks>
 		private static MultiPolygon ParseMultiPolygonTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("multipolygon", tokens);
+			WktReader.Expect("MULTIPOLYGON", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -542,7 +542,7 @@ namespace SpatialLite.Core.IO {
 		private static MultiPolygon ParseMultiPolygonText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new MultiPolygon();
 			}
@@ -561,7 +561,7 @@ namespace SpatialLite.Core.IO {
 		/// <returns>A GeometryCollection specified by tokens.</returns>
 		/// <remarks><![CDATA[<GeometryCollection tagged text> ::=  GeometryCollection {z}{m} <GeometryCollection text>]]></remarks>
 		private static GeometryCollection<Geometry> ParseGeometryCollectionTaggedText(WktTokensBuffer tokens) {
-			WktReader.Expect("geometrycollection", tokens);
+			WktReader.Expect("GEOMETRYCOLLECTION", tokens);
 			WktReader.Expect(TokenType.WHITESPACE, tokens);
 
 			bool is3D = false;
@@ -587,7 +587,7 @@ namespace SpatialLite.Core.IO {
 		private static GeometryCollection<Geometry> ParseGeometryCollectionText(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
 			WktToken t = tokens.Peek(true);
 
-			if (t.Type == TokenType.STRING && string.Equals(t.TextValue, "EMPTY", StringComparison.OrdinalIgnoreCase)) {
+			if (t.Type == TokenType.STRING && t.TextValue == "EMPTY") {
 				tokens.GetToken(true);
 				return new GeometryCollection<Geometry>();
 			}
@@ -646,7 +646,7 @@ namespace SpatialLite.Core.IO {
 		private static WktToken Expect(string value, WktTokensBuffer tokens) {
 			WktToken t = tokens.GetToken(true);
 
-			if (t.Type != TokenType.STRING || string.Equals(value, t.TextValue, StringComparison.OrdinalIgnoreCase) == false) {
+			if (t.Type != TokenType.STRING || value != t.TextValue) {
 				throw new WktParseException(string.Format("Expected '{0}' but encountered '{1}", value, t.TextValue));
 			}
 
@@ -665,13 +665,13 @@ namespace SpatialLite.Core.IO {
 			isMeasured = false;
 
 			if (token.Type == TokenType.STRING) {
-				if (string.Equals(token.TextValue, "Z", StringComparison.OrdinalIgnoreCase)) {
+				if (token.TextValue == "Z") {
 					is3D = true;
 				}
-				else if (string.Equals(token.TextValue, "M", StringComparison.OrdinalIgnoreCase)) {
+				else if (token.TextValue == "M") {
 					isMeasured = true;
 				}
-				else if (string.Equals(token.TextValue, "ZM", StringComparison.OrdinalIgnoreCase)) {
+				else if (token.TextValue == "ZM") {
 					is3D = true;
 					isMeasured = true;
 				}
