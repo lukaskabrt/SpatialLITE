@@ -15,7 +15,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			new Point(6, 10.1, -20.2),
 			new Point(7, -30.1, 40.2) });
 
-       #region Constructor(SourceList)
 
        [Fact]
        public void Constructor_Source_SetsSource() {
@@ -23,10 +22,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
            Assert.Same(_points, target.Source);
        }
-
-       #endregion
-
-       #region Indexer tests
 
        [Fact]
        public void Indexer_Get_ReturnsCoordinatesFromSourceList() {
@@ -44,20 +39,12 @@ namespace Tests.SpatialLite.Core.Geometries {
            Assert.Throws<NotSupportedException>(() => target[0] = new Coordinate(10.1, 11.2));
        }
 
-       #endregion
-
-       #region Count property
-
        [Fact]
        public void Count_GetsNumberOfItemsInSourceCollection() {
            ReadOnlyCoordinateList<Point> target = new ReadOnlyCoordinateList<Point>(_points);
 
            Assert.Equal(_points.Count, target.Count);
        }
-
-       #endregion
-
-       #region Add(Coordinate) tests
 
        [Fact]
        public void Add_Coordinate_ThowsNotSupportedException() {
@@ -66,20 +53,12 @@ namespace Tests.SpatialLite.Core.Geometries {
            Assert.Throws<NotSupportedException>(() => target.Add(Coordinate.Empty));
        }
 
-       #endregion
-
-       #region Add(Coordinates) tests
-
        [Fact]
        public void Add_Coordinates_ThowsNotSupportedException() {
            ReadOnlyCoordinateList<Point> target = new ReadOnlyCoordinateList<Point>(_points);
 
            Assert.Throws<NotSupportedException>(() => target.Add(new Coordinate[] { Coordinate.Empty }));
        }
-
-       #endregion
-
-       #region Insert(Index, Coordinate) tests
 
        [Fact]
        public void Insert_Index_Coordinate_ThowsNotSupportedException() {
@@ -88,10 +67,6 @@ namespace Tests.SpatialLite.Core.Geometries {
            Assert.Throws<NotSupportedException>(() => target.Insert(0, Coordinate.Empty));
        }
 
-       #endregion
-
-       #region RemoveAt(Index) tests
-
        [Fact]
        public void RemoveAt_Index_ThowsNotSupportedException() {
            ReadOnlyCoordinateList<Point> target = new ReadOnlyCoordinateList<Point>(_points);
@@ -99,17 +74,11 @@ namespace Tests.SpatialLite.Core.Geometries {
            Assert.Throws<NotSupportedException>(() => target.RemoveAt(0));
        }
 
-       #endregion
-
-       #region Clear() tests
-
        [Fact]
        public void Clear_ThowsNotSupportedException() {
            ReadOnlyCoordinateList<Point> target = new ReadOnlyCoordinateList<Point>(_points);
 
            Assert.Throws<NotSupportedException>(() => target.Clear());
        }
-
-       #endregion
     }
 }

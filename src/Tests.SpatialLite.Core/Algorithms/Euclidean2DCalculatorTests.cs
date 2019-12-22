@@ -12,9 +12,6 @@ using SpatialLite.Core.Algorithms;
 
 namespace Tests.SpatialLite.Core.Algorithms {
 	public class Euclidean2DCalculatorTests {
-		
-		#region ComputeDistance(Coordinate, Coordinate) tests
-
 		public static IEnumerable<object[]> CoordinatesSameXYOrdinates {
 			get {
 				yield return new object[] { new Coordinate(10.1, 100.2), new Coordinate(10.1, 100.2) };
@@ -59,10 +56,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 
 			Assert.Equal(2, distance);
 		}
-
-		#endregion
-
-		#region ComputeDistance(Coordinate, Coordinate, Coordinate, Mode) tests
 
 		[Fact]
 		public void ComputeDistance_CoordinateLineLineSegmentMode_ReturnsDistanceToEndPointsIfPointsProjectionLiesOutsideSegment() {
@@ -172,10 +165,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			Assert.Equal(expectedDistance, distance);
 		}
 
-		#endregion
-
-		#region ComputeArea(ICoordinateList) tests
-
 		[Fact]
 		public void ComputeArea_ThrowsExceptionIfNumberOfVerticesIsLesserThen3() {
 			Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
@@ -239,6 +228,5 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			double area = target.CalculateArea(listM.Object);
 			Assert.Equal(expectedArea, area);
 		}
-		#endregion
 	}
 }

@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "ChangeSet")]
 	public class PbfChangeset {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets id of the changeset.
@@ -14,6 +13,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(1, IsRequired = true, Name = "id")]
 		public long ID { get; set; }
 
-		#endregion
 	}
 }

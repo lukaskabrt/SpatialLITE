@@ -15,8 +15,6 @@ namespace SpatialLite.Gps.IO {
         private StreamWriter _streamWriter;
         private bool _disposed = false;
 
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the GpxWriter class that writes GPX entities to the specified stream.
         /// </summary>
@@ -65,18 +63,10 @@ namespace SpatialLite.Gps.IO {
             _xmlWriter.WriteAttributeString("creator", this.Settings.GeneratorName ?? "SpatialLite");
         }
 
-        #endregion
-
-        #region Public properties
-
         /// <summary>
         /// Gets settings of the writer
         /// </summary>
         public GpxWriterSettings Settings { get; private set; }
-
-        #endregion
-
-        #region Public methods
 
         /// <summary>
         /// Writes the given waypoint to the output stream
@@ -135,10 +125,6 @@ namespace SpatialLite.Gps.IO {
 
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region Private methods
 
         /// <summary>
         /// Writes the given point to the output stream
@@ -275,7 +261,5 @@ namespace SpatialLite.Gps.IO {
                 _disposed = true;
             }
         }
-
-        #endregion
     }
 }

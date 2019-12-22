@@ -13,8 +13,6 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
         private const int TestFileWaysCount = 14461;
         private const int TestFileRelationsCount = 124;
 
-        #region PbfReader-PbfWriter compliance tests
-
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfReaderCanReadFileCreatedByPbfWriter_NoDenseNoCompression() {
             MemoryStream stream = new MemoryStream();
@@ -87,10 +85,6 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
             }
         }
 
-        #endregion
-
-        #region Helper functions
-
         private void TestReader(IOsmReader reader) {
             IEntityInfo info = null;
             int nodesCount = 0, waysCount = 0, relationsCount = 0;
@@ -121,7 +115,5 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
             return data;
         }
-
-        #endregion
     }
 }

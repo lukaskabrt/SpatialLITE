@@ -13,16 +13,13 @@ namespace SpatialLite.Core.Algorithms {
     /// All coordinate are expected to be a long/lat pairs in degrees.
     /// </remarks>
     public class Sphere2DCalculator : IDimensionsCalculator {
-		#region Public Constants
 
 		/// <summary>
 		/// The radius of spheric approximation of the Earth.
 		/// </summary>
 		public const double EarthRadius = 6371010;
 
-		#endregion
 
-		#region Public Constructors()
 
 		/// <summary>
 		/// Initializes a new instance of the Sphere2DCalculator that uses sphere approximation of the Earth.
@@ -31,18 +28,10 @@ namespace SpatialLite.Core.Algorithms {
 			this.Radius = Sphere2DCalculator.EarthRadius;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets radius of the sphere that Sphere2DCalculator uses for calculations.
 		/// </summary>
 		public double Radius { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Calculates distance between 2 <see cref="Coordinate"/> objects using great circle path.
@@ -125,10 +114,6 @@ namespace SpatialLite.Core.Algorithms {
 			return Math.Abs(area * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius);
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Calculates initial course when moving from point C1 to point C2 on great circle path.
 		/// </summary>
@@ -156,7 +141,5 @@ namespace SpatialLite.Core.Algorithms {
 		private double ToRadians(double degrees) {
 			return degrees * Math.PI / 180;
 		}
-
-		#endregion
 	}
 }

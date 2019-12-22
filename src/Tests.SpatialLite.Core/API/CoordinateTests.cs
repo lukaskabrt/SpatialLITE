@@ -10,17 +10,10 @@ using SpatialLite.Core.API;
 
 namespace Tests.SpatialLite.Core.API {
 	public class CoordinateTests {
-
-		#region Test data
-
 		double xCoordinate = 3.5;
 		double yCoordinate = 4.2;
 		double zCoordinate = 10.5;
 		double mValue = 100.4;
-
-		#endregion
-
-		#region Constructor tests
 
 		[Fact]
 		public void Constructor_XY_SetsXYValuesAndZMNaN() {
@@ -52,10 +45,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.Equal(mValue, target.M);
 		}
 
-		#endregion
-
-		#region Is3D tests
-
 		[Fact]
 		public void Is3D_ReturnsFalseForNaNZCoordinate() {
 			Coordinate target = new Coordinate(xCoordinate, yCoordinate);
@@ -70,10 +59,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.True(target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_ReturnsFalseForNaNMCoordinate() {
 			Coordinate target = new Coordinate(xCoordinate, yCoordinate);
@@ -87,10 +72,6 @@ namespace Tests.SpatialLite.Core.API {
 
 			Assert.True(target.IsMeasured);
 		}
-
-		#endregion
-
-		#region Equals() tests
 
 		[Fact]
 		public void Equals_ReturnsTrueForCoordinateWithTheSameOrdinates() {
@@ -132,10 +113,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.False(target.Equals(other));
 		}
 
-		#endregion
-
-		#region Equals2D(Coordinate) tests
-
 		[Fact]
 		public void Equals2D_ReturnsTrueForCoordinateWithTheSameOrdinates() {
 			Coordinate target = new Coordinate(xCoordinate, yCoordinate, zCoordinate, mValue);
@@ -168,10 +145,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.False(target.Equals2D(other));
 		}
 
-		#endregion
-
-		#region operator == tests
-
 		[Fact]
 		public void EqualsOperator_ReturnsTrueForCoordinateWithTheSameOrdinates() {
 			Coordinate target = new Coordinate(xCoordinate, yCoordinate, zCoordinate, mValue);
@@ -196,10 +169,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.False(target == other);
 		}
 
-		#endregion
-
-		#region operator != tests
-
 		[Fact]
 		public void NotEqualsOperator_ReturnsFalseForCoordinateWithTheSameOrdinates() {
 			Coordinate target = new Coordinate(xCoordinate, yCoordinate, zCoordinate, mValue);
@@ -223,7 +192,5 @@ namespace Tests.SpatialLite.Core.API {
 
 			Assert.True(target != other);
 		}
-
-		#endregion
 	}
 }

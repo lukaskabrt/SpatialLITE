@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     /// <typeparam name="T">The type of entities to store.</typeparam>
     internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T : class, IEntityInfo {
-		#region Private Fields
 
 		private List<T> _storage = null;
 		private Dictionary<string, uint> _stringTable;
@@ -14,10 +13,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 		private int _stringTableSize = 0;
 		private int _estimatedEntityDataSize = 0;
 		private bool _writeMetadata;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the EntityInfoBuffer class.
@@ -35,10 +30,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 			//add dummy value to the string table to get rid of 0 index
 			this.GetStringIndex(string.Empty);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Get maximal estimated size of data in buffer.
@@ -60,10 +51,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 				return _storage.Count;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Adds specific entity to buffer
@@ -161,7 +148,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
 			return _storage.GetEnumerator();
 		}
-
-		#endregion
 	}
 }

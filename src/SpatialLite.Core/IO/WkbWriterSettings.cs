@@ -5,13 +5,8 @@ namespace SpatialLite.Core.IO {
     /// Contains settings that determine behaviour of the WkbWriter
     /// </summary>
     public class WkbWriterSettings {
-		#region Private Filds
 
 		private BinaryEncoding _encoding;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WkbWriterSettings class with default values.
@@ -20,10 +15,6 @@ namespace SpatialLite.Core.IO {
 			: base() {
 				this.Encoding = BinaryEncoding.LittleEndian;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets a encoding that <c>WkbWriter</c> will use for writing geometries.
@@ -50,6 +41,5 @@ namespace SpatialLite.Core.IO {
 		/// </summary>
 		protected internal bool IsReadOnly { get; internal set; }
 
-		#endregion
 	}
 }

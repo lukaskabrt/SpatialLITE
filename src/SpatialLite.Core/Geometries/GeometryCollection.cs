@@ -10,28 +10,13 @@ namespace SpatialLite.Core.Geometries {
     /// <remarks>All objects should be in the same spatial reference system, but it isn't enforced by this class.</remarks>
     /// <typeparam name="T">The type of objects in the collection</typeparam>
     public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : IGeometry {
-		#region Private Fields
-
-		private List<T> _geometries;
-
-		#endregion
-
-		#region Constructors
+		private readonly List<T> _geometries;
 
 		/// <summary>
 		/// Initializes a new instance of the <c>GeometryCollection</c> class that is empty and has assigned WSG84 coordinate reference system.
 		/// </summary>
 		public GeometryCollection()
 			: base() {
-			_geometries = new List<T>();
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>GeometryCollection</c> class that is empty and has assigned specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system<c>GeometryCollection</c>.</param>
-		public GeometryCollection(int srid)
-			: base(srid) {
 			_geometries = new List<T>();
 		}
 
@@ -43,20 +28,6 @@ namespace SpatialLite.Core.Geometries {
 			: base() {
 			_geometries = new List<T>(geometries);
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>GeometryCollection</c> class in specified coordinate reference system and fills it with specified geometries.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param> 
-		/// <param name="geometries">Geometry objects to be added to the collection</param>
-		public GeometryCollection(int srid, IEnumerable<T> geometries)
-			: base(srid) {
-			_geometries = new List<T>(geometries);
-		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets a value indicating whether the this <see cref="GeometryCollection{T}"/>"/> has Z ordinates set.
@@ -96,10 +67,6 @@ namespace SpatialLite.Core.Geometries {
 			get { return _geometries; }
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Computes envelope of the <c>GeometryCollection</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
@@ -115,19 +82,6 @@ namespace SpatialLite.Core.Geometries {
 			return result;
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  GeometryCollection</returns>
-		public override IGeometry GetBoundary() {
-			GeometryCollection<IGeometry> boundary = new GeometryCollection<IGeometry>(this.Srid);
-			foreach (var geometry in this.Geometries) {
-				boundary.Geometries.Add(geometry.GetBoundary());
-			}
-
-			return boundary;
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
@@ -135,17 +89,5 @@ namespace SpatialLite.Core.Geometries {
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Geometries.SelectMany(o => o.GetCoordinates());
         }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            foreach (var geometry in this.Geometries) {
-                geometry.Apply(filter);
-            }
-        }
-
-        #endregion
     }
 }

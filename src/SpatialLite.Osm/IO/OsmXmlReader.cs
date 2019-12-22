@@ -8,7 +8,6 @@ namespace SpatialLite.Osm.IO {
     /// Represents a OsmReader, that can read OSM entities saved in the XML format.
     /// </summary>
     public class OsmXmlReader : IOsmReader {
-		#region Private Fields
 
 		private bool _disposed = false;
 		private Sys.XmlReader _xmlReader;
@@ -23,10 +22,6 @@ namespace SpatialLite.Osm.IO {
 		/// Contains bool value indicating whether XmlReader is inside osm element
 		/// </summary>
 		private bool _insideOsm;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmXmlReader class that reads data from the specified file.
@@ -55,18 +50,10 @@ namespace SpatialLite.Osm.IO {
 			this.InitializeReader();
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets OsmReaderSettings object that contains properties which determine behaviour of the reader.
 		/// </summary>
 		public OsmXmlReaderSettings Settings { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Reads the next OSM entity from the stream.
@@ -102,10 +89,6 @@ namespace SpatialLite.Osm.IO {
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		/// <summary>
 		/// Reads Node from the currnt element in the _xmlReader.
@@ -453,6 +436,5 @@ namespace SpatialLite.Osm.IO {
 				_disposed = true;
 			}
 		}
-		#endregion
 	}
 }

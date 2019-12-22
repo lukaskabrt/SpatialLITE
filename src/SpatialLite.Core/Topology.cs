@@ -8,13 +8,8 @@ namespace SpatialLite.Core {
     /// Provides methods for basic topology analysis of geometry objects and relationships among them.
     /// </summary>
     public class Topology {
-		#region Private Static Fields
 	
 		private static Topology _euclidean2D;
-
-		#endregion
-
-		#region Static Constructors
 
 		/// <summary>
 		/// Initializes static members of the Topology class.
@@ -22,10 +17,6 @@ namespace SpatialLite.Core {
 		static Topology() {
 			_euclidean2D = new Topology(new Euclidean2DLocator());
 		}
-
-		#endregion
-
-		#region Public Static Properties
 
 		/// <summary>
 		/// Gets Topology class instance that uses Euclidean2DLocator to determine relationships among geometries.
@@ -35,10 +26,6 @@ namespace SpatialLite.Core {
 				return _euclidean2D;
 			}
 		}
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Topology class with specific geometry locator.
@@ -52,18 +39,10 @@ namespace SpatialLite.Core {
 			this.GeometryLocator = geometryLocator;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets IGeometryLocator that this Topology class instance uses to determine relationships among geometries.
 		/// </summary>
 		public IGeometryLocator GeometryLocator { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Determines whether specific Coordinate is in the given polygon.
@@ -149,7 +128,5 @@ namespace SpatialLite.Core {
 		public bool Intersects(ILineString line1, ILineString line2) {
 			return this.GeometryLocator.Intersects(line1.Coordinates, line2.Coordinates);
 		}
-
-		#endregion
 	}
 }

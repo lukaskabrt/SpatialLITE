@@ -13,7 +13,6 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.Algorithms {
 	public class Euclidean2DLocatorTests {
-		#region IsOnLine(Coordinate, A, B, LineMode) tests
 
 		[Fact]
 		public void IsOnLine_ReturnsTrueIfPointIsOnAorB() {
@@ -84,10 +83,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			Euclidean2DLocator target = new Euclidean2DLocator();
 			Assert.False(target.IsOnLine(c, a, b, mode));
 		}
-
-		#endregion
-
-		#region IsInRing(Coordinate, Ring) tests
 
 		[Fact]
 		public void IsInRing_ThrowsArgumentExceptionIfRingHasLessThen3Points() {
@@ -173,9 +168,7 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			Assert.False(target.IsInRing(c, ring.Coordinates));
 		}
 
-		#endregion
 
-		#region Intersects(A1, B1, Line1Mode, A2, B2, Line2Mode) tests
 
 		[Fact]
 		public void Intersects_ReturnsFalseForParallelLines() {
@@ -255,10 +248,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			Assert.True(target.Intersects(A1, B1, LineMode.LineSegment, A2, B2, LineMode.LineSegment));
 		}
 
-		#endregion
-
-		#region Intersects(ICoordinateList, ICoordinateList) tests
-
 		[Fact]
 		public void Intersects_LineLine_ReturnsaFalseForNonIntersectingLines() {
 			ICoordinateList line1 = new CoordinateList(new Coordinate[] { new Coordinate(1.0, 1.0), new Coordinate(2.0, 1.0), new Coordinate(2.0, 2.0) });
@@ -278,7 +267,5 @@ namespace Tests.SpatialLite.Core.Algorithms {
 
 			Assert.True(target.Intersects(line1, line2));
 		}
-
-		#endregion
 	}
 }

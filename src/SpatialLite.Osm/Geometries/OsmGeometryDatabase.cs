@@ -8,7 +8,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Represents in-memory OSM entities database that contains entities as IOsmGeometry objects.
     /// </summary>
     public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation> {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmGeometryDatabase class that is empty.
@@ -24,10 +23,6 @@ namespace SpatialLite.Osm.Geometries {
 		public OsmGeometryDatabase(IEnumerable<IOsmGeometry> entities)
 			: base(entities) {
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Creates a new instaance of the OsmDatabase class and loads data from specific IOsmReader into it.
@@ -85,10 +80,6 @@ namespace SpatialLite.Osm.Geometries {
 			return db;
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Saves entities from the database to the specific writer.
 		/// </summary>
@@ -98,7 +89,5 @@ namespace SpatialLite.Osm.Geometries {
 				writer.Write(entity);
 			}
 		}
-
-		#endregion
 	}
 }

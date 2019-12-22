@@ -8,17 +8,12 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "DenseInfo")]
 	internal class PbfDenseMetadata {
-		#region Private ImplicitFields
 		private IList<long> _changeset = new List<long>();
 		private IList<long> _timestamp = new List<long>();
 		private IList<int> _userId = new List<int>();
 		private IList<int> _userNameIndex = new List<int>();
 		private IList<int> _version = new List<int>();
 		private IList<bool> _visible = new List<bool>();
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the DenseInfo class with internal fields initialized to default capacity.
@@ -44,10 +39,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 			_version = new List<int>(capacity);
 			_visible = new List<bool>(capacity);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets changeset id for corresponding node in DenseNodes. Property is delta encoded.
@@ -105,7 +96,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 			get { return _visible; }
 			set { _visible = value; }
 		}
-
-		#endregion
 	}
 }

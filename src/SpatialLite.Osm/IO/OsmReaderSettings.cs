@@ -5,13 +5,8 @@ namespace SpatialLite.Osm.IO {
     /// Contains settings that determine behaviour of OsmReaders.
     /// </summary>
     public class OsmReaderSettings {
-		#region Private Fields
 
 		bool _readMetadata = true;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmReaderSettings class with default values.
@@ -19,10 +14,6 @@ namespace SpatialLite.Osm.IO {
 		public OsmReaderSettings() {
 			this.ReadMetadata = true;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets a value indicating whether OsmReader should read and parse entity metadata.
@@ -44,7 +35,5 @@ namespace SpatialLite.Osm.IO {
 		/// Gets or sets value indicating whether properties of the current OsmReaderSettings instance can be changed.
 		/// </summary>
 		protected internal bool IsReadOnly { get; internal set; }
-
-		#endregion
 	}
 }

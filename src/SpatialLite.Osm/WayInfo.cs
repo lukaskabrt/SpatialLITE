@@ -11,7 +11,6 @@ namespace SpatialLite.Osm {
     /// Nodes are represented with their id's only.
     /// </remarks>
     public class WayInfo : IEntityInfo {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WayInfo class with specified ID, Nodes, collection of tags and optionaly EntityMetadata.
@@ -44,11 +43,7 @@ namespace SpatialLite.Osm {
 			foreach (var node in way.Nodes) {
 				this.Nodes.Add(node.ID);
 			}
-		}
-
-		#endregion
-		
-		#region Public Properties
+		}		
 
 		/// <summary>
 		/// Gets type of the object that is represented by this WayInfo.
@@ -78,7 +73,5 @@ namespace SpatialLite.Osm {
 		/// Gets additional information about this IOsmGeometryInfo.
 		/// </summary>
 		public EntityMetadata Metadata { get; set; }
-
-		#endregion
 	}
 }

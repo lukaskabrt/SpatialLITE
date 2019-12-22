@@ -8,16 +8,11 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "DenseNodes")]
 	internal class PbfDenseNodes {
-		#region Private ImplicitFields
 	
 		private IList<long> _id = null;
 		private IList<long> _latitude = null;
 		private IList<long> _longitude = null;
 		private IList<int> _keysVals = null;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the DenseNodes class with internal fields initialized to default capacity.
@@ -39,10 +34,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 			_longitude = new List<long>(capacity);
 			_keysVals = new List<int>(capacity);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ids of the nodes. This property is delta encoded.
@@ -94,7 +85,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 			get { return _keysVals; }
 			set { _keysVals = value; }
 		}
-
-		#endregion
 	}
 }

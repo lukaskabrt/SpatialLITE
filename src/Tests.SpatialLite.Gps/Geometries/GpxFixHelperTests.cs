@@ -14,8 +14,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
             }
         }
 
-        #region ParseGpsFix tests
-
         [Theory]
         [MemberData(nameof(GpsFixes))]
         public void ParseGpsFix_ValidGpsFixes_ParsesStringValue(GpsFix expectedValue, string s) {
@@ -32,10 +30,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
             Assert.Null(parsedValue);
         }
 
-        #endregion
-
-        #region GpsFixToString tests
-
         [Theory]
         [MemberData(nameof(GpsFixes))]
         public void GpsFixToString_GpsFixes_ConvertsToStringEquivalents(GpsFix fix, string expectedValue) {
@@ -43,8 +37,5 @@ namespace Tests.SpatialLite.Gps.Geometries {
 
             Assert.Equal(expectedValue, strValue);
         }
-
-        #endregion
-
     }
 }

@@ -5,8 +5,6 @@ namespace SpatialLite.Gps.Geometries {
     /// Represents route - an ordered list of waypoints representing a series of turn points leading to a destination.
     /// </summary>
     public class GpxRoute : GpxTrackSegment, IGpxGeometry {
-        #region Public properties
-
         /// <summary>
         /// Get or sets additional info about the route
         /// </summary>
@@ -18,10 +16,6 @@ namespace SpatialLite.Gps.Geometries {
         public GpxGeometryType GeometryType {
             get { return GpxGeometryType.Route; }
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Creates a new, empty instance of the GpxRoute class
@@ -37,7 +31,5 @@ namespace SpatialLite.Gps.Geometries {
         public GpxRoute(IEnumerable<GpxPoint> points)
             : base(points) {
         }
-
-        #endregion
     }
 }

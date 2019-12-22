@@ -7,13 +7,8 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a location in the coordinate space.
     /// </summary>
     public class Point : Geometry, IPoint {
-		#region Private Fields
 
 		private Coordinate _position = Coordinate.Empty;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class that is empty and has assigned the WSG84 coordinate reference system.
@@ -32,7 +27,7 @@ namespace SpatialLite.Core.Geometries {
 			_position = new Coordinate(x, y);
 		}
 
-	/// <summary>
+		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class with specified X, Y and Z coordinates in WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="x">The X-coordinate of the <c>Point</c></param>
@@ -43,7 +38,7 @@ namespace SpatialLite.Core.Geometries {
 			_position = new Coordinate(x, y, z);
 		}
 
-			/// <summary>
+		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class with specified X, Y, Z coordinates and M value in WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="x">The X-coordinate of the <c>Point</c></param>
@@ -63,20 +58,6 @@ namespace SpatialLite.Core.Geometries {
 			: base() {
 			_position = position;
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class with specified <c>Position</c> and coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The SRID of coordinate reference system.</param>
-		/// <param name="position">The position of the <c>Point</c>.</param>
-		public Point(int srid, Coordinate position)
-			: base(srid) {
-			_position = position;
-		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets position of this <c>Point</c>
@@ -105,10 +86,6 @@ namespace SpatialLite.Core.Geometries {
 			get { return _position.IsMeasured; }
 		}
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>
         /// Returns Envelope, that covers this Point.
         /// </summary>
@@ -117,23 +94,6 @@ namespace SpatialLite.Core.Geometries {
 			return new Envelope(this.Position);
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object.
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  point.</returns>
-		/// <remarks>Boundary of the point is always empty.</remarks>
-		public override IGeometry GetBoundary() {
-			return new GeometryCollection<Geometry>(this.Srid);
-		}
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            filter.Filter(ref _position);
-        }
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
@@ -141,7 +101,5 @@ namespace SpatialLite.Core.Geometries {
         public override IEnumerable<Coordinate> GetCoordinates() {
             yield return this.Position;
         }
-
-        #endregion
     }
 }

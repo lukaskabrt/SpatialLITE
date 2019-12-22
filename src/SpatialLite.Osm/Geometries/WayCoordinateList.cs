@@ -9,7 +9,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Provides a read-only wrapper around list of Nodes that implements ICoordinateList interface.
     /// </summary>
     internal class WayCoordinateList : ICoordinateList {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WayCoordinateList class with specified source list fo nodes
@@ -18,10 +17,6 @@ namespace SpatialLite.Osm.Geometries {
 		public WayCoordinateList(IList<Node> source) {
 			this.Source = source;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets number of Coordinates in the list.
@@ -50,10 +45,6 @@ namespace SpatialLite.Osm.Geometries {
 				throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Adds Coordinate to the end of the list.
@@ -113,11 +104,5 @@ namespace SpatialLite.Osm.Geometries {
 		IEnumerator IEnumerable.GetEnumerator() {
 			return this.GetEnumerator();
 		}
-
-        public void Apply(ICoordinateFilter filter) {
-            throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
-        }
-
-        #endregion
     }
 }

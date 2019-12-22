@@ -8,15 +8,10 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "Relation")]
 	internal class PbfRelation {
-		#region Private Fields
 
 		private IList<long> _memberIds = null;
 		private IList<int> _rolesIndexes = null;
 		private IList<PbfRelationMemberType> _types = null;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the PbfRelation class with internal fields initialized to default capacity.
@@ -36,10 +31,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 			_rolesIndexes = new List<int>(capacity);
 			_types = new List<PbfRelationMemberType>(capacity);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the relation.
@@ -91,7 +82,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 			get { return _types; }
 			set { _types = value; }
 		}
-
-		#endregion
 	}
 }

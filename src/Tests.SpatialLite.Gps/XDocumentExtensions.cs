@@ -36,6 +36,7 @@ namespace Tests.SpatialLite.Gps {
                         return false;
                 }
             }
+
             return true;
         }
     }

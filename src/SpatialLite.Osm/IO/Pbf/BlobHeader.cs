@@ -6,14 +6,13 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract]
 	internal class BlobHeader {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets type of the fileblock.
 		/// </summary>
 		/// <remarks>
 		/// Supported values are 'OSMHeader' and 'OSMData'.
-		/// </remarks>
+		/// </remarks>S
 		[ProtoMember(1, IsRequired = true, Name = "type")]
 		public string Type { get; set; }
 
@@ -29,6 +28,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(3, IsRequired = true, Name = "datasize")]
 		public int DataSize { get; set; }
 
-		#endregion
 	}
 }

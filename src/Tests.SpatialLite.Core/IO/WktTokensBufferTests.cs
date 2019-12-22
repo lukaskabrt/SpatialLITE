@@ -12,18 +12,12 @@ namespace Tests.SpatialLite.Core.IO {
 		WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "}, 
 			new WktToken() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
 
-        #region Constructor() tests
-
         [Fact]
         public void Constructor__CreatesEmptyBuffer() {
 			WktTokensBuffer target = new WktTokensBuffer();
 
 			Assert.Empty(target);
 		}
-
-        #endregion
-
-        #region Constructor(IEnumerable<WktToken>) tests
 
         [Fact]
         public void Constructor_TextReader_CreatesBufferWithSpecificTokens() {
@@ -35,10 +29,6 @@ namespace Tests.SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
-
-		#region Count property tests
-
 		[Fact]
 		public void Count_GetsNumberOfItemsInBufffer() {
 			WktTokensBuffer target = new WktTokensBuffer();
@@ -46,10 +36,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Equal(_testData.Length, target.Count);
 		}
-
-		#endregion
-
-		#region Add(WktToken) tests
 
 		[Fact]
 		public void Add_WktToken_AddsItemToTheCollection() {
@@ -59,10 +45,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Single(target);
 			Assert.Contains(_testData[0], target);
 		}
-
-		#endregion
-
-		#region Add(IEnumerable<WktToken>) tests
 
 		[Fact]
 		public void Add_IEnumerable_AddsItemsToTheCollection() {
@@ -75,10 +57,6 @@ namespace Tests.SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
-
-		#region Clear() tests
-
 		[Fact]
 		public void Clear_RemovesAllItemsFromCollection() {
 			WktTokensBuffer target = new WktTokensBuffer();
@@ -88,10 +66,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Peek(IgnoreWhitespace) tests
 
 		[Fact]
 		public void Peek_IgnoreWhitespace_GetsNextTokenFromBufferAndLeavesItThere() {
@@ -150,10 +124,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Equal(WktToken.EndOfDataToken, result);
 		}
 
-		#endregion
-
-		#region GetToken(IgnoreWhitespace) tests
-
 		[Fact]
 		public void GetToken_IgnoreWhitespace_GetsNextTokenFromBufferAndRemoveIt() {
 			WktTokensBuffer target = new WktTokensBuffer();
@@ -211,7 +181,5 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Equal(WktToken.EndOfDataToken, result);
 			Assert.Empty(target);
 		}
-
-		#endregion
 	}
 }

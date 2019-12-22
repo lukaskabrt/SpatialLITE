@@ -8,8 +8,6 @@ namespace SpatialLite.Gps.Geometries {
     /// To represent a single GPS track where GPS reception was lost, or the GPS receiver was turned off, start a new Track Segment for each continuous span of track data.
     /// </remarks>
     public class GpxTrackSegment : GpsTrackBase<GpxPoint> {
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of the empty GpxTrackSegment
         /// </summary>
@@ -23,9 +21,6 @@ namespace SpatialLite.Gps.Geometries {
         public GpxTrackSegment(IEnumerable<GpxPoint> points)
             : base(points) {
         }
-
-        #endregion
-
     }
 
 }

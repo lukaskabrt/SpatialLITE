@@ -7,7 +7,6 @@ namespace SpatialLite.Core.Algorithms {
     /// Provides methods for determining relative position of geometries in Euclidean 2D space.
     /// </summary>
     public class Euclidean2DLocator : IGeometryLocator {
-		#region Public methods
 
 		/// <summary>
 		/// Determines whether specific coordinate is on the line defined by two points.
@@ -191,6 +190,5 @@ namespace SpatialLite.Core.Algorithms {
 			return false;
 		}
 
-		#endregion
 	}
 }

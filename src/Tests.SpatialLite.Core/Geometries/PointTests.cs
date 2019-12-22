@@ -11,7 +11,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class PointTests {
-		#region Test data
 
 		double _xOrdinate = 3.5;
 		double _yOrdinate = 4.2;
@@ -19,9 +18,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 		double _mValue = 100.4;
 
 		Coordinate _coordinate;
- 
-		#endregion
-
 		public PointTests() {
 			_coordinate = new Coordinate(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);
 		}
@@ -33,84 +29,40 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(m, target.Position.M);
 		}
 
-		#region Constructor tests
-
-		#region Constructor() tests
-
 		[Fact]
-		public void Constructor__CreatesPointWithEmptyPositionAndWSG84SRID() {
+		public void Constructor__CreatesPointWithEmptyPosition() {
 			Point target = new Point();
 
 			Assert.Equal(Coordinate.Empty, target.Position);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
-		#endregion
-
-		#region Constructor(X, Y) tests
-
 		[Fact]
-		public void Constructor_XY_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XY_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, double.NaN, double.NaN);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
-		#endregion
-
-		#region Constructor(X, Y, Z) tests
-
 		[Fact]
-		public void Constructor_XYZ_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XYZ_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, double.NaN);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
-		#endregion
-
-		#region Constructor(X, Y, Z, M) tests
-
 		[Fact]
-		public void Constructor_XYZM_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XYZM_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, _mValue);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
-		#endregion
-
-		#region Constructor(Position) tests
-
 		[Fact]
-		public void Constructor_Coordinate_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_Coordinate_SetsCoordinates() {
 			Point target = new Point(_coordinate);
 
 			Assert.Equal(_coordinate, target.Position);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
-
-		#endregion
-
-		#region Constructor(Srid, Position) tests
-
-		[Fact]
-		public void Constructor_SridCoordinate_SetsCoordinatesAndWSG84SRID() {
-			int srid = -1;
-			Point target = new Point(srid, _coordinate);
-
-			Assert.Equal(_coordinate, target.Position);
-			Assert.Equal(srid, target.Srid);
-		}
-
-		#endregion
-
-		#endregion
-
-		#region Is3D tests
 
 		[Fact]
 		public void Is3D_ReturnsTrueFor3DPoint() {
@@ -126,10 +78,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.False(target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_ReturnsTrueForMeasuredPoint() {
 			Point target = new Point(_xOrdinate, _yOrdinate, double.NaN, _mValue);
@@ -143,10 +91,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.False(target.IsMeasured);
 		}
-
-		#endregion
-
-		#region GetEnvelope() tests
 
 		[Fact]
 		public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPoint() {
@@ -177,20 +121,5 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(_coordinate.M, envelope.MinM);
 			Assert.Equal(_coordinate.M, envelope.MaxM);
 		}
-
-		#endregion
-
-		#region GetBoundary() tests
-
-		[Fact]
-		public void GetBoundary_ReturnsEmptyGeometryCollection() {
-			Point target = new Point(_coordinate);
-			IGeometryCollection<IGeometry> boundary = target.GetBoundary() as IGeometryCollection<IGeometry>;
-
-			Assert.NotNull(boundary);
-			Assert.Empty(boundary.Geometries);
-		}
-
-		#endregion
 	}
 }

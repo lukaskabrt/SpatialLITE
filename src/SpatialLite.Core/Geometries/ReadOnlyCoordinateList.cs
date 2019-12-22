@@ -8,8 +8,6 @@ namespace SpatialLite.Core.Geometries {
     /// Provides read-only ICoordinateList wrapper around collection of points
     /// </summary>
     public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the ReadOnlyCoordinateList class with specified source list fo nodes
         /// </summary>
@@ -17,10 +15,6 @@ namespace SpatialLite.Core.Geometries {
         public ReadOnlyCoordinateList(IReadOnlyList<T> source) {
             this.Source = source;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets number of Coordinates in the list.
@@ -49,10 +43,6 @@ namespace SpatialLite.Core.Geometries {
                 throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Adds Coordinate to the end of the list.
@@ -112,17 +102,5 @@ namespace SpatialLite.Core.Geometries {
         IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public void Apply(ICoordinateFilter filter) {
-            for (int i = 0; i < this.Source.Count; i++) {
-                this.Source[i].Apply(filter);
-            }
-        }
-
-        #endregion
     }
 }

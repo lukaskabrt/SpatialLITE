@@ -5,7 +5,6 @@ namespace SpatialLite.Osm {
     /// Contains additional information about OSM entities such as Author, Version, Timesptam of the last change and others.
     /// </summary>
     public class EntityMetadata {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets version of the object.
@@ -36,7 +35,5 @@ namespace SpatialLite.Osm {
 		/// Gets or sets visibility of this item.
 		/// </summary>
 		public bool Visible { get; set; }
-
-		#endregion
 	}
 }

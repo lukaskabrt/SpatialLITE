@@ -12,8 +12,6 @@ using Moq;
 namespace Tests.SpatialLite.Core.Algorithms {
 	public class Sphere2DCalculatorTests {
 
-		#region CalculateDistance(Coordinate, Coordinate) Tests
-
 		[Fact]
 		public void CalculateDistance_CoordinateCoordinate_Returns0ForSameCoordinate() {
 			Coordinate c = new Coordinate(10.1, 100.2);
@@ -60,10 +58,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 
 			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
 		}
-
-		#endregion
-
-		#region CalculateDistance(Coordinate, Coordinate, Coordinate, LineMode) Tests
 
 		[Fact]
 		public void CalculateDistance_LineCoordinate_ReturnsDistanceToInfiniteLine() {
@@ -120,10 +114,6 @@ namespace Tests.SpatialLite.Core.Algorithms {
 
 			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
 		}
-
-		#endregion
-
-		#region CalculateArea(ICoordinateList) Tests
         
 		[Fact]
 		public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointDoesNotEqualLast() {
@@ -161,7 +151,5 @@ namespace Tests.SpatialLite.Core.Algorithms {
 			double area = target.CalculateArea(listM.Object);
 			Assert.InRange<double>(area, expectedArea * 0.995, expectedArea * 1.005);
 		}
-
-		#endregion
 	}
 }

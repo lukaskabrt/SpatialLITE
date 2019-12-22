@@ -5,14 +5,9 @@ namespace SpatialLite.Osm.IO {
     /// Contains settings that determine behaviour of the OsmWriterWriter.
     /// </summary>
     public class OsmWriterSettings {
-		#region Private Fields
 
 		bool _writeMetadata = true;
 		string _programName = "SpatialLITE";
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmReaderSettings class with default values.
@@ -20,10 +15,6 @@ namespace SpatialLite.Osm.IO {
 		public OsmWriterSettings() {
 			this.WriteMetadata = true;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets a value indicating whether OsmWriter should write entity metadata.
@@ -61,7 +52,5 @@ namespace SpatialLite.Osm.IO {
 		/// Gets or sets value indicating whether properties of the current OsmWriterSettings instance can be changed.
 		/// </summary>
 		protected internal bool IsReadOnly { get; internal set; }
-
-		#endregion
 	}
 }

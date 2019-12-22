@@ -9,15 +9,10 @@ namespace SpatialLite.Core.IO {
     /// Provides function for writing geometry objects into WKB format.
     /// </summary>
     public class WkbWriter : IDisposable {
-		#region Private Fields
 
 		private bool _disposed = false;
 		private BinaryWriter _writer = null;
 		private Stream _output = null;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WkbWriter class with specific settings.
@@ -65,18 +60,10 @@ namespace SpatialLite.Core.IO {
 			_writer = new BinaryWriter(_output);
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the settings that detedmine behaviour of this instance of the WkbWriter.
 		/// </summary>
 		public WkbWriterSettings Settings { get; private set; }
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Writes specified Geometry in the WKB format to a binary arrray using default WkbWriterSettings.
@@ -96,10 +83,6 @@ namespace SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Releases all resources used by the WkbWriter.
 		/// </summary>
@@ -116,10 +99,6 @@ namespace SpatialLite.Core.IO {
 			WkbWriter.WriteEncoding(_writer, this.Settings.Encoding);
 			WkbWriter.Write(geometry, _writer);
 		}
-
-		#endregion
-
-		#region Private Static
 
 		/// <summary>
 		/// Writes the Encoding byte defined by <see cref="WkbWriterSettings.Encoding"/> property to the output stream.
@@ -317,10 +296,6 @@ namespace SpatialLite.Core.IO {
 			return result;
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Releases the unmanaged resources used by the WkbWriter and optionally releases the managed resources.
 		/// </summary>
@@ -338,7 +313,5 @@ namespace SpatialLite.Core.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

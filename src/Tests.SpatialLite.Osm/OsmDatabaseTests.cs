@@ -31,8 +31,6 @@ namespace Tests.SpatialLite.Osm {
 			_data = _nodeData.Concat<IOsmGeometry>(_wayData).Concat<IOsmGeometry>(_relationData).ToArray();
 		}
 
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyDatabase() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>();
@@ -42,10 +40,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Empty(target.Ways);
 			Assert.Empty(target.Relations);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<T>) tests
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems() {
@@ -73,11 +67,6 @@ namespace Tests.SpatialLite.Osm {
 			}
 		}
 
-		#endregion
-
-
-		#region Count property tests
-
 		[Fact]
 		public void Count_ReturnsNumberOfAllEntities() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
@@ -85,20 +74,12 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Equal(_data.Length, target.Count);
 		}
 
-		#endregion
-
-		#region IsReadOnly property tests
-
 		[Fact]
 		public void IsReadOnly_ReturnsFalse() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
 
 			Assert.False(target.IsReadOnly);
 		}
-
-		#endregion
-
-		#region Item[ID, EntityType] tests
 
 		[Fact]
 		public void Item_ReturnsNullIfIDIsNotPresentInCollection() {
@@ -131,11 +112,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Same(_relationData[0], entity);
 		}
 
-		#endregion
-
-
-		#region Add(IOsmGeometry) tests
-
 		[Fact]
 		public void Add_AddsNodeToCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_nodeData.Skip(1));
@@ -144,7 +120,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_nodeData[0], target);
 		}
 
-
 		[Fact]
 		public void Add_AddsWayToCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_wayData.Skip(1));
@@ -152,7 +127,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Contains(_wayData[0], target);
 		}
-
 
 		[Fact]
 		public void Add_AddsRelationToCollection() {
@@ -176,10 +150,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Throws<ArgumentException>(() => target.Add(_data[0]));
 		}
 
-		#endregion
-        
-		#region Clear() tests
-
 		[Fact]
 		public void Clear_RemovesAllItemsFromCollection() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
@@ -190,10 +160,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Empty(target.Ways);
 			Assert.Empty(target.Relations);
 		}
-
-		#endregion
-
-		#region Contains(IOsmGeometry) tests
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseForNull() {
@@ -244,10 +210,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_relationData[0], target);
 		}
 
-		#endregion
-
-		#region Contains(ID) tests
-
 		[Fact]
 		public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainNodeID() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
@@ -289,10 +251,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.True(target.Contains(_relationData[0].ID, EntityType.Relation));
 		}
-
-		#endregion
-
-		#region Remove(IOsmGeometry) tests
 
 		[Fact]
 		public void Remove_IOsmGeometry_ReturnsFalseIfItemIsNull() {
@@ -368,10 +326,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_relationData[1], target);
 		}
 
-		#endregion
-
-		#region Remove(ID) tests
-
 		[Fact]
 		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfNodeIsNotPresent() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_nodeData.Skip(1));
@@ -437,10 +391,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_relationData[1], target);
 		}
 
-		#endregion
-
-		#region IEnumerable<IOsmGeometry>.GetEnumerator() tests
-
 		[Fact]
 		public void GetEnumerator_ReturnsEnumeratorThatEnumeratesAllEntities() {
 			OsmDatabase<IOsmGeometry, Node, Way, Relation> target = new OsmDatabase<IOsmGeometry, Node, Way, Relation>(_data);
@@ -452,10 +402,6 @@ namespace Tests.SpatialLite.Osm {
 				Assert.Contains(entity, _data);
 			}
 		}
-
-		#endregion
-
-		#region CopyTo(Array, ArrayIndex) tests
 
 		[Fact]
 		public void CopyTo_CopiesEntitiesToArray() {
@@ -469,6 +415,5 @@ namespace Tests.SpatialLite.Osm {
 			}
 		}
 
-		#endregion
 	}
 }

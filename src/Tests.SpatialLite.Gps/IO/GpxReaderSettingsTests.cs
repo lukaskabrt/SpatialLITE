@@ -4,7 +4,6 @@ using Xunit;
 
 namespace Tests.SpatialLite.Gps.IO {
     public class GpxReaderSettingsTests {
-        #region Constructor() tests
 
         [Fact]
         public void Constructor__CreatesSettingsWithDefaultValues() {
@@ -13,10 +12,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.True(target.ReadMetadata);
         }
 
-        #endregion
-
-        #region ReadMetadata property tests
-
         [Fact]
         public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
             var target = new GpxReaderSettings();
@@ -24,7 +19,5 @@ namespace Tests.SpatialLite.Gps.IO {
 
             Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);
         }
-
-        #endregion
     }
 }

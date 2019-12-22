@@ -9,13 +9,8 @@ namespace SpatialLite.Osm.Geometries {
     /// Represents OSM way.
     /// </summary>
     public class Way : LineString, IOsmGeometry {
-		#region Private Fields
 
 		private WayCoordinateList _coordinatesAdapter;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Way class with specified ID.
@@ -48,10 +43,6 @@ namespace SpatialLite.Osm.Geometries {
 
 			_coordinatesAdapter = new WayCoordinateList(this.Nodes);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the Node.
@@ -89,10 +80,6 @@ namespace SpatialLite.Osm.Geometries {
 			get { return EntityType.Way; }
 		}
 
-		#endregion
-
-		#region Public Static Methods
-
 		/// <summary>
 		/// Creates a new instance of the Way class based on data from WayInfo object
 		/// </summary>
@@ -120,7 +107,5 @@ namespace SpatialLite.Osm.Geometries {
 
 			return result;
 		}
-
-		#endregion
 	}
 }

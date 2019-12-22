@@ -45,8 +45,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			_relationWithoutMembers = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { });
 		}
 
-		#region Constructor(Path, Settings)
-
 		[Fact]
 		public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist() {
 			Assert.Throws<FileNotFoundException>(delegate { new OsmXmlReader("non-existing-file.osm", new OsmXmlReaderSettings() { ReadMetadata = false }); });
@@ -62,10 +60,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			}
 		}
 
-		#endregion
-
-		#region Constructor(Stream, Settings) tests
-
 		[Fact]
 		public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly() {
 			OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
@@ -74,10 +68,6 @@ namespace Tests.SpatialLite.Osm.IO {
 				Assert.True(settings.IsReadOnly);
 			}
 		}
-
-		#endregion
-
-		#region Read() tests
 
 		[Fact]
 		public void Read_SkipsUnknownElements() {
@@ -114,10 +104,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
 			target.Read();
 		}
-
-		#endregion
-
-		#region Read() tests - nodes
 
 		[Fact]
 		public void Read_ThrowsExceptionIfNodeHasNotID() {
@@ -175,10 +161,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			this.CompareNodes(_nodeProperties, readNode);
 		}
 
-		#endregion
-
-		#region Read() tests - way
-
 		[Fact]
 		public void Read_ThrowsExceptionIfWayHasNotID() {
 			OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
@@ -232,10 +214,6 @@ namespace Tests.SpatialLite.Osm.IO {
 
 			this.CompareWays(_wayProperties, readWay);
 		}
-
-		#endregion
-
-		#region Read() tests - relation
 
 		[Fact]
 		public void Read_ThrowsExceptionIfRelationHasNotID() {
@@ -314,10 +292,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			this.CompareRelation(_relationProperties, readRelation);
 		}
 
-		#endregion
-
-		#region Dispose() tests
-
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
 			string filename = "../../../Data/Xml/osm-real-file.osm";
@@ -329,10 +303,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 			testStream.Dispose();
 		}
-
-		#endregion
-
-		#region Compare*(Expected, actual)
 
 		private void CompareNodes(NodeInfo expected, NodeInfo actual) {
 			Assert.Equal(expected.ID, actual.ID);
@@ -386,7 +356,5 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.Equal(expected.Version, actual.Version);
 			Assert.Equal(expected.Changeset, actual.Changeset);
 		}
-
-		#endregion
 	}
 }

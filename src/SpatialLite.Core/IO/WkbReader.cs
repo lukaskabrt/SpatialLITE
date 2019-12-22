@@ -10,15 +10,10 @@ namespace SpatialLite.Core.IO {
     /// Provides functions for reading and parsing geometries from WKB format.
     /// </summary>
     public class WkbReader : IDisposable {
-		#region Private Fields
 
 		private BinaryReader _inputReader;
 		private FileStream _inputFileStream;
 		private bool _disposed = false;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WkbReader class that reads data from specific stream.
@@ -40,10 +35,6 @@ namespace SpatialLite.Core.IO {
 			_inputFileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			_inputReader = new BinaryReader(_inputFileStream);
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Parses data from the binnary array.
@@ -102,10 +93,6 @@ namespace SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Releases all resources used by the ComponentLibrary.
 		/// </summary>
@@ -157,10 +144,6 @@ namespace SpatialLite.Core.IO {
 				return null;
 			}
 		}
-
-		#endregion
-
-		#region Private Static Methods
 
 		/// <summary>
 		/// Reads Coordinate from the BinaryReader.
@@ -354,10 +337,6 @@ namespace SpatialLite.Core.IO {
 			basicType = (WkbGeometryType)((int)type % 1000);
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Releases the unmanaged resources used by the ComponentLibrary and optionally releases the managed resources.
 		/// </summary>
@@ -376,6 +355,5 @@ namespace SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
 	}
 }

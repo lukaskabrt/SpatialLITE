@@ -11,18 +11,14 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class GeometryCollectionTests {
-		#region Test Data
 
 		Point[] _geometries;
-
 
 		Coordinate[] _coordinatesXYZM = new Coordinate[] {
 				new Coordinate(12,10,100, 1000),
 				new Coordinate(22,20,200, 2000),
 				new Coordinate(32,30,300, 3000)
 		};
-
-		#endregion
 
 		public GeometryCollectionTests() {
 			_geometries = new Point[3];
@@ -39,63 +35,20 @@ namespace Tests.SpatialLite.Core.Geometries {
 			}
 		}
 
-		#region Constructors tests
-
-		#region Default constructors tests
-
 		[Fact]
-		public void Constructor__CreatesNewEmptyCollectionInWSG84() {
+		public void Constructor__CreatesNewEmptyCollection() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>();
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.NotNull(target.Geometries);
 			Assert.Empty(target.Geometries);
 		}
 
-		#endregion
-
-		#region Constructor(SRID) tests
-
 		[Fact]
-		public void Constructor_SRID_CreatesEmptyCollectionInSpecifiedSRID() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid);
-
-			Assert.Equal(srid, target.Srid);
-			Assert.NotNull(target.Geometries);
-			Assert.Empty(target.Geometries);
-		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<IGeometry>)
-
-		[Fact]
-		public void Constructor_IEnumerable_CreateNewCollectionWithDataInWSG84() {
+		public void Constructor_IEnumerable_CreateNewCollectionWithData() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(_geometries);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			CheckGeometries(target, _geometries);
 		}
-
-		#endregion
-
-		#region Constructor(SRID, IEnumerable)
-
-		[Fact]
-		public void Constructor_SRIDIEnumerable_CreateNewCollectionWithDataInWSpecifiedSRID() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid, _geometries);
-
-			Assert.Equal(srid, target.Srid);
-			CheckGeometries(target, _geometries);
-		}
-
-		#endregion
-
-		#endregion
-
-		#region Is3D tests
 
 		[Fact]
 		public void Is3D_ReturnsFalseForEmptyCollection() {
@@ -119,10 +72,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.True(target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_ReturnsFalseForEmptyCollection() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>();
@@ -145,10 +94,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.True(target.IsMeasured);
 		}
 
-		#endregion
-
-		#region GetEnvelope tests
-
 		[Fact]
 		public void GetEnvelopeReturnsEmptyEnvelopeForEmptyCollection() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>();
@@ -163,30 +108,5 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(expected, target.GetEnvelope());
 		}
-
-		#endregion
-
-		#region GetBoundary tests
-
-		[Fact]
-		public void GetBoundary_ReturnsGeometryCollectionWithBoundariesOfObjectsInCollection() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid);
-			target.Geometries.Add(new LineString(srid, _coordinatesXYZM));
-
-			IGeometryCollection<IGeometry> boundary = target.GetBoundary() as IGeometryCollection<IGeometry>;
-
-			Assert.NotNull(boundary);
-			Assert.Equal(srid, boundary.Srid);
-			Assert.Equal(target.Geometries.Count, boundary.Geometries.Count());
-
-			IMultiPoint expectedChildBoundary = target.Geometries[0].GetBoundary() as IMultiPoint;
-			IMultiPoint childBoundary = boundary.Geometries.First() as IMultiPoint;;
-
-			Assert.Equal(expectedChildBoundary.Geometries.First().Position, childBoundary.Geometries.First().Position);
-			Assert.Equal(expectedChildBoundary.Geometries.Last().Position, childBoundary.Geometries.Last().Position);
-		}
-
-		#endregion
 	}
 }

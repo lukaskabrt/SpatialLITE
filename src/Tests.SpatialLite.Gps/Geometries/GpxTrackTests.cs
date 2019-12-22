@@ -4,20 +4,12 @@ using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxTrackTests {
-        #region Constructors tests
-
-        #region Constructor() tests
-
         [Fact]
         public void Constructor_Parameterless_CreateEmptyGpxTrack() {
             GpxTrack target = new GpxTrack();
 
             Assert.Empty(target.Geometries);
         }
-
-        #endregion
-
-        #region Constructor(IEnumerable<GpxTrackSegment>) tests
 
         [Fact]
         public void Constructor_Segments_CreateGpxTrackWithSegments() {
@@ -31,19 +23,11 @@ namespace Tests.SpatialLite.Gps.Geometries {
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region GeometryType tests
-
         [Fact]
         public void GeometryType_ReturnsTrack() {
             GpxTrack target = new GpxTrack();
 
             Assert.Equal(GpxGeometryType.Track, target.GeometryType);
         }
-
-        #endregion
     }
 }

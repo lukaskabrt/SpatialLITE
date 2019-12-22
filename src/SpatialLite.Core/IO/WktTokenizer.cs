@@ -8,7 +8,6 @@ namespace SpatialLite.Core.IO {
     /// Implemets tokenizer that splits wkt string to list of tokens.
     /// </summary>
     internal static class WktTokenizer {
-		#region Public Static Methods
 
 		/// <summary>
 		/// Splits text to tokens.
@@ -54,10 +53,6 @@ namespace SpatialLite.Core.IO {
 			yield return new WktToken() { Type = lastToken, Value = stringBuffer.ToString() };
 		}
 
-		#endregion
-
-		#region Private Static Methods
-
 		/// <summary>
 		/// Gets type of the token.
 		/// </summary>
@@ -86,7 +81,5 @@ namespace SpatialLite.Core.IO {
 
 			throw new Exception();
 		}
-
-		#endregion
 	}
 }

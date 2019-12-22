@@ -11,7 +11,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.API {
 	public class EnvelopeTests {
-		#region Test data
 
 		Coordinate[] _coordinates = new Coordinate[] {
 				new Coordinate(1, 10, 100, 1000),
@@ -38,10 +37,6 @@ namespace Tests.SpatialLite.Core.API {
 			}
 		}
 
-        #endregion
-
-        #region Hepler functions
-
         internal void CheckBoundaries(Envelope target, double minX, double maxX, double minY, double maxY, double minZ, double maxZ, double minM, double maxM) {
 			Assert.Equal(minX, target.MinX);
 			Assert.Equal(maxX, target.MaxX);
@@ -52,12 +47,6 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.Equal(minM, target.MinM);
 			Assert.Equal(maxM, target.MaxM);
 		}
-
-		#endregion
-
-		#region Constructors tests
-
-		#region Default constructor tests
 
 		[Fact]
 		public void Constructor__InitializesBoundsToNaNValues() {
@@ -73,20 +62,12 @@ namespace Tests.SpatialLite.Core.API {
 			Assert.Equal(double.NaN, target.MaxM);
 		}
 
-		#endregion
-
-		#region Constructor(Coordinate) tests
-
 		[Fact]
 		public void Constructor_Coordinate_InitializesXYZProperties() {
 			Envelope target = new Envelope(_coordinates[0]);
 
 			CheckBoundaries(target, _coordinates[0].X, _coordinates[0].X, _coordinates[0].Y, _coordinates[0].Y, _coordinates[0].Z, _coordinates[0].Z, _coordinates[0].M, _coordinates[0].M);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<Coordinate>) tests
 
 		[Fact]
 		public void Constructor_IEnumerableCoordinate_SetsMinMaxValues() {
@@ -98,10 +79,6 @@ namespace Tests.SpatialLite.Core.API {
 				_expectedBounds[4], _expectedBounds[5], _expectedBounds[6], _expectedBounds[7]);
 		}
 
-		#endregion
-
-		#region Constructor(Envelope) tests
-
 		[Fact]
 		public void Constructor_Envelope_CopiesMinMaxValues() {
 			Envelope source = new Envelope(_coordinates);
@@ -111,12 +88,6 @@ namespace Tests.SpatialLite.Core.API {
 			CheckBoundaries(target, _expectedBounds[0], _expectedBounds[1], _expectedBounds[2], _expectedBounds[3],
 				_expectedBounds[4], _expectedBounds[5], _expectedBounds[6], _expectedBounds[7]);
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Extend(Coordinate) tests
 
 		[Fact]
 		public void Extend_Coordinate_SetsMinMaxValuesOnEmptyEnvelope() {
@@ -165,10 +136,6 @@ namespace Tests.SpatialLite.Core.API {
 				_expectedBounds[4], _expectedBounds[5], _expectedBounds[6], _expectedBounds[7]);
 		}
 
-		#endregion
-
-		#region Extend(IEnumerable<Coordinate>) tests
-
 		[Fact]
 		public void Extend_IEnumerableCoordinate_SetsMinMaxValuesOnEmptyEnvelope() {
 			Envelope target = new Envelope();
@@ -198,10 +165,6 @@ namespace Tests.SpatialLite.Core.API {
 			CheckBoundaries(target, _lowerValues.X, _higherValues.X, _lowerValues.Y, _higherValues.Y, _lowerValues.Z, _higherValues.Z, _lowerValues.M, _higherValues.M);
 		}
 
-		#endregion
-
-		#region Extend(Envelope) tests
-
 		[Fact]
 		public void Extend_Envelope_SetsMinMaxValuesOnEmptyEnvelope() {
 			Envelope target = new Envelope();
@@ -230,10 +193,6 @@ namespace Tests.SpatialLite.Core.API {
 
 			CheckBoundaries(target, _lowerValues.X, _higherValues.X, _lowerValues.Y, _higherValues.Y, _lowerValues.Z, _higherValues.Z, _lowerValues.M, _higherValues.M);
 		}
-
-		#endregion
-
-		#region Equals(object), Equals(Envelope) tests
 
 		[Fact]
 		public void Equals_ReturnsTrueForSameObjectInstance() {
@@ -274,7 +233,5 @@ namespace Tests.SpatialLite.Core.API {
 
 			Assert.False(target.Equals(other));
 		}
-
-		#endregion
 	}
 }

@@ -9,7 +9,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Ecapsules member of the OSM relation and it's role in the relation.
     /// </summary>
     public class RelationMember : Geometry {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the RelationMember class with empty Role and specified Member.
@@ -47,10 +46,6 @@ namespace SpatialLite.Osm.Geometries {
 			}
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the actual member.
 		/// </summary>
@@ -84,10 +79,6 @@ namespace SpatialLite.Osm.Geometries {
 			}
 		}
 
-		#endregion
-
-		#region Public Static Methods
-
 		/// <summary>
 		/// Creates a new instance of the RelationMember class based on the data from RelationInfo object.
 		/// </summary>
@@ -117,10 +108,6 @@ namespace SpatialLite.Osm.Geometries {
 			return result;
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
@@ -131,14 +118,6 @@ namespace SpatialLite.Osm.Geometries {
 			return ((Geometry)this.Member).GetEnvelope();
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object.
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  the RelationMember.</returns>
-		public override IGeometry GetBoundary() {
-			return this.Member.GetBoundary();
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
@@ -146,15 +125,5 @@ namespace SpatialLite.Osm.Geometries {
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Member.GetCoordinates();
         }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            this.Member.Apply(filter);
-        }
-
-        #endregion
     }
 }

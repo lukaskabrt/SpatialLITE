@@ -8,13 +8,8 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "HeaderBlock")]
 	internal class OsmHeader {
-#region Private ImplicitFields
 		private IList<string> _optionalFeatures = new List<string>();
 		private IList<string> _requiredFeatures = new List<string>();
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets bounding box of the data in the file
@@ -51,7 +46,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		/// </summary>
 		[ProtoMember(0x10, Name = "writingprogram", IsRequired = false)]
 		public string WritingProgram { get; set; }
-
-		#endregion
 	}
 }

@@ -5,13 +5,8 @@ namespace SpatialLite.Osm.IO {
     /// Contains settings that determine behaviour of the OsmXmlReader.
     /// </summary>
     public class OsmXmlReaderSettings : OsmReaderSettings {
-		#region Private Fields
 
 		private bool _strictMode = true;
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets a value indicating whether OsmXmlReader should run in strct mode.
@@ -36,7 +31,5 @@ namespace SpatialLite.Osm.IO {
 				_strictMode = value;
 			}
 		}
-
-		#endregion
 	}
 }

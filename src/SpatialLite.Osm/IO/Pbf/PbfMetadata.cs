@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "Info")]
 	internal class PbfMetadata {
-		#region Public Propeties
 
 		/// <summary>
 		/// Gets or sets changeset ID.
@@ -38,6 +37,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(1, Name = "version", IsRequired = false)]
 		public int? Version { get; set; }
 
-		#endregion
 	}
 }

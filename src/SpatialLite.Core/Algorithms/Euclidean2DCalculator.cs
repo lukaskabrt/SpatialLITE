@@ -6,7 +6,6 @@ namespace SpatialLite.Core.Algorithms {
     /// Provides methods for calculating distance and area in 2D euclidean space
     /// </summary>
     public class Euclidean2DCalculator : IDimensionsCalculator {
-		#region Public methods
 
 		/// <summary>
 		/// Calculates distance between two points
@@ -115,6 +114,5 @@ namespace SpatialLite.Core.Algorithms {
 			return area / 2.0;
 		}
 
-		#endregion
 	}
 }

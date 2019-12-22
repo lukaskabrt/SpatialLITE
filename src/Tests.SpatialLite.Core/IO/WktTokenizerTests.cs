@@ -11,7 +11,6 @@ using System.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WktTokenizerTests {
-		#region Tokenize(string) tests
 
 		[Fact]
 		void Tokenize_String_ReturnsEmptyTokenForEmptyString() {
@@ -87,10 +86,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
 		}
 
-		#endregion
-
-		#region Tokenize(TextReader) tests
-
 		[Fact]
 		void Tokenize_TextReader_ProcessesComplexText() {
 			StringReader reader = new StringReader("point z (-10 -15 -100.1)");
@@ -137,7 +132,5 @@ namespace Tests.SpatialLite.Core.IO {
 			t = tokens[10];
 			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
 		}
-
-		#endregion
 	}
 }

@@ -8,23 +8,15 @@ using SpatialLite.Gps;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxPointTests {
-        #region Test data
 
 		double _xOrdinate = 3.5;
 		double _yOrdinate = 4.2;
 		double _zOrdinate = 10.5;
 
 		Coordinate _coordinate;
- 
-		#endregion
-
         public GpxPointTests() {
 			_coordinate = new Coordinate(_xOrdinate, _yOrdinate, _zOrdinate);
         }
-
-        #region Constructor tests
-
-        #region Constructor() tests
 
         [Fact]
         public void Constructor__CreatesPointWithEmptyPositionAndNullTimestamp() {
@@ -33,10 +25,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
             Assert.Equal(Coordinate.Empty, target.Position);
             Assert.Null(target.Timestamp);
         }
-        
-        #endregion
-
-        #region Constructor(Coordinate) tests
 
         [Fact]
         public void Constructor_Coordinate_CreatesPointWithPositionAndNullTimestamp() {
@@ -45,10 +33,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
             Assert.Equal(_coordinate, target.Position);
             Assert.Null(target.Timestamp);
         }
-
-        #endregion
-
-        #region Constructor(Coordinate, Timestamp) tests
 
         [Fact]
         public void Constructor_Coordinate_CreatesPointWithPositionAndTimestamp() {
@@ -59,11 +43,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
             Assert.Equal(timestamp, target.Timestamp);
         }
 
-        
-        #endregion
-
-        #region Constructor(Lon, Lat, Elevation, Timestamp) tests
-
         [Fact]
         public void Constructor_LonLatElevationTimestamp_CreatesPointWithPositionAndTimestamp() {
             var timestamp = DateTime.Now;
@@ -73,19 +52,11 @@ namespace Tests.SpatialLite.Gps.Geometries {
             Assert.Equal(timestamp, target.Timestamp);
         }
 
-        #endregion
-
-        #endregion
-
-        #region GeometryType tests
-
         [Fact]
         public void GeometryType_ReturnsWaypoint() {
             GpxPoint target = new GpxPoint();
 
             Assert.Equal(GpxGeometryType.Waypoint, target.GeometryType);
         }
-
-        #endregion
     }
 }

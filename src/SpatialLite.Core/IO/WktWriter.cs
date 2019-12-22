@@ -8,17 +8,12 @@ namespace SpatialLite.Core.IO {
     /// Provides methods for writing Geomerty objects into WKT format.
     /// </summary>
     public class WktWriter : IDisposable {
-		#region Private Fields
 
 		private static System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
 		private bool _disposed = false;
 		private TextWriter _writer;
 		private Stream _outputStream;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WkbWriter class with specific settings.
@@ -62,18 +57,10 @@ namespace SpatialLite.Core.IO {
 			_writer = new StreamWriter(_outputStream);
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the settings that determines behaviour of this instance of the WktWriter.
 		/// </summary>
 		public WktWriterSettings Settings { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Writes the Geometry object in the WKT format to the output.
@@ -91,10 +78,6 @@ namespace SpatialLite.Core.IO {
 			GC.SuppressFinalize(this);
 		}
 
-		#endregion
-
-		#region Public Static Methods
-
 		/// <summary>
 		/// Writes the Geometry object to the string in WKT format.
 		/// </summary>
@@ -106,10 +89,6 @@ namespace SpatialLite.Core.IO {
 
 			return tw.ToString();
 		}
-
-		#endregion
-
-		#region Private Static Methods
 
 		/// <summary>
 		/// Writes specified Geometry to the TextWriter in WKT format.
@@ -476,10 +455,6 @@ namespace SpatialLite.Core.IO {
 			return dimension;
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Releases the unmanaged resources used by the WktWriter and optionally releases the managed resources.
 		/// </summary>
@@ -497,7 +472,5 @@ namespace SpatialLite.Core.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

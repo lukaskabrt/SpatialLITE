@@ -14,7 +14,6 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
         private const int TestFileWaysCount = 14461;
         private const int TestFileRelationsCount = 124;
 
-        #region OsmXmlReader Tests
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void XmlOsmReaderReadsFilesCreatedByOsmosis() {
@@ -26,10 +25,6 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
                 this.TestReader(reader);
             }
         }
-
-        #endregion
-
-        #region OsmXmlWriter Tests
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void XmlOsmWriterWritesFilesCompatibleWithOsmosis() {
@@ -47,10 +42,6 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
             Assert.True(File.Exists(osmosisXmlFile));
             Assert.True(new FileInfo(osmosisXmlFile).Length > 0);
         }
-
-        #endregion
-
-        #region Helper functions
 
         private IEnumerable<IEntityInfo> GetTestData() {
             List<IEntityInfo> data = new List<IEntityInfo>();
@@ -92,7 +83,5 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
             Assert.Equal(TestFileWaysCount, waysCount);
             Assert.Equal(TestFileRelationsCount, relationsCount);
         }
-
-        #endregion
     }
 }

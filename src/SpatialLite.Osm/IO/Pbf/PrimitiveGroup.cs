@@ -8,7 +8,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "PrimitiveGroup")]
 	internal class PrimitiveGroup {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets collection of nodes.
@@ -40,6 +39,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(5, Name = "changesets")]
 		public List<PbfChangeset> Changesets { get; set; }
 
-		#endregion
 	}
 }

@@ -8,23 +8,11 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a polygon, which may include holes.
     /// </summary>
     public class Polygon : Geometry, IPolygon {
-		#region Constructors
-
 		/// <summary>
 		/// Initializes a new instance of the <c>Polygon</c> class in WSG84 coordinate reference system that without ExteriorRing and no InteriorRings.
 		/// </summary>
 		public Polygon()
 			: base() {
-			this.ExteriorRing = new CoordinateList();
-			this.InteriorRings = new List<ICoordinateList>(0);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Polygon</c> class in specified coordinate reference system that without ExteriorRing and no InteriorRings.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		public Polygon(int srid)
-			: base(srid) {
 			this.ExteriorRing = new CoordinateList();
 			this.InteriorRings = new List<ICoordinateList>(0);
 		}
@@ -37,22 +25,6 @@ namespace SpatialLite.Core.Geometries {
 			this.ExteriorRing = exteriorRing;
 			this.InteriorRings = new List<ICoordinateList>(0);
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Polygon</c> class with the given exterior boundary and specific holes
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		/// <param name="exteriorRing">The exterior boundary of the polygon.</param>
-		/// <param name="interiorRings">The collection of interior boundaries defining holes in the polygon.</param>
-		public Polygon(int srid, ICoordinateList exteriorRing, IEnumerable<ICoordinateList> interiorRings)
-			: base(srid) {
-			this.ExteriorRing = exteriorRing;
-			this.InteriorRings = interiorRings.ToList();
-		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets the exterior boundary of the polygon.
@@ -94,10 +66,6 @@ namespace SpatialLite.Core.Geometries {
 			get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.IsMeasured); }
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Computes envelope of the <c>Polygon</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
@@ -108,25 +76,6 @@ namespace SpatialLite.Core.Geometries {
 			return this.ExteriorRing.Count == 0 ? new Envelope() : new Envelope(this.ExteriorRing);
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object.
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  Polygon.</returns>
-		public override IGeometry GetBoundary() {
-			MultiLineString boundary = new MultiLineString(this.Srid);
-			if (this.ExteriorRing.Count > 0) {
-				boundary.Geometries.Add(new LineString(this.Srid, this.ExteriorRing));
-			}
-
-			foreach (var ring in this.InteriorRings) {
-				if (ring.Count > 0) {
-					boundary.Geometries.Add(new LineString(this.Srid, ring));
-				}
-			}
-
-			return boundary;
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
@@ -134,19 +83,5 @@ namespace SpatialLite.Core.Geometries {
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.ExteriorRing.Concat(this.InteriorRings.SelectMany(o => o));
         }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            this.ExteriorRing.Apply(filter);
-
-            foreach (var ring in this.InteriorRings) {
-                ring.Apply(filter);
-            }
-        }
-
-        #endregion
     }
 }

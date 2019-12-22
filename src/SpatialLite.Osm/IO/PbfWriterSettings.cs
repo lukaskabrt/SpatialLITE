@@ -5,14 +5,9 @@ namespace SpatialLite.Osm.IO {
     ///  Contains settings that determine behaviour of the PbfWriter.
     /// </summary>
     public class PbfWriterSettings : OsmWriterSettings {
-		#region Private Fields
 
 		private bool _useDenseFormat;
 		private CompressionMode _compression;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the PbfWriterSettings class with default values.
@@ -22,10 +17,6 @@ namespace SpatialLite.Osm.IO {
 			this.UseDenseFormat = true;
 			this.Compression = CompressionMode.ZlibDeflate;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets a value indicating whether PbfWriter should use dense format for serializing nodes.
@@ -58,7 +49,5 @@ namespace SpatialLite.Osm.IO {
 				_compression = value;
 			}
 		}
-
-		#endregion
 	}
 }

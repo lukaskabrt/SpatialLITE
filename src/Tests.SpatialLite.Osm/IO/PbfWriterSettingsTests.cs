@@ -6,9 +6,6 @@ using SpatialLite.Osm.IO;
 
 namespace Tests.SpatialLite.Osm.IO {
     public class PbfWriterSettingsTests {
-
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor__SetsDefaultValues() {
 			PbfWriterSettings target = new PbfWriterSettings();
@@ -18,10 +15,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.True(target.WriteMetadata);
 		}
 
-		#endregion
-
-		#region UseDenseFormat property tests
-
 		[Fact]
 		public void UseDenseFormatSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
 			PbfWriterSettings target = new PbfWriterSettings();
@@ -30,10 +23,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.Throws<InvalidOperationException>(() => target.UseDenseFormat = false);
 		}
 
-		#endregion
-
-		#region Compression property tests
-
 		[Fact]
 		public void ConpressionSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
 			PbfWriterSettings target = new PbfWriterSettings();
@@ -41,7 +30,5 @@ namespace Tests.SpatialLite.Osm.IO {
 
 			Assert.Throws<InvalidOperationException>(() => target.Compression = CompressionMode.ZlibDeflate);
 		}
-
-		#endregion
 	}
 }

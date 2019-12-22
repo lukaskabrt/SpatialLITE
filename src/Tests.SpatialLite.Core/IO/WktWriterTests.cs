@@ -14,7 +14,6 @@ using SpatialLite.Core.IO;
 namespace Tests.SpatialLite.Core.IO {
     public class WktWriterTests {
 
-        #region Test data
 
         private static Coordinate[] _coordinatesXY = new Coordinate[] {
                 new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
@@ -36,10 +35,6 @@ namespace Tests.SpatialLite.Core.IO {
                 new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
         };
 
-        #endregion
-
-        #region Constructor(Stream, Settings) tests
-
         [Fact]
         public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly() {
             WktWriterSettings settings = new WktWriterSettings();
@@ -59,10 +54,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfSettingsIsNull() {
             Assert.Throws<ArgumentNullException>(() => new WktWriter(new MemoryStream(), null));
         }
-
-        #endregion
-
-        #region Constructor(Path, Settings) tests
 
         [Fact]
         public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly() {
@@ -99,11 +90,6 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.Throws<ArgumentNullException>(() => new WktWriter(path, null));
         }
 
-        #endregion
-
-
-        #region WriteToString(IGeometry) tests
-
         public static IEnumerable<object[]> WriteToStringTestData {
             get {
                 yield return new object[] { new Point(), "point empty" };
@@ -122,10 +108,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt) {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
-
-        #endregion
-
-        #region Dispose() tests
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
@@ -150,11 +132,6 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.False(stream.CanRead);
         }
 
-        #endregion
-
-
-        #region Write(Point) tests
-
         public static IEnumerable<object[]> Write_WritesPointsOfAllDimensionsTestData {
             get {
                 yield return new object[] { new Point(), "point empty" };
@@ -171,10 +148,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        #endregion
-
-        #region Write(LineString) tests
-
         public static IEnumerable<object[]> Write_WritesLinestringOfAllDimensionsTestData {
             get {
                 yield return new object[] { new LineString(), "linestring empty" };
@@ -190,11 +163,7 @@ namespace Tests.SpatialLite.Core.IO {
         public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt) {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
-
-        #endregion
-
-        #region Write(Polygon) tests
-
+        
         public static IEnumerable<object[]> Write_WritesPolygonsOfAllDimensionsTestData {
             get {
                 yield return new object[] { new Polygon(), "polygon empty" };
@@ -221,10 +190,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(polygon, wkt);
         }
 
-        #endregion
-
-        #region Write(MultiPoint) tests
-
         public static IEnumerable<object[]> Write_WritesMultiPoinsOfAllDimensionsTestData {
             get {
                 yield return new object[] { new MultiPoint(), "multipoint empty" };
@@ -240,10 +205,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt) {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
-
-        #endregion
-
-        #region Write(MultiLineString) tests
 
         public static IEnumerable<object[]> Write_WritesMultiLineStringsOfAllDimensionsTestData {
             get {
@@ -265,10 +226,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        #endregion
-
-        #region Write(MultiPolygon) tests
-
         public static IEnumerable<object[]> Write_WritesMultiPolygonsOfAllDimensionsTestData {
             get {
                 yield return new object[] { new MultiPolygon(), "multipolygon empty" };
@@ -288,10 +245,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt) {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
-
-        #endregion
-
-        #region Write(GeometryCollection, TextWriter)
 
         public static IEnumerable<object[]> Write_WritesGeometryCollectionOfAllDimensionsTestData {
             get {
@@ -334,10 +287,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(collection, wkt);
         }
 
-        #endregion
-
-        #region Helper methods
-
         private void TestWriteGeometry(IGeometry geometry, string expectedWkt) {
             MemoryStream stream = new MemoryStream();
             using (WktWriter writer = new WktWriter(stream, new WktWriterSettings())) {
@@ -349,7 +298,5 @@ namespace Tests.SpatialLite.Core.IO {
                 Assert.Equal(expectedWkt, wkt, StringComparer.OrdinalIgnoreCase);
             }
         }
-
-        #endregion
     }
 }

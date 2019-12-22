@@ -9,7 +9,6 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WkbWriterSettingsTests {
-		#region Constructor() tests
 
 		[Fact]
 		public void Constructor__SetsDefaultValues() {
@@ -18,10 +17,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Equal(BinaryEncoding.LittleEndian, target.Encoding);
 		}
 
-		#endregion
-
-		#region Encoding property tests
-
 		[Fact]
 		public void UseDenseFormatSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
 			WkbWriterSettings target = new WkbWriterSettings();
@@ -29,7 +24,5 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Throws<InvalidOperationException>(() => target.Encoding = BinaryEncoding.BigEndian);
 		}
-
-		#endregion
 	}
 }

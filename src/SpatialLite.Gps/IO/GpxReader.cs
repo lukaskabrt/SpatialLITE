@@ -8,7 +8,6 @@ namespace SpatialLite.Gps.IO {
     /// Implements data reader that can read GPX data from streams and files.
     /// </summary>
     public class GpxReader : IGpxReader, IDisposable {
-        #region Private Fields
 
         private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
@@ -22,10 +21,6 @@ namespace SpatialLite.Gps.IO {
         private bool _ownsInputStream = false;
 
         private bool _insideGpx = false;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the GpxReader class that reads data from the specified file.
@@ -54,18 +49,10 @@ namespace SpatialLite.Gps.IO {
             this.InitializeReader();
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
         /// Gets GpxReaderSettings object that determines behaviour of the reader.
         /// </summary>
         public GpxReaderSettings Settings { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Releases all resources used by the GpxReader.
@@ -95,10 +82,6 @@ namespace SpatialLite.Gps.IO {
 
             return null;
         }
-
-        #endregion
-
-        #region Private methods
 
         /// <summary>
         /// Reads a GPX point from the internal XmlReader
@@ -410,7 +393,5 @@ namespace SpatialLite.Gps.IO {
                 _disposed = true;
             }
         }
-
-        #endregion
     }
 }

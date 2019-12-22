@@ -47,11 +47,5 @@ namespace SpatialLite.Core.API {
 		/// Removes all Coordinates from the collection.
 		/// </summary>
 		void Clear();
-
-        /// <summary>
-        /// Applies the specific filter on this CoordinateList
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        void Apply(ICoordinateFilter filter);
 	}
 }

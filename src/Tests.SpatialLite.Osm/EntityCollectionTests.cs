@@ -18,18 +18,12 @@ namespace Tests.SpatialLite.Osm {
 			_data[2] = new Node(3);
 		}
 
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyCollection() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<T>) tests
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems() {
@@ -40,10 +34,6 @@ namespace Tests.SpatialLite.Osm {
 			}
 		}
 
-		#endregion
-
-		#region Count tests
-
 		[Fact]
 		public void Count_ReturnsNumberOfElements() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
@@ -51,10 +41,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Equal(_data.Length, target.Count);
 		}
-
-		#endregion
-
-		#region Contains(T) tests
 
 		[Fact]
 		public void Contains_IOsmGeometry_ReturnsFalseForEmptyCollection() {
@@ -84,10 +70,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_data[0], target);
 		}
 
-		#endregion
-
-		#region Contains(ID) tests
-
 		[Fact]
 		public void Contains_ID_ReturnsFalseForEmptyCollection() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
@@ -109,10 +91,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.True(target.Contains(_data[0].ID));
 		}
 
-		#endregion
-
-		#region Clear() tests
-
 		[Fact]
 		public void Clear_RemovesAllItemsFromCollection() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
@@ -120,10 +98,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Add(T) tests
 
 		[Fact]
 		public void Add_AddsEntityToCollection() {
@@ -147,20 +121,12 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Throws<ArgumentException>(() => target.Add(_data[0]));
 		}
 
-		#endregion
-
-		#region IsReadOnly tests
-
 		[Fact]
 		public void IsReadOnly_ReturnsFalse() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
 
 			Assert.False(target.IsReadOnly);
 		}
-
-		#endregion
-
-		#region Remove(T) tests
 
 		[Fact]
 		public void Remove_IOsmGeometry_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent() {
@@ -194,10 +160,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_data[2], target);
 		}
 
-		#endregion
-
-		#region Remove(ID) tests
-
 		[Fact]
 		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
@@ -221,10 +183,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_data[2], target);
 		}
 
-		#endregion
-
-		#region Item[ID] tests
-
 		[Fact]
 		public void Item_ReturnsNullIfIDIsNotpResentInCollection() {
 			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
@@ -239,7 +197,5 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Equal(1, entity.ID);
 		}
-
-		#endregion
 	}
 }

@@ -9,7 +9,6 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WktWriterSettingsTests {
-		#region Constructor() tests
 
 		[Fact]
 		public void Constructor__SetsDefaultValues() {
@@ -18,6 +17,5 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.False(target.IsReadOnly);
 		}
 
-		#endregion
 	}
 }

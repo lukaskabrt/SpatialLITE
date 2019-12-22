@@ -11,7 +11,6 @@ namespace SpatialLite.Osm {
     /// <typeparam name="W">The type of Ways</typeparam>
     /// <typeparam name="R">The type of Relations</typeparam>
     public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity where N : T where W : T where R : T {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmDatabase class that is empty.
@@ -32,10 +31,6 @@ namespace SpatialLite.Osm {
 				this.Add(entity);
 			}
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets collection of nodes in the database.
@@ -93,10 +88,6 @@ namespace SpatialLite.Osm {
 				return default(T);
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// When overridden in derived class, saves entities from the database to specific writer.
@@ -234,7 +225,5 @@ namespace SpatialLite.Osm {
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
 			return this.GetEnumerator();
 		}
-
-		#endregion
     }
 }

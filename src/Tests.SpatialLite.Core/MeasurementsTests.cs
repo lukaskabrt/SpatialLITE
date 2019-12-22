@@ -13,25 +13,16 @@ using SpatialLite.Core.Algorithms;
 
 namespace Tests.SpatialLite.Core {
 	public class MeasurementsTests {
-		#region static Euclidean2D tests
 
 		[Fact]
 		public void Euclidean2D_GetsInstanceOfMeasuremntsWithTheEuclidean2DCalculator() {
 			Assert.IsType<Euclidean2DCalculator>(Measurements.Euclidean2D.DimensionsCalculator);
 		}
 
-		#endregion
-
-		#region static Sphere2D tests
-
 		[Fact]
 		public void Sphere2D_GetsInstanceOfMeasuremntsWithTheSphere2DCalculator() {
 			Assert.IsType<Sphere2DCalculator>(Measurements.Sphere2D.DimensionsCalculator);
 		}
-
-		#endregion
-
-		#region Constructor(IEuclidean2DDistanceCalculator) tests
 
 		[Fact]
 		public void Constructor_SetsCalculatorObject() {
@@ -41,11 +32,6 @@ namespace Tests.SpatialLite.Core {
 
 			Assert.Same(calculatorM.Object, target.DimensionsCalculator);
 		}
-
-		#endregion
-
-
-		#region ComputeDistance(Coordinate, Coordinate) tests
 
 		[Fact]
 		public void ComputeDistance_CoordinateCoordinate_CallsIDistanceCalculatorWithCorrectParameters() {
@@ -58,10 +44,6 @@ namespace Tests.SpatialLite.Core {
 
 			calculatorM.Verify(calc => calc.CalculateDistance(c1, c2), Times.Once());
 		}
-
-		#endregion
-
-		#region ComputeDistance(IPoint, IPoint) tests
 
 		[Fact]
 		public void ComputeDistance_PointPoint_ReturnsNaNIfPoint1IsEmpty() {
@@ -99,10 +81,6 @@ namespace Tests.SpatialLite.Core {
 			calculatorM.Verify(calc => calc.CalculateDistance(p1.Position, p2.Position), Times.Once());
 		}
 
-		#endregion
-
-		#region ComputeDistance(IPoint, ILineString) tests
-
 		[Fact]
 		public void ComputeDistance_PointLineString_ReturnsNaNIfLineStringIsEmpty() {
 			Point point = new Point(new Coordinate(10.1, 20.1));
@@ -128,10 +106,6 @@ namespace Tests.SpatialLite.Core {
 
 			Assert.True(double.IsNaN(distance));
 		}
-
-		#endregion
-
-		#region ComputeDistance(IPoint, IMultiLineString) tests
 
 		[Fact]
 		public void ComputeDistance_PointMultiLineString_ReturnsNaNIfMultiLineStringIsEmpty() {
@@ -159,11 +133,6 @@ namespace Tests.SpatialLite.Core {
 
 			Assert.True(double.IsNaN(distance));
 		}
-
-		#endregion
-
-
-		#region ComputeLength(ILineString) tests
 
 		[Fact]
 		public void ComputeLength_LineString_RetursZeroForLineStringWithoutPoints() {
@@ -207,10 +176,6 @@ namespace Tests.SpatialLite.Core {
 			Assert.Equal(sum, length);
 		}
 
-		#endregion
-
-		#region ComputeLength(IMultiLineString) tests
-
 		[Fact]
 		public void ComputeLength_MultiLineString_RetursZeroForMultiLineStringWithoutMembers() {
 			MultiLineString multilinestring = new MultiLineString();
@@ -242,10 +207,6 @@ namespace Tests.SpatialLite.Core {
 
 			Assert.Equal(sum, length);
 		}
-
-		#endregion
-
-		#region ComputeArea(IPolygon) tests
 
 		[Fact]
 		public void ComputeArea_IPolygon_ReturnsAreaOfSimplePolygonCalculatedByIDimensionsCalculator() {
@@ -283,10 +244,6 @@ namespace Tests.SpatialLite.Core {
 			Assert.Equal(exteriorArea - interiorArea, area);
 		}
 
-		#endregion
-
-		#region ComputeArea(IMultiPolygon) tests
-
 		[Fact]
 		public void ComputeArea_IMultiPolygon_ReturnsSumOfPolygonAreas() {
 			Random generator = new Random();
@@ -304,7 +261,5 @@ namespace Tests.SpatialLite.Core {
 
 			Assert.Equal(2 * polygonArea, area);
 		}
-
-		#endregion
 	}
 }

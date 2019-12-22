@@ -11,16 +11,11 @@ namespace SpatialLite.Osm.IO {
     /// Represents IOsmWriter that writes OSM entities to Pbf format.
     /// </summary>
     public class PbfWriter : IOsmWriter {
-		#region Public Constans
 
 		/// <summary>
 		/// Defines maximal allowed size of uncompressed OsmData block. Larger blocks are considered invalid.
 		/// </summary>
 		public const int MaxDataBlockSize = 16 * 1024 * 1024;
-
-		#endregion
-
-		#region Private Fields
 
 		private DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
 
@@ -31,10 +26,6 @@ namespace SpatialLite.Osm.IO {
 		private EntityInfoBuffer<NodeInfo> _nodesBuffer;
 		private EntityInfoBuffer<WayInfo> _wayBuffer;
 		private EntityInfoBuffer<RelationInfo> _relationBuffer;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the PbfWriter class that writes entities to specified stream with given settings.
@@ -66,18 +57,10 @@ namespace SpatialLite.Osm.IO {
 			this.WriteHeader();
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets settings used by this PbfWriter.
 		/// </summary>
 		public PbfWriterSettings Settings { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Writes specified entity in PBF format to the underlaying stream.
@@ -151,10 +134,6 @@ namespace SpatialLite.Osm.IO {
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		/// <summary>
 		/// Creates  internal buffers and initializes them to default capacity.
@@ -586,7 +565,5 @@ namespace SpatialLite.Osm.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

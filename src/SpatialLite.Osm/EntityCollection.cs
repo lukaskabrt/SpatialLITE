@@ -7,13 +7,8 @@ namespace SpatialLite.Osm {
 	/// </summary>
 	/// <typeparam name="T">The type of the entities in the collection.</typeparam>
 	public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntity {
-		#region Private Fields
 
 		private Dictionary<long, T> _storage = null;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the EntityCollection class that is empty.
@@ -33,10 +28,6 @@ namespace SpatialLite.Osm {
 				_storage.Add(entity.ID, entity);
 			}
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets the number of entities in the collection.
@@ -162,7 +153,5 @@ namespace SpatialLite.Osm {
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
 			return this.GetEnumerator();
 		}
-
-		#endregion
 	}
 }

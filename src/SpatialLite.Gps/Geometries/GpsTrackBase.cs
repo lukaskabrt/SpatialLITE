@@ -10,8 +10,6 @@ namespace SpatialLite.Gps.Geometries {
     public class GpsTrackBase<T> : LineString where T : IGpsPoint {
         private ICoordinateList _coordinatesAdapter;
 
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of the GpsTrackBase class
         /// </summary>
@@ -27,10 +25,6 @@ namespace SpatialLite.Gps.Geometries {
             _coordinatesAdapter = new ReadOnlyCoordinateList<T>(this.Points);
         }
 
-        #endregion
-
-        #region Public properties
-
         /// <summary>
         /// Gets the collection of track points of this track
         /// </summary>
@@ -44,8 +38,5 @@ namespace SpatialLite.Gps.Geometries {
                 return _coordinatesAdapter;
             }
         }
-
-        #endregion
     }
-
 }

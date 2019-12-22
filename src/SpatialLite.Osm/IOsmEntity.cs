@@ -3,7 +3,6 @@
     /// Defines properties for all OSM entities.
     /// </summary>
     public interface IOsmEntity {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the object.
@@ -25,6 +24,5 @@
 		/// </summary>
 		EntityType EntityType { get; }
 
-		#endregion
 	}
 }

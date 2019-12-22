@@ -47,8 +47,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			_relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
         }
 
-        #region Constructor(Filename, Settings) tests
-
         [Fact]
 		public void Constructor_FilenameSettings_SetsSettingsAndMakesThemReadOnly() {
 			string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-test.pbf");
@@ -85,10 +83,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.True(fi.Length > 0);
 		}
 
-		#endregion
-
-		#region Constructor(Stream, Settings) tests
-
 		[Fact]
 		public void Constructor_StreamSettings_SetsSettingsAndMakeThemReadOnly() {
 			PbfWriterSettings settings = new PbfWriterSettings();
@@ -109,10 +103,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.True(stream.ToArray().Length > 0);
 		}
 
-		#endregion
-
-		#region Dispose() tests
-
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
 			string filename = PathHelper.GetTempFilePath("pbfwriter-closes-output-filestream-test.pbf");
@@ -123,10 +113,6 @@ namespace Tests.SpatialLite.Osm.IO {
 
 			new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
 		}
-
-		#endregion
-
-		#region Write(IEntityInfo) tests
 
 		[Fact]
 		public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata() {
@@ -143,10 +129,6 @@ namespace Tests.SpatialLite.Osm.IO {
 				Assert.Throws<ArgumentNullException>(() => target.Write(_nodeProperties));
 			}
 		}
-
-		#endregion
-
-		#region Write(NodeInfo) tests
 
 		[Fact]
 		public void Write_IEntityInfo_WritesNode() {
@@ -184,7 +166,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			this.TestPbfOutput(stream, _nodeProperties);
 		}
 
-
 		[Fact]
 		public void Write_IEntityInfo_DoesntWritesNodeMetadataIfWriteMetasdataSettingsIsFalse() {
 			PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
@@ -196,10 +177,6 @@ namespace Tests.SpatialLite.Osm.IO {
 
 			this.TestPbfOutput(stream, _node);
 		}
-
-		#endregion
-
-		#region Write(NodeInfo) tests - dense format
 
 		[Fact]
 		public void Write_IEntityInfo_WritesNode_Dense() {
@@ -249,10 +226,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			this.TestPbfOutput(stream, _node);
 		}
 
-		#endregion
-
-		#region Write(WayInfo) tests
-
 		[Fact]
 		public void Write_IEntityInfo_WritesWay() {
 			PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
@@ -300,10 +273,6 @@ namespace Tests.SpatialLite.Osm.IO {
 
 			this.TestPbfOutput(stream, _way);
 		}
-
-		#endregion
-
-		#region Write(RelationInfo) tests
 
 		[Fact]
 		public void Write_IEntityInfo_WritesRelationWithNode() {
@@ -377,10 +346,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			this.TestPbfOutput(stream, _relationNode);
 		}
 
-		#endregion
-
-		#region Write(IOsmGeometry)
-
 		[Fact]
 		public void Write_IOsmGeometry_WritesNode() {
 			Node node = new Node(1, 11.1, 12.1);
@@ -432,10 +397,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			}
 		}
 
-		#endregion
-
-		#region Flush() tests
-
 		[Fact]
 		public void Flush_ForcesWriterToWriteDataToUnderalyingStorage() {
 			MemoryStream stream = new MemoryStream();
@@ -455,8 +416,6 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.True(stream.Length > originalStreamLength + minimalExpectedLengthIncrease);
 		}
 
-		#endregion
-
 		private void TestPbfOutput(MemoryStream pbfStream, IEntityInfo expected) {
 			if (pbfStream.CanSeek) {
 				pbfStream.Seek(0, SeekOrigin.Begin);
@@ -474,8 +433,6 @@ namespace Tests.SpatialLite.Osm.IO {
 				case EntityType.Relation: this.CompareRelation(expected as RelationInfo, read as RelationInfo); break;
 			}
 		}
-
-		#region Compare*(Expected, actual)
 
 		private void CompareNodes(NodeInfo expected, NodeInfo actual) {
 			Assert.Equal(expected.ID, actual.ID);
@@ -531,7 +488,5 @@ namespace Tests.SpatialLite.Osm.IO {
 			Assert.Equal(expected.Version, actual.Version);
 			Assert.Equal(expected.Changeset, actual.Changeset);
 		}
-
-		#endregion
 	}
 }
