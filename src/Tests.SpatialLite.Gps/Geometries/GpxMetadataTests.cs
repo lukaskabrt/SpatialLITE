@@ -4,7 +4,6 @@ using SpatialLite.Gps.Geometries;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxMetadataTests {
-        #region Constructor() tests
 
         [Fact]
         public void Constructor_CreatesMetadataWithEmptyCollectionOfLinks() {
@@ -12,8 +11,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
 
             Assert.Empty(target.Links);
         }
-
-        #endregion
     }
 
     public class GpxMetadataWrapper : GpxMetadata {

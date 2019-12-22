@@ -13,10 +13,6 @@ using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps {
     public class GpxDocumentTests {
-        #region Constructors tests
-
-        #region Constructor() tests
-
         [Fact]
         public void Constructor_CreatesEmptyDocument() {
             var target = new GpxDocument();
@@ -25,10 +21,6 @@ namespace Tests.SpatialLite.Gps {
             Assert.Empty(target.Routes);
             Assert.Empty(target.Tracks);
         }
-
-        #endregion
-
-        #region Constructor(Waypoints, Routes, Tracks) tests
 
         [Fact]
         public void Constructor_WaypointsRoutesTracks_CreatesDocumentWithGpxEntities() {
@@ -67,12 +59,6 @@ namespace Tests.SpatialLite.Gps {
             Assert.Throws<ArgumentNullException>(() => new GpxDocument(waypoints, routes, null));
         }
 
-        #endregion
-
-        #endregion
-
-        #region static Load(IGpxReader) tests
-
         [Fact]
         public void Load_IGpxReader_ThrowsExceptionIfReaderIsNull() {
             IGpxReader reader = null;
@@ -90,10 +76,6 @@ namespace Tests.SpatialLite.Gps {
                 Assert.Single(target.Tracks);
             }
         }
-
-        #endregion
-
-        #region static Load(string) tests
 
         [Fact]
         public void Load_string_ThrowsExceptionIfPathIsNull() {
@@ -119,10 +101,6 @@ namespace Tests.SpatialLite.Gps {
             Assert.Equal(2, target.Routes.Count);
             Assert.Single(target.Tracks);
         }
-
-        #endregion
-
-        #region Save(IGpxWriter) tests
 
         [Fact]
         public void Save_IGpxWriter_ThrowsExceptionIfWriterIsNull() {
@@ -151,10 +129,6 @@ namespace Tests.SpatialLite.Gps {
             writerM.Verify(w => w.Write(track), Times.Once());
         }
 
-        #endregion
-
-        #region Save(string) tests
-
         [Fact]
         public void Save_ThrowsExceptionIfPathIsNull() {
             string path = null;
@@ -175,7 +149,5 @@ namespace Tests.SpatialLite.Gps {
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(original, saved));
         }
-
-        #endregion
     }
 }

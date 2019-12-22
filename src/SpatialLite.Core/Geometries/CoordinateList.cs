@@ -8,13 +8,8 @@ namespace SpatialLite.Core.Geometries {
     /// Represents read-write list of Coordinates.
     /// </summary>
     public class CoordinateList : ICoordinateList {
-		#region Private Fields
 
 		private List<Coordinate> _storage;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the CoordinateList class, that is empty.
@@ -30,10 +25,6 @@ namespace SpatialLite.Core.Geometries {
 		public CoordinateList(IEnumerable<Coordinate> coords) {
 			_storage = new List<Coordinate>(coords);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets number of Coordinates in the list.
@@ -57,10 +48,6 @@ namespace SpatialLite.Core.Geometries {
 				_storage[index] = value;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Adds Coordinate to the end of the list.
@@ -130,7 +117,5 @@ namespace SpatialLite.Core.Geometries {
                 _storage[i] = coordinate;
             }
         }
-
-		#endregion
 	}
 }

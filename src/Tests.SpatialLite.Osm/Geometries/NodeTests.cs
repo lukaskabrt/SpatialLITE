@@ -7,7 +7,6 @@ using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm.Geometry {
     public class NodeTests {
-		#region Constructor(ID) tests
 
 		[Fact]
 		public void Constructor_int_CreatesNodeAndInitializeProperties() {
@@ -20,10 +19,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.NotNull(target.Tags);
 			Assert.Null(target.Metadata);
 		}
-
-		#endregion
-
-		#region Constructor(ID, Longitude, Latitude) tests
 
 		[Fact]
 		public void Constructor_int_double_double_CreatesNodeAndInitializeProperties() {
@@ -38,10 +33,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.NotNull(target.Tags);
 			Assert.Null(target.Metadata);
 		}
-
-		#endregion
-
-		#region Constructor(ID, Longitude, Latitude, Tags) tests
 
 		[Fact]
 		public void Constructor_int_double_double_Tags_CreatesNodeAndInitializesProperties() {
@@ -59,10 +50,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.Null(target.Metadata);
 		}
 
-		#endregion
-
-		#region Constructor(ID, Coordinate) tests
-
 		[Fact]
 		public void Constructor_int_Coordinate_CreatesNodeAndInitializeProperties() {
 			int id = 11;
@@ -75,10 +62,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.Equal(target.Position.Y, coord.Y);
 			Assert.NotNull(target.Tags);
 		}
-
-		#endregion
-
-		#region Constructor(ID, Coordinate, Tags) tests
 
 		[Fact]
 		public void Constructor_int_Coordinate_Tags_CreatesNodeAndInitializeProperties() {
@@ -95,10 +78,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.Same(tags, target.Tags);
 		}
 
-		#endregion
-
-		#region FromNodeInfo(NodeInfo)
-
 		[Fact]
 		public void Constructor_NodeInfo_CreatesNodeFromNodeInfo() {
 			NodeInfo info = new NodeInfo(1, 15.6, 20.4, new TagsCollection(), new EntityMetadata());
@@ -112,17 +91,11 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Assert.Same(info.Metadata, target.Metadata);
 		}
 
-		#endregion
-
-		#region EntityType property tests
-
 		[Fact]
 		public void EntityType_Returns_Node() {
 			Node target = new Node(1);
 
 			Assert.Equal(EntityType.Node, target.EntityType);
 		}
-
-		#endregion
 	}
 }

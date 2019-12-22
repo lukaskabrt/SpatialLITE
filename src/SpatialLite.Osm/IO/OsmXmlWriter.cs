@@ -10,7 +10,6 @@ namespace SpatialLite.Osm.IO {
     /// Represents an IOsmWriter, that can write OSM entities to XML format.
     /// </summary>
     public class OsmXmlWriter : IOsmWriter {
-		#region Private Fields
 
 		private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.InvariantCulture;
 		private Stream _output;
@@ -22,10 +21,6 @@ namespace SpatialLite.Osm.IO {
 
 		// underlaying stream writer for writing to files
 		private StreamWriter _streamWriter;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmXmlWriter class that writes OSM entities to the specified stream.
@@ -65,18 +60,10 @@ namespace SpatialLite.Osm.IO {
 			_writer = XmlWriter.Create(_streamWriter, writerSetting);
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets settings used by this XmlWriter.
 		/// </summary>
 		public OsmWriterSettings Settings { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Releases all resources used by the OsmXmlWriter.
@@ -134,10 +121,6 @@ namespace SpatialLite.Osm.IO {
 		public void Flush() {
 			_writer.Flush();
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		/// <summary>
 		/// Writes &lt;osm&gt; start element to the output stream.
@@ -280,7 +263,5 @@ namespace SpatialLite.Osm.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

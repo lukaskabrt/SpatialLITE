@@ -48,8 +48,6 @@ namespace Tests.SpatialLite.Osm.IO {
             _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
         }
 
-        #region Constructor(Stream, WriteDetails)
-
         [Fact]
         public void Constructor_StreamSettings_SetsSettingsAndMakesThemReadOnly() {
             MemoryStream stream = new MemoryStream();
@@ -59,10 +57,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 Assert.True(target.Settings.IsReadOnly);
             }
         }
-
-        #endregion
-
-        #region Constructor(Path, Settings)
 
         [Fact]
         public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
@@ -87,10 +81,6 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.True(File.Exists(filename));
         }
 
-        #endregion
-
-        #region Dispose() tests
-
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
             string path = PathHelper.GetTempFilePath("xmlwriter-closes-output-filestream-test.osm");
@@ -102,10 +92,6 @@ namespace Tests.SpatialLite.Osm.IO {
             testStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
             testStream.Dispose();
         }
-
-        #endregion
-
-        #region Write(IEntityInfo) tests
 
         [Fact]
         public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata() {
@@ -125,10 +111,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 target.Write(_nodeProperties);
             }
         }
-
-        #endregion
-
-        #region Write(NodeInfo) tests
 
         [Fact]
         public void Write_IEntityInfo_WritesNode() {
@@ -181,10 +163,6 @@ namespace Tests.SpatialLite.Osm.IO {
             }
         }
 
-        #endregion
-
-        #region Write(WayInfo) tests
-
         [Fact]
         public void Write_IEntityInfo_WritesWay() {
             MemoryStream stream = new MemoryStream();
@@ -235,10 +213,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 }
             }
         }
-
-        #endregion
-
-        #region Write(RelationInfo) tests
 
         [Fact]
         public void Write_IEntityInfo_WritesRelationWithNode() {
@@ -313,10 +287,6 @@ namespace Tests.SpatialLite.Osm.IO {
             }
         }
 
-        #endregion
-
-        #region Write(IOsmGeometry)
-
         [Fact]
         public void Write_IOsmGeometry_WritesNode() {
             Node node = new Node(1, 11.1, 12.1);
@@ -366,8 +336,6 @@ namespace Tests.SpatialLite.Osm.IO {
             }
         }
 
-        #endregion
-
         private void TestXmlOutput(MemoryStream xmlStream, IEntityInfo expected, bool readMetadata) {
             if (xmlStream.CanSeek) {
                 xmlStream.Seek(0, SeekOrigin.Begin);
@@ -384,8 +352,6 @@ namespace Tests.SpatialLite.Osm.IO {
                 case EntityType.Relation: this.CompareRelation(expected as RelationInfo, read as RelationInfo); break;
             }
         }
-
-        #region Compare*(Expected, actual)
 
         private void CompareNodes(NodeInfo expected, NodeInfo actual) {
             Assert.Equal(expected.ID, actual.ID);
@@ -441,8 +407,6 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.Equal(expected.Version, actual.Version);
             Assert.Equal(expected.Changeset, actual.Changeset);
         }
-
-        #endregion
 
         private void CheckNode(XElement element) {
             Assert.Equal("15", element.Attribute("id").Value);

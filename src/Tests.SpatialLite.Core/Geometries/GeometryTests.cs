@@ -11,7 +11,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class GeometryTests {
-		#region Geometry class mock
 
 		class GeometryMock : Geometry {
 
@@ -48,22 +47,12 @@ namespace Tests.SpatialLite.Core.Geometries {
             }
         }
 
-		#endregion
-
-		#region Constructors tests
-
-		#region Default constructor tests
-
 		[Fact]
 		public void Constructor_SetsDefaultSRID() {
 			GeometryMock target = new GeometryMock();
 
 			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
-
-		#endregion
-
-		#region Constructor(SRID) tests
 
 		[Fact]
 		public void Constructor_SRID_SetsSRID() {
@@ -72,9 +61,5 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(srid, target.Srid);
 		}
-
-		#endregion
-
-		#endregion
 	}
 }

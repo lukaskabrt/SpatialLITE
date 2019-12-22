@@ -5,24 +5,15 @@ namespace SpatialLite.Gps.IO {
     /// Contains settings that determine behaviour of the GpxWriter.
     /// </summary>
     public class GpxWriterSettings {
-		#region Private Fields
 
 		bool _writeMetadata = true;
         string _generatorName;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the GpxWriterSettings class with default values.
 		/// </summary>
         public GpxWriterSettings() {
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets a value indicating whether GpxWriter should write entity metadata.
@@ -60,7 +51,5 @@ namespace SpatialLite.Gps.IO {
         /// Gets or sets value indicating whether properties of the current GpxWriterSettings instance can be changed.
 		/// </summary>
 		public bool IsReadOnly { get; internal set; }
-
-		#endregion
     }
 }

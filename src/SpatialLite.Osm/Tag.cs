@@ -5,14 +5,9 @@ namespace SpatialLite.Osm {
     /// Represents OSM tag and it's value.
     /// </summary>
     public class Tag {
-		#region Private Fields
 
 		private string _key;
 		private string _value;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Tag class with specified key and value.
@@ -36,10 +31,6 @@ namespace SpatialLite.Osm {
 			_value = value;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the key of the tag.
 		/// </summary>
@@ -57,10 +48,6 @@ namespace SpatialLite.Osm {
 				return _value;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Compares the current Tag object with the specified object for equivalence.
@@ -101,7 +88,5 @@ namespace SpatialLite.Osm {
 		public override int GetHashCode() {
 			return unchecked(_key.GetHashCode() * 83 + _value.GetHashCode());
 		}
-
-		#endregion
 	}
 }

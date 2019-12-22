@@ -7,13 +7,8 @@ namespace SpatialLite.Osm {
     /// Represents collection of Tags that are accesible by their key.
     /// </summary>
     public class TagsCollection : ICollection<Tag> {
-		#region Private Fields
 
 		private List<Tag> _tags;
-
-		#endregion
-
-		#region Constructor()
 
 		/// <summary>
 		/// Initializes a new instance of the TagsCollection class.
@@ -32,10 +27,6 @@ namespace SpatialLite.Osm {
 				this.Add(tag);
 			}
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets the number of Tags in the TagsCollection.
@@ -220,10 +211,6 @@ namespace SpatialLite.Osm {
 			}
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Returns Enumerator for empty collection.
 		/// </summary>
@@ -231,7 +218,5 @@ namespace SpatialLite.Osm {
 		private IEnumerator<Tag> GetEmptyEnumerator() {
 			yield break;
 		}
-
-		#endregion
 	}
 }

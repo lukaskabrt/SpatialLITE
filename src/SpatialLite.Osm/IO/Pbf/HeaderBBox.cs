@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "HeaderBBox")]
 	internal class HeaderBBox {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets Bootom boundary of the BBox.
@@ -32,6 +31,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(3, Name = "top", IsRequired = true, DataFormat = DataFormat.ZigZag)]
 		public long Top { get; set; }
 
-		#endregion
 	}
 }

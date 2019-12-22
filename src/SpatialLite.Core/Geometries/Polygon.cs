@@ -8,8 +8,6 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a polygon, which may include holes.
     /// </summary>
     public class Polygon : Geometry, IPolygon {
-		#region Constructors
-
 		/// <summary>
 		/// Initializes a new instance of the <c>Polygon</c> class in WSG84 coordinate reference system that without ExteriorRing and no InteriorRings.
 		/// </summary>
@@ -50,10 +48,6 @@ namespace SpatialLite.Core.Geometries {
 			this.InteriorRings = interiorRings.ToList();
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets or sets the exterior boundary of the polygon.
 		/// </summary>
@@ -93,10 +87,6 @@ namespace SpatialLite.Core.Geometries {
 			//TODO consider using InteriorRings as well
 			get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.IsMeasured); }
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Computes envelope of the <c>Polygon</c> object. The envelope is defined as a minimal bounding box for a geometry.
@@ -146,7 +136,5 @@ namespace SpatialLite.Core.Geometries {
                 ring.Apply(filter);
             }
         }
-
-        #endregion
     }
 }

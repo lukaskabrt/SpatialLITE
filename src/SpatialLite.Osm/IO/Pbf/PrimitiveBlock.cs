@@ -8,14 +8,9 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "PrimitiveBlock")]
 	internal class PrimitiveBlock {
-		#region Private Fields
 
 		private int _granularity = 100;
 		private int _date_granularity = 1000;
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets StringTable with all strings used in the block.
@@ -58,7 +53,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 			get { return _date_granularity; }
 			set { _date_granularity = value; }
 		}
-
-		#endregion
 	}
 }

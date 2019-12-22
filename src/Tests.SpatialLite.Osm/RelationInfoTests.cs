@@ -8,7 +8,6 @@ using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
     public class RelationMemberTests {
-		#region Constructor(ID, Tags, Members, Metadata) tests
 
 		[Fact]
 		public void Constructor_PropertiesWithoutEntityDetails_SetsProperties() {
@@ -41,10 +40,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Same(details, target.Metadata);
 		}
 
-		#endregion
-
-		#region Constructor(Relation) tests
-
 		[Fact]
 		public void Constructor_Relation_SetsProperties() {
 			Relation relation = new Relation(100, new RelationMember[0], new TagsCollection()) { Metadata = new EntityMetadata() };
@@ -72,7 +67,5 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_Relation_ThrowExceptionIfRelationIsNull() {
 			Assert.Throws<ArgumentNullException>(() => new RelationInfo(null));
 		}
-
-		#endregion
 	}
 }

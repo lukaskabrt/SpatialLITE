@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Represents OSM node.
     /// </summary>
     public class Node : Point, IOsmGeometry {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Node class with specified ID.
@@ -58,10 +57,6 @@ namespace SpatialLite.Osm.Geometries {
 			this.Tags = tags;
 		}
 
-		#endregion
-
-		#region Public Static Methods
-
 		/// <summary>
 		/// Creates a new instance of the Node class with data from NodeInfo object
 		/// </summary>
@@ -70,10 +65,6 @@ namespace SpatialLite.Osm.Geometries {
 		public static Node FromNodeInfo(NodeInfo info) {
 			return new Node(info.ID, info.Longitude, info.Latitude, info.Tags) { Metadata = info.Metadata };
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the Node.
@@ -90,14 +81,11 @@ namespace SpatialLite.Osm.Geometries {
 		/// </summary>
 		public EntityMetadata Metadata { get; set; }
 
-
 		/// <summary>
 		/// Gets type of this entity.
 		/// </summary>
 		public EntityType EntityType {
 			get { return EntityType.Node; }
 		}
-
-		#endregion
 	}
 }

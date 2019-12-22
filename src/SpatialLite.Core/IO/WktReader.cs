@@ -12,7 +12,6 @@ namespace SpatialLite.Core.IO {
     /// Provides functions for reading and parsing geometries from WKT format.
     /// </summary>
     public class WktReader : IDisposable {
-		#region Private Fields
 
 		private static CultureInfo _invarianCulture = CultureInfo.InvariantCulture;
 
@@ -21,10 +20,6 @@ namespace SpatialLite.Core.IO {
 		private WktTokensBuffer _tokens;
 
 		private bool _disposed = false;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WktReader class that reads data from specific stream.
@@ -48,10 +43,6 @@ namespace SpatialLite.Core.IO {
 			_inputReader = new StreamReader(_inputFileStream);
 			_tokens = new WktTokensBuffer(WktTokenizer.Tokenize(_inputReader));
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Parses a Geometry from WKT string.
@@ -84,10 +75,6 @@ namespace SpatialLite.Core.IO {
 				return null;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Reads next geometry from the input.
@@ -125,10 +112,6 @@ namespace SpatialLite.Core.IO {
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-
-		#endregion
-
-		#region Private Static Methods
 
 		/// <summary>
 		/// Parses a geometry tagged text.
@@ -701,10 +684,6 @@ namespace SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
-
-		#region Private Methods
-
 		/// <summary>
 		/// Releases the unmanaged resources used by the ComponentLibrary and optionally releases the managed resources.
 		/// </summary>
@@ -722,7 +701,5 @@ namespace SpatialLite.Core.IO {
 				_disposed = true;
 			}
 		}
-
-		#endregion
 	}
 }

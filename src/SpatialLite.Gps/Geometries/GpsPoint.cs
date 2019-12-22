@@ -7,7 +7,6 @@ namespace SpatialLite.Gps.Geometries {
     /// Represents location on the earth surface with timestamp that defines time when the point was recorded 
     /// </summary>
     public class GpsPoint : Point, IGpsPoint {
-        #region Constructors
 
         /// <summary>
         /// Creates a new, empty instance of the GpsPoint
@@ -45,15 +44,9 @@ namespace SpatialLite.Gps.Geometries {
             Timestamp = time;
         }
 
-        #endregion
-
-        #region Public properties
-
         /// <summary>
         /// Gets or sets time when the point was recorded.
         /// </summary>
-        public DateTime? Timestamp { get; set; }
-        
-        #endregion
+        public DateTime? Timestamp { get; set; }        
     }
 }

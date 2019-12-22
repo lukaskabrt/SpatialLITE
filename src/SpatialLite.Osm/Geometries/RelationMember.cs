@@ -9,7 +9,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Ecapsules member of the OSM relation and it's role in the relation.
     /// </summary>
     public class RelationMember : Geometry {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the RelationMember class with empty Role and specified Member.
@@ -47,10 +46,6 @@ namespace SpatialLite.Osm.Geometries {
 			}
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the actual member.
 		/// </summary>
@@ -84,10 +79,6 @@ namespace SpatialLite.Osm.Geometries {
 			}
 		}
 
-		#endregion
-
-		#region Public Static Methods
-
 		/// <summary>
 		/// Creates a new instance of the RelationMember class based on the data from RelationInfo object.
 		/// </summary>
@@ -116,10 +107,6 @@ namespace SpatialLite.Osm.Geometries {
 
 			return result;
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
@@ -154,7 +141,5 @@ namespace SpatialLite.Osm.Geometries {
         public override void Apply(ICoordinateFilter filter) {
             this.Member.Apply(filter);
         }
-
-        #endregion
     }
 }

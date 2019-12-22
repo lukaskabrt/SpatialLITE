@@ -20,7 +20,6 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		bool IsMeasured { get; }
 
-
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>

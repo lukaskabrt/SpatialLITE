@@ -7,7 +7,6 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a collection of LineStrings
     /// </summary>
     public class MultiLineString : GeometryCollection<LineString>, IMultiLineString {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the MultiLineString class that is empty and has assigned WSG84 coordinate reference system.
@@ -41,10 +40,6 @@ namespace SpatialLite.Core.Geometries {
 			: base(srid, linestrings) {
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets collection of geometry obejcts from this MultiLineString as the collection of IMultiLineString objects.
 		/// </summary>
@@ -52,6 +47,5 @@ namespace SpatialLite.Core.Geometries {
 			get { return base.Geometries; }
 		}
 
-		#endregion
 	}
 }

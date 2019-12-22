@@ -16,7 +16,6 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WkbWriterTests {
-        #region Constructor(Stream, Settings) tests
 
         [Fact]
         public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly() {
@@ -37,10 +36,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfSettingsIsNull() {
             Assert.Throws<ArgumentNullException>(() => new WkbWriter(new MemoryStream(), null));
         }
-
-        #endregion
-
-        #region Constructor(Path, Settings) tests
 
         [Fact]
         public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly() {
@@ -82,10 +77,6 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.Throws<NotSupportedException>(() => new WkbWriter(stream, new WkbWriterSettings() { Encoding = BinaryEncoding.BigEndian }));
         }
 
-        #endregion
-
-        #region Dispose() tests
-
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
             string filename = PathHelper.GetTempFilePath("wkbwriter-closes-output-filestream-test.bin");
@@ -109,10 +100,6 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.False(stream.CanRead);
         }
 
-        #endregion
-
-        #region Write(IGeometry) Encoding byte testing
-
         [Fact]
         public void WkbWriter_Write_WritesLittleEndianEncodingByte() {
             MemoryStream stream = new MemoryStream();
@@ -122,10 +109,6 @@ namespace Tests.SpatialLite.Core.IO {
                 CompareBytes(stream.ToArray(), 0, new byte[] { (byte)BinaryEncoding.LittleEndian });
             }
         }
-
-        #endregion
-
-        #region Write(IPoint) tests
 
         [Fact]
         public void Write_WritesEmptyPointAsEmptyGeoemtryCollection() {
@@ -192,10 +175,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region Write(ILineString) tests
-
         [Fact]
         public void Write_WritesEmptyLineString() {
             string wkt = "linestring empty";
@@ -259,10 +238,6 @@ namespace Tests.SpatialLite.Core.IO {
                 this.CompareBytes(stream.ToArray(), TestDataReader.Read("linestring-3DM.wkb"));
             }
         }
-
-        #endregion
-
-        #region Write(IPolygon) tests
 
         [Fact]
         public void Write_WritesEmptyPolygon() {
@@ -342,10 +317,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region Write(MultiPoint) tests
-
         [Fact]
         public void Write_WritesEmptyMultipoint() {
             string wkt = "multipoint empty";
@@ -410,10 +381,6 @@ namespace Tests.SpatialLite.Core.IO {
                 this.CompareBytes(stream.ToArray(), TestDataReader.Read("multipoint-3DM.wkb"));
             }
         }
-
-        #endregion
-
-        #region Write(IMultilineString) test
 
         [Fact]
         public void Write_WritesEmptyMultiLineString() {
@@ -480,10 +447,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region Write(MultiPolygon) tests
-
         [Fact]
         public void Write_WritesEmptyMultiPolygon() {
             string wkt = "multipolygon empty";
@@ -548,10 +511,6 @@ namespace Tests.SpatialLite.Core.IO {
                 this.CompareBytes(stream.ToArray(), TestDataReader.Read("multipolygon-3DM.wkb"));
             }
         }
-
-        #endregion
-
-        #region Write(GeometryCollection, TextWriter)
 
         [Fact]
         public void Write_WritesEmptyGeometryCollection() {
@@ -657,10 +616,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region WriteToArray(IGeometry) tests
-
         public static IEnumerable<object[]> WriteToArrayTestData {
             get {
                 yield return new object[] { "point zm (-10.1 15.5 100.5 1000.5)", TestDataReader.Read("point-3DM.wkb") };
@@ -683,10 +638,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.CompareBytes(wkb, expectedWkb);
         }
 
-        #endregion
-
-        #region Helper methods
-
         private void CompareBytes(byte[] array, byte[] expected) {
 			Assert.Equal(array.Length, expected.Length);
 
@@ -704,7 +655,5 @@ namespace Tests.SpatialLite.Core.IO {
 		private Geometry ParseWKT(string wkt) {
 			return WktReader.Parse(wkt);
 		}
-
-		#endregion
 	}
 }

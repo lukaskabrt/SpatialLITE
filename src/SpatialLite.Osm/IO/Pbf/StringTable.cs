@@ -10,13 +10,8 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "StringTable")]
 	public class StringTable {
-		#region Private Fields
 
 		private List<byte[]> _s = new List<byte[]>();
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets collection of strings serialized as byte array.
@@ -64,7 +59,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 				this[(int)index] = value;
 			}
 		}
-
-		#endregion
 	}
 }

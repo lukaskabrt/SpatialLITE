@@ -8,7 +8,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract(Name = "Node")]
 	internal class PbfNode {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the node.
@@ -46,6 +45,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(9, IsRequired = true, Name = "lon", DataFormat = DataFormat.ZigZag)]
 		public long Longitude { get; set; }
 
-		#endregion
 	}
 }

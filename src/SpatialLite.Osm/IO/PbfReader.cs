@@ -10,7 +10,6 @@ namespace SpatialLite.Osm.IO {
     /// Represents IOsmReader that can read OSM entities from PBF format.
     /// </summary>
     public class PbfReader : IOsmReader {
-        #region Public Constants
 
         /// <summary>
         /// Defines maximal allowed size of uncompressed OsmData block. Larger blocks are considered invalid.
@@ -22,18 +21,10 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         public const int MaxHeaderBlockSize = 64 * 1024;
 
-        #endregion
-
-        #region Private Fields
-
         private bool _disposed = false;
         private Stream _input;
         private Queue<IEntityInfo> _cache;
         private DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the PbfReader class that read data form specified stream.
@@ -99,18 +90,10 @@ namespace SpatialLite.Osm.IO {
             throw new InvalidDataException("Input stream doesn't contain an 'OSMHeader' block.");
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
         /// Gets OsmReaderSettings object that contains properties which determine behaviour of the OSM reader.
         /// </summary>
         public OsmReaderSettings Settings { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Reads next OSM entity from the stream.
@@ -146,10 +129,6 @@ namespace SpatialLite.Osm.IO {
 
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// Reads and deserializes a BlobHeader from input stream.
@@ -455,7 +434,5 @@ namespace SpatialLite.Osm.IO {
                 _disposed = true;
             }
         }
-
-        #endregion
     }
 }

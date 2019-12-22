@@ -5,7 +5,6 @@ namespace SpatialLite.Gps.Geometries {
     /// Represents a link to an external resource (Web page, digital photo, video clip, etc) with additional information.
     /// </summary>
     public class GpxLink {
-        #region Public properties
 
         /// <summary>
         /// Gets the URL of the link
@@ -22,10 +21,6 @@ namespace SpatialLite.Gps.Geometries {
         /// </summary>
         public string Type { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of the GpxLink with given url
         /// </summary>
@@ -33,7 +28,5 @@ namespace SpatialLite.Gps.Geometries {
         public GpxLink(Uri url) {
             Url = url;
         }
-
-        #endregion
     }
 }

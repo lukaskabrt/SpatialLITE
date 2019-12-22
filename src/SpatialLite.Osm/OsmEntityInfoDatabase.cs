@@ -7,7 +7,6 @@ namespace SpatialLite.Osm {
     /// Represents in-memory OSM entities database that contains entities as IEntityInfo objects.
     /// </summary>
     public class OsmEntityInfoDatabase : OsmDatabase<IEntityInfo, NodeInfo, WayInfo, RelationInfo> {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OsmEntityInfoDatabase class that is empty.
@@ -23,10 +22,6 @@ namespace SpatialLite.Osm {
 		public OsmEntityInfoDatabase(IEnumerable<IEntityInfo> entities)
 			: base(entities) {
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Creates a new instaance of the OsmDatabase class and loads data from specific IOsmReader into it.
@@ -48,10 +43,6 @@ namespace SpatialLite.Osm {
 			return db;
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Saves entities from the database to specific writer.
 		/// </summary>
@@ -61,7 +52,5 @@ namespace SpatialLite.Osm {
 				writer.Write(entity);
 			}
 		}
-
-		#endregion
 	}
 }

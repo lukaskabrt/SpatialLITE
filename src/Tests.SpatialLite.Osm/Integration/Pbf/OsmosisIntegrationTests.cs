@@ -14,8 +14,6 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
         private const int TestFileWaysCount = 14461;
         private const int TestFileRelationsCount = 124;
 
-        #region PbfReader tests
-
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfReaderReadsFilesCreatedByOsmosis_NoDenseNoCompression() {
             string pbfFile = PathHelper.GetTempFilePath("pbfreader-osmosis-compatibility-test-osmosis-real-file.pbf");
@@ -63,10 +61,6 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
                 this.TestReader(reader);
             }
         }
-
-        #endregion
-
-        #region PbfWriter tests
 
         [Fact, Trait("Category", "Osm.Integration")]
         public void PbfWriterWritesFilesCompatibleWithOsmosis_NoDenseNoCompression() {
@@ -140,10 +134,6 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
             Assert.True(new FileInfo(osmosisXmlFile).Length > 0);
         }
 
-        #endregion
-
-        #region Helper functions
-
         private void CallOsmosis(string arguments) {
             ProcessStartInfo osmosisInfo = new ProcessStartInfo(PathHelper.OsmosisPath);
             osmosisInfo.Arguments = arguments;
@@ -184,7 +174,5 @@ namespace Tests.SpatialLite.Osm.Integration.Pbf {
 
             return data;
         }
-
-        #endregion
     }
 }

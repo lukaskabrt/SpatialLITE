@@ -8,14 +8,9 @@ namespace SpatialLite.Core {
     /// Provides methods for measuring geometry objects.
     /// </summary>
     public class Measurements {
-		#region Private Static Fields
 
 		private static readonly Measurements _euclidean2D;
 		private static readonly Measurements _sphere2D;
-
-		#endregion
-
-		#region Static Constructors
 
 		/// <summary>
 		/// Initializes static members of the Measurements class.
@@ -25,10 +20,6 @@ namespace SpatialLite.Core {
 			_sphere2D = new Measurements(new Sphere2DCalculator());
 		}
 
-		#endregion
-
-		#region Constructors
-
 		/// <summary>
 		/// Initializes a new instance of the Measurements class that uses specific IDistanceCalculator.
 		/// </summary>
@@ -36,10 +27,6 @@ namespace SpatialLite.Core {
 		public Measurements(IDimensionsCalculator distanceCalculator) {
 			this.DimensionsCalculator = distanceCalculator;
 		}
-
-		#endregion
-
-		#region Public Static Properties
 
 		/// <summary>
 		/// Gets Measurments class instance that uses 2D Euclidean space.
@@ -59,18 +46,10 @@ namespace SpatialLite.Core {
 			}
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets IDistanceCalculator object used by this Measurements to compute dimensions of geometries.
 		/// </summary>
 		public IDimensionsCalculator DimensionsCalculator { get; private set; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Computes distance between two points
@@ -199,7 +178,5 @@ namespace SpatialLite.Core {
 
 			return area;
 		}
-
-		#endregion
 	}
 }

@@ -7,7 +7,6 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a collection of Points
     /// </summary>
     public class MultiPoint : GeometryCollection<Point>, IMultiPoint {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the MultiPoint class that is empty and has assigned WSG84 coordinate reference system.
@@ -41,10 +40,6 @@ namespace SpatialLite.Core.Geometries {
 			: base(srid, points) {
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets collection of points from this Multipoint as the collection of IPoint objects.
 		/// </summary>
@@ -52,6 +47,5 @@ namespace SpatialLite.Core.Geometries {
 			get { return base.Geometries; }
 		}
 
-		#endregion
 	}
 }

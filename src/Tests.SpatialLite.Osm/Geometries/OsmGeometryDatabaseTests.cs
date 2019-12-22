@@ -15,7 +15,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		Way[] _wayData;
 		Relation[] _relationData;
 		IOsmGeometry[] _data;
-
 		public OsmGeometryDatabaseTests() {
 			_nodeData = new Node[3];
 			_nodeData[0] = new Node(1);
@@ -33,8 +32,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			_data = _nodeData.Concat<IOsmGeometry>(_wayData).Concat<IOsmGeometry>(_relationData).ToArray();
 		}
 
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyDatabase() {
 			OsmGeometryDatabase target = new OsmGeometryDatabase();
@@ -44,10 +41,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Empty(target.Ways);
 			Assert.Empty(target.Relations);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<T>) tests
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems() {
@@ -74,10 +67,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 				Assert.Contains(_relationData[i], target.Relations);
 			}
 		}
-
-		#endregion
-
-		#region Load(IOsmReader, IgnoreMissing) tests
 
 		[Fact]
 		public void Load_LoadsNodes() {
@@ -153,10 +142,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Equal(1, target.Relations.Count);
 		}
 
-		#endregion
-
-		#region Save(IOsmWriter) tests
-
 		[Fact]
 		public void Save_CallsIOsmWriterWriteForAllEntities() {
 			List<IOsmGeometry> written = new List<IOsmGeometry>();
@@ -172,7 +157,5 @@ namespace Tests.SpatialLite.Osm.Geometries {
 				Assert.Contains(entity, written);
 			}
 		}
-
-		#endregion
 	}
 }

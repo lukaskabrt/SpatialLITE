@@ -6,7 +6,6 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ProtoContract]
 	internal class Blob {
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets blob content if no compression is used.
@@ -26,6 +25,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 		[ProtoMember(3, IsRequired = false, Name = "zlib_data")]
 		public byte[] ZlibData { get; set; }
 
-		#endregion
 	}
 }

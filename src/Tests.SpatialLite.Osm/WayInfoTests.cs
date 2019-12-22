@@ -8,7 +8,6 @@ using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
     public class WayInfoTests {
-		#region Constructor(ID, Tags, Nodes, EntityMetadata) tests
 
 		[Fact]
 		public void Constructor_PropertiesWithoutEntityDetails_SetsProperties() {
@@ -41,10 +40,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Same(details, target.Metadata);
 		}
 
-		#endregion
-
-		#region Constructor(Way) tests
-
 		[Fact]
 		public void Constructor_Way_SetsProperties() {
 			Way way = new Way(10, new Node[0], new TagsCollection()) { Metadata = new EntityMetadata() };
@@ -72,7 +67,5 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_Way_ThrowsExceptionIfWayIsNull() {
 			Assert.Throws<ArgumentNullException>(() => new WayInfo(null));
 		}
-
-		#endregion
 	}
 }

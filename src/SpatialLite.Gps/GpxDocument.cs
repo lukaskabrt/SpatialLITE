@@ -8,9 +8,6 @@ namespace SpatialLite.Gps {
     /// Represents an in-memory GPX document with it's waypoints, routes and tracks 
     /// </summary>
     public class GpxDocument {
-
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the GpxDocument class that is empty
         /// </summary>
@@ -32,10 +29,6 @@ namespace SpatialLite.Gps {
             this.Tracks = new List<GpxTrack>(tracks);
         }
 
-        #endregion
-
-        #region Public properties
-
         /// <summary>
         /// Gets collection of waypoints from the document.
         /// </summary>
@@ -50,10 +43,6 @@ namespace SpatialLite.Gps {
         /// Gets collection of tracks from the document.
         /// </summary>
         public List<GpxTrack> Tracks { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Saves content of the GpxDocument to file.
@@ -87,10 +76,6 @@ namespace SpatialLite.Gps {
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         /// <summary>
         /// Loads Gpx data from reader to this instance of the GpxDocument class
         /// </summary>
@@ -105,8 +90,6 @@ namespace SpatialLite.Gps {
                 }
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Loads Gpx data from a file.

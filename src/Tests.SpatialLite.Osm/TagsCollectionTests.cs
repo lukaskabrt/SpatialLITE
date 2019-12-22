@@ -19,18 +19,12 @@ namespace Tests.SpatialLite.Osm {
 			new Tag("test-key-1", "test-value-2")
 		};
 
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor_CreatesEmptyTagsCollection() {
 			TagsCollection target = new TagsCollection();
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<Tags>) tests
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesCollectionWithGivetTags() {
@@ -45,10 +39,6 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_IEnumerable_ThrowsExceptionWithDuplicateKeys() {
 			Assert.Throws<ArgumentException>(() => new TagsCollection(_tagsDuplicitKeys));
 		}
-
-		#endregion
-
-		#region Add(Tag) tests
 
 		[Fact]
 		public void Add_AddsTag() {
@@ -66,10 +56,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Throws<ArgumentException>(delegate { target.Add(_tagsDuplicitKeys[1]); });
 		}
 
-		#endregion
-
-		#region Clear() tests
-
 		[Fact]
 		public void Clear_DoesNothingOnEmptyCollection() {
 			TagsCollection target = new TagsCollection();
@@ -84,10 +70,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Contains(Tag) tests
 
 		[Fact]
 		public void Contains_Tag_ReturnsFalseForEmptyCollection() {
@@ -111,10 +93,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(_tags[0], target);
 		}
 
-		#endregion
-
-		#region Contains(Key) tests
-
 		[Fact]
 		public void Contains_string_ReturnsFalseForEmptyCollection() {
 			TagsCollection target = new TagsCollection();
@@ -135,10 +113,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.True(target.Contains(_tags[0].Key));
 		}
-
-		#endregion
-
-		#region CopyTo(Array, index) tests
 
 		[Fact]
 		public void CopyTo_ThrowsArgumentNullExceptionIfArrayIsNull() {
@@ -177,10 +151,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Null(array[4]);
 		}
 
-		#endregion
-		
-		#region GetTag(Key) tests
-
 		[Fact]
 		public void GetTag_ReturnsNullForEmptyCollection() {
 			TagsCollection target = new TagsCollection();
@@ -202,10 +172,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Same(_tags[0], returned);
 		}
-
-		#endregion
-
-		#region Remove(Tag) tests
 
 		[Fact]
 		public void Remove_Tag_ReturnsFalseForEmptyCollection() {
@@ -231,10 +197,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.True(target.Remove(_tags[0]));
 			this.CompareCollections(_tags.Skip(1), target);
 		}
-
-		#endregion
-
-		#region Remove(Key) tests
 
 		[Fact]
 		public void Remove_string_ReturnsFalseForEmptyCollection() {
@@ -264,10 +226,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Contains(tags[0], target);
 		}
 
-		#endregion
-
-		#region Count property tests
-
 		[Fact]
 		public void Count_ReturnsZeroForEmptyCollection() {
 			TagsCollection target = new TagsCollection();
@@ -282,20 +240,12 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Equal(_tags.Length, target.Count);
 		}
 
-		#endregion
-
-		#region IsReadOnly property tests
-
 		[Fact]
 		public void IsReadOnly_ReturnsFalse() {
 			TagsCollection target = new TagsCollection();
 
 			Assert.False(target.IsReadOnly);
 		}
-
-		#endregion
-
-		#region Item property tests
 
 		[Fact]
 		public void Item_Get_ThrowsExceptionForEmptyCollection() {
@@ -346,8 +296,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Equal("new-value", target[_tags[0].Key]);
 		}
-
-		#endregion
 
 		private void CompareCollections(IEnumerable<Tag> expected, IEnumerable<Tag> actual) {
 			Assert.Equal(expected.Count(), actual.Count());

@@ -15,7 +15,6 @@ using Tests.SpatialLite.Core.Data;
 namespace Tests.SpatialLite.Core.IO {
 
 	public class WktReaderTests {
-		#region Test data
 
 		private Coordinate[] _coordinatesXY = new Coordinate[] {
 				new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
@@ -37,30 +36,16 @@ namespace Tests.SpatialLite.Core.IO {
 				new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
 		};
 
-        #endregion
-
-
-        #region Constructor(Stream) tests
-
         [Fact]
         public void Constructor_Stream_ThrowsAgrumentNullExceptioIfStreamIsNull() {
             Stream stream = null;
             Assert.Throws<ArgumentNullException>(() => new WktReader(stream));
         }
 
-        #endregion
-
-        #region Constructor(Path) tests
-
         [Fact]
         public void Constructor_Path_ThrowsFileNotFoundExceptioIfFileDoesNotExists() {
             Assert.Throws<FileNotFoundException>(() => new WktReader("non-existing-file.wkb"));
         }
-
-        #endregion
-
-
-        #region Dispose() tests
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
@@ -83,11 +68,6 @@ namespace Tests.SpatialLite.Core.IO {
 
             Assert.False(stream.CanRead);
         }
-
-        #endregion
-
-        #region Read() tests
-
         public static IEnumerable<object[]> Read_ReadsAllGeometryTypesTestData {
             get {
                 yield return new object[] { TestDataReader.Read("wkt-point-3DM.wkt") };
@@ -139,10 +119,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region Read<T>() tests
-
         [Fact]
         public void ReadT_ReadsGeometry() {
             using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt"))) {
@@ -166,10 +142,6 @@ namespace Tests.SpatialLite.Core.IO {
                 Assert.Throws<WktParseException>(() => target.Read<LineString>());
             }
         }
-
-        #endregion
-
-        #region Parse(WKT) tests
 
         [Fact]
 		public void Parse_ParsesPoint() {
@@ -270,10 +242,6 @@ namespace Tests.SpatialLite.Core.IO {
 			WktReader.Parse(wkt);
 		}
 
-		#endregion
-
-		#region Parse<Point>(WKT) tests
-
 		[Fact]
 		public void Parse_ParsesEmptyPoint() {
 			string wkt = "point empty";
@@ -333,10 +301,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Throws<WktParseException>(() => WktReader.Parse<Point>(wkt));
 		}
 
-		#endregion
-
-		#region Parse<LineString>(WKT) tests
-
 		[Fact]
 		public void Parse_ParsesEmptyLineString() {
 			string wkt = "linestring empty";
@@ -393,10 +357,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Throws<WktParseException>(() => WktReader.Parse<LineString>(wkt));
 		}
-
-		#endregion
-
-		#region Parse<Polygon>(WKT) tests
 
 		[Fact]
 		public void ParsePolygon_ParsesEmptyPolygon() {
@@ -473,10 +433,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Throws<WktParseException>(() => WktReader.Parse<Polygon>(wkt));
 		}
 
-		#endregion
-
-		#region ParseMultiPoint(WKT) tests
-
 		[Fact]
 		public void Parse_ParsesEmptyMultiPoint() {
 			string wkt = "multipoint empty";
@@ -541,10 +497,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Throws<WktParseException>(() => WktReader.Parse<MultiPoint>(wkt));
 		}
-
-		#endregion
-
-		#region Parse<MultiLineString>(WKT) tests
 
 		[Fact]
 		public void Parse_ParsesEmptyMultiLineString() {
@@ -611,10 +563,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Throws<WktParseException>(() => WktReader.Parse<MultiLineString>(wkt));
 		}
 
-		#endregion
-
-		#region ParseMultiPolygon(WKT) tests
-
 		[Fact]
 		public void Parse_ParsesEmptyMultiPolygon() {
 			string wkt = "multipolygon empty";
@@ -679,10 +627,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.Throws<WktParseException>(() => WktReader.Parse<MultiPolygon>(wkt));
 		}
-
-		#endregion
-
-		#region ParseGeometryCollection(WKT) tests
 
 		[Fact]
 		public void Parse_ParsesEmptyGeometryCollection() {
@@ -770,10 +714,6 @@ namespace Tests.SpatialLite.Core.IO {
 			Assert.Throws<WktParseException>(() => WktReader.Parse<GeometryCollection<Geometry>>(wkt));
 		}
 
-		#endregion
-
-		#region Helper methods
-
 		private void CompareCoordinate(Coordinate expected, Coordinate actual) {
 			Assert.Equal(expected, actual);
 		}
@@ -785,7 +725,5 @@ namespace Tests.SpatialLite.Core.IO {
 				Assert.Equal(expected[i], actual[i]);
 			}
 		}
-
-		#endregion
 	}
 }

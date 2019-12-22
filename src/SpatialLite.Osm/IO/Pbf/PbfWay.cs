@@ -8,13 +8,8 @@ namespace SpatialLite.Osm.IO.Pbf {
     /// </summary>
     [ ProtoContract(Name = "Way")]
 	internal class PbfWay {
-		#region Private ImplicitFields
 	
 		private IList<long> _refs = null;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the PbfWay class with internal fields initialized to default capacity.
@@ -30,10 +25,6 @@ namespace SpatialLite.Osm.IO.Pbf {
 		public PbfWay(int capacity) {
 			_refs = new List<long>(capacity);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets or sets ID of the way.
@@ -67,7 +58,5 @@ namespace SpatialLite.Osm.IO.Pbf {
 			get { return _refs; }
 			set { _refs = value; }
 		}
-
-		#endregion
 	}
 }

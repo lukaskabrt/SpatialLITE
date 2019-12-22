@@ -22,8 +22,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			_nodesEntityCollection = _nodesCollectionM.Object;
 		}
 
-		#region Constructor(ID) tests
-
 		[Fact]
 		public void Constructor_int_CreatesNewRelationAndInitializesProperties() {
 			int id = 11;
@@ -33,10 +31,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Empty(target.Tags);
 			Assert.Empty(target.Geometries);
 		}
-
-		#endregion
-
-		#region Constructor(ID, Members) tests
 
 		[Fact]
 		public void Constructor_int_IEnumerable_CreatesRelationWithMembersAndInitializesProperties() {
@@ -53,10 +47,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Empty(target.Tags);
 		}
 
-		#endregion
-
-		#region Constructor(ID, Members, Tags) tests
-
 		[Fact]
 		public void Constructor_int_tags_CreatesRelationAndIntializesProperties() {
 			int id = 11;
@@ -72,10 +62,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 			Assert.Same(tags, target.Tags);
 		}
-
-		#endregion
-
-		#region  FromRelationInfo(RelationInfo, IEntityCollection<IOsmGeometry>, ThrowOnMissing) tests
 
 		[Fact]
 		public void FromRelationInfo_SetsRelationProperties() {
@@ -108,10 +94,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Null(Relation.FromRelationInfo(_relationInfo, _nodesEntityCollection, false));
 		}
 
-		#endregion
-
-		#region EntityType property tests
-
 		[Fact]
 		public void EntityType_Returns_Relation() {
 			Relation target = new Relation(100);
@@ -119,6 +101,5 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Equal(EntityType.Relation, target.EntityType);
 		}
 
-		#endregion
 	}
 }

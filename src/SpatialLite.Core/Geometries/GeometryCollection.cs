@@ -10,13 +10,7 @@ namespace SpatialLite.Core.Geometries {
     /// <remarks>All objects should be in the same spatial reference system, but it isn't enforced by this class.</remarks>
     /// <typeparam name="T">The type of objects in the collection</typeparam>
     public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : IGeometry {
-		#region Private Fields
-
 		private List<T> _geometries;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <c>GeometryCollection</c> class that is empty and has assigned WSG84 coordinate reference system.
@@ -53,10 +47,6 @@ namespace SpatialLite.Core.Geometries {
 			: base(srid) {
 			_geometries = new List<T>(geometries);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets a value indicating whether the this <see cref="GeometryCollection{T}"/>"/> has Z ordinates set.
@@ -95,10 +85,6 @@ namespace SpatialLite.Core.Geometries {
 		IEnumerable<T> IGeometryCollection<T>.Geometries {
 			get { return _geometries; }
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Computes envelope of the <c>GeometryCollection</c> object. The envelope is defined as a minimal bounding box for a geometry.
@@ -145,7 +131,5 @@ namespace SpatialLite.Core.Geometries {
                 geometry.Apply(filter);
             }
         }
-
-        #endregion
     }
 }

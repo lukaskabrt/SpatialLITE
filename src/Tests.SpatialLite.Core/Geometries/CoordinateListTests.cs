@@ -10,7 +10,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class CoordinateListTests {
-		#region Test data
 
 		Coordinate _coordinate = new Coordinate(-10, -20, -200);
 
@@ -20,22 +19,12 @@ namespace Tests.SpatialLite.Core.Geometries {
 				new Coordinate(32,30,300)
 		};
 
-		#endregion
-
-		#region Constructors tests
-
-		#region Constructor() tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyList() {
 			CoordinateList target = new CoordinateList();
 
 			Assert.Empty(target);
 		}
-
-		#endregion
-
-		#region Constructor(IEnumerable<Coordinate>) tests
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesListWithSpecifiedItems() {
@@ -46,12 +35,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			}
 		}
 
-		#endregion
-
-		#endregion
-
-		#region Indexer tests
-
 		[Fact]
 		public void Indexer_GetsAndSetsValues() {
 			CoordinateList target = new CoordinateList(_coordinates);
@@ -61,10 +44,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			target[1] = _coordinate;
 			Assert.Equal(_coordinate, target[1]);
 		}
-
-		#endregion
-
-		#region Count property tests
 
 		[Fact]
 		public void Count_Returns0ForEmptyList() {
@@ -79,10 +58,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(_coordinates.Length, target.Count);
 		}
-
-		#endregion
-
-		#region Add(Coordinate) tests
 
 		[Fact]
 		public void Add_AppendsCoordinateToTheEndOfList() {
@@ -99,10 +74,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(_coordinates.Length + 1, target.Count);
 		}
-
-		#endregion
-
-		#region Add(IEnumerable<Coordinate>) tests
 
 		[Fact]
 		public void Add_AppendsCollectionOfCoordinatesToTheEndOfList() {
@@ -121,10 +92,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(_coordinates.Length + 1, target.Count);
 		}
-
-		#endregion
-
-		#region Insert tests
 
 		[Fact]
 		public void Insert_InsertsCoordinateToSpecifiedIndex() {
@@ -153,10 +120,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(_coordinates.Length + 1, target.Count);
 		}
 
-		#endregion
-
-		#region RemoveAt(index) tests
-
 		[Fact]
 		public void RemoveAt_RemovesCoordinateAtIndex() {
 			CoordinateList target = new CoordinateList(_coordinates);
@@ -166,7 +129,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(_coordinates[2], target[1]);
 		}
 
-
 		[Fact]
 		public void RemoveAt_DecreasesCount() {
 			CoordinateList target = new CoordinateList(_coordinates);
@@ -174,10 +136,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(_coordinates.Length - 1, target.Count);
 		}
-
-		#endregion
-
-		#region Clear() tests
 
 		[Fact]
 		public void Clear_RemovesAllCoordinatesFromList() {
@@ -187,7 +145,5 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Empty(target.ToArray());
 			Assert.Equal(0, target.Count);
 		}
-
-		#endregion
 	}
 }

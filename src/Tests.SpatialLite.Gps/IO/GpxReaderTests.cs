@@ -11,7 +11,6 @@ using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps.IO {
     public class GpxReaderTests {
-        #region Constructor(Path, Settings)
 
         [Fact]
         public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist() {
@@ -27,10 +26,6 @@ namespace Tests.SpatialLite.Gps.IO {
                 Assert.True(settings.IsReadOnly);
             }
         }
-
-        #endregion
-
-        #region Constructor(Stream, Settings) tests
 
         [Fact]
         public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly() {
@@ -50,10 +45,6 @@ namespace Tests.SpatialLite.Gps.IO {
         public void Constructor_StreamSettings_ThrowsExceptionXmlContainsInvalidRootElement() {
             Assert.Throws<InvalidDataException>(delegate { new GpxReader(TestDataReader.Open("gpx-invalid-root-element.gpx"), new GpxReaderSettings() { ReadMetadata = false }); });
         }
-
-        #endregion
-
-        #region Read() Waypoint tests
 
         [Fact]
         public void Read_ThrowsExceptionIfWaypointHasntLat() {
@@ -190,10 +181,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Equal("plain/text", link.Type);
         }
 
-        #endregion
-
-        #region Read() Track tests
-
         [Fact]
         public void Read_ParsesTrackWithSingleSegment() {
             var data = TestDataReader.Open("gpx-track-single-track-segment.gpx");
@@ -308,10 +295,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Null(result.Metadata);
         }
 
-        #endregion
-
-        #region Route parsing tests
-
         [Fact]
         public void Read_ParsesEmptyRoute() {
             var data = TestDataReader.Open("gpx-route-empty.gpx");
@@ -389,10 +372,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.Null(result.Metadata);
         }
 
-        #endregion
-
-        #region Dispose() tests
-
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
             string filename = "../../../Data/Gpx/gpx-real-file.gpx";
@@ -404,10 +383,6 @@ namespace Tests.SpatialLite.Gps.IO {
             testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
             testStream.Dispose();
         }
-
-        #endregion
-
-        #region Complex tests
 
         [Fact]
         public void Read_ReadsAllEntitiesFromRealGpxFile() {
@@ -430,7 +405,5 @@ namespace Tests.SpatialLite.Gps.IO {
             // tracks
             Assert.Single(parsed.Where(g => g.GeometryType == GpxGeometryType.Track));
         }
-
-        #endregion
     }
 }

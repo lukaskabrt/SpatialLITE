@@ -5,16 +5,11 @@ namespace SpatialLite.Core.API {
     /// Represents minimal bounding box of a <see cref="IGeometry"/> object.
     /// </summary>
     public class Envelope {
-        #region Public Static Fields
 
         /// <summary>
         /// Empty Envelope, that has all it's bounds set to double.NaN
         /// </summary>
         public static Envelope Empty = new Envelope();
-
-        #endregion
-
-        #region Private Fields
 
         private const int XIndex = 0;
         private const int YIndex = 1;
@@ -26,11 +21,6 @@ namespace SpatialLite.Core.API {
             new double[] { double.NaN, double.NaN },
             new double[] { double.NaN, double.NaN },
             new double[] { double.NaN, double.NaN } };
-
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <c>Envelope</c> class that is empty and has all it's values initialized to <c>double.NaN</c>.
@@ -61,10 +51,6 @@ namespace SpatialLite.Core.API {
         public Envelope(Envelope source) {
             this.Initialize(source.MinX, source.MaxX, source.MinY, source.MaxY, source.MinZ, source.MaxZ, source.MinM, source.MaxM);
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets Envelope's minimal x-coordinate.
@@ -136,7 +122,6 @@ namespace SpatialLite.Core.API {
             }
         }
 
-
         /// <summary>
         /// Returns the difference between the maximum and minimum y values.
         /// </summary>
@@ -159,10 +144,6 @@ namespace SpatialLite.Core.API {
                 return this.Equals(Envelope.Empty);
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Extends this <c>Envelope</c> to cover specified <c>Coordinate</c>.
@@ -296,7 +277,6 @@ namespace SpatialLite.Core.API {
                 y <= this.MaxY;
         }
 
-
         ///<summary>
         /// Tests if the given point lies in or on the envelope.
         ///</summary>
@@ -305,7 +285,6 @@ namespace SpatialLite.Core.API {
         public bool Covers(Coordinate p) {
             return Covers(p.X, p.Y);
         }
-
 
         ///<summary>
         /// Tests if the <c>Envelope other</c> lies wholely inside this <c>Envelope</c> (inclusive of the boundary).
@@ -322,7 +301,6 @@ namespace SpatialLite.Core.API {
                 other.MinY >= this.MinY &&
                 other.MaxY <= this.MaxY;
         }
-
 
         /// <summary>
         /// Serves as a hash function for the <c>Envelope</c> class.
@@ -401,10 +379,6 @@ namespace SpatialLite.Core.API {
             _bounds[MIndex][1] = sortedM[1];
         }
 
-        #endregion
-
-        #region Private Methods
-
         /// <summary>
         /// Sorts two coordinates
         /// </summary>
@@ -427,7 +401,5 @@ namespace SpatialLite.Core.API {
                 return new double[] { c1, c2 };
             }
         }
-
-        #endregion
     }
 }

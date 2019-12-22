@@ -6,7 +6,6 @@ using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
     public class TagTests {
-		#region Constructors tests
 
 		[Fact]
 		public void Constructor_TagValue_SetsKeyAndValue() {
@@ -42,10 +41,6 @@ namespace Tests.SpatialLite.Osm {
 
 			Assert.Throws<ArgumentNullException>(delegate { new Tag(key, value); });
 		}
-
-		#endregion
-
-		#region Equals tests
 
 		[Fact]
 		public void Equals_ReturnTrueForSameKeyAndValue() {
@@ -95,6 +90,5 @@ namespace Tests.SpatialLite.Osm {
 			Assert.False(target.Equals(other));
 		}
 
-		#endregion
 	}
 }

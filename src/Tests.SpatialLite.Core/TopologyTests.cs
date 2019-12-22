@@ -13,13 +13,10 @@ using Moq;
 namespace Tests.SpatialLite.Core {
 	public class TopologyTests {
 
-		#region static Euclidean2D property tests
-
 		[Fact]
 		public void Euclidean2D_GetTopologyInstanceWithEuclidean2DLocator() {
 			Assert.IsType<Euclidean2DLocator>(Topology.Euclidean2D.GeometryLocator);
 		}
 
-		#endregion
 	}
 }

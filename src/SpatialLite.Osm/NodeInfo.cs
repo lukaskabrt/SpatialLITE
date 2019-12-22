@@ -7,7 +7,6 @@ namespace SpatialLite.Osm {
     /// Represents information about node.
     /// </summary>
     public class NodeInfo : IEntityInfo {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the NodeInfo class with specified ID, latitude, longitude, collection of tags and optionally EntityMetadata.
@@ -40,10 +39,6 @@ namespace SpatialLite.Osm {
 			this.Tags = node.Tags;
 			this.Metadata = node.Metadata;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets type of the object that is represented by this IOsmGeometryInfo.
@@ -78,7 +73,5 @@ namespace SpatialLite.Osm {
 		/// Gets or sets metadata of this Node.
 		/// </summary>
 		public EntityMetadata Metadata { get; set; }
-
-		#endregion
 	}
 }

@@ -11,7 +11,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class PolygonTests {
-		#region Test Data
 		
 		Coordinate[] _coordinatesXY = new Coordinate[] {
 					new Coordinate(1, 2), new Coordinate(1.1, 2.1), new Coordinate(1.2, 2.2), new Coordinate(1.3, 2.3)
@@ -28,8 +27,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 		CoordinateList _exteriorRing3D;
 		CoordinateList[] _interiorRings3D;
 
-		#endregion
-
 		public PolygonTests() {
 			_exteriorRing3D = new CoordinateList(_coordinatesXYZ);
 
@@ -45,10 +42,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			}
 		}
 
-		#region Constructor tests
-
-		#region Default Constructor tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyPolygonAndInitializesProperties() {
 			Polygon target = new Polygon();
@@ -61,10 +54,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.NotNull(target.InteriorRings);
 			Assert.Empty(target.InteriorRings);
 		}
-
-		#endregion
-
-		#region Constructor(SRID) tests
 
 		[Fact]
 		public void Constructor_SRID_CreatesEmptyPolygonWithCustomSRID() {
@@ -80,10 +69,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Empty(target.InteriorRings);
 		}
 
-		#endregion
-
-		#region Constructor(ExteriorRing)
-
 		[Fact]
 		public void Constructor_ExteriorRing_CreatesPolygonWithExteriorBoundary() {
 			Polygon target = new Polygon(_exteriorRing3D);
@@ -94,10 +79,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.NotNull(target.InteriorRings);
 			Assert.Empty(target.InteriorRings);
 		}
-
-		#endregion
-
-		#region Constructor(ExteriorRing, IEnumerable<InteriorRings>)
 
 		[Fact]
 		public void Constructor_SRIDExteriorRingInteriorRings_CreatesPolygonWithExteriorBoundary() {
@@ -111,12 +92,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			CheckInteriorRings(target, _interiorRings3D);
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Is3D tests
 
 		[Fact]
 		public void Is3D_ReturnsTrueFor3DExteriorRing() {
@@ -139,10 +114,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.False(target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_ReturnsTrueForMeasuredExteriorRing() {
 			Polygon target = new Polygon(new CoordinateList(_coordinatesXYZM));
@@ -164,10 +135,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.False(target.IsMeasured);
 		}
 
-		#endregion
-
-		#region GetEnvelope() tests
-
 		[Fact]
 		public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPolygon() {
 			Polygon target = new Polygon();
@@ -177,7 +144,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(Envelope.Empty, envelope);
 		}
-
 
 		[Fact]
 		public void GetEnvelopeReturnsEnvelopeOfLineString() {
@@ -189,10 +155,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(expectedEnvelope, envelope);
 		}
 
-		#endregion
-
-		#region GetBoundary() tests
-
 		[Fact]
 		public void GetBoundary_ReturnsMultiLineStringWithExteriorAndInteriorRingsAndCorrectSRID() {
 			int srid = 1;
@@ -202,7 +164,5 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.NotNull(boundary);
 			Assert.Equal(srid, boundary.Srid);
 		}
-
-		#endregion
 	}
 }

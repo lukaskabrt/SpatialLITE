@@ -13,27 +13,16 @@ using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO {
 	public class WkbReaderTests {
-
-		#region Constructor(Stream) tests
-
 		[Fact]
 		public void Constructor_Stream_ThrowsAgrumentNullExceptioIfStreamIsNull() {
 			Stream stream = null;
 			Assert.Throws<ArgumentNullException>(() => new WkbReader(stream));
 		}
 
-		#endregion
-
-		#region Constructor(Path) tests
-
 		[Fact]
 		public void Constructor_Path_ThrowsFileNotFoundExceptioIfFileDoesNotExists() {
 			Assert.Throws<FileNotFoundException>(() => new WkbReader("non-existing-file.wkb"));
 		}
-
-		#endregion
-
-		#region Dispose() tests
 
 		[Fact]
 		public void Dispose_ClosesOutputStreamIfWritingToFiles() {
@@ -56,10 +45,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			Assert.False(stream.CanRead);
 		}
-
-		#endregion
-
-		#region Read() tests
 
 		[Fact]
 		public void Read_ReturnsNullIfStreamIsEmpty() {
@@ -115,10 +100,6 @@ namespace Tests.SpatialLite.Core.IO {
             }
         }
 
-        #endregion
-
-        #region Read<T>(WKB) tests
-
         [Fact]
         public void ReadT_ReturnsNullIfStreamIsEmpty() {
             MemoryStream stream = new MemoryStream();
@@ -165,10 +146,6 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.Throws<WkbFormatException>(() => target.Read<LineString>());
         }
 
-        #endregion
-
-        #region Parse(WKB) tests
-
         [Fact]
         public void Parse_ThrowsExceptionIfWKBDoesNotRepresentGeometry() {
             byte[] wkb = new byte[] { 12, 0, 0, 45, 78, 124, 36, 0 };
@@ -197,10 +174,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.ComparePoints(parsed, expected);
         }
 
-        #endregion
-
-        #region Parse<T>(WKB) tests
-
         [Fact]
         public void ParseT_ThrowsExceptionIfWKBDoesNotRepresentSpecifiedType() {
             byte[] wkb = TestDataReader.Read("linestring-2D.wkb");
@@ -219,10 +192,6 @@ namespace Tests.SpatialLite.Core.IO {
         public void ParseT_ThrowsArgumentNullExceptionIfDataIsNull() {
             Assert.Throws<ArgumentNullException>(() => WkbReader.Parse<Point>(null));
         }
-
-        #endregion
-
-        #region Parse<Point>(WKB) tests
 
         [Fact]
         public void ParsePoint_Parses2DPoint() {
@@ -255,10 +224,6 @@ namespace Tests.SpatialLite.Core.IO {
 
             this.TestParsePoint(wkb, wkt);
         }
-
-        #endregion
-
-        #region Parse<LineString>(WKB) tests
 
         [Fact]
         public void Parse_ParsesEmptyLineString() {
@@ -298,10 +263,6 @@ namespace Tests.SpatialLite.Core.IO {
 
             this.TestParseLineString(wkb, wkt);
         }
-
-        #endregion
-
-        #region Parse<Polygon>(WKB) tests
 
         [Fact]
         public void Parse_ParsesEmptyPolygon() {
@@ -351,10 +312,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestParsePolygon(wkb, wkt);
         }
 
-        #endregion
-
-        #region Parse<MultiPoint>(WKB) tests
-
         [Fact]
         public void ParseMultiPoint_ParsesEmptyMultipoint() {
             string wkt = "multipoint empty";
@@ -394,10 +351,6 @@ namespace Tests.SpatialLite.Core.IO {
 
             this.TestParseMultiPoint(wkb, wkt);
         }
-
-        #endregion
-
-        #region Parse<MuliLineString>(WKB) test
 
         [Fact]
         public void ParseMultiLineString_ParsesEmptyMultiLineString() {
@@ -439,10 +392,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestParseMultiLineString(wkb, wkt);
         }
 
-        #endregion
-
-        #region Parse<MultiPolygon>(WKB) tests
-
         [Fact]
         public void ParseMultiPolygon_ParsesEmptyMultiPolygon() {
             string wkt = "multipolygon empty";
@@ -482,10 +431,6 @@ namespace Tests.SpatialLite.Core.IO {
 
             this.TestParseMultiPolygon(wkb, wkt);
         }
-
-        #endregion
-
-        #region Parse<GeometryCollection>(WKB) tests
 
         [Fact]
         public void ParseGeometryCollection_ParsesEmptyGeometryCollection() {
@@ -571,11 +516,6 @@ namespace Tests.SpatialLite.Core.IO {
             this.ComparePoints((Point)((GeometryCollection<Geometry>)parsed.Geometries[0]).Geometries[0], (Point)((GeometryCollection<Geometry>)expected.Geometries[0]).Geometries[0]);
         }
 
-        #endregion
-
-
-        #region TestParse*(WKB, ExpectedAsWKT)
-
         private void TestParsePoint(byte[] wkb, string expectedAsWkt) {
 			Point expected = (Point)this.ParseWKT(expectedAsWkt);
 			Point parsed = WkbReader.Parse<Point>(wkb);
@@ -617,10 +557,6 @@ namespace Tests.SpatialLite.Core.IO {
 
 			this.CompareMultiPolygons(parsed, expected);
 		}
-
-		#endregion
-
-		#region Compare*(Actual, Expected)
 
 		private void ComparePoints(Point point, Point expected) {
 			Assert.Equal(expected.Position, point.Position);
@@ -670,7 +606,6 @@ namespace Tests.SpatialLite.Core.IO {
 			}
 		}
 
-		#endregion
 
 		private Geometry ParseWKT(string wkt) {
 			return WktReader.Parse(wkt);

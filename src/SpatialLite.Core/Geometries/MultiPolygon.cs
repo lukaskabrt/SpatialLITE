@@ -7,7 +7,6 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a collection of Polygons
     /// </summary>
     public class MultiPolygon : GeometryCollection<Polygon>, IMultiPolygon {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the MultiPolygon class that is empty and has assigned WSG84 coordinate reference system.
@@ -32,7 +31,6 @@ namespace SpatialLite.Core.Geometries {
 			: base(polygons) {
 		}
 
-
 		/// <summary>
 		/// Initializes a new instance of the MultiPolygon class with specified Polygons and coordinate reference system.
 		/// </summary>
@@ -42,17 +40,11 @@ namespace SpatialLite.Core.Geometries {
 			: base(srid, polygons) {
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Gets collection of polygons from this MultiPolygon as the collection of IPolygon objects.
 		/// </summary>
 		IEnumerable<IPolygon> IGeometryCollection<IPolygon>.Geometries {
 			get { return base.Geometries; }
 		}
-
-		#endregion
 	}
 }

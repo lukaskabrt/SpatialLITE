@@ -7,7 +7,6 @@ namespace SpatialLite.Core.Geometries {
     /// Represetns the base class for all geometry object.
     /// </summary>
     public abstract class Geometry : IGeometry {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes Geometry class that uses the WSG84 coordinate reference system.
@@ -24,10 +23,6 @@ namespace SpatialLite.Core.Geometries {
 			this.Srid = srid;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets the Srid of the coordinate reference system used by this Geometry.
 		/// </summary>
@@ -42,10 +37,6 @@ namespace SpatialLite.Core.Geometries {
 		/// Gets a value indicating whether this <see cref="Geometry"/> has M values.
 		/// </summary>
 		public abstract bool IsMeasured { get; }
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
@@ -72,7 +63,5 @@ namespace SpatialLite.Core.Geometries {
         /// </summary>
         /// <param name="filter">The filter to apply</param>
         public abstract void Apply(ICoordinateFilter filter);
-		
-        #endregion
 	}
 }

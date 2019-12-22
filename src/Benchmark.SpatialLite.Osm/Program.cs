@@ -74,8 +74,6 @@ namespace Benchmark.SpatialLite.Osm {
             }
         }
 
-        #region XmlReader benchmarks
-
         static void TestXmlReaderSpeed() {
             int entitiesRead = 0;
 
@@ -98,10 +96,6 @@ namespace Benchmark.SpatialLite.Osm {
             }
         }
 
-        #endregion
-
-        #region XmlWriter benchmarks
-
         static void TestXmlWriterSpeed() {
             using (OsmXmlWriter writer = new OsmXmlWriter("TestFiles\\temp.osm", new OsmWriterSettings() { WriteMetadata = true })) {
                 foreach (var entity in _entities) {
@@ -117,10 +111,6 @@ namespace Benchmark.SpatialLite.Osm {
                 }
             }
         }
-
-        #endregion
-
-        #region PbfReader benchmarks
 
         static void TestPbfReaderSpeedNoDenseNoCompression() {
             int entitiesRead = 0;
@@ -166,10 +156,6 @@ namespace Benchmark.SpatialLite.Osm {
             }
         }
 
-        #endregion
-
-        #region PbfWriter benchmarks
-
         static void TestPbfWriterSpeed() {
             using (PbfWriter writer = new PbfWriter("TestFiles\\temp.pbf", new PbfWriterSettings() { WriteMetadata = true, Compression = CompressionMode.None, UseDenseFormat = false })) {
                 foreach (var entity in _entities) {
@@ -202,26 +188,16 @@ namespace Benchmark.SpatialLite.Osm {
             }
         }
 
-        #endregion
-
-        #region OsmGeometryDatabase benchmars
-
         static void TestOsmGeometryDatabaseLoadFromPbfReader() {
             using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = true })) {
                 OsmGeometryDatabase db = OsmGeometryDatabase.Load(reader, true);
             }
         }
 
-        #endregion
-
-        #region OsmEntityInfoDatabase benchmarks
-
         static void TestOsmEntityInfoDatabaseLoadFromPbfReader() {
             using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = true })) {
                 OsmEntityInfoDatabase db = OsmEntityInfoDatabase.Load(reader);
             }
         }
-
-        #endregion
     }
 }

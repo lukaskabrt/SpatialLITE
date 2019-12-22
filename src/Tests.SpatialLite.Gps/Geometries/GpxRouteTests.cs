@@ -6,20 +6,12 @@ using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxRouteTests {
-        #region Constructor tests
-
-        #region Constructor() tests
-
         [Fact]
         public void Constructor_Parameterless_CreatesEmptyRoute() {
             GpxRoute target = new GpxRoute();
 
             Assert.Empty(target.Points);
         }
-
-        #endregion
-
-        #region Constructor(IEnumerable<GpxPoint>) tests
 
         [Fact]
         public void Constructor_IEnumerablePoints_CreatesRouteWithPoints() {
@@ -36,19 +28,11 @@ namespace Tests.SpatialLite.Gps.Geometries {
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region GeometryType tests
-
         [Fact]
         public void GeometryType_ReturnsRoute() {
             GpxRoute target = new GpxRoute();
 
             Assert.Equal(GpxGeometryType.Route, target.GeometryType);
         }
-
-        #endregion
     }
 }

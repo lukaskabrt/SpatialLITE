@@ -29,8 +29,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             _nodesEntityCollection = _nodesCollectionM.Object;
         }
 
-        #region Constructor(ID) tests
-
         [Fact]
         public void Constructor_ID_CreatesNewEmptyWayAndInitializesProperties() {
             int id = 11;
@@ -43,10 +41,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Assert.Empty(target.Tags);
             Assert.Null(target.Metadata);
         }
-
-        #endregion
-
-        #region Constructor(ID, Nodes) tests
 
         [Fact]
         public void Constructor_ID_Nodes_CreatesWayAddsNodesAndInitializesProperties() {
@@ -63,9 +57,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Assert.Empty(target.Tags);
             Assert.Null(target.Metadata);
         }
-        #endregion
-
-        #region Constructor(ID, Nodes, Tags) tests
 
         [Fact]
         public void Constructor_ID_Nodes_Tags_CreatesWayAddsNodesAndInitializesProperties() {
@@ -84,10 +75,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Assert.Same(tags, target.Tags);
             Assert.Null(target.Metadata);
         }
-
-        #endregion
-
-        #region FromWayInfo(WayInfo, IEntityCollection<IOsmGeometry>, bool) tests
 
         [Fact]
         public void FromWayInfo_SetsProperties() {
@@ -134,10 +121,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Equal(_nodes[0].Position, target.Coordinates[0]);
 		}
 
-        #endregion
-
-        #region Coordinates property tests
-
         [Fact]
         public void Coordinates_GetsPositionOfNodes() {
             int id = 11;
@@ -161,17 +144,11 @@ namespace Tests.SpatialLite.Osm.Geometries {
             }
         }
 
-        #endregion
-
-        #region EntityType property tests
-
         [Fact]
         public void EntityType_Returns_Way() {
             Way target = new Way(10);
 
             Assert.Equal(EntityType.Way, target.EntityType);
         }
-
-        #endregion
     }
 }

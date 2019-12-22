@@ -17,20 +17,12 @@ namespace Tests.SpatialLite.Gps.Geometries {
 
         }
 
-        #region Constructors tests
-
-        #region Constructor() tests
-
         [Fact]
         public void Constructor__CreatesEmptyGpsTrack() {
             GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>();
 
             Assert.Equal(0 ,target.Coordinates.Count);
         }
-
-        #endregion
-
-        #region Constructor(IEnumerable<T>) tests
 
         [Fact]
         public void Constructor_IEnumerablePoints_CreatesGpsTrackWithPoints() {
@@ -42,12 +34,6 @@ namespace Tests.SpatialLite.Gps.Geometries {
                 Assert.Same(_points[i], target.Points[i]);
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region Coordinates property tests
 
         [Fact]
         public void Coordinates_GetsPositionOfPoints() {
@@ -69,7 +55,5 @@ namespace Tests.SpatialLite.Gps.Geometries {
                 Assert.Equal(_points[i].Position, target.Coordinates[i]);
             }
         }
-
-        #endregion
     }
 }

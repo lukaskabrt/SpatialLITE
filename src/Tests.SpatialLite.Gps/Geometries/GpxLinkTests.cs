@@ -4,9 +4,6 @@ using SpatialLite.Gps.Geometries;
 
 namespace Tests.SpatialLite.Gps.Geometries {
     public class GpxLinkTests {
-        #region Constructor tests
-
-        #region Constructor(Url) tests
 
         [Fact]
         public void Constructor_Url_SetsUrl() {
@@ -16,9 +13,5 @@ namespace Tests.SpatialLite.Gps.Geometries {
 
             Assert.Same(url, target.Url);
         }
-
-        #endregion
-
-        #endregion
     }
 }

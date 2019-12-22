@@ -5,7 +5,6 @@ using SpatialLite.Osm.Geometries;
 
 namespace Tests.SpatialLite.Osm {
     public class RelationMemberInfoTests {
-		#region Constructor(RelationMember)
 
 		[Fact]
 		public void Constructor_RelationMember_SetsProperties() {
@@ -17,7 +16,5 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Equal(member.MemberType, target.MemberType);
 			Assert.Equal(member.Role, target.Role);
 		}
-
-		#endregion
 	}
 }

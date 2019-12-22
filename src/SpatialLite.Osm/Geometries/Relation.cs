@@ -7,7 +7,6 @@ namespace SpatialLite.Osm.Geometries {
     /// Represents OSM relation.
     /// </summary>
     public class Relation : GeometryCollection<RelationMember>, IOsmGeometry {
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Relation class with the specified ID.
@@ -38,10 +37,6 @@ namespace SpatialLite.Osm.Geometries {
 			this.Tags = tags;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets or sets ID of the Relation.
 		/// </summary>
@@ -63,10 +58,6 @@ namespace SpatialLite.Osm.Geometries {
 		public EntityType EntityType {
 			get { return EntityType.Relation; }
 		}
-
-		#endregion
-
-		#region Public Static Methods
 
 		/// <summary>
 		/// Creates a new instance of the Relation class with data from RelationInfo object.
@@ -90,7 +81,5 @@ namespace SpatialLite.Osm.Geometries {
 
 			return result;
 		}
-
-		#endregion
 	}
 }

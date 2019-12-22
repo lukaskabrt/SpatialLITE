@@ -35,8 +35,6 @@ namespace Tests.SpatialLite.Gps.IO {
         GpxTrackMetadata _trackMetadata;
         GpxTrack _track;
         GpxTrack _trackWithMetadata;
-
-
         public GpxWriterTests() {
             _pointMetadata = new GpxPointMetadata();
             _pointMetadata.AgeOfDgpsData = 45;
@@ -79,8 +77,6 @@ namespace Tests.SpatialLite.Gps.IO {
             _trackWithMetadata.Metadata = _trackMetadata;
         }
 
-        #region Constructor(Stream, Settings) tests
-
         [Fact]
         public void Constructor_StreamSettings_SetsSettingsAndMarkSettingsAsReadOnly() {
             var stream = new MemoryStream();
@@ -104,10 +100,6 @@ namespace Tests.SpatialLite.Gps.IO {
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
-
-        #endregion
-
-        #region Constructor(Path, Settings) tests
 
         [Fact]
         public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
@@ -145,10 +137,6 @@ namespace Tests.SpatialLite.Gps.IO {
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
-
-        #endregion
-
-        #region Write(waypoint) tests
 
         [Fact]
         public void Write_WritesWaypointWithoutMetadataIfMetadataIsNull() {
@@ -208,10 +196,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
-        #endregion
-
-        #region Write(route) tests
-
         [Fact]
         public void Write_WritesRouteWith3Points() {
             MemoryStream stream = new MemoryStream();
@@ -268,10 +252,6 @@ namespace Tests.SpatialLite.Gps.IO {
 
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
-
-        #endregion
-
-        #region Write(track) tests
 
         [Fact]
         public void Write_WritesTrack() {
@@ -330,10 +310,6 @@ namespace Tests.SpatialLite.Gps.IO {
             Assert.True(XDocumentExtensions.DeepEqualsWithNormalization(written, expected));
         }
 
-        #endregion
-
-        #region Dispose() tests
-
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
             string path = PathHelper.GetTempFilePath("gpxwriter-closes-output-filestream-test.osm");
@@ -355,7 +331,5 @@ namespace Tests.SpatialLite.Gps.IO {
 
             Assert.False(stream.CanRead);
         }
-
-        #endregion
     }
 }

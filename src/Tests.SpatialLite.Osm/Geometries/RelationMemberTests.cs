@@ -18,8 +18,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			_nodesEntityCollection = _nodesCollectionM.Object;
 		}
 
-		#region Constructor(Member) tests
-
 		[Fact]
 		public void Constructor_Member_CreatesNewRelationMembeAndSetsMember() {
 			Node member = new Node(11);
@@ -33,10 +31,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		public void Constructor_Member_ThrowsExceptionIfMemberIsNull() {
 			Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
 		}
-
-		#endregion
-
-		#region Constructor(Member, Role) tests
 
 		[Fact]
 		public void Constructor_Member_Role_CreatesRelationMemberAndSetsMemberAndRole() {
@@ -52,10 +46,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 		public void Constructor_Member_Role_ThrowsExceptionIfMemberIsNull() {
 			Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
 		}
-
-		#endregion
-
-		#region FromRelationMemberInfo(RelationMemberInfo, IEntityCollection<IOsmGeometry>, ThrowOnMissing) tests
 
 		[Fact]
 		public void FromRelationMemberInfo_ThrowExceptionIfTypeIsUnknown() {
@@ -95,10 +85,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
 		}
 
-		#endregion
-
-		#region Is3D tests
-
 		[Fact]
 		public void Is3D_GetsTrueFor3DMember() {
 			Mock<Node> memberM = new Mock<Node>(11);
@@ -119,10 +105,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Equal(memberM.Object.Is3D, target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_GetsTrueForMeasuredMember() {
 			Mock<Node> memberM = new Mock<Node>(11);
@@ -142,10 +124,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 			Assert.Equal(memberM.Object.IsMeasured, target.IsMeasured);
 		}
-
-		#endregion
-
-		#region MemberType Tests
 
 		[Fact]
 		public void MemberType_ReturnsCorrectValueForNode() {
@@ -168,10 +146,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
 			Assert.Equal(EntityType.Relation, target.MemberType);
 		}
 
-		#endregion
-
-		#region GetEnvelope Tests
-
 		[Fact]
 		public void GetEnvelopeReturnsMembersEnvelope() {
 			Envelope expectedEnvelope = new Envelope(new Coordinate(1.1, 2.2));
@@ -182,13 +156,5 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 			Assert.Same(expectedEnvelope, target.GetEnvelope());
 		}
-
-		#endregion
-
-		#region GetBoundary() tests
-
-		//TODO implement test for GetBoundary()
-
-		#endregion	
 	}
 }

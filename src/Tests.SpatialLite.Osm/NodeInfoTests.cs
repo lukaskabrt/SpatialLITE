@@ -7,7 +7,6 @@ using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm {
     public class NodeInfoTests {
-		#region Constructor(ID, Latitude, Longitude, Tags, EntityMetadata) tests
 
 		[Fact]
 		public void Constructor_PropertiesWithoutEntityDetails_SetsProperties() {
@@ -44,10 +43,6 @@ namespace Tests.SpatialLite.Osm {
 			Assert.Same(details, target.Metadata);
 		}
 
-		#endregion
-
-		#region Constructor(Node) tests
-
 		[Fact]
 		public void Constructor_Node_SetsProperties() {
 			Node node = new Node(1, 10.1, 12.1, new TagsCollection()) { Metadata = new EntityMetadata() };
@@ -65,7 +60,5 @@ namespace Tests.SpatialLite.Osm {
 		public void Constructor_Node_ThrowsExceptionIfNodeIsNull() {
 			Assert.Throws<ArgumentNullException>(() => new NodeInfo(null));
 		}
-
-		#endregion
 	}
 }

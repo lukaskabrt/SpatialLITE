@@ -7,13 +7,8 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a curve with linear interpolation between consecutive vertices.  
     /// </summary>
     public class LineString : Geometry, ILineString {
-		#region Private Fields
 
 		private CoordinateList _coordinates;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <c>LineString</c> class that is empty and has assigned WSG84 coordinate reference system.
@@ -50,10 +45,6 @@ namespace SpatialLite.Core.Geometries {
 			: base(srid) {
 			_coordinates = new CoordinateList(coords);
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets a value indicating whether the this <see cref="LineString"/> has Z-coordinates set.
@@ -132,10 +123,6 @@ namespace SpatialLite.Core.Geometries {
 			}
 		}
 
-		#endregion
-
-		#region Public Methods
-
 		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
@@ -174,7 +161,5 @@ namespace SpatialLite.Core.Geometries {
         public override void  Apply(ICoordinateFilter filter) {
             this.Coordinates.Apply(filter);
         }
-
-		#endregion
 	}
 }

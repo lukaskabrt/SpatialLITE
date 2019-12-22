@@ -8,7 +8,6 @@ namespace SpatialLite.Core.API {
     /// A Coordinate may include a M value. The M value allows an application to associate some measure with the <c>Coordinate</c>. 
     /// </remarks>
     public struct Coordinate : IEquatable<Coordinate> {
-		#region Public Static Fields
 
 		/// <summary>
 		/// Represents an empty coordinate.
@@ -18,18 +17,10 @@ namespace SpatialLite.Core.API {
 		/// </remarks>
 		public static Coordinate Empty = new Coordinate(double.NaN, double.NaN, double.NaN, double.NaN);
 
-		#endregion
-
-		#region Private Fields
-
 		private double _x;
 		private double _y;
 		private double _z;
 		private double _m;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <c>Coordinate</c> struct with X, Y ordinates.
@@ -69,10 +60,6 @@ namespace SpatialLite.Core.API {
 			_z = z;
 			_m = m;
 		}
-
-		#endregion
-
-		#region Public Properties
 
 		/// <summary>
 		/// Gets the X-coordinate
@@ -124,10 +111,6 @@ namespace SpatialLite.Core.API {
 			}
 		}
 
-		#endregion
-
-		#region Operators
-
 		/// <summary>
 		/// Determiens whether specific Coordinates values are equal
 		/// </summary>
@@ -147,10 +130,6 @@ namespace SpatialLite.Core.API {
 		public static bool operator !=(Coordinate lhs, Coordinate rhs) {
 			return !(lhs == rhs);
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Returns a <c>string</c> that represents the current <c>Coordinate</c>.
@@ -203,7 +182,5 @@ namespace SpatialLite.Core.API {
 			return ((this.X == other.X) || (double.IsNaN(this.X) && double.IsNaN(other.X))) &&
 				((this.Y == other.Y) || (double.IsNaN(this.Y) && double.IsNaN(other.Y)));
 		}
-
-		#endregion
 	}
 }

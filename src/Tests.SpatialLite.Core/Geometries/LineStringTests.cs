@@ -11,7 +11,6 @@ using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.Geometries {
 	public class LineStringTests {
-		#region Test data
 
 		Coordinate[] _coordinatesXY = new Coordinate[] {
 				new Coordinate(12,10),
@@ -31,7 +30,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 				new Coordinate(32,30,300, 3000)
 		};
 
-		#endregion
 
 		private void CheckCoordinates(LineString target, Coordinate[] expectedPoints) {
 			Assert.Equal(expectedPoints.Length, target.Coordinates.Count);
@@ -41,10 +39,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			}
 		}
 
-		#region Constructors tests
-
-		#region Default constructor tests
-
 		[Fact]
 		public void Constructor__CreatesEmptyLineStringWithWSG84() {
 			LineString target = new LineString();
@@ -52,10 +46,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(0, target.Coordinates.Count);
 			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
-
-		#endregion
-
-		#region Constructor(SRID) tests
 
 		[Fact]
 		public void Constructor_SRID_CreatesEmptyLineStringAndSetsCustomSRID() {
@@ -66,10 +56,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(srid, target.Srid);
 		}
 
-		#endregion
-
-		#region Constructor (IEnumerable<Coordinate>)
-
 		[Fact]
 		public void Constructor_IEnumerable_CreatesLineStringFromCoordinates() {
 			LineString target = new LineString(_coordinatesXYZ);
@@ -77,10 +63,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(SRIDList.WSG84, target.Srid);
 			CheckCoordinates(target, _coordinatesXYZ);
 		}
-
-		#endregion
-
-		#region Constructor(SRID, IEnumerable<IPoint>) tests
 
 		[Fact]
 		public void Constructor_SRIDIEnumerable_CreatesLineStringFromPointsWithSpecifiedSRID() {
@@ -90,12 +72,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(srid, target.Srid);
 			CheckCoordinates(target, _coordinatesXYZ);
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Is3D tests
 
 		[Fact]
 		public void Is3D_ReturnsFalseForEmptyLineString() {
@@ -118,10 +94,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.True(target.Is3D);
 		}
 
-		#endregion
-
-		#region IsMeasured tests
-
 		[Fact]
 		public void IsMeasured_ReturnsFalseForEmptyLineString() {
 			LineString target = new LineString();
@@ -143,10 +115,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.True(target.IsMeasured);
 		}
 
-		#endregion
-
-		#region Start tests
-
 		[Fact]
 		public void Start_ReturnsEmptyCoordinateForEmptyLineString() {
 			LineString target = new LineString();
@@ -161,10 +129,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(_coordinatesXYZ.First(), target.Start);
 		}
 
-		#endregion
-
-		#region End tests
-
 		[Fact]
 		public void End_ReturnsEmptyCoordinateForEmptyLineString() {
 			LineString target = new LineString();
@@ -178,10 +142,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(_coordinatesXYZ.Last(), target.End);
 		}
-
-		#endregion
-
-		#region IsClosed tests
 
 		[Fact]
 		public void IsClosed_ReturnsTrueForClosedLineString() {
@@ -205,10 +165,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.False(target.IsClosed);
 		}
 
-		#endregion
-
-		#region GetEnvelope() tests
-
 		[Fact]
 		public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyLineString() {
 			LineString target = new LineString();
@@ -224,10 +180,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.Equal(expected, target.GetEnvelope());
 		}
-
-		#endregion
-
-		#region GetBoundary() tests
 
 		[Fact]
 		public void GetBoundary_ReturnsMultipointWithStartAndEndPointsAndCorrectSRID() {
@@ -250,8 +202,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 
 			Assert.NotNull(boundary);
 			Assert.Empty(boundary.Geometries);
-		}
-		
-		#endregion
+		}		
 	}
 }

@@ -5,13 +5,8 @@ namespace SpatialLite.Core.IO {
     /// Represents collection of WktToken obejcts with specialized methods to access it's items.
     /// </summary>
     internal class WktTokensBuffer : IEnumerable<WktToken> {
-		#region Private Fields
 
 		private List<WktToken> _buffer;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the WktTokenBuffer class that is empty.
@@ -28,10 +23,6 @@ namespace SpatialLite.Core.IO {
 			_buffer = new List<WktToken>(tokens);
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets number of items in the collection
 		/// </summary>
@@ -40,10 +31,6 @@ namespace SpatialLite.Core.IO {
 				return _buffer.Count;
 			}
 		}
-
-		#endregion
-
-		#region Public Methods
 
 		/// <summary>
 		/// Adds specific token to the end of tokens tokens
@@ -132,7 +119,5 @@ namespace SpatialLite.Core.IO {
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
 			return this.GetEnumerator();
 		}
-
-		#endregion
 	}
 }

@@ -5,7 +5,6 @@ namespace SpatialLite.Osm {
     /// Represents information about relation member.
     /// </summary>
     public struct RelationMemberInfo {
-		#region Public Fields
 
 		/// <summary>
 		/// The type of the member (node, way, relation)
@@ -22,10 +21,6 @@ namespace SpatialLite.Osm {
 		/// </summary>
 		public long Reference;
 
-		#endregion
-
-		#region Constructors
-
 		/// <summary>
 		/// Initializes a new instance of the RelationMemberInfo structure with values from specific RelationMember.
 		/// </summary>
@@ -36,6 +31,5 @@ namespace SpatialLite.Osm {
 			this.Role = source.Role;
 		}
 
-		#endregion
 	}
 }

@@ -7,13 +7,8 @@ namespace SpatialLite.Core.Geometries {
     /// Represents a location in the coordinate space.
     /// </summary>
     public class Point : Geometry, IPoint {
-		#region Private Fields
 
 		private Coordinate _position = Coordinate.Empty;
-
-		#endregion
-
-		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class that is empty and has assigned the WSG84 coordinate reference system.
@@ -32,7 +27,7 @@ namespace SpatialLite.Core.Geometries {
 			_position = new Coordinate(x, y);
 		}
 
-	/// <summary>
+		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class with specified X, Y and Z coordinates in WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="x">The X-coordinate of the <c>Point</c></param>
@@ -43,7 +38,7 @@ namespace SpatialLite.Core.Geometries {
 			_position = new Coordinate(x, y, z);
 		}
 
-			/// <summary>
+		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class with specified X, Y, Z coordinates and M value in WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="x">The X-coordinate of the <c>Point</c></param>
@@ -74,10 +69,6 @@ namespace SpatialLite.Core.Geometries {
 			_position = position;
 		}
 
-		#endregion
-
-		#region Public Properties
-
 		/// <summary>
 		/// Gets or sets position of this <c>Point</c>
 		/// </summary>
@@ -104,10 +95,6 @@ namespace SpatialLite.Core.Geometries {
 		public override bool IsMeasured {
 			get { return _position.IsMeasured; }
 		}
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Returns Envelope, that covers this Point.
@@ -141,7 +128,5 @@ namespace SpatialLite.Core.Geometries {
         public override IEnumerable<Coordinate> GetCoordinates() {
             yield return this.Position;
         }
-
-        #endregion
     }
 }
