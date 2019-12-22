@@ -11,9 +11,9 @@ using System.IO;
 namespace Benchmark.SpatialLite.Osm {
     public class Program {
         static void Main(string[] args) {
-            var summary = BenchmarkRunner.Run<WktReaderBenchmarks>();
-            //var test = new WktReaderBenchmarks();
-            //test.ReadMemory();
+            //var summary = BenchmarkRunner.Run<WktReaderBenchmarks>();
+            var test = new WktReaderBenchmarks();
+            test.ReadMemory();
         }
     }
 
@@ -23,7 +23,7 @@ namespace Benchmark.SpatialLite.Osm {
         private byte[] _file;
 
         public WktReaderBenchmarks() {
-            _file = File.ReadAllBytes("c:\\Users\\Lukas\\Source\\Repos\\spatiallite-net\\src\\Benchmark.SpatialLite.Osm\\TestFiles\\andorra-trim.wkt");
+            _file = File.ReadAllBytes("c:\\Users\\Lukas\\Source\\Repos\\spatiallite-net\\src\\Benchmark.SpatialLite.Osm\\TestFiles\\andorra.wkt");
         }
 
         [Benchmark]

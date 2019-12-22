@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace SpatialLite.Core.IO {
     /// <summary>
     /// Represents collection of WktToken obejcts with specialized methods to access it's items.
     /// </summary>
     internal class WktTokensBuffer {
-        private IEnumerator<WktToken> _buffer;
+        private WktTokenizer _tokenizer;
 
         private WktToken _current = WktToken.EndOfDataToken;
         private WktToken _next = WktToken.EndOfDataToken;
 
         /// <summary>
-        /// Initializes a new instance of the WktTokensBuffer class and fills it with specified tokens.
+        /// Initializes a new instance of the WktTokensBuffer class.
         /// </summary>
-        /// <param name="tokens">Tokens to add to the buffer.</param>
-        public WktTokensBuffer(IEnumerable<WktToken> tokens) {
-            _buffer = tokens.GetEnumerator();
+        /// <param name="tokenizer"></param>
+        public WktTokensBuffer(WktTokenizer tokenizer) {
+            _tokenizer = tokenizer;
             Advance();
             Advance();
         }
@@ -54,11 +55,7 @@ namespace SpatialLite.Core.IO {
 
         private void Advance() {
             _current = _next;
-            if(_buffer.MoveNext()) {
-                _next = _buffer.Current;
-            } else {
-                _next = WktToken.EndOfDataToken;
-            }
+            _next = _tokenizer.GetNextToken();
         }
     }
 }

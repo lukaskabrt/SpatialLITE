@@ -17,6 +17,10 @@
 		/// The string value of the token.
 		/// </summary>
 		public string TextValue;
+
+        /// <summary>
+        /// The numeric value of the token.
+        /// </summary>
         public double NumericValue;
 	}
 }

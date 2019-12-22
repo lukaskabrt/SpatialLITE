@@ -30,7 +30,7 @@ namespace SpatialLite.Core.IO {
 			}
 
 			_inputReader = new StreamReader(input);
-			_tokens = new WktTokensBuffer(WktTokenizer.Tokenize(_inputReader));
+			_tokens = new WktTokensBuffer(new WktTokenizer(_inputReader));
 		}
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace SpatialLite.Core.IO {
 		public WktReader(string path) {
 			_inputFileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			_inputReader = new StreamReader(_inputFileStream);
-			_tokens = new WktTokensBuffer(WktTokenizer.Tokenize(_inputReader));
+			_tokens = new WktTokensBuffer(new WktTokenizer(_inputReader));
 		}
 
 		/// <summary>
@@ -49,7 +49,7 @@ namespace SpatialLite.Core.IO {
 		/// <param name="wkt">The string with WKT representation of a Geometry.</param>
 		/// <returns>The parsed Geometry.</returns>
 		public static Geometry Parse(string wkt) {
-			WktTokensBuffer tokens = new WktTokensBuffer(WktTokenizer.Tokenize(wkt));
+			WktTokensBuffer tokens = new WktTokensBuffer(new WktTokenizer(wkt));
 			return WktReader.ParseGeometryTaggedText(tokens);
 		}
 
