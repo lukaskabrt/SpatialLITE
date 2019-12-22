@@ -6,11 +6,6 @@ namespace SpatialLite.Core.API {
     /// </summary>
     public interface IGeometry {
 		/// <summary>
-		/// Gets the Srid of the Coordinate Reference System used by the <c>IGeometry</c> object.
-		/// </summary>
-		int Srid { get; }
-
-		/// <summary>
 		/// Gets a value indicating whether the <c>IGeometry</c> object has Z coordinates.
 		/// </summary>
 		bool Is3D { get; }
@@ -28,22 +23,10 @@ namespace SpatialLite.Core.API {
 		/// </returns>
 		Envelope GetEnvelope();
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  geometric  object</returns>
-		IGeometry GetBoundary();
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
         /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         IEnumerable<Coordinate> GetCoordinates();
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        void Apply(ICoordinateFilter filter);
 	}
 }

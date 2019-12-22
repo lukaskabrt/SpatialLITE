@@ -10,7 +10,7 @@ namespace SpatialLite.Core.Geometries {
     /// <remarks>All objects should be in the same spatial reference system, but it isn't enforced by this class.</remarks>
     /// <typeparam name="T">The type of objects in the collection</typeparam>
     public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : IGeometry {
-		private List<T> _geometries;
+		private readonly List<T> _geometries;
 
 		/// <summary>
 		/// Initializes a new instance of the <c>GeometryCollection</c> class that is empty and has assigned WSG84 coordinate reference system.
@@ -21,30 +21,11 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <c>GeometryCollection</c> class that is empty and has assigned specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system<c>GeometryCollection</c>.</param>
-		public GeometryCollection(int srid)
-			: base(srid) {
-			_geometries = new List<T>();
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <c>GeometryCollection</c> class in WSG84 coordinate reference system and fills it with specified geometries.
 		/// </summary>
 		/// <param name="geometries">Geometry objects to be added to the collection</param>
 		public GeometryCollection(IEnumerable<T> geometries)
 			: base() {
-			_geometries = new List<T>(geometries);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>GeometryCollection</c> class in specified coordinate reference system and fills it with specified geometries.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param> 
-		/// <param name="geometries">Geometry objects to be added to the collection</param>
-		public GeometryCollection(int srid, IEnumerable<T> geometries)
-			: base(srid) {
 			_geometries = new List<T>(geometries);
 		}
 
@@ -101,35 +82,12 @@ namespace SpatialLite.Core.Geometries {
 			return result;
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  GeometryCollection</returns>
-		public override IGeometry GetBoundary() {
-			GeometryCollection<IGeometry> boundary = new GeometryCollection<IGeometry>(this.Srid);
-			foreach (var geometry in this.Geometries) {
-				boundary.Geometries.Add(geometry.GetBoundary());
-			}
-
-			return boundary;
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
         /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Geometries.SelectMany(o => o.GetCoordinates());
-        }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            foreach (var geometry in this.Geometries) {
-                geometry.Apply(filter);
-            }
         }
     }
 }

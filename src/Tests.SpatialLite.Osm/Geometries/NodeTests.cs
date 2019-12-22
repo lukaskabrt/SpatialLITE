@@ -13,7 +13,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			int id = 11;
 			Node target = new Node(id);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Equal(Coordinate.Empty, target.Position);
 			Assert.Equal(id, target.ID);
 			Assert.NotNull(target.Tags);
@@ -26,7 +25,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Coordinate coord = new Coordinate(-15.6, 68.7);
 			Node target = new Node(id, coord.X, coord.Y);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Equal(target.Position.X, coord.X);
 			Assert.Equal(target.Position.Y, coord.Y);
 			Assert.Equal(id, target.ID);
@@ -42,7 +40,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 
 			Node target = new Node(id, coord.X, coord.Y, tags);
 			
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Equal(target.Position.X, coord.X);
 			Assert.Equal(target.Position.Y, coord.Y);
 			Assert.Equal(id, target.ID);
@@ -56,7 +53,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 			Coordinate coord = new Coordinate(-15.6, 68.7);
 			Node target = new Node(id, coord);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Equal(id, target.ID);
 			Assert.Equal(target.Position.X, coord.X);
 			Assert.Equal(target.Position.Y, coord.Y);
@@ -71,7 +67,6 @@ namespace Tests.SpatialLite.Osm.Geometry {
 
 			Node target = new Node(id, coord, tags);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Equal(id, target.ID);
 			Assert.Equal(target.Position.X, coord.X);
 			Assert.Equal(target.Position.Y, coord.Y);

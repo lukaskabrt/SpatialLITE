@@ -36,38 +36,17 @@ namespace Tests.SpatialLite.Core.Geometries {
 		}
 
 		[Fact]
-		public void Constructor__CreatesNewEmptyCollectionInWSG84() {
+		public void Constructor__CreatesNewEmptyCollection() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>();
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.NotNull(target.Geometries);
 			Assert.Empty(target.Geometries);
 		}
 
 		[Fact]
-		public void Constructor_SRID_CreatesEmptyCollectionInSpecifiedSRID() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid);
-
-			Assert.Equal(srid, target.Srid);
-			Assert.NotNull(target.Geometries);
-			Assert.Empty(target.Geometries);
-		}
-
-		[Fact]
-		public void Constructor_IEnumerable_CreateNewCollectionWithDataInWSG84() {
+		public void Constructor_IEnumerable_CreateNewCollectionWithData() {
 			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(_geometries);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
-			CheckGeometries(target, _geometries);
-		}
-
-		[Fact]
-		public void Constructor_SRIDIEnumerable_CreateNewCollectionWithDataInWSpecifiedSRID() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid, _geometries);
-
-			Assert.Equal(srid, target.Srid);
 			CheckGeometries(target, _geometries);
 		}
 
@@ -128,25 +107,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Envelope expected = new Envelope(new Coordinate[] {_geometries[0].Position, _geometries[1].Position, _geometries[2].Position});
 
 			Assert.Equal(expected, target.GetEnvelope());
-		}
-
-		[Fact]
-		public void GetBoundary_ReturnsGeometryCollectionWithBoundariesOfObjectsInCollection() {
-			int srid = 1;
-			GeometryCollection<Geometry> target = new GeometryCollection<Geometry>(srid);
-			target.Geometries.Add(new LineString(srid, _coordinatesXYZM));
-
-			IGeometryCollection<IGeometry> boundary = target.GetBoundary() as IGeometryCollection<IGeometry>;
-
-			Assert.NotNull(boundary);
-			Assert.Equal(srid, boundary.Srid);
-			Assert.Equal(target.Geometries.Count, boundary.Geometries.Count());
-
-			IMultiPoint expectedChildBoundary = target.Geometries[0].GetBoundary() as IMultiPoint;
-			IMultiPoint childBoundary = boundary.Geometries.First() as IMultiPoint;;
-
-			Assert.Equal(expectedChildBoundary.Geometries.First().Position, childBoundary.Geometries.First().Position);
-			Assert.Equal(expectedChildBoundary.Geometries.Last().Position, childBoundary.Geometries.Last().Position);
 		}
 	}
 }

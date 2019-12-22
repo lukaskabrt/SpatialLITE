@@ -118,28 +118,12 @@ namespace SpatialLite.Osm.Geometries {
 			return ((Geometry)this.Member).GetEnvelope();
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  geometric  object.
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  the RelationMember.</returns>
-		public override IGeometry GetBoundary() {
-			return this.Member.GetBoundary();
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
         /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Member.GetCoordinates();
-        }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void Apply(ICoordinateFilter filter) {
-            this.Member.Apply(filter);
         }
     }
 }

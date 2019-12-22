@@ -16,28 +16,11 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the MultiPolygon class that is empty and has assigned specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		public MultiPolygon(int srid)
-			: base(srid) {
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the MultiPolygon class with specified Polygons
 		/// </summary>
 		/// <param name="polygons">The collection of Polygons to be copied to the new MultiPolygon.</param>
 		public MultiPolygon(IEnumerable<Polygon> polygons)
 			: base(polygons) {
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the MultiPolygon class with specified Polygons and coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		/// <param name="polygons">The collection of Polygons to be copied to the new MultiPolygon.</param>
-		public MultiPolygon(int srid, IEnumerable<Polygon> polygons)
-			: base(srid, polygons) {
 		}
 
 		/// <summary>

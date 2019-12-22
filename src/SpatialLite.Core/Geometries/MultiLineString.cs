@@ -16,14 +16,6 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the MultiLineString class that is empty and has assigned specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		public MultiLineString(int srid)
-			: base(srid) {
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the MultiLineString class with specified LineStrings
 		/// </summary>
 		/// <param name="linestrings">The collection of LineString to be copied to the new MultiLineString.</param>
@@ -32,20 +24,10 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the MultiLineString class with specified LineStrings and coordinate reference system
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system</param> 
-		/// <param name="linestrings">The collection of LineString to be copied to the new MultiLineString.</param>
-		public MultiLineString(int srid, IEnumerable<LineString> linestrings)
-			: base(srid, linestrings) {
-		}
-
-		/// <summary>
 		/// Gets collection of geometry obejcts from this MultiLineString as the collection of IMultiLineString objects.
 		/// </summary>
 		IEnumerable<ILineString> IGeometryCollection<ILineString>.Geometries {
 			get { return base.Geometries; }
 		}
-
 	}
 }

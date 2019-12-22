@@ -36,7 +36,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Way target = new Way(id);
 
             Assert.Equal(id, target.ID);
-            Assert.Equal(SRIDList.WSG84, target.Srid);
             Assert.Empty(target.Nodes);
             Assert.Empty(target.Tags);
             Assert.Null(target.Metadata);
@@ -48,7 +47,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Way target = new Way(id, _nodes);
 
             Assert.Equal(id, target.ID);
-            Assert.Equal(SRIDList.WSG84, target.Srid);
             Assert.Equal(_nodes.Count, target.Nodes.Count);
             for (int i = 0; i < _nodes.Count; i++) {
                 Assert.Same(_nodes[i], target.Nodes[i]);
@@ -66,7 +64,6 @@ namespace Tests.SpatialLite.Osm.Geometries {
             Way target = new Way(id, _nodes, tags);
 
             Assert.Equal(id, target.ID);
-            Assert.Equal(SRIDList.WSG84, target.Srid);
             Assert.Equal(_nodes.Count, target.Nodes.Count);
             for (int i = 0; i < _nodes.Count; i++) {
                 Assert.Same(_nodes[i], target.Nodes[i]);

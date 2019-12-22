@@ -40,36 +40,16 @@ namespace Tests.SpatialLite.Core.Geometries {
 		}
 
 		[Fact]
-		public void Constructor__CreatesEmptyLineStringWithWSG84() {
+		public void Constructor__CreatesEmptyLineString() {
 			LineString target = new LineString();
 
 			Assert.Equal(0, target.Coordinates.Count);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
-		}
-
-		[Fact]
-		public void Constructor_SRID_CreatesEmptyLineStringAndSetsCustomSRID() {
-			int srid = 1;
-			LineString target = new LineString(srid);
-
-			Assert.Equal(0, target.Coordinates.Count);
-			Assert.Equal(srid, target.Srid);
 		}
 
 		[Fact]
 		public void Constructor_IEnumerable_CreatesLineStringFromCoordinates() {
 			LineString target = new LineString(_coordinatesXYZ);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
-			CheckCoordinates(target, _coordinatesXYZ);
-		}
-
-		[Fact]
-		public void Constructor_SRIDIEnumerable_CreatesLineStringFromPointsWithSpecifiedSRID() {
-			int srid = 1;
-			LineString target = new LineString(srid, _coordinatesXYZ);
-
-			Assert.Equal(srid, target.Srid);
 			CheckCoordinates(target, _coordinatesXYZ);
 		}
 
@@ -179,29 +159,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Envelope expected = new Envelope(_coordinatesXYZ);
 
 			Assert.Equal(expected, target.GetEnvelope());
-		}
-
-		[Fact]
-		public void GetBoundary_ReturnsMultipointWithStartAndEndPointsAndCorrectSRID() {
-			int srid = 1111;
-			LineString target = new LineString(srid, _coordinatesXYZM);
-			IMultiPoint boundary = target.GetBoundary() as IMultiPoint;
-
-			Assert.NotNull(boundary);
-			Assert.Equal(srid, boundary.Srid);
-			Assert.Equal(target.Start, boundary.Geometries.First().Position);
-			Assert.Equal(target.End, boundary.Geometries.Last().Position);
-		}
-
-		[Fact]
-		public void GetBoundary_ReturnsEmptyMultiPointForClosedLineString() {
-			LineString target = new LineString(_coordinatesXYZ);
-			target.Coordinates.Add(target.Coordinates[0]);
-
-			IMultiPoint boundary = target.GetBoundary() as IMultiPoint;
-
-			Assert.NotNull(boundary);
-			Assert.Empty(boundary.Geometries);
 		}		
 	}
 }

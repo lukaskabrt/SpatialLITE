@@ -30,52 +30,38 @@ namespace Tests.SpatialLite.Core.Geometries {
 		}
 
 		[Fact]
-		public void Constructor__CreatesPointWithEmptyPositionAndWSG84SRID() {
+		public void Constructor__CreatesPointWithEmptyPosition() {
 			Point target = new Point();
 
 			Assert.Equal(Coordinate.Empty, target.Position);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
 		[Fact]
-		public void Constructor_XY_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XY_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, double.NaN, double.NaN);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
 		[Fact]
-		public void Constructor_XYZ_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XYZ_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, double.NaN);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
 		[Fact]
-		public void Constructor_XYZM_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_XYZM_SetsCoordinates() {
 			Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);
 
 			ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, _mValue);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 		}
 
 		[Fact]
-		public void Constructor_Coordinate_SetsCoordinatesAndWSG84SRID() {
+		public void Constructor_Coordinate_SetsCoordinates() {
 			Point target = new Point(_coordinate);
 
 			Assert.Equal(_coordinate, target.Position);
-			Assert.Equal(SRIDList.WSG84, target.Srid);
-		}
-
-		[Fact]
-		public void Constructor_SridCoordinate_SetsCoordinatesAndWSG84SRID() {
-			int srid = -1;
-			Point target = new Point(srid, _coordinate);
-
-			Assert.Equal(_coordinate, target.Position);
-			Assert.Equal(srid, target.Srid);
 		}
 
 		[Fact]
@@ -134,15 +120,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Assert.Equal(_coordinate.Z, envelope.MaxZ);
 			Assert.Equal(_coordinate.M, envelope.MinM);
 			Assert.Equal(_coordinate.M, envelope.MaxM);
-		}
-
-		[Fact]
-		public void GetBoundary_ReturnsEmptyGeometryCollection() {
-			Point target = new Point(_coordinate);
-			IGeometryCollection<IGeometry> boundary = target.GetBoundary() as IGeometryCollection<IGeometry>;
-
-			Assert.NotNull(boundary);
-			Assert.Empty(boundary.Geometries);
 		}
 	}
 }

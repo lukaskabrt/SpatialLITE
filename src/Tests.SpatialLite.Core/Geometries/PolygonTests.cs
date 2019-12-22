@@ -45,26 +45,10 @@ namespace Tests.SpatialLite.Core.Geometries {
 		[Fact]
 		public void Constructor__CreatesEmptyPolygonAndInitializesProperties() {
 			Polygon target = new Polygon();
-
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			
 			Assert.NotNull(target.ExteriorRing);
 			Assert.Empty(target.ExteriorRing);
 
-			Assert.NotNull(target.InteriorRings);
-			Assert.Empty(target.InteriorRings);
-		}
-
-		[Fact]
-		public void Constructor_SRID_CreatesEmptyPolygonWithCustomSRID() {
-			int srid = 1;
-			Polygon target = new Polygon(srid);
-
-			Assert.Equal(srid, target.Srid);
-
-			Assert.NotNull(target.ExteriorRing);
-			Assert.Empty(target.ExteriorRing);
-			
 			Assert.NotNull(target.InteriorRings);
 			Assert.Empty(target.InteriorRings);
 		}
@@ -73,24 +57,10 @@ namespace Tests.SpatialLite.Core.Geometries {
 		public void Constructor_ExteriorRing_CreatesPolygonWithExteriorBoundary() {
 			Polygon target = new Polygon(_exteriorRing3D);
 
-			Assert.Equal(SRIDList.WSG84, target.Srid);
 			Assert.Same(_exteriorRing3D, target.ExteriorRing);
 
 			Assert.NotNull(target.InteriorRings);
 			Assert.Empty(target.InteriorRings);
-		}
-
-		[Fact]
-		public void Constructor_SRIDExteriorRingInteriorRings_CreatesPolygonWithExteriorBoundary() {
-			int srid = 1;
-			Polygon target = new Polygon(srid, _exteriorRing3D, _interiorRings3D);
-
-			Assert.Equal(srid, target.Srid);
-
-			Assert.NotNull(target.ExteriorRing);
-			Assert.Same(_exteriorRing3D, target.ExteriorRing);
-
-			CheckInteriorRings(target, _interiorRings3D);
 		}
 
 		[Fact]
@@ -138,8 +108,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 		[Fact]
 		public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPolygon() {
 			Polygon target = new Polygon();
-			double x = double.NaN;
-			bool test = x == double.NaN;
 			Envelope envelope = target.GetEnvelope();
 
 			Assert.Equal(Envelope.Empty, envelope);
@@ -153,16 +121,6 @@ namespace Tests.SpatialLite.Core.Geometries {
 			Envelope envelope = target.GetEnvelope();
 
 			Assert.Equal(expectedEnvelope, envelope);
-		}
-
-		[Fact]
-		public void GetBoundary_ReturnsMultiLineStringWithExteriorAndInteriorRingsAndCorrectSRID() {
-			int srid = 1;
-			Polygon target = new Polygon(srid, _exteriorRing3D, _interiorRings3D);
-			IMultiLineString boundary = target.GetBoundary() as IMultiLineString;
-
-			Assert.NotNull(boundary);
-			Assert.Equal(srid, boundary.Srid);
 		}
 	}
 }

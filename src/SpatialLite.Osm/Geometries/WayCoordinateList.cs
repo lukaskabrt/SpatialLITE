@@ -104,9 +104,5 @@ namespace SpatialLite.Osm.Geometries {
 		IEnumerator IEnumerable.GetEnumerator() {
 			return this.GetEnumerator();
 		}
-
-        public void Apply(ICoordinateFilter filter) {
-            throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
-        }
     }
 }

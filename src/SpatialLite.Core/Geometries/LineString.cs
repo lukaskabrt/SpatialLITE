@@ -19,30 +19,11 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <c>LineString</c> class that is empty and has assigned specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		public LineString(int srid)
-			: base(srid) {
-			_coordinates = new CoordinateList();
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <c>LineString</c> class with specified coordinates and WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="coords">The collection of coordinates to be copied to the new LineString.</param>
 		public LineString(IEnumerable<Coordinate> coords)
 			: base() {
-			_coordinates = new CoordinateList(coords);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>LineString</c> class with specified coordinates and specified coordinate reference system.
-		/// </summary>
-		/// <param name="srid">The <c>SRID</c> of the coordinate reference system.</param>
-		/// <param name="coords">The collection of coordinates to be copied to the new LineStringBase.</param>
-		public LineString(int srid, IEnumerable<Coordinate> coords)
-			: base(srid) {
 			_coordinates = new CoordinateList(coords);
 		}
 
@@ -133,33 +114,12 @@ namespace SpatialLite.Core.Geometries {
 			return new Envelope(_coordinates);
 		}
 
-		/// <summary>
-		/// Returns  the  closure  of  the  combinatorial  boundary  of  this  LineString  object
-		/// </summary>
-		/// <returns> the  closure  of  the  combinatorial  boundary  of  this  LineString</returns>
-		public override IGeometry GetBoundary() {
-			if (this.IsClosed) {
-				return new MultiPoint(this.Srid);
-			}
-			else {
-				return new MultiPoint(this.Srid, new Point[] { new Point(this.Srid, this.Start), new Point(this.Srid, this.End) });
-			}
-		}
-
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object
         /// </summary>
         /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
         public override IEnumerable<Coordinate> GetCoordinates() {
             return this.Coordinates;
-        }
-
-        /// <summary>
-        /// Applies the specific filter on this geometry
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public override void  Apply(ICoordinateFilter filter) {
-            this.Coordinates.Apply(filter);
         }
 	}
 }

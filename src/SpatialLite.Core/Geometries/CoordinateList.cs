@@ -105,17 +105,5 @@ namespace SpatialLite.Core.Geometries {
 		IEnumerator IEnumerable.GetEnumerator() {
 			return ((IEnumerable)_storage).GetEnumerator();
 		}
-
-        /// <summary>
-        /// Applies the specific filter on this CoordinateList
-        /// </summary>
-        /// <param name="filter">The filter to apply</param>
-        public void Apply(ICoordinateFilter filter) {
-            for (int i = 0; i < _storage.Count; i++) {
-                var coordinate = _storage[i];
-                filter.Filter(ref coordinate);
-                _storage[i] = coordinate;
-            }
-        }
 	}
 }
