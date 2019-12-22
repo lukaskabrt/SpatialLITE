@@ -153,7 +153,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		/// <returns>Hash code for current Coordinate value.</returns>
 		public override int GetHashCode() {
-			return X.GetHashCode() + 17 * Y.GetHashCode() + 17 * Z.GetHashCode() + 17 * M.GetHashCode();
+			return X.GetHashCode() + 7 * Y.GetHashCode() + 13 * Z.GetHashCode() + 17 * M.GetHashCode();
 		}
 
 		/// <summary>
