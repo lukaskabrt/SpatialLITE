@@ -121,6 +121,20 @@ namespace SpatialLite.Core {
 		}
 
 		/// <summary>
+		/// Compute length of the line
+		/// </summary>
+		/// <param name="coordinates">The coordinates of line to measure</param>
+		/// <returns>The length of the line</returns>
+		public double ComputeLength(ICoordinateList coordinates) {
+			double length = 0;
+			for (int i = 1; i < coordinates.Count; i++) {
+				length += this.DimensionsCalculator.CalculateDistance(coordinates[i - 1], coordinates[i]);
+			}
+
+			return length;
+		}
+
+		/// <summary>
 		/// Compute length of the linestring
 		/// </summary>
 		/// <param name="line">The linestring to measure</param>

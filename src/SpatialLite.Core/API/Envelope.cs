@@ -36,6 +36,10 @@ namespace SpatialLite.Core.API {
             this.Initialize(coord.X, coord.X, coord.Y, coord.Y, coord.Z, coord.Z, coord.M, coord.M);
         }
 
+        public Envelope(double minX, double maxX, double minY, double maxY) {
+            this.Initialize(minX, maxX, minY, maxY);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <c>Envelope</c> class that covers specified coordinates.
         /// </summary>
