@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SpatialLite.Core.API;
+using SpatialLite.Core.Api;
 using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Gps.Geometries {
@@ -22,7 +22,7 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="points">The points of the track</param>
         public GpsTrackBase(IEnumerable<T> points) {
             this.Points = new List<T>(points);
-            _coordinatesAdapter = new ReadOnlyCoordinateList<T>(this.Points);
+            _coordinatesAdapter = new CoordinateSequence<T>(this.Points);
         }
 
         /// <summary>

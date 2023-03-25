@@ -1,5 +1,6 @@
 ﻿using System;
-using SpatialLite.Core.API;
+using System.Collections.Generic;
+using SpatialLite.Core.Api;
 
 namespace SpatialLite.Core.Algorithms {
     /// <summary>
@@ -96,7 +97,7 @@ namespace SpatialLite.Core.Algorithms {
 		/// <param name="vertices">The vertices of the polygon</param>
 		/// <returns>The area of the polygon in squareed coordinate's units</returns>
 		/// <remarks>Polygon is expected to be simple. ComputeArea method handles correctly CoordinateList from Polygon class, where first and last vertices are the same.</remarks>
-		public double CalculateArea(ICoordinateList vertices) {
+		public double CalculateArea(IReadOnlyList<Coordinate> vertices) {
 			if (vertices.Count < 3) {
 				throw new ArgumentException("List must contain at least 3 vertices.", "vertices");
 			}
@@ -113,6 +114,5 @@ namespace SpatialLite.Core.Algorithms {
 
 			return area / 2.0;
 		}
-
-	}
+    }
 }

@@ -7,9 +7,9 @@ namespace Tests.SpatialLite.Core.API
 {
     public class CoordinateTests
     {
-        const float xCoordinate = 3.5f;
-        const float yCoordinate = 4.2f;
-        const float zCoordinate = 10.5f;
+        const double xCoordinate = 3.5f;
+        const double yCoordinate = 4.2f;
+        const double zCoordinate = 10.5f;
 
         [Fact]
         public void Constructor_XY_SetsXYValuesAndZNaN()
@@ -18,7 +18,7 @@ namespace Tests.SpatialLite.Core.API
 
             target.X.Should().Be(xCoordinate);
             target.Y.Should().Be(yCoordinate);
-            target.Z.Should().Be(float.NaN);
+            target.Z.Should().Be(double.NaN);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Tests.SpatialLite.Core.API
         [InlineData(xCoordinate + 1, yCoordinate, zCoordinate)]
         [InlineData(xCoordinate, yCoordinate + 1, zCoordinate)]
         [InlineData(xCoordinate, yCoordinate, zCoordinate + 1)]
-        public void Equals_ReturnsFalseForCoordinateWithDifferentOrdinates(float x, float y, float z)
+        public void Equals_ReturnsFalseForCoordinateWithDifferentOrdinates(double x, double y, double z)
         {
             var target = new Coordinate(xCoordinate, yCoordinate, zCoordinate);
             var other = new Coordinate(x, y, z);
@@ -150,7 +150,7 @@ namespace Tests.SpatialLite.Core.API
         [Theory]
         [InlineData(xCoordinate + 1, yCoordinate)]
         [InlineData(xCoordinate, yCoordinate + 1)]
-        public void Equals2D_ReturnsFalseForCoordinateWithDifferentXYOrdinates(float x, float y)
+        public void Equals2D_ReturnsFalseForCoordinateWithDifferentXYOrdinates(double x, double y)
         {
             var target = new Coordinate(xCoordinate, yCoordinate, zCoordinate);
             var other = new Coordinate(x, y, zCoordinate);

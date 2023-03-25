@@ -21,7 +21,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="id">The ID of the node.</param>
 		/// <param name="longitude">The longitude of the Node.</param>
 		/// <param name="latitude">The latitude of the Node.</param>
-		public Node(long id, float longitude, float latitude)
+		public Node(long id, double longitude, double latitude)
 			: this(id, new Coordinate(longitude, latitude), new TagsCollection()) {
 		}
 
@@ -32,7 +32,7 @@ namespace SpatialLite.Osm.Geometries {
 		/// <param name="longitude">The longitude of the Node.</param>
 		/// <param name="latitude">The latitude of the Node.</param>
 		/// <param name="tags">The collection of tags associated with the Node.</param>
-		public Node(long id, float longitude, float latitude, TagsCollection tags)
+		public Node(long id, double longitude, double latitude, TagsCollection tags)
 			: this(id, new Coordinate(longitude, latitude), tags) {
 		}
 

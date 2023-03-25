@@ -145,7 +145,7 @@ namespace Tests.SpatialLite.Core.Geometries
 
             var envelope = target.GetEnvelope();
 
-            envelope.Should().Equals(new Envelope(_coordinatesXYZ));
+            envelope.Should().Equals(new Envelope2D(_coordinatesXYZ));
         }
     }
 }

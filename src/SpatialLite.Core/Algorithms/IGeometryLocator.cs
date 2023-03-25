@@ -1,10 +1,11 @@
-﻿using SpatialLite.Core.API;
+﻿using SpatialLite.Core.Api;
 
-namespace SpatialLite.Core.Algorithms {
-    /// <summary>
-    /// Defines methods that a class providing relative geometry position computation capabilities must implement.
-    /// </summary>
-    public interface  IGeometryLocator {
+namespace SpatialLite.Core.Algorithms;
+
+/// <summary>
+/// Defines methods that a class providing relative geometry position computation capabilities must implement.
+/// </summary>
+public interface  IGeometryLocator {
 		/// <summary>
 		/// Determines whether specific coordinate is on line defined by two points.
 		/// </summary>
@@ -21,7 +22,7 @@ namespace SpatialLite.Core.Algorithms {
 		/// <param name="c">The coordinate to be tested.</param>
 		/// <param name="line">The polyline.</param>
 		/// <returns>true if coordinate C is on the line, otherwise false.</returns>
-		bool IsOnLine(Coordinate c, ICoordinateList line);
+		bool IsOnLine(Coordinate c, ICoordinateSequence line);
 
 		/// <summary>
 		/// Determines whether specific point is in ring.
@@ -29,7 +30,7 @@ namespace SpatialLite.Core.Algorithms {
 		/// <param name="c">The coordinate to be tested.</param>
 		/// <param name="ring">The ring to locate point in.</param>
 		/// <returns>True if point lies inside ring, otherwise false.</returns>
-		bool IsInRing(Coordinate c, ICoordinateList ring);
+		bool IsInRing(Coordinate c, ICoordinateSequence ring);
 
 		/// <summary>
 		/// Determines whether two lines or line segments defined by two points each intersects.
@@ -49,6 +50,5 @@ namespace SpatialLite.Core.Algorithms {
 		/// <param name="line1">The first polyline to test.</param>
 		/// <param name="line2">The second polyline to test.</param>
 		/// <returns>true if polylines intersets, otherwise false.</returns>
-		bool Intersects(ICoordinateList line1, ICoordinateList line2);
+		bool Intersects(ICoordinateSequence line1, ICoordinateSequence line2);
 	}
-}

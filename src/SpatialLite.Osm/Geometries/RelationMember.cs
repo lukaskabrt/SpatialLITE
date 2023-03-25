@@ -103,9 +103,9 @@ namespace SpatialLite.Osm.Geometries {
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
 		/// <returns>
-		/// Returns an <see cref="Envelope"/> object that specifies the minimal bounding box of the <c>Geometry</c> object.
+		/// Returns an <see cref="Envelope2D"/> object that specifies the minimal bounding box of the <c>Geometry</c> object.
 		/// </returns>
-		public override Envelope GetEnvelope() {
+		public override Envelope2D GetEnvelope() {
 			return ((Geometry)this.Member).GetEnvelope();
 		}
 

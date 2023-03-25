@@ -6,7 +6,7 @@ namespace Tests.SpatialLite.Core.FluentAssertions
 {
     public static class CoordinateExtensions
     {
-        public static void ShouldHaveCoordinates(this Coordinate coordinate, float x, float y, float z)
+        public static void ShouldHaveCoordinates(this Coordinate coordinate, double x, double y, double z)
         {
             using (new AssertionScope())
             {

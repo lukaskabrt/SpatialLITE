@@ -25,7 +25,7 @@ namespace Tests.SpatialLite.Core.IO {
         };
 
         private Coordinate[] _coordinatesXYM = new Coordinate[] {
-                new Coordinate(-10.1f, 15.5f, float.NaN), new Coordinate(20.2f, -25.5f, float.NaN), new Coordinate(30.3f, 35.5f, float.NaN)
+                new Coordinate(-10.1f, 15.5f, double.NaN), new Coordinate(20.2f, -25.5f, double.NaN), new Coordinate(30.3f, 35.5f, double.NaN)
         };
 
         private Coordinate[] _coordinatesXYZM = new Coordinate[] {

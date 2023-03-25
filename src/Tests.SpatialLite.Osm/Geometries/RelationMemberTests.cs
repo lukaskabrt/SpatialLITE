@@ -128,7 +128,7 @@ namespace Tests.SpatialLite.Osm.Geometries {
 
 		[Fact]
 		public void GetEnvelopeReturnsMembersEnvelope() {
-			Envelope expectedEnvelope = new Envelope(new Coordinate(1.1f, 2.2f));
+            Envelope2D expectedEnvelope = new Envelope2D(new Coordinate(1.1f, 2.2f));
 			Mock<Way> member = new Mock<Way>(11);
 			member.Setup(function => function.GetEnvelope()).Returns(expectedEnvelope);
 

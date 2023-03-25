@@ -1,10 +1,12 @@
-﻿using SpatialLite.Core.API;
+﻿using SpatialLite.Core.Api;
+using System.Collections.Generic;
 
-namespace SpatialLite.Core.Algorithms {
-    /// <summary>
-    /// Defines methods that a class providing distance and area calculations capabilities must implement
-    /// </summary>
-    public interface IDimensionsCalculator {
+namespace SpatialLite.Core.Algorithms;
+
+/// <summary>
+/// Defines methods that a class providing distance and area calculations capabilities must implement
+/// </summary>
+public interface IDimensionsCalculator {
 		/// <summary>
 		/// Calculates distance between two points
 		/// </summary>
@@ -28,6 +30,5 @@ namespace SpatialLite.Core.Algorithms {
 		/// </summary>
 		/// <param name="vertices">The vertices of the polygon</param>
 		/// <returns>The area of the polygon</returns>
-		double CalculateArea(ICoordinateList vertices);
+		double CalculateArea(IReadOnlyList<Coordinate> vertices);
 	}
-}

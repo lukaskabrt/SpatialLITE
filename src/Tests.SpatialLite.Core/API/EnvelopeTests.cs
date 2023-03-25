@@ -12,7 +12,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Height_ReturnsZeroForEmptyEnvelope()
         {
-            var target = Envelope.Empty;
+            var target = Envelope2D.Empty;
 
             target.Height.Should().Be(0);
         }
@@ -20,7 +20,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Height_ReturnsYDifference()
         {
-            var target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             target.Height.Should().Be(2);
         }
@@ -30,7 +30,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Width_ReturnsZeroForEmptyEnvelope()
         {
-            var target = Envelope.Empty;
+            var target = Envelope2D.Empty;
 
             target.Width.Should().Be(0);
         }
@@ -38,7 +38,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Width_ReturnsXDifference()
         {
-            var target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             target.Width.Should().Be(2);
         }
@@ -48,7 +48,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Equals_ReturnsTrueForSameObjectInstance()
         {
-            object target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            object target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             target.Equals(target).Should().BeTrue();
         }
@@ -56,8 +56,8 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Equals_ReturnsTrueForEnvelopeWithTheSameBounds()
         {
-            var target = new Envelope(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
-            var other = new Envelope(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
+            var target = new Envelope2D(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
+            var other = new Envelope2D(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
 
             target.Equals(other).Should().BeTrue();
         }
@@ -65,7 +65,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Equals_ReturnsFalseForNull()
         {
-            var target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
             object other = null;
 
             target.Equals(other).Should().BeFalse();
@@ -74,35 +74,35 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Equals_ReturnsFalseForOtherObjectType()
         {
-            var target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
             object other = "string";
 
             target.Equals(other).Should().BeFalse();
         }
 
-        public static TheoryData<Envelope> EnvelopesWithOtherBounds => new()
+        public static TheoryData<Envelope2D> EnvelopesWithOtherBounds => new()
         {
-            { new Envelope(new[] { new Coordinate(-2, -1), new Coordinate(1, 1) }) },
-            { new Envelope(new[] { new Coordinate(-1, -2), new Coordinate(1, 1) }) },
-            { new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(2, 1) }) },
-            { new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 2) }) }
+            { new Envelope2D(new[] { new Coordinate(-2, -1), new Coordinate(1, 1) }) },
+            { new Envelope2D(new[] { new Coordinate(-1, -2), new Coordinate(1, 1) }) },
+            { new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(2, 1) }) },
+            { new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 2) }) }
         };
 
         [Theory]
         [MemberData(nameof(EnvelopesWithOtherBounds))]
-        public void Equals_ReturnsFalseForEnvelopeWithDifferentBounds(Envelope other)
+        public void Equals_ReturnsFalseForEnvelopeWithDifferentBounds(Envelope2D other)
         {
-            var target = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var target = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             target.Equals(other).Should().BeFalse();
         }
 
-        /* Expand(float, float) */
+        /* Expand(double, double) */
 
         [Fact]
         public void Expand_ExpandsEnvelopeBySpecifiedValues()
         {
-            var source = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var source = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             source.Expand(1, 2).ShouldHaveBounds(-2, 2, -3, 3);
         }
@@ -110,15 +110,15 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Expand_ShrinksEnvelopeBySpecifiedNegativeValues()
         {
-            var source = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var source = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
-            source.Expand(-0.5f, -0.1f).ShouldHaveBounds(-0.5f, 0.5f, -0.9f, 0.9f);
+            source.Expand(-0.5, -0.1).ShouldHaveBounds(-0.5, 0.5, -0.9, 0.9);
         }
 
         [Fact]
         public void Expand_ShrinksEnvelopeToSinglePoint()
         {
-            var source = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var source = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             source.Expand(-1, -1).ShouldHaveBounds(0, 0, 0, 0);
         }
@@ -126,7 +126,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Expand_ShrinksEnvelopeToEmptyEnvelope()
         {
-            var source = new Envelope(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
+            var source = new Envelope2D(new[] { new Coordinate(-1, -1), new Coordinate(1, 1) });
 
             source.Expand(-3, -3).IsEmpty.Should().BeTrue();
         }
@@ -134,7 +134,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void Expand_DoesNotExpandEmptyEnvelope()
         {
-            Envelope.Empty.Expand(2, 2).IsEmpty.Should().BeTrue();
+            Envelope2D.Empty.Expand(2, 2).IsEmpty.Should().BeTrue();
         }
     }
 }

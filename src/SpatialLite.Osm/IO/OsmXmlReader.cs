@@ -120,7 +120,7 @@ namespace SpatialLite.Osm.IO
                 throw new Sys.XmlException("Attribute 'lat' is missing.");
             }
 
-            float nodeLat = float.Parse(attLat, System.Globalization.CultureInfo.InvariantCulture);
+            double nodeLat = double.Parse(attLat, System.Globalization.CultureInfo.InvariantCulture);
 
             // longitude
             string attLon = _xmlReader.GetAttribute("lon");
@@ -129,7 +129,7 @@ namespace SpatialLite.Osm.IO
                 throw new Sys.XmlException("Attribute 'lon'is missing.");
             }
 
-            float nodeLon = float.Parse(attLon, System.Globalization.CultureInfo.InvariantCulture);
+            double nodeLon = double.Parse(attLon, System.Globalization.CultureInfo.InvariantCulture);
 
             EntityMetadata additionalInfo = null;
             if (this.Settings.ReadMetadata)

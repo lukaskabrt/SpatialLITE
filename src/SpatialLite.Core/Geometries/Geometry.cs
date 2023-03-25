@@ -14,14 +14,19 @@ namespace SpatialLite.Core.Geometries {
         public virtual bool Is3D => this.GetCoordinates().Any(c => c.Is3D);
 
         /// <summary>
+        /// Gets a value indicating whether this <see cref="Geometry"/> has M values.
+        /// </summary>
+        public virtual bool IsMeasured => this.GetCoordinates().Any(c => c.IsMeasured);
+
+        /// <summary>
         /// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
         /// </summary>
         /// <returns>
-        /// Returns an <see cref="Envelope"/> object that specifies the minimal bounding box of the <c>Geometry</c> object.
+        /// Returns an <see cref="Envelope2D"/> object that specifies the minimal bounding box of the <c>Geometry</c> object.
         /// </returns>
-        public virtual Envelope GetEnvelope()
+        public virtual Envelope2D GetEnvelope()
         {
-            return new Envelope(this.GetCoordinates());
+            return new Envelope2D(this.GetCoordinates());
         }
 
         /// <summary>

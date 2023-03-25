@@ -16,7 +16,7 @@ namespace SpatialLite.Osm {
 		/// <param name="longitude">The longitude of the node.</param>
 		/// <param name="tags">The collection of thag associated with the node.</param>
 		/// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
-		public NodeInfo(long id, float latitude, float longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
+		public NodeInfo(long id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null) {
 			this.ID = id;
 			this.Latitude = latitude;
 			this.Longitude = longitude;
@@ -62,12 +62,12 @@ namespace SpatialLite.Osm {
 		/// <summary>
 		/// Gets the latitude of the node.
 		/// </summary>
-		public float Latitude { get; set; }
+		public double Latitude { get; set; }
 
 		/// <summary>
 		/// Gets the longitude of the node.
 		/// </summary>
-		public float Longitude { get; set; }
+		public double Longitude { get; set; }
 
 		/// <summary>
 		/// Gets or sets metadata of this Node.

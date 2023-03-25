@@ -89,7 +89,7 @@ namespace Tests.SpatialLite.Core.Geometries
 
             var envelope = target.GetEnvelope();
 
-            envelope.ShouldHaveSameBounds(new Envelope(_coordinatesXY));
+            envelope.ShouldHaveSameBounds(new Envelope2D(_coordinatesXY));
         }
     }
 }

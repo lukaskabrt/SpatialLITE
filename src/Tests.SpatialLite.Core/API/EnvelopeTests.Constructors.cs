@@ -14,7 +14,7 @@ namespace Tests.SpatialLite.Core.API
         {
             var coordinate = Coordinate.Empty;
 
-            var target = new Envelope(coordinate);
+            var target = new Envelope2D(coordinate);
 
             target.IsEmpty.Should().BeTrue();
         }
@@ -24,7 +24,7 @@ namespace Tests.SpatialLite.Core.API
         {
             var coordinate = new Coordinate(1, 2);
 
-            var target = new Envelope(coordinate);
+            var target = new Envelope2D(coordinate);
 
             target.ShouldHaveBounds(coordinate.X, coordinate.X, coordinate.Y, coordinate.Y);
         }
@@ -34,7 +34,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void CopiesEmptySourceEnvelope()
         {
-            var target = new Envelope(Envelope.Empty);
+            var target = new Envelope2D(Envelope2D.Empty);
 
             target.IsEmpty.Should().BeTrue();
         }
@@ -42,8 +42,8 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void CopiesMinMaxValuesFromSourceEnvelope()
         {
-            var source = new Envelope(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
-            var target = new Envelope(source);
+            var source = new Envelope2D(new[] { new Coordinate(1, 2), new Coordinate(-1, -2) });
+            var target = new Envelope2D(source);
 
             target.ShouldHaveSameBounds(source);
         }
@@ -53,7 +53,7 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void InitializesEmptyEnvelopeForEmptyList()
         {
-            var target = new Envelope(new Coordinate[] { });
+            var target = new Envelope2D(new Coordinate[] { });
 
             target.IsEmpty.Should().BeTrue();
         }
@@ -61,12 +61,12 @@ namespace Tests.SpatialLite.Core.API
         [Fact]
         public void InitializesEmptyEnvelopeForListOfEmptyCoordinates()
         {
-            var target = new Envelope(new[] { Coordinate.Empty, Coordinate.Empty });
+            var target = new Envelope2D(new[] { Coordinate.Empty, Coordinate.Empty });
 
             target.IsEmpty.Should().BeTrue();
         }
 
-        public static TheoryData<Coordinate[], float, float, float, float> CoordinatesListWithBounds => new()
+        public static TheoryData<Coordinate[], double, double, double, double> CoordinatesListWithBounds => new()
         {
             { new[] { new Coordinate(-1, 1), Coordinate.Empty }, -1, -1, 1, 1 },
             { new[] { Coordinate.Empty, new Coordinate(-1, 1) }, -1, -1, 1, 1 },
@@ -78,9 +78,9 @@ namespace Tests.SpatialLite.Core.API
 
         [Theory]
         [MemberData(nameof(CoordinatesListWithBounds))]
-        public void InitializesEnvelopeWithBoundsFromCoordinates(Coordinate[] coordinates, float minX, float maxX, float minY, float maxY)
+        public void InitializesEnvelopeWithBoundsFromCoordinates(Coordinate[] coordinates, double minX, double maxX, double minY, double maxY)
         {
-            var target = new Envelope(coordinates);
+            var target = new Envelope2D(coordinates);
 
             target.ShouldHaveBounds(minX, maxX, minY, maxY);
         }

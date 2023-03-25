@@ -229,20 +229,20 @@ namespace SpatialLite.Core.IO {
         /// <remarks><![CDATA[<x> <y> {<z>} {<m>}]]></remarks>
         private static Coordinate ParseCoordinate(WktTokensBuffer tokens, bool is3D, bool isMeasured) {
             WktToken t = WktReader.Expect(TokenType.NUMBER, tokens);
-            float x = float.Parse(t.Value, _invarianCulture);
+            double x = double.Parse(t.Value, _invarianCulture);
 
             WktReader.Expect(TokenType.WHITESPACE, tokens);
 
             t = WktReader.Expect(TokenType.NUMBER, tokens);
-            float y = float.Parse(t.Value, _invarianCulture);
+            double y = double.Parse(t.Value, _invarianCulture);
 
-            float z = float.NaN;
+            double z = double.NaN;
 
             if (is3D) {
                 WktReader.Expect(TokenType.WHITESPACE, tokens);
 
                 t = WktReader.Expect(TokenType.NUMBER, tokens);
-                z = float.Parse(t.Value, _invarianCulture);
+                z = double.Parse(t.Value, _invarianCulture);
             }
 
             if (isMeasured) {

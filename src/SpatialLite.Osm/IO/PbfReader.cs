@@ -295,7 +295,7 @@ namespace SpatialLite.Osm.IO
 
                 EntityMetadata metadata = this.ProcessMetadata(node.Metadata, block);
 
-                NodeInfo parsed = new NodeInfo((long)node.ID, (float)lat, (float)lon, new TagsCollection(tags), metadata);
+                NodeInfo parsed = new NodeInfo((long)node.ID, (double)lat, (double)lon, new TagsCollection(tags), metadata);
                 _cache.Enqueue(parsed);
             }
         }
@@ -371,7 +371,7 @@ namespace SpatialLite.Osm.IO
                     }
                 }
 
-                NodeInfo parsed = new NodeInfo((long)idStore, (float)lat, (float)lon, new TagsCollection(tags), metadata);
+                NodeInfo parsed = new NodeInfo((long)idStore, (double)lat, (double)lon, new TagsCollection(tags), metadata);
                 _cache.Enqueue(parsed);
             }
         }

@@ -14,9 +14,9 @@ using Tests.SpatialLite.Core.FluentAssertions;
 namespace Tests.SpatialLite.Core.Geometries {
 	public class PointTests {
 
-		const float _xCoordinate = 3.5f;
-		const float _yCoordinate = 4.2f;
-		const float _zCoordinate = 10.5f;
+		const double _xCoordinate = 3.5f;
+		const double _yCoordinate = 4.2f;
+		const double _zCoordinate = 10.5f;
 
 		Coordinate _coordinate = new (_xCoordinate, _yCoordinate, _zCoordinate);
 		
@@ -31,7 +31,7 @@ namespace Tests.SpatialLite.Core.Geometries {
 		public void Constructor_XY_SetsCoordinates() {
 			var target = new Point(_xCoordinate, _yCoordinate);
 
-			target.Position.ShouldHaveCoordinates(_xCoordinate, _yCoordinate, float.NaN);
+			target.Position.ShouldHaveCoordinates(_xCoordinate, _yCoordinate, double.NaN);
 		}
 
 		[Fact]

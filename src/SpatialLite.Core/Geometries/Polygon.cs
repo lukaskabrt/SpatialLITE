@@ -63,9 +63,9 @@ namespace SpatialLite.Core.Geometries
         /// Computes envelope of the <c>Polygon</c> object. The envelope is defined as a minimal bounding box for a geometry.
         /// </summary>
         /// <returns>
-        /// Returns an <see cref="Envelope"/> object that specifies the minimal bounding box of the <c>Polygon</c> object.
+        /// Returns an <see cref="Envelope2D"/> object that specifies the minimal bounding box of the <c>Polygon</c> object.
         /// </returns>
-        public override Envelope GetEnvelope() => this.ExteriorRing.Count == 0 ? Envelope.Empty : new Envelope(this.ExteriorRing);
+        public override Envelope2D GetEnvelope() => this.ExteriorRing.Count == 0 ? Envelope2D.Empty : new Envelope2D(this.ExteriorRing);
 
         /// <summary>
         /// Gets collection of all <see cref="Coordinate"/> of this IGeometry object

@@ -78,7 +78,7 @@ namespace Tests.SpatialLite.Core.Geometries
         [Fact]
         public void GetEnvelopeReturnsUnionOfMembersEnvelopes()
         {
-            var expected = new Envelope(new Coordinate[] { _geometries[0].Position, _geometries[1].Position });
+            var expected = new Envelope2D(new Coordinate[] { _geometries[0].Position, _geometries[1].Position });
             var target = new GeometryCollection<Geometry>(_geometries);
 
             var envelope = target.GetEnvelope();

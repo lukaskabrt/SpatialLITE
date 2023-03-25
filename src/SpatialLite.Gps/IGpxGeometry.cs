@@ -1,4 +1,4 @@
-﻿using SpatialLite.Core.API;
+﻿using SpatialLite.Core.Api;
 
 namespace SpatialLite.Gps {
     /// <summary>

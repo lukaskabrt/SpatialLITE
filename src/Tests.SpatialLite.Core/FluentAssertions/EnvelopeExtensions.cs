@@ -6,7 +6,7 @@ namespace Tests.SpatialLite.Core.FluentAssertions
 {
     public static class EnvelopeExtensions
     {
-        public static void ShouldHaveBounds(this Envelope envelope, float minX, float maxX, float minY, float maxY)
+        public static void ShouldHaveBounds(this Envelope2D envelope, double minX, double maxX, double minY, double maxY)
         {
             using (new AssertionScope())
             {
@@ -17,7 +17,7 @@ namespace Tests.SpatialLite.Core.FluentAssertions
             }
         }
 
-        public static void ShouldHaveSameBounds(this Envelope envelope, Envelope expected)
+        public static void ShouldHaveSameBounds(this Envelope2D envelope, Envelope2D expected)
         {
             using (new AssertionScope())
             {

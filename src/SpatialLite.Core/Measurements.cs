@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using SpatialLite.Core.API;
+using SpatialLite.Core.Api;
 using SpatialLite.Core.Algorithms;
 
 namespace SpatialLite.Core {

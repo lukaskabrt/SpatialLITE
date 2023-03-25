@@ -1,7 +1,7 @@
 ﻿using System;
 
 using SpatialLite.Core.Algorithms;
-using SpatialLite.Core.API;
+using SpatialLite.Core.Api;
 
 namespace SpatialLite.Core {
     /// <summary>
