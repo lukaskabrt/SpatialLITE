@@ -25,9 +25,9 @@ namespace Tests.SpatialLite.Osm.IO {
 				Changeset = 6410629
 			};
 
-			_node = new NodeInfo(1, 50.4f, 16.2f, new TagsCollection());
-			_nodeTags = new NodeInfo(2, 50.4f, 16.2f, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
-			_nodeProperties = new NodeInfo(3, 50.4f, 16.2f, new TagsCollection(), _details);
+			_node = new NodeInfo(1, 50.4, 16.2, new TagsCollection());
+			_nodeTags = new NodeInfo(2, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
+			_nodeProperties = new NodeInfo(3, 50.4, 16.2, new TagsCollection(), _details);
 
 			_way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
 			_wayTags = new WayInfo(2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });

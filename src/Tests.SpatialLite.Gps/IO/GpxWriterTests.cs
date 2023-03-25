@@ -6,7 +6,7 @@ using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
 using System.IO;
 using System.Xml.Linq;
-using SpatialLite.Core.API;
+using SpatialLite.Core.Api;
 using Tests.SpatialLite.Gps.Data;
 
 namespace Tests.SpatialLite.Gps.IO {

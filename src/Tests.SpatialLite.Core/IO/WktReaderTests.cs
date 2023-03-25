@@ -17,23 +17,23 @@ namespace Tests.SpatialLite.Core.IO {
     public class WktReaderTests {
 
         private Coordinate[] _coordinatesXY = new Coordinate[] {
-                new Coordinate(-10.1f, 15.5f), new Coordinate(20.2f, -25.5f), new Coordinate(30.3f, 35.5f)
+                new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
         };
 
         private Coordinate[] _coordinatesXYZ = new Coordinate[] {
-                new Coordinate(-10.1f, 15.5f, 100.5f), new Coordinate(20.2f, -25.5f, 200.5f), new Coordinate(30.3f, 35.5f, -300.5f)
+                new Coordinate(-10.1, 15.5, 100.5f), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
         };
 
         private Coordinate[] _coordinatesXYM = new Coordinate[] {
-                new Coordinate(-10.1f, 15.5f, double.NaN), new Coordinate(20.2f, -25.5f, double.NaN), new Coordinate(30.3f, 35.5f, double.NaN)
+                new Coordinate(-10.1, 15.5, double.NaN), new Coordinate(20.2, -25.5, double.NaN), new Coordinate(30.3, 35.5, double.NaN)
         };
 
         private Coordinate[] _coordinatesXYZM = new Coordinate[] {
-                new Coordinate(-10.1f, 15.5f, 100.5f), new Coordinate(20.2f, -25.5f, 200.5f), new Coordinate(30.3f, 35.5f, -300.5f)
+                new Coordinate(-10.1, 15.5, 100.5), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
         };
 
         private Coordinate[] _coordinates2XYZM = new Coordinate[] {
-                new Coordinate(-1.1f, 1.5f, 10.5f), new Coordinate(2.2f, -2.5f, 20.5f), new Coordinate(3.3f, 3.5f, -30.5f)
+                new Coordinate(-1.1, 1.5, 10.5), new Coordinate(2.2, -2.5, 20.5), new Coordinate(3.3, 3.5, -30.5)
         };
 
         [Fact]

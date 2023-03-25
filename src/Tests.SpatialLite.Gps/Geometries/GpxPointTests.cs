@@ -3,7 +3,7 @@
 using Xunit;
 
 using SpatialLite.Gps.Geometries;
-using SpatialLite.Core.API;
+using SpatialLite.Core.Api;
 using SpatialLite.Gps;
 
 namespace Tests.SpatialLite.Gps.Geometries {

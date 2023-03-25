@@ -8,7 +8,7 @@ namespace SpatialLite.Gps.Geometries {
     /// </summary>
     /// <typeparam name="T">The type of the Gps points</typeparam>
     public class GpsTrackBase<T> : LineString where T : IGpsPoint {
-        private ICoordinateList _coordinatesAdapter;
+        private ICoordinateSequence _coordinatesAdapter;
 
         /// <summary>
         /// Creates a new instance of the GpsTrackBase class
@@ -22,7 +22,7 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="points">The points of the track</param>
         public GpsTrackBase(IEnumerable<T> points) {
             this.Points = new List<T>(points);
-            _coordinatesAdapter = new CoordinateSequence<T>(this.Points);
+            _coordinatesAdapter = new CoordinateSequenceAdapter<T>(this.Points);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace SpatialLite.Gps.Geometries {
         /// <summary>
         /// Gets the list of çoordinates of this track.
         /// </summary>
-        public override ICoordinateList Coordinates {
+        public override ICoordinateSequence Coordinates {
             get {
                 return _coordinatesAdapter;
             }

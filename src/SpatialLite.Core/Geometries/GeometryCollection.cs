@@ -34,7 +34,7 @@ namespace SpatialLite.Core.Geometries
         /// <summary>
         /// Gets the list of IGeometry objects in this collection
         /// </summary>
-        public IReadOnlyList<T> Geometries => _geometries;
+        public List<T> Geometries => _geometries;
 
         /// <summary>
         /// Gets collection of geometry objects from this <see cref="GeometryCollection{T}"/> as the collection of <see cref="IGeometry"/> objects.
