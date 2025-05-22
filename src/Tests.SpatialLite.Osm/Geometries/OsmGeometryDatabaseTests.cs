@@ -101,7 +101,7 @@ public class OsmGeometryDatabaseTests
         Assert.True(target.Nodes.Contains(2));
         Assert.True(target.Nodes.Contains(3));
 
-        Assert.Equal(1, target.Ways.Count);
+        Assert.Single(target.Ways);
         Assert.True(target.Ways.Contains(10));
     }
 
@@ -111,10 +111,10 @@ public class OsmGeometryDatabaseTests
         IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
-        Assert.Equal(1, target.Nodes.Count);
+        Assert.Single(target.Nodes);
         Assert.True(target.Nodes.Contains(1));
 
-        Assert.Equal(1, target.Relations.Count);
+        Assert.Single(target.Relations);
         Assert.True(target.Relations.Contains(100));
     }
 
@@ -146,7 +146,7 @@ public class OsmGeometryDatabaseTests
         target = OsmGeometryDatabase.Load(reader, true);
 
         Assert.Equal(2, target.Nodes.Count);
-        Assert.Equal(0, target.Ways.Count);
+        Assert.Empty(target.Ways);
     }
 
     [Fact]
@@ -156,7 +156,7 @@ public class OsmGeometryDatabaseTests
         OsmGeometryDatabase target = null;
         target = OsmGeometryDatabase.Load(reader, true);
 
-        Assert.Equal(1, target.Relations.Count);
+        Assert.Single(target.Relations);
     }
 
     [Fact]
