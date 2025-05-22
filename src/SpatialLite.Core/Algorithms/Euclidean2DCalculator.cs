@@ -111,7 +111,7 @@ namespace SpatialLite.Core.Algorithms {
 				area += (vertices[(i + 1) % vertices.Count].X + vertices[i % vertices.Count].X) * (vertices[(i + 1) % vertices.Count].Y - vertices[i % vertices.Count].Y);
 			}
 
-			return Math.Abs(area / 2.0);
+			return area / 2.0;
 		}
 
 	}
