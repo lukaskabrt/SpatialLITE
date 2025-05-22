@@ -1,6 +1,6 @@
 # SpatialLITE
 
-SpatialLITE is a lightweight .NET Core library for spatial data processing.
+SpatialLITE is a lightweight .NET 8 library for spatial data processing.
 
 ![Build Status](https://kabrt.visualstudio.com/_apis/public/build/definitions/a0c2814c-9acd-4035-824a-a2548f8a8c1b/10/badge)
 
