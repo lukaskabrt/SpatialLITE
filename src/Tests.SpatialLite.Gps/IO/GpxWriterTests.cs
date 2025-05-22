@@ -9,33 +9,36 @@ using System.Xml.Linq;
 using SpatialLite.Core.API;
 using Tests.SpatialLite.Gps.Data;
 
-namespace Tests.SpatialLite.Gps.IO {
-    public class GpxWriterTests {
+namespace Tests.SpatialLite.Gps.IO
+{
+    public class GpxWriterTests
+    {
         GpxPoint _waypoint = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
         GpxPoint _waypointWithMetadata = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
         GpxPointMetadata _pointMetadata;
 
         GpxRoute _route = new GpxRoute(new GpxPoint[] {
-		    new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
-		});
+            new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
+        });
         GpxRoute _routeWithMetadata = new GpxRoute(new GpxPoint[] {
-		    new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
-		});
+            new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
+        });
         GpxTrackMetadata _routeMetadata;
 
         GpxTrackSegment _segment = new GpxTrackSegment(new GpxPoint[] {
-		    new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
-			new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
-		});
+            new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
+            new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
+        });
         GpxTrackMetadata _trackMetadata;
         GpxTrack _track;
         GpxTrack _trackWithMetadata;
-        public GpxWriterTests() {
+        public GpxWriterTests()
+        {
             _pointMetadata = new GpxPointMetadata();
             _pointMetadata.AgeOfDgpsData = 45;
             _pointMetadata.DgpsId = 124;
@@ -78,21 +81,25 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Constructor_StreamSettings_SetsSettingsAndMarkSettingsAsReadOnly() {
+        public void Constructor_StreamSettings_SetsSettingsAndMarkSettingsAsReadOnly()
+        {
             var stream = new MemoryStream();
             var settings = new GpxWriterSettings();
-            using (var target = new GpxWriter(stream, settings)) {
+            using (var target = new GpxWriter(stream, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(target.Settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_StreamSettings_CreatesGpxFileWithRootElement() {
+        public void Constructor_StreamSettings_CreatesGpxFileWithRootElement()
+        {
             string generatorName = "SpatialLite";
             var stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false, GeneratorName = generatorName })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false, GeneratorName = generatorName }))
+            {
             }
 
             XDocument written = XDocument.Load(new MemoryStream(stream.ToArray()));
@@ -102,22 +109,26 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
+        public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly()
+        {
             string path = PathHelper.GetTempFilePath("gpxwriter-constructor-test-1.gpx");
 
             var settings = new GpxWriterSettings();
-            using (var target = new GpxWriter(path, settings)) {
+            using (var target = new GpxWriter(path, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(target.Settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_PathSettings_CreatesOutputFile() {
+        public void Constructor_PathSettings_CreatesOutputFile()
+        {
             string filename = PathHelper.GetTempFilePath("gpxwriter-constructor-creates-output-test.gpx");
 
             var settings = new GpxWriterSettings();
-            using (var target = new GpxWriter(filename, settings)) {
+            using (var target = new GpxWriter(filename, settings))
+            {
                 ;
             }
 
@@ -125,11 +136,13 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Constructor_PathSettings_CreatesGpxFileWithRootElement() {
+        public void Constructor_PathSettings_CreatesGpxFileWithRootElement()
+        {
             string path = PathHelper.GetTempFilePath("gpxwriter-constructor-test-2.gpx");
             string generatorName = "SpatialLite";
 
-            using (GpxWriter target = new GpxWriter(path, new GpxWriterSettings() { WriteMetadata = false, GeneratorName = generatorName })) {
+            using (GpxWriter target = new GpxWriter(path, new GpxWriterSettings() { WriteMetadata = false, GeneratorName = generatorName }))
+            {
             }
 
             XDocument written = XDocument.Load(path);
@@ -139,10 +152,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesWaypointWithoutMetadataIfMetadataIsNull() {
+        public void Write_WritesWaypointWithoutMetadataIfMetadataIsNull()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_waypoint);
             }
 
@@ -153,10 +168,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesWaypointWithoutMetadataIfWriteMetadataIsFalse() {
+        public void Write_WritesWaypointWithoutMetadataIfWriteMetadataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_waypointWithMetadata);
             }
 
@@ -167,10 +184,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesWaypointWithMetadata() {
+        public void Write_WritesWaypointWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_waypointWithMetadata);
             }
 
@@ -181,12 +200,14 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesWaypointWithoutUnnecessaryElements() {
+        public void Write_WritesWaypointWithoutUnnecessaryElements()
+        {
             _waypointWithMetadata.Metadata.SatellitesCount = null;
             _waypointWithMetadata.Metadata.Name = null;
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_waypointWithMetadata);
             }
 
@@ -197,10 +218,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesRouteWith3Points() {
+        public void Write_WritesRouteWith3Points()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_route);
             }
 
@@ -211,10 +234,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesRouteWithMetadata() {
+        public void Write_WritesRouteWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_routeWithMetadata);
             }
 
@@ -225,10 +250,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesRouteWithoutMetadataIfWriteMetadataIsFalse() {
+        public void Write_WritesRouteWithoutMetadataIfWriteMetadataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_routeWithMetadata);
             }
 
@@ -239,11 +266,13 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesRouteWithoutUnnecessaryElements() {
+        public void Write_WritesRouteWithoutUnnecessaryElements()
+        {
             _routeWithMetadata.Metadata.Source = null;
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_routeWithMetadata);
             }
 
@@ -254,10 +283,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesTrack() {
+        public void Write_WritesTrack()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_track);
             }
 
@@ -268,10 +299,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_WritesTrackWithMetadata() {
+        public void Write_WritesTrackWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_trackWithMetadata);
             }
 
@@ -282,10 +315,12 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_DoesntWriteTrackMetadataIfWriteMetadataIsFalse() {
+        public void Write_DoesntWriteTrackMetadataIfWriteMetadataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_trackWithMetadata);
             }
 
@@ -296,11 +331,13 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Write_TrackWithEntityDetailsButNullValues_WritesTrackWithoutUnnecessaryElements() {
+        public void Write_TrackWithEntityDetailsButNullValues_WritesTrackWithoutUnnecessaryElements()
+        {
             MemoryStream stream = new MemoryStream();
             _trackWithMetadata.Metadata.Source = null;
 
-            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true })) {
+            using (GpxWriter target = new GpxWriter(stream, new GpxWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_trackWithMetadata);
             }
 
@@ -311,7 +348,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+        public void Dispose_ClosesOutputStreamIfWritingToFiles()
+        {
             string path = PathHelper.GetTempFilePath("gpxwriter-closes-output-filestream-test.osm");
 
             var target = new GpxWriter(path, new GpxWriterSettings());
@@ -323,7 +361,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToStream() {
+        public void Dispose_ClosesOutputStreamIfWritingToStream()
+        {
             MemoryStream stream = new MemoryStream();
 
             var target = new GpxWriter(stream, new GpxWriterSettings());

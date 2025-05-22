@@ -5,11 +5,13 @@ using System.IO;
 using ProtoBuf;
 using SpatialLite.Osm.IO.Pbf;
 
-namespace SpatialLite.Osm.IO {
+namespace SpatialLite.Osm.IO
+{
     /// <summary>
     /// Represents IOsmReader that can read OSM entities from PBF format.
     /// </summary>
-    public class PbfReader : IOsmReader {
+    public class PbfReader : IOsmReader
+    {
 
         /// <summary>
         /// Defines maximal allowed size of uncompressed OsmData block. Larger blocks are considered invalid.
@@ -31,7 +33,8 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="input">The input stream.</param>
         /// <param name="settings">The OsmReaderSettings object that determines behaviour of PbfReader.</param>
-        public PbfReader(Stream input, OsmReaderSettings settings) {
+        public PbfReader(Stream input, OsmReaderSettings settings)
+        {
             _input = input;
             _cache = new Queue<IEntityInfo>();
 
@@ -39,18 +42,27 @@ namespace SpatialLite.Osm.IO {
             this.Settings.IsReadOnly = true;
 
             BlobHeader blobHeader = null;
-            while ((blobHeader = this.ReadBlobHeader()) != null) {
-                try {
-                    if (blobHeader.Type == "OSMHeader") {
+            while ((blobHeader = this.ReadBlobHeader()) != null)
+            {
+                try
+                {
+                    if (blobHeader.Type == "OSMHeader")
+                    {
                         OsmHeader osmHeader = (OsmHeader)this.ReadBlob(blobHeader);
                         this.ProcessOsmHeader(osmHeader);
                         return;
-                    } else if (blobHeader.Type == "OSMData") {
+                    }
+                    else if (blobHeader.Type == "OSMData")
+                    {
                         throw new InvalidDataException("Input stream doesn't contain an 'OSMHeader' block before 'OSMData' block.");
-                    } else {
+                    }
+                    else
+                    {
                         _input.Seek(blobHeader.DataSize, SeekOrigin.Current);
                     }
-                } catch (ProtoException ex) {
+                }
+                catch (ProtoException ex)
+                {
                     throw new InvalidDataException("Input stream contains unsupported data", ex);
                 }
             }
@@ -63,7 +75,8 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="path">The path to the input file.</param>
         /// <param name="settings">The OsmReaderSettings object that determines behaviour of PbfReader.</param>
-        public PbfReader(string path, OsmReaderSettings settings) {
+        public PbfReader(string path, OsmReaderSettings settings)
+        {
             _input = new FileStream(path, FileMode.Open, FileAccess.Read);
             _cache = new Queue<IEntityInfo>();
 
@@ -71,18 +84,27 @@ namespace SpatialLite.Osm.IO {
             this.Settings.IsReadOnly = true;
 
             BlobHeader blobHeader = null;
-            while ((blobHeader = this.ReadBlobHeader()) != null) {
-                try {
-                    if (blobHeader.Type == "OSMHeader") {
+            while ((blobHeader = this.ReadBlobHeader()) != null)
+            {
+                try
+                {
+                    if (blobHeader.Type == "OSMHeader")
+                    {
                         OsmHeader osmHeader = (OsmHeader)this.ReadBlob(blobHeader);
                         this.ProcessOsmHeader(osmHeader);
                         return;
-                    } else if (blobHeader.Type == "OSMData") {
+                    }
+                    else if (blobHeader.Type == "OSMData")
+                    {
                         throw new InvalidDataException("Input stream doesn't contain an 'OSMHeader' block before 'OSMData' block.");
-                    } else {
+                    }
+                    else
+                    {
                         _input.Seek(blobHeader.DataSize, SeekOrigin.Current);
                     }
-                } catch (ProtoException ex) {
+                }
+                catch (ProtoException ex)
+                {
                     throw new InvalidDataException("Input stream contains unsupported data", ex);
                 }
             }
@@ -99,24 +121,34 @@ namespace SpatialLite.Osm.IO {
         /// Reads next OSM entity from the stream.
         /// </summary>
         /// <returns>Parsed OSM entity from the stream or null if no other entity is available.</returns>
-        public IEntityInfo Read() {
-            if (_cache.Count > 0) {
+        public IEntityInfo Read()
+        {
+            if (_cache.Count > 0)
+            {
                 return _cache.Dequeue();
-            } else {
+            }
+            else
+            {
                 BlobHeader blobHeader = null;
-                while (_cache.Count == 0 && (blobHeader = this.ReadBlobHeader()) != null) {
+                while (_cache.Count == 0 && (blobHeader = this.ReadBlobHeader()) != null)
+                {
                     PrimitiveBlock data = this.ReadBlob(blobHeader) as PrimitiveBlock;
-                    if (data != null) {
-                        foreach (PrimitiveGroup group in data.PrimitiveGroup) {
+                    if (data != null)
+                    {
+                        foreach (PrimitiveGroup group in data.PrimitiveGroup)
+                        {
                             this.ProcessPrimitiveGroup(data, group);
                         }
                     }
                 }
             }
 
-            if (_cache.Count > 0) {
+            if (_cache.Count > 0)
+            {
                 return _cache.Dequeue();
-            } else {
+            }
+            else
+            {
                 return null;
             }
         }
@@ -124,7 +156,8 @@ namespace SpatialLite.Osm.IO {
         /// <summary>
         /// Releases all resources used by the PbfReader.
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
 
             GC.SuppressFinalize(this);
@@ -134,8 +167,10 @@ namespace SpatialLite.Osm.IO {
         /// Reads and deserializes a BlobHeader from input stream.
         /// </summary>
         /// <returns>Deserialized BlobHeader object or null if end of the stream is reached.</returns>
-        private BlobHeader ReadBlobHeader() {
-            if (_input.Position < _input.Length) {
+        private BlobHeader ReadBlobHeader()
+        {
+            if (_input.Position < _input.Length)
+            {
                 return Serializer.DeserializeWithLengthPrefix<BlobHeader>(_input, PrefixStyle.Fixed32BigEndian);
             }
 
@@ -147,42 +182,58 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="header">Header of the blob.</param>
         /// <returns>Deserialized content of the read blob or null if blob contains unknown data.</returns>
-        private object ReadBlob(BlobHeader header) {
+        private object ReadBlob(BlobHeader header)
+        {
             byte[] buffer = new byte[header.DataSize];
             _input.Read(buffer, 0, header.DataSize);
             Blob blob = Serializer.Deserialize<Blob>(new MemoryStream(buffer));
 
             Stream blobContentStream;
-            if (blob.Raw != null) {
+            if (blob.Raw != null)
+            {
                 blobContentStream = new MemoryStream(blob.Raw);
-            } else if (blob.ZlibData != null) {
+            }
+            else if (blob.ZlibData != null)
+            {
                 MemoryStream deflateStreamData = new MemoryStream(blob.ZlibData);
 
                 //skip ZLIB header
                 deflateStreamData.Seek(2, SeekOrigin.Begin);
 
                 blobContentStream = new System.IO.Compression.DeflateStream(deflateStreamData, System.IO.Compression.CompressionMode.Decompress);
-            } else {
+            }
+            else
+            {
                 throw new NotSupportedException();
             }
 
-            if (header.Type.Equals("OSMData", StringComparison.OrdinalIgnoreCase)) {
-                if ((blob.RawSize.HasValue && blob.RawSize > MaxDataBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxDataBlockSize)) {
+            if (header.Type.Equals("OSMData", StringComparison.OrdinalIgnoreCase))
+            {
+                if ((blob.RawSize.HasValue && blob.RawSize > MaxDataBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxDataBlockSize))
+                {
                     throw new InvalidDataException("Invalid OSMData block");
                 }
 
                 return Serializer.Deserialize<PrimitiveBlock>(blobContentStream);
-            } else if (header.Type.Equals("OSMHeader", StringComparison.OrdinalIgnoreCase)) {
-                if ((blob.RawSize.HasValue && blob.RawSize > MaxHeaderBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxHeaderBlockSize)) {
+            }
+            else if (header.Type.Equals("OSMHeader", StringComparison.OrdinalIgnoreCase))
+            {
+                if ((blob.RawSize.HasValue && blob.RawSize > MaxHeaderBlockSize) || (blob.RawSize.HasValue == false && blobContentStream.Length > MaxHeaderBlockSize))
+                {
                     throw new InvalidDataException("Invalid OSMHeader block");
                 }
 
-                try {
+                try
+                {
                     return Serializer.Deserialize<OsmHeader>(blobContentStream);
-                } catch (ProtoException ex) {
+                }
+                catch (ProtoException ex)
+                {
                     throw new InvalidDataException("Invalid OSMData block", ex);
                 }
-            } else {
+            }
+            else
+            {
                 return null;
             }
         }
@@ -191,10 +242,13 @@ namespace SpatialLite.Osm.IO {
         /// Checks OsmHeader required features and if any of required features isn't supported, NotSupportedException is thrown.
         /// </summary>
         /// <param name="header">OsmHeader object to process.</param>
-        private void ProcessOsmHeader(OsmHeader header) {
+        private void ProcessOsmHeader(OsmHeader header)
+        {
             string[] supportedFeatures = new string[] { "OsmSchema-V0.6", "DenseNodes" };
-            foreach (var required in header.RequiredFeatures) {
-                if (supportedFeatures.Contains(required) == false) {
+            foreach (var required in header.RequiredFeatures)
+            {
+                if (supportedFeatures.Contains(required) == false)
+                {
                     throw new NotSupportedException(string.Format("Processing specified PBF file requires '{0}' feature which isn't supported by PbfReader.", required));
                 }
             }
@@ -205,7 +259,8 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="block">The PrimitiveBlock that contains specified PrimitiveGroup.</param>
         /// <param name="group">The PrimitiveGroup to process.</param>
-        private void ProcessPrimitiveGroup(PrimitiveBlock block, PrimitiveGroup group) {
+        private void ProcessPrimitiveGroup(PrimitiveBlock block, PrimitiveGroup group)
+        {
             this.ProcessNodes(block, group);
             this.ProcessDenseNodes(block, group);
             this.ProcessWays(block, group);
@@ -217,18 +272,23 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="block">The PrimitiveBlock that contains specified PrimitiveGroup.</param>
         /// <param name="group">The PrimitiveGroup with nodes to process.</param>
-        private void ProcessNodes(PrimitiveBlock block, PrimitiveGroup group) {
-            if (group.Nodes == null) {
+        private void ProcessNodes(PrimitiveBlock block, PrimitiveGroup group)
+        {
+            if (group.Nodes == null)
+            {
                 return;
             }
 
-            foreach (PbfNode node in group.Nodes) {
+            foreach (PbfNode node in group.Nodes)
+            {
                 double lat = 1E-09 * (block.LatOffset + (block.Granularity * node.Latitude));
                 double lon = 1E-09 * (block.LonOffset + (block.Granularity * node.Longitude));
 
                 List<Tag> tags = new List<Tag>();
-                if (node.Keys != null) {
-                    for (int i = 0; i < node.Keys.Count; i++) {
+                if (node.Keys != null)
+                {
+                    for (int i = 0; i < node.Keys.Count; i++)
+                    {
                         tags.Add(new Tag(block.StringTable[node.Keys[i]], block.StringTable[node.Values[i]]));
                     }
                 }
@@ -245,8 +305,10 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="block">The PrimitiveBlock that contains specified PrimitiveGroup.</param>
         /// <param name="group">The PrimitiveGroup with nodes to process.</param>
-        private void ProcessDenseNodes(PrimitiveBlock block, PrimitiveGroup group) {
-            if (group.DenseNodes == null) {
+        private void ProcessDenseNodes(PrimitiveBlock block, PrimitiveGroup group)
+        {
+            if (group.DenseNodes == null)
+            {
                 return;
             }
 
@@ -261,7 +323,8 @@ namespace SpatialLite.Osm.IO {
             int userIdStore = 0;
             int usernameIdStore = 0;
 
-            for (int i = 0; i < group.DenseNodes.Id.Count; i++) {
+            for (int i = 0; i < group.DenseNodes.Id.Count; i++)
+            {
                 idStore += group.DenseNodes.Id[i];
                 lonStore += group.DenseNodes.Longitude[i];
                 latStore += group.DenseNodes.Latitude[i];
@@ -270,8 +333,10 @@ namespace SpatialLite.Osm.IO {
                 double lon = 1E-09 * (block.LonOffset + (block.Granularity * lonStore));
 
                 List<Tag> tags = new List<Tag>();
-                if (group.DenseNodes.KeysVals.Count > 0) {
-                    while (group.DenseNodes.KeysVals[keyValueIndex] != 0) {
+                if (group.DenseNodes.KeysVals.Count > 0)
+                {
+                    while (group.DenseNodes.KeysVals[keyValueIndex] != 0)
+                    {
                         string key = block.StringTable[group.DenseNodes.KeysVals[keyValueIndex++]];
                         string value = block.StringTable[group.DenseNodes.KeysVals[keyValueIndex++]];
 
@@ -283,13 +348,15 @@ namespace SpatialLite.Osm.IO {
                 }
 
                 EntityMetadata metadata = null;
-                if (this.Settings.ReadMetadata && group.DenseNodes.DenseInfo != null) {
+                if (this.Settings.ReadMetadata && group.DenseNodes.DenseInfo != null)
+                {
                     timestampStore += group.DenseNodes.DenseInfo.Timestamp[i];
                     changesetStore += group.DenseNodes.DenseInfo.Changeset[i];
                     userIdStore += group.DenseNodes.DenseInfo.UserId[i];
                     usernameIdStore += group.DenseNodes.DenseInfo.UserNameIndex[i];
 
-                    metadata = new EntityMetadata() {
+                    metadata = new EntityMetadata()
+                    {
                         Changeset = (int)changesetStore,
                         Timestamp = _unixEpoch.AddMilliseconds(timestampStore * block.DateGranularity),
                         Uid = userIdStore,
@@ -298,7 +365,8 @@ namespace SpatialLite.Osm.IO {
                         Visible = true
                     };
 
-                    if (group.DenseNodes.DenseInfo.Visible.Count > 0) {
+                    if (group.DenseNodes.DenseInfo.Visible.Count > 0)
+                    {
                         metadata.Visible = group.DenseNodes.DenseInfo.Visible[i];
                     }
                 }
@@ -313,23 +381,29 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="block">The PrimitiveBlock that contains specified PrimitiveGroup.</param>
         /// <param name="group">The PrimitiveGroup with nodes to process.</param>
-        private void ProcessWays(PrimitiveBlock block, PrimitiveGroup group) {
-            if (group.Ways == null) {
+        private void ProcessWays(PrimitiveBlock block, PrimitiveGroup group)
+        {
+            if (group.Ways == null)
+            {
                 return;
             }
 
-            foreach (var way in group.Ways) {
+            foreach (var way in group.Ways)
+            {
                 long refStore = 0;
                 List<long> refs = new List<long>(way.Refs.Count);
 
-                for (int i = 0; i < way.Refs.Count; i++) {
+                for (int i = 0; i < way.Refs.Count; i++)
+                {
                     refStore += (long)way.Refs[i];
                     refs.Add(refStore);
                 }
 
                 List<Tag> tags = new List<Tag>();
-                if (way.Keys != null) {
-                    for (int i = 0; i < way.Keys.Count; i++) {
+                if (way.Keys != null)
+                {
+                    for (int i = 0; i < way.Keys.Count; i++)
+                    {
                         tags.Add(new Tag(block.StringTable[way.Keys[i]], block.StringTable[way.Values[i]]));
                     }
                 }
@@ -346,21 +420,26 @@ namespace SpatialLite.Osm.IO {
         /// </summary>
         /// <param name="block">The PrimitiveBlock that contains specified PrimitiveGroup.</param>
         /// <param name="group">The PrimitiveGroup with nodes to process.</param>
-        private void ProcessRelations(PrimitiveBlock block, PrimitiveGroup group) {
-            if (group.Relations == null) {
+        private void ProcessRelations(PrimitiveBlock block, PrimitiveGroup group)
+        {
+            if (group.Relations == null)
+            {
                 return;
             }
 
-            foreach (var relation in group.Relations) {
+            foreach (var relation in group.Relations)
+            {
                 long memberRefStore = 0;
 
                 List<RelationMemberInfo> members = new List<RelationMemberInfo>();
-                for (int i = 0; i < relation.MemberIds.Count; i++) {
+                for (int i = 0; i < relation.MemberIds.Count; i++)
+                {
                     memberRefStore += (long)relation.MemberIds[i];
                     string role = block.StringTable[relation.RolesIndexes[i]];
 
                     EntityType memberType = 0;
-                    switch (relation.Types[i]) {
+                    switch (relation.Types[i])
+                    {
                         case PbfRelationMemberType.Node: memberType = EntityType.Node; break;
                         case PbfRelationMemberType.Way: memberType = EntityType.Way; break;
                         case PbfRelationMemberType.Relation: memberType = EntityType.Relation; break;
@@ -370,8 +449,10 @@ namespace SpatialLite.Osm.IO {
                 }
 
                 List<Tag> tags = new List<Tag>();
-                if (relation.Keys != null) {
-                    for (int i = 0; i < relation.Keys.Count; i++) {
+                if (relation.Keys != null)
+                {
+                    for (int i = 0; i < relation.Keys.Count; i++)
+                    {
                         tags.Add(new Tag(block.StringTable[relation.Keys[i]], block.StringTable[relation.Values[i]]));
                     }
                 }
@@ -389,29 +470,36 @@ namespace SpatialLite.Osm.IO {
         /// <param name="serializedMetadata">Serilized metadata.</param>
         /// <param name="block">PrimitiveBlock that contains metadata being processed.</param>
         /// <returns>Parsed metadata.</returns>
-        private EntityMetadata ProcessMetadata(PbfMetadata serializedMetadata, PrimitiveBlock block) {
+        private EntityMetadata ProcessMetadata(PbfMetadata serializedMetadata, PrimitiveBlock block)
+        {
             EntityMetadata metadata = null;
 
-            if (this.Settings.ReadMetadata && serializedMetadata != null) {
+            if (this.Settings.ReadMetadata && serializedMetadata != null)
+            {
                 //PBF has no field for 'visible' property, true is default value for OSM entity read from PBF file
                 metadata = new EntityMetadata() { Visible = true };
-                if (serializedMetadata.Changeset.HasValue) {
+                if (serializedMetadata.Changeset.HasValue)
+                {
                     metadata.Changeset = (int)serializedMetadata.Changeset.Value;
                 }
 
-                if (serializedMetadata.Timestamp.HasValue) {
+                if (serializedMetadata.Timestamp.HasValue)
+                {
                     metadata.Timestamp = _unixEpoch.AddMilliseconds(serializedMetadata.Timestamp.Value * block.DateGranularity);
                 }
 
-                if (serializedMetadata.UserID.HasValue) {
+                if (serializedMetadata.UserID.HasValue)
+                {
                     metadata.Uid = serializedMetadata.UserID.Value;
                 }
 
-                if (serializedMetadata.UserNameIndex.HasValue) {
+                if (serializedMetadata.UserNameIndex.HasValue)
+                {
                     metadata.User = block.StringTable[serializedMetadata.UserNameIndex.Value];
                 }
 
-                if (serializedMetadata.Version.HasValue) {
+                if (serializedMetadata.Version.HasValue)
+                {
                     metadata.Version = serializedMetadata.Version.Value;
                 }
             }
@@ -423,10 +511,14 @@ namespace SpatialLite.Osm.IO {
         /// Releases the unmanaged resources used by the PbfReader and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-        private void Dispose(bool disposing) {
-            if (!this._disposed) {
-                if (disposing) {
-                    if (_input != null) {
+        private void Dispose(bool disposing)
+        {
+            if (!this._disposed)
+            {
+                if (disposing)
+                {
+                    if (_input != null)
+                    {
                         _input.Dispose();
                     }
                 }

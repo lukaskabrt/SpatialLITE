@@ -3,24 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using SpatialLite.Core.API;
 
-namespace SpatialLite.Core.Geometries {
+namespace SpatialLite.Core.Geometries
+{
     /// <summary>
     /// Provides read-only ICoordinateList wrapper around collection of points
     /// </summary>
-    public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint {
+    public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
+    {
         /// <summary>
         /// Initializes a new instance of the ReadOnlyCoordinateList class with specified source list fo nodes
         /// </summary>
         /// <param name="source">The list of Points to be used as source for this ReadOnlyCoordinateList</param>
-        public ReadOnlyCoordinateList(IReadOnlyList<T> source) {
+        public ReadOnlyCoordinateList(IReadOnlyList<T> source)
+        {
             this.Source = source;
         }
 
         /// <summary>
         /// Gets number of Coordinates in the list.
         /// </summary>
-        public int Count {
-            get {
+        public int Count
+        {
+            get
+            {
                 return this.Source.Count;
             }
         }
@@ -35,11 +40,14 @@ namespace SpatialLite.Core.Geometries {
         /// </summary>
         /// <param name="index">The zero-based index of the Coordinate to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public Coordinate this[int index] {
-            get {
+        public Coordinate this[int index]
+        {
+            get
+            {
                 return this.Source[index].Position;
             }
-            set {
+            set
+            {
                 throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
             }
         }
@@ -48,7 +56,8 @@ namespace SpatialLite.Core.Geometries {
         /// Adds Coordinate to the end of the list.
         /// </summary>
         /// <param name="coord">The Coordinate to add to the list.</param>
-        public void Add(Coordinate coord) {
+        public void Add(Coordinate coord)
+        {
             throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
         }
 
@@ -56,7 +65,8 @@ namespace SpatialLite.Core.Geometries {
         /// Adds collection of coordinates to the end of the list.
         /// </summary>
         /// <param name="coords">The collection of coordinates to add to the list.</param>
-        public void Add(IEnumerable<Coordinate> coords) {
+        public void Add(IEnumerable<Coordinate> coords)
+        {
             throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
         }
 
@@ -66,7 +76,8 @@ namespace SpatialLite.Core.Geometries {
         /// <param name="index">The zero-based index at which coord should be inserted.</param>
         /// <param name="coord">The Coordinate to insert into list.</param>
         /// <remarks>If index equals the number of items in the list, then item is appended to the list.</remarks>
-        public void Insert(int index, Coordinate coord) {
+        public void Insert(int index, Coordinate coord)
+        {
             throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
         }
 
@@ -74,14 +85,16 @@ namespace SpatialLite.Core.Geometries {
         /// Removes Coordinate at the specified index from the list.
         /// </summary>
         /// <param name="index">The zero-based index of the Coordinate to remove.</param>
-        public void RemoveAt(int index) {
+        public void RemoveAt(int index)
+        {
             throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
         }
 
         /// <summary>
         /// Removes all Coordinates from the collection.
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             throw new NotSupportedException("This operation isn't supported - use Nodes property to modify coordinates.");
         }
 
@@ -89,8 +102,10 @@ namespace SpatialLite.Core.Geometries {
         /// Returns an enumerator that iterates through the CoordinateList
         /// </summary>
         /// <returns>The Enumerator for the CoordinateList</returns>
-        public IEnumerator<Coordinate> GetEnumerator() {
-            foreach (var node in this.Source) {
+        public IEnumerator<Coordinate> GetEnumerator()
+        {
+            foreach (var node in this.Source)
+            {
                 yield return node.Position;
             }
         }
@@ -99,7 +114,8 @@ namespace SpatialLite.Core.Geometries {
         /// Returns an enumerator that iterates through the CoordinateList
         /// </summary>
         /// <returns>The Enumerator for the CoordinateList</returns>
-        IEnumerator IEnumerable.GetEnumerator() {
+        IEnumerator IEnumerable.GetEnumerator()
+        {
             return this.GetEnumerator();
         }
     }

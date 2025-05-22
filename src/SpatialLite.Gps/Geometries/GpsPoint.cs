@@ -2,16 +2,19 @@
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
-namespace SpatialLite.Gps.Geometries {
+namespace SpatialLite.Gps.Geometries
+{
     /// <summary>
     /// Represents location on the earth surface with timestamp that defines time when the point was recorded 
     /// </summary>
-    public class GpsPoint : Point, IGpsPoint {
+    public class GpsPoint : Point, IGpsPoint
+    {
 
         /// <summary>
         /// Creates a new, empty instance of the GpsPoint
         /// </summary>
-        public GpsPoint() {
+        public GpsPoint()
+        {
         }
 
         /// <summary>
@@ -19,7 +22,8 @@ namespace SpatialLite.Gps.Geometries {
         /// </summary>
         /// <param name="position">The position of the point</param>
         public GpsPoint(Coordinate position)
-            : base(position) {
+            : base(position)
+        {
         }
 
         /// <summary>
@@ -30,7 +34,8 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="elevation">The elevation of the point</param>
         /// <param name="time">The time when the point was recorded</param>
         public GpsPoint(double longitude, double latitude, double elevation, DateTime time)
-            : base(longitude, latitude, elevation) {
+            : base(longitude, latitude, elevation)
+        {
             Timestamp = time;
         }
 
@@ -40,13 +45,14 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="position">The position of the point</param>
         /// <param name="time">The time when the point was recorded</param>
         public GpsPoint(Coordinate position, DateTime time)
-            : base(position) {
+            : base(position)
+        {
             Timestamp = time;
         }
 
         /// <summary>
         /// Gets or sets time when the point was recorded.
         /// </summary>
-        public DateTime? Timestamp { get; set; }        
+        public DateTime? Timestamp { get; set; }
     }
 }

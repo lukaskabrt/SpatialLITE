@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace SpatialLite.Osm {
+namespace SpatialLite.Osm
+{
     /// <summary>
     /// Defines methods and properties for collection of the OSM entities where entities can be accessed by their ID and type.
     /// </summary>
     /// <typeparam name="T">The type of the entitie in the collection.</typeparam>
-    public interface IEntityCollection<T> : ICollection<T> where T : IOsmEntity {
+    public interface IEntityCollection<T> : ICollection<T> where T : IOsmEntity
+    {
         /// <summary>
         /// Gets an entity with specific ID from the collection.
         /// </summary>

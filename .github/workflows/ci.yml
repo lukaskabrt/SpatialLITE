@@ -23,7 +23,6 @@ jobs:
 
     - name: Check code format
       run: dotnet format --no-restore --verify-no-changes
-      continue-on-error: true
         
     - name: Restore dependencies
       run: dotnet restore

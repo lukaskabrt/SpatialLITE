@@ -1,10 +1,12 @@
 ﻿using SpatialLite.Gps.Geometries;
 
-namespace SpatialLite.Gps.IO {
+namespace SpatialLite.Gps.IO
+{
     /// <summary>
     /// Defines functions and properties for classes that can writes GPX entities to a destination.
     /// </summary>
-    public interface IGpxWriter {
+    public interface IGpxWriter
+    {
         /// <summary>
         /// Writes GpxWaypoint
         /// </summary>

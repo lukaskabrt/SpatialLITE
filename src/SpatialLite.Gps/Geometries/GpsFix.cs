@@ -1,8 +1,10 @@
-﻿namespace SpatialLite.Gps.Geometries {
+﻿namespace SpatialLite.Gps.Geometries
+{
     /// <summary>
     /// Defines type of the GPS fix
     /// </summary>
-    public enum GpsFix {
+    public enum GpsFix
+    {
         /// <summary>
         /// No fix
         /// </summary>

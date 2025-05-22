@@ -9,118 +9,133 @@ using SpatialLite.Core;
 using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 
-namespace Tests.SpatialLite.Core.Geometries {
-	public class PolygonTests {
-		
-		Coordinate[] _coordinatesXY = new Coordinate[] {
-					new Coordinate(1, 2), new Coordinate(1.1, 2.1), new Coordinate(1.2, 2.2), new Coordinate(1.3, 2.3)
-		};
-		
-		Coordinate[] _coordinatesXYZ = new Coordinate[] {
-					new Coordinate(1, 2, 3), new Coordinate(1.1, 2.1, 3.1), new Coordinate(1.2, 2.2, 3.2), new Coordinate(1.3, 2.3, 3.3)
-		};
+namespace Tests.SpatialLite.Core.Geometries
+{
+    public class PolygonTests
+    {
 
-		Coordinate[] _coordinatesXYZM = new Coordinate[] {
-					new Coordinate(1, 2, 3, 10), new Coordinate(1.1, 2.1, 3.1, 20), new Coordinate(1.2, 2.2, 3.2, 30), new Coordinate(1.3, 2.3, 3.3, 40)
-		};
+        Coordinate[] _coordinatesXY = new Coordinate[] {
+                    new Coordinate(1, 2), new Coordinate(1.1, 2.1), new Coordinate(1.2, 2.2), new Coordinate(1.3, 2.3)
+        };
 
-		CoordinateList _exteriorRing3D;
-		CoordinateList[] _interiorRings3D;
+        Coordinate[] _coordinatesXYZ = new Coordinate[] {
+                    new Coordinate(1, 2, 3), new Coordinate(1.1, 2.1, 3.1), new Coordinate(1.2, 2.2, 3.2), new Coordinate(1.3, 2.3, 3.3)
+        };
 
-		public PolygonTests() {
-			_exteriorRing3D = new CoordinateList(_coordinatesXYZ);
+        Coordinate[] _coordinatesXYZM = new Coordinate[] {
+                    new Coordinate(1, 2, 3, 10), new Coordinate(1.1, 2.1, 3.1, 20), new Coordinate(1.2, 2.2, 3.2, 30), new Coordinate(1.3, 2.3, 3.3, 40)
+        };
 
-			_interiorRings3D = new CoordinateList[2];
-			_interiorRings3D[0] = new CoordinateList(new Coordinate[] { _coordinatesXYZ[0], _coordinatesXYZ[1], _coordinatesXYZ[0] });
-			_interiorRings3D[1] = new CoordinateList(new Coordinate[] { _coordinatesXYZ[1], _coordinatesXYZ[2], _coordinatesXYZ[1] });
-		}
+        CoordinateList _exteriorRing3D;
+        CoordinateList[] _interiorRings3D;
 
-		private void CheckInteriorRings(Polygon target, CoordinateList[] expected) {
-			Assert.Equal(expected.Length, target.InteriorRings.Count);
-			for (int i = 0; i < expected.Length; i++) {
-				Assert.Same(expected[i], target.InteriorRings[i]);
-			}
-		}
+        public PolygonTests()
+        {
+            _exteriorRing3D = new CoordinateList(_coordinatesXYZ);
 
-		[Fact]
-		public void Constructor__CreatesEmptyPolygonAndInitializesProperties() {
-			Polygon target = new Polygon();
-			
-			Assert.NotNull(target.ExteriorRing);
-			Assert.Empty(target.ExteriorRing);
+            _interiorRings3D = new CoordinateList[2];
+            _interiorRings3D[0] = new CoordinateList(new Coordinate[] { _coordinatesXYZ[0], _coordinatesXYZ[1], _coordinatesXYZ[0] });
+            _interiorRings3D[1] = new CoordinateList(new Coordinate[] { _coordinatesXYZ[1], _coordinatesXYZ[2], _coordinatesXYZ[1] });
+        }
 
-			Assert.NotNull(target.InteriorRings);
-			Assert.Empty(target.InteriorRings);
-		}
+        private void CheckInteriorRings(Polygon target, CoordinateList[] expected)
+        {
+            Assert.Equal(expected.Length, target.InteriorRings.Count);
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Same(expected[i], target.InteriorRings[i]);
+            }
+        }
 
-		[Fact]
-		public void Constructor_ExteriorRing_CreatesPolygonWithExteriorBoundary() {
-			Polygon target = new Polygon(_exteriorRing3D);
+        [Fact]
+        public void Constructor__CreatesEmptyPolygonAndInitializesProperties()
+        {
+            Polygon target = new Polygon();
 
-			Assert.Same(_exteriorRing3D, target.ExteriorRing);
+            Assert.NotNull(target.ExteriorRing);
+            Assert.Empty(target.ExteriorRing);
 
-			Assert.NotNull(target.InteriorRings);
-			Assert.Empty(target.InteriorRings);
-		}
+            Assert.NotNull(target.InteriorRings);
+            Assert.Empty(target.InteriorRings);
+        }
 
-		[Fact]
-		public void Is3D_ReturnsTrueFor3DExteriorRing() {
-			Polygon target = new Polygon(_exteriorRing3D);
+        [Fact]
+        public void Constructor_ExteriorRing_CreatesPolygonWithExteriorBoundary()
+        {
+            Polygon target = new Polygon(_exteriorRing3D);
 
-			Assert.True(target.Is3D);
-		}
+            Assert.Same(_exteriorRing3D, target.ExteriorRing);
 
-		[Fact]
-		public void Is3D_ReturnsFalseForEmptyPolygon() {
-			Polygon target = new Polygon();
+            Assert.NotNull(target.InteriorRings);
+            Assert.Empty(target.InteriorRings);
+        }
 
-			Assert.False(target.Is3D);
-		}
+        [Fact]
+        public void Is3D_ReturnsTrueFor3DExteriorRing()
+        {
+            Polygon target = new Polygon(_exteriorRing3D);
 
-		[Fact]
-		public void Is3D_ReturnsFalseFor2DExteriorRing() {
-			Polygon target = new Polygon(new CoordinateList(_coordinatesXY));
+            Assert.True(target.Is3D);
+        }
 
-			Assert.False(target.Is3D);
-		}
+        [Fact]
+        public void Is3D_ReturnsFalseForEmptyPolygon()
+        {
+            Polygon target = new Polygon();
 
-		[Fact]
-		public void IsMeasured_ReturnsTrueForMeasuredExteriorRing() {
-			Polygon target = new Polygon(new CoordinateList(_coordinatesXYZM));
+            Assert.False(target.Is3D);
+        }
 
-			Assert.True(target.IsMeasured);
-		}
+        [Fact]
+        public void Is3D_ReturnsFalseFor2DExteriorRing()
+        {
+            Polygon target = new Polygon(new CoordinateList(_coordinatesXY));
 
-		[Fact]
-		public void IsMeasured_ReturnsFalseForEmptyPolygon() {
-			Polygon target = new Polygon();
+            Assert.False(target.Is3D);
+        }
 
-			Assert.False(target.IsMeasured);
-		}
+        [Fact]
+        public void IsMeasured_ReturnsTrueForMeasuredExteriorRing()
+        {
+            Polygon target = new Polygon(new CoordinateList(_coordinatesXYZM));
 
-		[Fact]
-		public void IsMeasured_ReturnsFalseForNonMeasuredExteriorRing() {
-			Polygon target = new Polygon(new CoordinateList(_coordinatesXYZ));
+            Assert.True(target.IsMeasured);
+        }
 
-			Assert.False(target.IsMeasured);
-		}
+        [Fact]
+        public void IsMeasured_ReturnsFalseForEmptyPolygon()
+        {
+            Polygon target = new Polygon();
 
-		[Fact]
-		public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPolygon() {
-			Polygon target = new Polygon();
-			Envelope envelope = target.GetEnvelope();
+            Assert.False(target.IsMeasured);
+        }
 
-			Assert.Equal(Envelope.Empty, envelope);
-		}
+        [Fact]
+        public void IsMeasured_ReturnsFalseForNonMeasuredExteriorRing()
+        {
+            Polygon target = new Polygon(new CoordinateList(_coordinatesXYZ));
 
-		[Fact]
-		public void GetEnvelopeReturnsEnvelopeOfLineString() {
-			Envelope expectedEnvelope = new Envelope(_coordinatesXYZ);
+            Assert.False(target.IsMeasured);
+        }
 
-			Polygon target = new Polygon(_exteriorRing3D);
-			Envelope envelope = target.GetEnvelope();
+        [Fact]
+        public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPolygon()
+        {
+            Polygon target = new Polygon();
+            Envelope envelope = target.GetEnvelope();
 
-			Assert.Equal(expectedEnvelope, envelope);
-		}
-	}
+            Assert.Equal(Envelope.Empty, envelope);
+        }
+
+        [Fact]
+        public void GetEnvelopeReturnsEnvelopeOfLineString()
+        {
+            Envelope expectedEnvelope = new Envelope(_coordinatesXYZ);
+
+            Polygon target = new Polygon(_exteriorRing3D);
+            Envelope envelope = target.GetEnvelope();
+
+            Assert.Equal(expectedEnvelope, envelope);
+        }
+    }
 }

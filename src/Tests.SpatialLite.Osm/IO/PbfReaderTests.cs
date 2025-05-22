@@ -8,8 +8,10 @@ using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
 using Tests.SpatialLite.Osm.Data;
 
-namespace Tests.SpatialLite.Osm.IO {
-    public class PbfReaderTests {
+namespace Tests.SpatialLite.Osm.IO
+{
+    public class PbfReaderTests
+    {
         //resolution for default granularity
         private const double _resolution = 1E-07;
 
@@ -18,8 +20,10 @@ namespace Tests.SpatialLite.Osm.IO {
         private WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
         private RelationInfo _relationNode, _relationWay, _relationRelation, _relationProperties, _relationTags;
 
-        public PbfReaderTests() {
-            _details = new EntityMetadata() {
+        public PbfReaderTests()
+        {
+            _details = new EntityMetadata()
+            {
                 Timestamp = new DateTime(2010, 11, 19, 22, 5, 56, DateTimeKind.Utc),
                 Uid = 127998,
                 User = "Luk@s",
@@ -48,58 +52,68 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsExceptionIfStreamDoesntContainOSMHeaderBeforeOSMData() {
+        public void Constructor_StreamSettings_ThrowsExceptionIfStreamDoesntContainOSMHeaderBeforeOSMData()
+        {
             var dataStream = TestDataReader.OpenPbf("pbf-without-osm-header.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(dataStream, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsExceptionIfOSMHeaderDefinedUnsupportedRequiredFeature() {
+        public void Constructor_StreamSettings_ThrowsExceptionIfOSMHeaderDefinedUnsupportedRequiredFeature()
+        {
             var dataStream = TestDataReader.OpenPbf("pbf-unsupported-required-feature.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(dataStream, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Constructor_StreamSettings_SetsSettingsAndMakesThemIsReadOnly() {
+        public void Constructor_StreamSettings_SetsSettingsAndMakesThemIsReadOnly()
+        {
             var dataStream = TestDataReader.OpenPbf("pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings();
 
-            using (PbfReader target = new PbfReader(dataStream, settings)) {
+            using (PbfReader target = new PbfReader(dataStream, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist() {
+        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist()
+        {
             Assert.Throws<FileNotFoundException>(delegate { new PbfReader("non-existing-file.pbf", new OsmReaderSettings() { ReadMetadata = false }); });
         }
 
         [Fact]
-        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesntContainOSMHeaderBeforeOSMData() {
+        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesntContainOSMHeaderBeforeOSMData()
+        {
             string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-without-osm-header.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(filename, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Constructor_StringSettings_ThrowsExceptionIfOSMHeaderDefinedUnsupportedRequiredFeature() {
+        public void Constructor_StringSettings_ThrowsExceptionIfOSMHeaderDefinedUnsupportedRequiredFeature()
+        {
             string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-unsupported-required-feature.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(filename, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Constructor_StringSettings_SetsSettingsAndMakesThemIsReadOnly() {
+        public void Constructor_StringSettings_SetsSettingsAndMakesThemIsReadOnly()
+        {
             string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings();
 
-            using (PbfReader target = new PbfReader(filename, settings)) {
+            using (PbfReader target = new PbfReader(filename, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Read_ReturnsNullIfAllEntitiesHaveBeenRead() {
+        public void Read_ReturnsNullIfAllEntitiesHaveBeenRead()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-node.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             //read only entity
             IEntityInfo read = target.Read();
@@ -110,17 +124,20 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ThrowInvalidDataExceptionIfHeaderBlockSizeExceedesAllowdValue() {
+        public void Read_ThrowInvalidDataExceptionIfHeaderBlockSizeExceedesAllowdValue()
+        {
             Assert.Throws<InvalidDataException>(() => new PbfReader(TestDataReader.OpenPbf("pbf-too-large-header-block.pbf"), new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Read_ThrowInvalidDataExceptionIfOsmDataBlockSizeExceedesAllowdValue() {
+        public void Read_ThrowInvalidDataExceptionIfOsmDataBlockSizeExceedesAllowdValue()
+        {
             Assert.Throws<InvalidDataException>(() => new PbfReader(TestDataReader.OpenPbf("pbf-too-large-data-block.pbf"), new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
-        public void Read_ReadsNode_DenseNoCompression() {
+        public void Read_ReadsNode_DenseNoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-nd-node.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -128,7 +145,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsNodeWithTags_DenseNoCompression() {
+        public void Read_ReadsNodeWithTags_DenseNoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-nd-node-tags.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -136,7 +154,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsNodeWithMetadata_DenseNoCompression() {
+        public void Read_ReadsNodeWithMetadata_DenseNoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-nd-node-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = true });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -144,7 +163,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_SkipsNodeMetadataIfProcessMetadataIsFalse_DenseNoCompression() {
+        public void Read_SkipsNodeMetadataIfProcessMetadataIsFalse_DenseNoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-nd-node-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -152,7 +172,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsNode_NoCompression() {
+        public void Read_ReadsNode_NoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-node.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -160,7 +181,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsNodeWithTags_NoCompression() {
+        public void Read_ReadsNodeWithTags_NoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-node-tags.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -168,7 +190,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsNodeWithMetadata_NoCompression() {
+        public void Read_ReadsNodeWithMetadata_NoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-node-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = true });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -176,7 +199,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_SkipsNodeMetadataIfProcessMetadataIsFalse_NoCompression() {
+        public void Read_SkipsNodeMetadataIfProcessMetadataIsFalse_NoCompression()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-node-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             NodeInfo readNode = target.Read() as NodeInfo;
 
@@ -184,7 +208,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsWay_NoCompresion() {
+        public void Read_ReadsWay_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-way.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             WayInfo readWay = target.Read() as WayInfo;
 
@@ -192,7 +217,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsWayWithTags_NoCompresion() {
+        public void Read_ReadsWayWithTags_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-way-tags.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             WayInfo readWay = target.Read() as WayInfo;
 
@@ -200,7 +226,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsWayWithMetadata_NoCompresion() {
+        public void Read_ReadsWayWithMetadata_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-way-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = true });
             WayInfo readWay = target.Read() as WayInfo;
 
@@ -208,7 +235,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_SkipsWayMetadataIfProcessMetadataIsFalse_NoCompresion() {
+        public void Read_SkipsWayMetadataIfProcessMetadataIsFalse_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-way-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             WayInfo readWay = target.Read() as WayInfo;
 
@@ -216,7 +244,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsWayWithoutNodes_NoCompresion() {
+        public void Read_ReadsWayWithoutNodes_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-way-without-nodes.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             WayInfo readWay = target.Read() as WayInfo;
 
@@ -224,7 +253,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsRelationWithNode_NoCompresion() {
+        public void Read_ReadsRelationWithNode_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-node.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -232,7 +262,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsRelationWithWay_NoCompresion() {
+        public void Read_ReadsRelationWithWay_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-way.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -240,7 +271,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsRelationWithRelation_NoCompresion() {
+        public void Read_ReadsRelationWithRelation_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-relation.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -248,7 +280,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsRelationWithTags_NoCompresion() {
+        public void Read_ReadsRelationWithTags_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-tags.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -256,7 +289,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_ReadsRelationWithAllProperties_NoCompresion() {
+        public void Read_ReadsRelationWithAllProperties_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = true });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -264,7 +298,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Read_SkipsRelationMetadataIfProcessMetadataIsFalse_NoCompresion() {
+        public void Read_SkipsRelationMetadataIfProcessMetadataIsFalse_NoCompresion()
+        {
             PbfReader target = new PbfReader(TestDataReader.OpenPbf("pbf-n-relation-all-properties.pbf"), new OsmReaderSettings() { ReadMetadata = false });
             RelationInfo readRelation = target.Read() as RelationInfo;
 
@@ -272,7 +307,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+        public void Dispose_ClosesOutputStreamIfWritingToFiles()
+        {
             string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings() { ReadMetadata = true };
 
@@ -286,7 +322,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToStream() {
+        public void Dispose_ClosesOutputStreamIfWritingToStream()
+        {
             var stream = TestDataReader.OpenPbf("pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings() { ReadMetadata = true };
 
@@ -296,7 +333,8 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.False(stream.CanRead);
         }
 
-        private void CompareNodes(NodeInfo expected, NodeInfo actual) {
+        private void CompareNodes(NodeInfo expected, NodeInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.InRange(actual.Longitude, expected.Longitude - _resolution, expected.Longitude + _resolution);
             Assert.InRange(actual.Latitude, expected.Latitude - _resolution, expected.Latitude + _resolution);
@@ -305,10 +343,12 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareWays(WayInfo expected, WayInfo actual) {
+        private void CompareWays(WayInfo expected, WayInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.Equal(expected.Nodes.Count, actual.Nodes.Count);
-            for (int i = 0; i < expected.Nodes.Count; i++) {
+            for (int i = 0; i < expected.Nodes.Count; i++)
+            {
                 Assert.Equal(expected.Nodes[i], actual.Nodes[i]);
             }
 
@@ -316,10 +356,12 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareRelation(RelationInfo expected, RelationInfo actual) {
+        private void CompareRelation(RelationInfo expected, RelationInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.Equal(expected.Members.Count, actual.Members.Count);
-            for (int i = 0; i < expected.Members.Count; i++) {
+            for (int i = 0; i < expected.Members.Count; i++)
+            {
                 Assert.Equal(expected.Members[i], actual.Members[i]);
             }
 
@@ -327,8 +369,10 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareTags(TagsCollection expected, TagsCollection actual) {
-            if (expected == null && actual == null) {
+        private void CompareTags(TagsCollection expected, TagsCollection actual)
+        {
+            if (expected == null && actual == null)
+            {
                 return;
             }
 
@@ -336,8 +380,10 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.True(expected.All(tag => actual.Contains(tag)));
         }
 
-        private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual) {
-            if (expected == null && actual == null) {
+        private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual)
+        {
+            if (expected == null && actual == null)
+            {
                 return;
             }
 

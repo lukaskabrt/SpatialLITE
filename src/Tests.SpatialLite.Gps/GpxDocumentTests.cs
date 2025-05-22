@@ -11,10 +11,13 @@ using System.Xml.Linq;
 using Moq;
 using Tests.SpatialLite.Gps.Data;
 
-namespace Tests.SpatialLite.Gps {
-    public class GpxDocumentTests {
+namespace Tests.SpatialLite.Gps
+{
+    public class GpxDocumentTests
+    {
         [Fact]
-        public void Constructor_CreatesEmptyDocument() {
+        public void Constructor_CreatesEmptyDocument()
+        {
             var target = new GpxDocument();
 
             Assert.Empty(target.Waypoints);
@@ -23,7 +26,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Constructor_WaypointsRoutesTracks_CreatesDocumentWithGpxEntities() {
+        public void Constructor_WaypointsRoutesTracks_CreatesDocumentWithGpxEntities()
+        {
             IEnumerable<GpxPoint> waypoints = new[] { new GpxPoint() };
             IEnumerable<GpxRoute> routes = new[] { new GpxRoute() };
             IEnumerable<GpxTrack> tracks = new[] { new GpxTrack() };
@@ -36,7 +40,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfWaypointsIsNull() {
+        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfWaypointsIsNull()
+        {
             IEnumerable<GpxRoute> routes = new[] { new GpxRoute() };
             IEnumerable<GpxTrack> tracks = new[] { new GpxTrack() };
 
@@ -44,7 +49,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfRoutesIsNull() {
+        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfRoutesIsNull()
+        {
             IEnumerable<GpxPoint> waypoints = new[] { new GpxPoint() };
             IEnumerable<GpxTrack> tracks = new[] { new GpxTrack() };
 
@@ -52,7 +58,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfTracksIsNull() {
+        public void Constructor_WaypointsRoutesTracks_ThrowsArgumentNullExceptionIfTracksIsNull()
+        {
             IEnumerable<GpxPoint> waypoints = new[] { new GpxPoint() };
             IEnumerable<GpxRoute> routes = new[] { new GpxRoute() };
 
@@ -60,15 +67,18 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Load_IGpxReader_ThrowsExceptionIfReaderIsNull() {
+        public void Load_IGpxReader_ThrowsExceptionIfReaderIsNull()
+        {
             IGpxReader reader = null;
 
             Assert.Throws<ArgumentNullException>(() => GpxDocument.Load(reader));
         }
 
         [Fact]
-        public void Load_IGpxReader_LoadsEntitiesFromReader() {
-            using (var reader = new GpxReader(TestDataReader.Open("gpx-real-file.gpx"), new GpxReaderSettings() { ReadMetadata = true })) {
+        public void Load_IGpxReader_LoadsEntitiesFromReader()
+        {
+            using (var reader = new GpxReader(TestDataReader.Open("gpx-real-file.gpx"), new GpxReaderSettings() { ReadMetadata = true }))
+            {
                 var target = GpxDocument.Load(reader);
 
                 Assert.Equal(3, target.Waypoints.Count);
@@ -78,21 +88,24 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Load_string_ThrowsExceptionIfPathIsNull() {
+        public void Load_string_ThrowsExceptionIfPathIsNull()
+        {
             string path = null;
 
             Assert.Throws<ArgumentNullException>(() => GpxDocument.Load(path));
         }
 
         [Fact]
-        public void Load_string_ThrowsExceptionIfFileDoesntExists() {
+        public void Load_string_ThrowsExceptionIfFileDoesntExists()
+        {
             string path = "non-existing-file.gpx";
 
             Assert.Throws<FileNotFoundException>(() => GpxDocument.Load(path));
         }
 
         [Fact]
-        public void Load_LoadsGpxEntitiesFromFile() {
+        public void Load_LoadsGpxEntitiesFromFile()
+        {
             string path = "../../../Data/Gpx/gpx-real-file.gpx";
 
             var target = GpxDocument.Load(path);
@@ -103,7 +116,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Save_IGpxWriter_ThrowsExceptionIfWriterIsNull() {
+        public void Save_IGpxWriter_ThrowsExceptionIfWriterIsNull()
+        {
             IGpxWriter writer = null;
 
             var target = new GpxDocument();
@@ -111,7 +125,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Save_IGpxWriter_WritesDataToWriter() {
+        public void Save_IGpxWriter_WritesDataToWriter()
+        {
             var waypoint = new GpxPoint();
             var route = new GpxRoute();
             var track = new GpxTrack();
@@ -130,7 +145,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Save_ThrowsExceptionIfPathIsNull() {
+        public void Save_ThrowsExceptionIfPathIsNull()
+        {
             string path = null;
             var target = new GpxDocument();
 
@@ -138,7 +154,8 @@ namespace Tests.SpatialLite.Gps {
         }
 
         [Fact]
-        public void Save_SavesDataToFile() {
+        public void Save_SavesDataToFile()
+        {
             string path = PathHelper.GetTempFilePath("gpxdocument-save-test.gpx");
 
             var target = GpxDocument.Load(PathHelper.RealGpxFilePath);

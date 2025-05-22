@@ -7,10 +7,13 @@ using SpatialLite.Osm.IO;
 using Tests.SpatialLite.Osm.Data;
 using Xunit;
 
-namespace Tests.SpatialLite.Osm.Integration.Xml {
-    public class OsmDatabaseTests {
+namespace Tests.SpatialLite.Osm.Integration.Xml
+{
+    public class OsmDatabaseTests
+    {
         [Fact, Trait("Category", "Osm.Integration")]
-        public void OsmEntityInfoDatabase_LoadesRealFile() {
+        public void OsmEntityInfoDatabase_LoadesRealFile()
+        {
             OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
             OsmEntityInfoDatabase target = OsmEntityInfoDatabase.Load(reader);
 
@@ -20,7 +23,8 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
         }
 
         [Fact, Trait("Category", "Osm.Integration")]
-        public void OsmGeometryDatabase_LoadesRealFile() {
+        public void OsmGeometryDatabase_LoadesRealFile()
+        {
             OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
             OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 

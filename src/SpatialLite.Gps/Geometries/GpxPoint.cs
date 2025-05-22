@@ -1,16 +1,19 @@
 ﻿using System;
 using SpatialLite.Core.API;
 
-namespace SpatialLite.Gps.Geometries {
+namespace SpatialLite.Gps.Geometries
+{
     /// <summary>
     /// Represents a Gpx point
     /// </summary>
-    public class GpxPoint : GpsPoint, IGpxGeometry {
+    public class GpxPoint : GpsPoint, IGpxGeometry
+    {
 
         /// <summary>
         /// Creates a new, empty instance of the GpxPoint
         /// </summary>
-        public GpxPoint() {
+        public GpxPoint()
+        {
         }
 
         /// <summary>
@@ -18,7 +21,8 @@ namespace SpatialLite.Gps.Geometries {
         /// </summary>
         /// <param name="position">The position of the point</param>
         public GpxPoint(Coordinate position)
-            : base(position) {
+            : base(position)
+        {
         }
 
         /// <summary>
@@ -29,7 +33,8 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="elevation">The elevation of the point</param>
         /// <param name="time">The time when the point was recorded</param>
         public GpxPoint(double longitude, double latitude, double elevation, DateTime time)
-            : base(longitude, latitude, elevation, time) {
+            : base(longitude, latitude, elevation, time)
+        {
         }
 
         /// <summary>
@@ -38,7 +43,8 @@ namespace SpatialLite.Gps.Geometries {
         /// <param name="position">The position of the point</param>
         /// <param name="time">The time when the point was recorded</param>
         public GpxPoint(Coordinate position, DateTime time)
-            : base(position) {
+            : base(position)
+        {
             Timestamp = time;
         }
 
@@ -50,7 +56,8 @@ namespace SpatialLite.Gps.Geometries {
         /// <summary>
         /// Get the type of geometry
         /// </summary>
-        public GpxGeometryType GeometryType {
+        public GpxGeometryType GeometryType
+        {
             get { return GpxGeometryType.Waypoint; }
         }
     }

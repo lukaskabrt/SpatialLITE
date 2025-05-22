@@ -2,17 +2,21 @@
 
 using SpatialLite.Gps.Geometries;
 
-namespace Tests.SpatialLite.Gps.Geometries {
-    public class GpxMetadataTests {
+namespace Tests.SpatialLite.Gps.Geometries
+{
+    public class GpxMetadataTests
+    {
 
         [Fact]
-        public void Constructor_CreatesMetadataWithEmptyCollectionOfLinks() {
+        public void Constructor_CreatesMetadataWithEmptyCollectionOfLinks()
+        {
             GpxMetadata target = new GpxMetadataWrapper();
 
             Assert.Empty(target.Links);
         }
     }
 
-    public class GpxMetadataWrapper : GpxMetadata {
+    public class GpxMetadataWrapper : GpxMetadata
+    {
     }
 }

@@ -11,8 +11,10 @@ using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 using SpatialLite.Core.IO;
 
-namespace Tests.SpatialLite.Core.IO {
-    public class WktWriterTests {
+namespace Tests.SpatialLite.Core.IO
+{
+    public class WktWriterTests
+    {
 
 
         private static Coordinate[] _coordinatesXY = new Coordinate[] {
@@ -36,41 +38,49 @@ namespace Tests.SpatialLite.Core.IO {
         };
 
         [Fact]
-        public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly() {
+        public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly()
+        {
             WktWriterSettings settings = new WktWriterSettings();
-            using (WktWriter target = new WktWriter(new MemoryStream(), settings)) {
+            using (WktWriter target = new WktWriter(new MemoryStream(), settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfStreamIsNull() {
+        public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfStreamIsNull()
+        {
             Stream stream = null;
             Assert.Throws<ArgumentNullException>(() => new WktWriter(stream, new WktWriterSettings()));
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfSettingsIsNull() {
+        public void Constructor_StreamSettings_ThrowsArgumentNullExceptionIfSettingsIsNull()
+        {
             Assert.Throws<ArgumentNullException>(() => new WktWriter(new MemoryStream(), null));
         }
 
         [Fact]
-        public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly() {
+        public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly()
+        {
             WktWriterSettings settings = new WktWriterSettings();
-            using (WktWriter target = new WktWriter(new MemoryStream(), settings)) {
+            using (WktWriter target = new WktWriter(new MemoryStream(), settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_PathSettings_CreatesOutputFile() {
+        public void Constructor_PathSettings_CreatesOutputFile()
+        {
             string filename = PathHelper.GetTempFilePath("wktwriter-constructor-creates-output-test.wkt");
             File.Delete(filename);
 
             WktWriterSettings settings = new WktWriterSettings();
-            using (WktWriter target = new WktWriter(filename, settings)) {
+            using (WktWriter target = new WktWriter(filename, settings))
+            {
                 ;
             }
 
@@ -78,20 +88,24 @@ namespace Tests.SpatialLite.Core.IO {
         }
 
         [Fact]
-        public void Constructor_PathSettings_ThrowsArgumentNullExceptionIfStreamIsNull() {
+        public void Constructor_PathSettings_ThrowsArgumentNullExceptionIfStreamIsNull()
+        {
             string path = null;
             Assert.Throws<ArgumentNullException>(() => new WktWriter(path, new WktWriterSettings()));
         }
 
         [Fact]
-        public void Constructor_PathSettings_ThrowsArgumentNullExceptionIfSettingsIsNull() {
+        public void Constructor_PathSettings_ThrowsArgumentNullExceptionIfSettingsIsNull()
+        {
             string path = PathHelper.GetTempFilePath("WktWriter-constructor-test.bin");
 
             Assert.Throws<ArgumentNullException>(() => new WktWriter(path, null));
         }
 
-        public static IEnumerable<object[]> WriteToStringTestData {
-            get {
+        public static IEnumerable<object[]> WriteToStringTestData
+        {
+            get
+            {
                 yield return new object[] { new Point(), "point empty" };
                 yield return new object[] { new LineString(), "linestring empty" };
                 yield return new object[] { new Polygon(), "polygon empty" };
@@ -105,12 +119,14 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(WriteToStringTestData))]
-        public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt) {
+        public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+        public void Dispose_ClosesOutputStreamIfWritingToFiles()
+        {
             string filename = PathHelper.GetTempFilePath("wktwriter-closes-output-filestream-test.wkt");
 
             WktWriterSettings settings = new WktWriterSettings();
@@ -123,7 +139,8 @@ namespace Tests.SpatialLite.Core.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToStream() {
+        public void Dispose_ClosesOutputStreamIfWritingToStream()
+        {
             MemoryStream stream = new MemoryStream();
 
             WktWriter target = new WktWriter(stream, new WktWriterSettings());
@@ -132,8 +149,10 @@ namespace Tests.SpatialLite.Core.IO {
             Assert.False(stream.CanRead);
         }
 
-        public static IEnumerable<object[]> Write_WritesPointsOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesPointsOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new Point(), "point empty" };
                 yield return new object[] { new Point(_coordinatesXY[0]), "point (-10.1 15.5)" };
                 yield return new object[] { new Point(_coordinatesXYM[0]), "point m (-10.1 15.5 1000.5)" };
@@ -144,12 +163,15 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesPointsOfAllDimensionsTestData))]
-        public void Write_WritesPointsOfAllDimensions(Point toWrite, string expectedWkt) {
+        public void Write_WritesPointsOfAllDimensions(Point toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        public static IEnumerable<object[]> Write_WritesLinestringOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesLinestringOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new LineString(), "linestring empty" };
                 yield return new object[] { new LineString(_coordinatesXY), "linestring (-10.1 15.5, 20.2 -25.5, 30.3 35.5)" };
                 yield return new object[] { new LineString(_coordinatesXYM), "linestring m (-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)" };
@@ -160,12 +182,15 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesLinestringOfAllDimensionsTestData))]
-        public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt) {
+        public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
-        
-        public static IEnumerable<object[]> Write_WritesPolygonsOfAllDimensionsTestData {
-            get {
+
+        public static IEnumerable<object[]> Write_WritesPolygonsOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new Polygon(), "polygon empty" };
                 yield return new object[] { new Polygon(new CoordinateList(_coordinatesXY)), "polygon ((-10.1 15.5, 20.2 -25.5, 30.3 35.5))" };
                 yield return new object[] { new Polygon(new CoordinateList(_coordinatesXYM)), "polygon m ((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5))" };
@@ -176,12 +201,14 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesPolygonsOfAllDimensionsTestData))]
-        public void Write_WritesPolygonsOfAllDimensions(Polygon toWrite, string expectedWkt) {
+        public void Write_WritesPolygonsOfAllDimensions(Polygon toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
         [Fact]
-        public void Write_WritesComplexPolygonWitOuterAndInnerRings() {
+        public void Write_WritesComplexPolygonWitOuterAndInnerRings()
+        {
             string wkt = "polygon zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5))";
             Polygon polygon = new Polygon(new CoordinateList(_coordinatesXYZM));
             polygon.InteriorRings.Add(new CoordinateList(_coordinates2XYZM));
@@ -190,8 +217,10 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(polygon, wkt);
         }
 
-        public static IEnumerable<object[]> Write_WritesMultiPoinsOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesMultiPoinsOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new MultiPoint(), "multipoint empty" };
                 yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXY[0]), new Point(_coordinatesXY[1]) }), "multipoint ((-10.1 15.5),(20.2 -25.5))" };
                 yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXYM[0]), new Point(_coordinatesXYM[1]) }), "multipoint m ((-10.1 15.5 1000.5),(20.2 -25.5 2000.5))" };
@@ -202,12 +231,15 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesMultiPoinsOfAllDimensionsTestData))]
-        public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt) {
+        public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        public static IEnumerable<object[]> Write_WritesMultiLineStringsOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesMultiLineStringsOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new MultiLineString(), "multilinestring empty" };
                 yield return new object[] { new MultiLineString(new LineString[] { new LineString(_coordinatesXY), new LineString(_coordinatesXY) }),
                     "multilinestring ((-10.1 15.5, 20.2 -25.5, 30.3 35.5),(-10.1 15.5, 20.2 -25.5, 30.3 35.5))" };
@@ -222,12 +254,15 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesMultiLineStringsOfAllDimensionsTestData))]
-        public void Write_WritesMultiLineStringsOfAllDimensions(MultiLineString toWrite, string expectedWkt) {
+        public void Write_WritesMultiLineStringsOfAllDimensions(MultiLineString toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        public static IEnumerable<object[]> Write_WritesMultiPolygonsOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesMultiPolygonsOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new MultiPolygon(), "multipolygon empty" };
                 yield return new object[] { new MultiPolygon(new Polygon[] { new Polygon(new CoordinateList(_coordinatesXY)), new Polygon(new CoordinateList(_coordinatesXY)) }),
                     "multipolygon (((-10.1 15.5, 20.2 -25.5, 30.3 35.5)),((-10.1 15.5, 20.2 -25.5, 30.3 35.5)))" };
@@ -242,12 +277,15 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesMultiPolygonsOfAllDimensionsTestData))]
-        public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt) {
+        public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
-        public static IEnumerable<object[]> Write_WritesGeometryCollectionOfAllDimensionsTestData {
-            get {
+        public static IEnumerable<object[]> Write_WritesGeometryCollectionOfAllDimensionsTestData
+        {
+            get
+            {
                 yield return new object[] { new GeometryCollection<Geometry>(), "geometrycollection empty" };
                 yield return new object[] { new GeometryCollection<Geometry>(new Geometry[] { new Point(_coordinatesXY[0]) }), "geometrycollection (point (-10.1 15.5))" };
                 yield return new object[] { new GeometryCollection<Geometry>(new Geometry[] { new Point(_coordinatesXYM[0]) }), "geometrycollection m (point m (-10.1 15.5 1000.5))" };
@@ -258,12 +296,14 @@ namespace Tests.SpatialLite.Core.IO {
 
         [Theory]
         [MemberData(nameof(Write_WritesGeometryCollectionOfAllDimensionsTestData))]
-        public void Write_WritesGeometryCollectionOfAllDimensions(GeometryCollection<Geometry> toWrite, string expectedWkt) {
+        public void Write_WritesGeometryCollectionOfAllDimensions(GeometryCollection<Geometry> toWrite, string expectedWkt)
+        {
             this.TestWriteGeometry(toWrite, expectedWkt);
         }
 
         [Fact]
-        public void Write_WritesCollectionWithAllGeometryTypes() {
+        public void Write_WritesCollectionWithAllGeometryTypes()
+        {
             string wkt = "geometrycollection (point (-10.1 15.5),linestring (-10.1 15.5, 20.2 -25.5, 30.3 35.5),polygon ((-10.1 15.5, 20.2 -25.5, 30.3 35.5)),multipoint empty,multilinestring empty,multipolygon empty)";
             GeometryCollection<Geometry> collection = new GeometryCollection<Geometry>();
             collection.Geometries.Add(new Point(_coordinatesXY[0]));
@@ -277,7 +317,8 @@ namespace Tests.SpatialLite.Core.IO {
         }
 
         [Fact]
-        public void Write_WritesNestedCollection() {
+        public void Write_WritesNestedCollection()
+        {
             string wkt = "geometrycollection (geometrycollection (point (-10.1 15.5)))";
             GeometryCollection<Geometry> collection = new GeometryCollection<Geometry>();
             GeometryCollection<Geometry> nested = new GeometryCollection<Geometry>();
@@ -287,13 +328,16 @@ namespace Tests.SpatialLite.Core.IO {
             this.TestWriteGeometry(collection, wkt);
         }
 
-        private void TestWriteGeometry(IGeometry geometry, string expectedWkt) {
+        private void TestWriteGeometry(IGeometry geometry, string expectedWkt)
+        {
             MemoryStream stream = new MemoryStream();
-            using (WktWriter writer = new WktWriter(stream, new WktWriterSettings())) {
+            using (WktWriter writer = new WktWriter(stream, new WktWriterSettings()))
+            {
                 writer.Write(geometry);
             }
 
-            using (TextReader tr = new StreamReader(new MemoryStream(stream.ToArray()))) {
+            using (TextReader tr = new StreamReader(new MemoryStream(stream.ToArray())))
+            {
                 string wkt = tr.ReadToEnd();
                 Assert.Equal(expectedWkt, wkt, StringComparer.OrdinalIgnoreCase);
             }

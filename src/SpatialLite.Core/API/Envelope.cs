@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace SpatialLite.Core.API {
+namespace SpatialLite.Core.API
+{
     /// <summary>
     /// Represents minimal bounding box of a <see cref="IGeometry"/> object.
     /// </summary>
-    public class Envelope {
+    public class Envelope
+    {
 
         /// <summary>
         /// Empty Envelope, that has all it's bounds set to double.NaN
@@ -25,14 +27,16 @@ namespace SpatialLite.Core.API {
         /// <summary>
         /// Initializes a new instance of the <c>Envelope</c> class that is empty and has all it's values initialized to <c>double.NaN</c>.
         /// </summary>
-        public Envelope() {
+        public Envelope()
+        {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Envelope</c> class with the single coordinate.
         /// </summary>
         /// <param name="coord">The coordinate used initialize <c>Envelope</c></param>
-        public Envelope(Coordinate coord) {
+        public Envelope(Coordinate coord)
+        {
             this.Initialize(coord.X, coord.X, coord.Y, coord.Y, coord.Z, coord.Z, coord.M, coord.M);
         }
 
@@ -40,7 +44,8 @@ namespace SpatialLite.Core.API {
         /// Initializes a new instance of the <c>Envelope</c> class that covers specified coordinates.
         /// </summary>
         /// <param name="coords">The coordinates to be covered.</param>
-        public Envelope(IEnumerable<Coordinate> coords) {
+        public Envelope(IEnumerable<Coordinate> coords)
+        {
             this.Extend(coords);
         }
 
@@ -48,63 +53,72 @@ namespace SpatialLite.Core.API {
         /// Initializes a new instance of the <c>Envelope</c> class as copy of specified <c>Envelope</c>.
         /// </summary>
         /// <param name="source">The <c>Envelope</c> object whose values are to be copied.</param>
-        public Envelope(Envelope source) {
+        public Envelope(Envelope source)
+        {
             this.Initialize(source.MinX, source.MaxX, source.MinY, source.MaxY, source.MinZ, source.MaxZ, source.MinM, source.MaxM);
         }
 
         /// <summary>
         /// Gets Envelope's minimal x-coordinate.
         /// </summary>
-        public double MinX {
+        public double MinX
+        {
             get { return _bounds[XIndex][0]; }
         }
 
         /// <summary>
         /// Gets Envelope's maximal x-coordinate.
         /// </summary>
-        public double MaxX {
+        public double MaxX
+        {
             get { return _bounds[XIndex][1]; }
         }
 
         /// <summary>
         /// Gets Envelope's minimal y-coordinate.
         /// </summary>
-        public double MinY {
+        public double MinY
+        {
             get { return _bounds[YIndex][0]; }
         }
 
         /// <summary>
         /// Gets Envelope's maximal y-coordinate.
         /// </summary>
-        public double MaxY {
+        public double MaxY
+        {
             get { return _bounds[YIndex][1]; }
         }
 
         /// <summary>
         /// Gets Envelope's minimal z-coordinate.
         /// </summary>
-        public double MinZ {
+        public double MinZ
+        {
             get { return _bounds[ZIndex][0]; }
         }
 
         /// <summary>
         /// Gets Envelope's maximal z-coordinate.
         /// </summary>
-        public double MaxZ {
+        public double MaxZ
+        {
             get { return _bounds[ZIndex][1]; }
         }
 
         /// <summary>
         /// Gets Envelope's minimal m-coordinate.
         /// </summary>
-        public double MinM {
+        public double MinM
+        {
             get { return _bounds[MIndex][0]; }
         }
 
         /// <summary>
         /// Gets Envelope's maximal m-coordinate.
         /// </summary>
-        public double MaxM {
+        public double MaxM
+        {
             get { return _bounds[MIndex][1]; }
         }
 
@@ -112,9 +126,12 @@ namespace SpatialLite.Core.API {
         /// Returns the difference between the maximum and minimum x values.
         /// </summary>
         /// <returns>max x - min x, or 0 if this is a null <c>Envelope</c>.</returns>
-        public double Width {
-            get {
-                if (this.IsEmpty) {
+        public double Width
+        {
+            get
+            {
+                if (this.IsEmpty)
+                {
                     return 0;
                 }
 
@@ -126,9 +143,12 @@ namespace SpatialLite.Core.API {
         /// Returns the difference between the maximum and minimum y values.
         /// </summary>
         /// <returns>max y - min y, or 0 if this is a null <c>Envelope</c>.</returns>
-        public double Height {
-            get {
-                if (this.IsEmpty) {
+        public double Height
+        {
+            get
+            {
+                if (this.IsEmpty)
+                {
                     return 0;
                 }
 
@@ -139,8 +159,10 @@ namespace SpatialLite.Core.API {
         /// <summary>
         /// Checks if this Envelope equals the empty Envelope.
         /// </summary>
-        public bool IsEmpty {
-            get {
+        public bool IsEmpty
+        {
+            get
+            {
                 return this.Equals(Envelope.Empty);
             }
         }
@@ -149,13 +171,17 @@ namespace SpatialLite.Core.API {
         /// Extends this <c>Envelope</c> to cover specified <c>Coordinate</c>.
         /// </summary>
         /// <param name="coord">The <c>Coordinate</c> to be covered by extended Envelope.</param>
-        public void Extend(Coordinate coord) {
-            if (double.IsNaN(_bounds[XIndex][0]) || double.IsNaN(_bounds[YIndex][0])) {
+        public void Extend(Coordinate coord)
+        {
+            if (double.IsNaN(_bounds[XIndex][0]) || double.IsNaN(_bounds[YIndex][0]))
+            {
                 _bounds[XIndex][0] = _bounds[XIndex][1] = coord.X;
                 _bounds[YIndex][0] = _bounds[YIndex][1] = coord.Y;
                 _bounds[ZIndex][0] = _bounds[ZIndex][1] = coord.Z;
                 _bounds[MIndex][0] = _bounds[MIndex][1] = coord.M;
-            } else {
+            }
+            else
+            {
                 if (coord.X < _bounds[XIndex][0]) { _bounds[XIndex][0] = coord.X; }
                 if (coord.X > _bounds[XIndex][1]) { _bounds[XIndex][1] = coord.X; }
 
@@ -174,8 +200,10 @@ namespace SpatialLite.Core.API {
         /// Extends this <c>Envelope</c> to cover specified <c>Coordinates</c>.
         /// </summary>
         /// <param name="coords">The collection of Coordinates to be covered by extended Envelope.</param>
-        public void Extend(IEnumerable<Coordinate> coords) {
-            foreach (var coord in coords) {
+        public void Extend(IEnumerable<Coordinate> coords)
+        {
+            foreach (var coord in coords)
+            {
                 this.Extend(coord);
             }
         }
@@ -184,8 +212,10 @@ namespace SpatialLite.Core.API {
         /// Extends this <c>Envelope</c> to cover specified <c>Envelope</c>.
         /// </summary>
         /// <param name="envelope">The <c>Envelope</c> to be covered by extended Envelope.</param>
-        public void Extend(Envelope envelope) {
-            if (double.IsNaN(_bounds[XIndex][0]) || double.IsNaN(_bounds[YIndex][0])) {
+        public void Extend(Envelope envelope)
+        {
+            if (double.IsNaN(_bounds[XIndex][0]) || double.IsNaN(_bounds[YIndex][0]))
+            {
                 _bounds[XIndex][0] = envelope.MinX;
                 _bounds[XIndex][1] = envelope.MaxX;
 
@@ -197,7 +227,9 @@ namespace SpatialLite.Core.API {
 
                 _bounds[MIndex][0] = envelope.MinM;
                 _bounds[MIndex][1] = envelope.MaxM;
-            } else {
+            }
+            else
+            {
                 if (envelope.MinX < _bounds[XIndex][0]) { _bounds[XIndex][0] = envelope.MinX; }
                 if (envelope.MaxX > _bounds[XIndex][1]) { _bounds[XIndex][1] = envelope.MaxX; }
 
@@ -217,9 +249,11 @@ namespace SpatialLite.Core.API {
         /// </summary>
         /// <param name="obj">The <c>object</c> to compare with the current <c>Envelope</c></param>
         /// <returns>true if the specified  <c>object</c> is equal to the current <c>Envelope</c>; otherwise, false.</returns>
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             Envelope other = obj as Envelope;
-            if (other == null) {
+            if (other == null)
+            {
                 return false;
             }
 
@@ -231,7 +265,8 @@ namespace SpatialLite.Core.API {
         /// </summary>
         /// <param name="other">The <c>Envelope</c> to compare with the current <c>Envelope</c></param>
         /// <returns>true if the specified  <c>Envelope</c> is equal to the current <c>Envelope</c>; otherwise, false.</returns>
-        public bool Equals(Envelope other) {
+        public bool Equals(Envelope other)
+        {
             return ((this.MinX == other.MinX) || (double.IsNaN(this.MinX) && double.IsNaN(other.MinX))) &&
                 ((this.MinY == other.MinY) || (double.IsNaN(this.MinY) && double.IsNaN(other.MinY))) &&
                 ((this.MinZ == other.MinZ) || (double.IsNaN(this.MinZ) && double.IsNaN(other.MinZ))) &&
@@ -252,8 +287,10 @@ namespace SpatialLite.Core.API {
         /// <returns>
         /// <c>true</c> if the <c>Envelope</c>s overlap.
         /// </returns>
-        public bool Intersects(Envelope other) {
-            if (this.IsEmpty || other.IsEmpty) {
+        public bool Intersects(Envelope other)
+        {
+            if (this.IsEmpty || other.IsEmpty)
+            {
                 return false;
             }
 
@@ -266,8 +303,10 @@ namespace SpatialLite.Core.API {
         /// <param name="x">the x-coordinate of the point which this <c>Envelope</c> is being checked for containing</param>
         /// <param name="y">the y-coordinate of the point which this <c>Envelope</c> is being checked for containing</param>
         /// <returns> <c>true</c> if <c>(x, y)</c> lies in the interior or on the boundary of this <c>Envelope</c>.</returns>
-        public bool Covers(double x, double y) {
-            if (this.IsEmpty) {
+        public bool Covers(double x, double y)
+        {
+            if (this.IsEmpty)
+            {
                 return false;
             }
 
@@ -282,7 +321,8 @@ namespace SpatialLite.Core.API {
         ///</summary>
         /// <param name="p">the point which this <c>Envelope</c> is being checked for containing</param>
         /// <returns><c>true</c> if the point lies in the interior or on the boundary of this <c>Envelope</c>.</returns>
-        public bool Covers(Coordinate p) {
+        public bool Covers(Coordinate p)
+        {
             return Covers(p.X, p.Y);
         }
 
@@ -291,8 +331,10 @@ namespace SpatialLite.Core.API {
         ///</summary>
         /// <param name="other">the <c>Envelope</c> to check</param>
         /// <returns>true if this <c>Envelope</c> covers the <c>other</c></returns>
-        public bool Covers(Envelope other) {
-            if (this.IsEmpty || other.IsEmpty) {
+        public bool Covers(Envelope other)
+        {
+            if (this.IsEmpty || other.IsEmpty)
+            {
                 return false;
             }
 
@@ -306,7 +348,8 @@ namespace SpatialLite.Core.API {
         /// Serves as a hash function for the <c>Envelope</c> class.
         /// </summary>
         /// <returns>Hash code for current Envelope object.</returns>
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return _bounds.GetHashCode();
         }
 
@@ -317,7 +360,8 @@ namespace SpatialLite.Core.API {
         /// <param name="x2">Second x-coordinate.</param>
         /// <param name="y1">First y-coordinate.</param>
         /// <param name="y2">Second y-coordinate.</param>
-        public void Initialize(double x1, double x2, double y1, double y2) {
+        public void Initialize(double x1, double x2, double y1, double y2)
+        {
             var sortedX = this.SortCoordinates(x1, x2);
             _bounds[XIndex][0] = sortedX[0];
             _bounds[XIndex][1] = sortedX[1];
@@ -336,7 +380,8 @@ namespace SpatialLite.Core.API {
         /// <param name="y2">Second y-coordinate.</param>
         /// <param name="z1">First z-coordinate.</param>
         /// <param name="z2">Second z-coordinate.</param>
-        public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2) {
+        public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2)
+        {
             var sortedX = this.SortCoordinates(x1, x2);
             _bounds[XIndex][0] = sortedX[0];
             _bounds[XIndex][1] = sortedX[1];
@@ -361,7 +406,8 @@ namespace SpatialLite.Core.API {
         /// <param name="z2">Second z-coordinate.</param>
         /// <param name="m1">First measure value.</param>
         /// <param name="m2">Second measure value.</param>
-        public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2, double m1, double m2) {
+        public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2, double m1, double m2)
+        {
             var sortedX = this.SortCoordinates(x1, x2);
             _bounds[XIndex][0] = sortedX[0];
             _bounds[XIndex][1] = sortedX[1];
@@ -386,18 +432,24 @@ namespace SpatialLite.Core.API {
         /// <param name="c2">Second coordinate.</param>
         /// <returns>Array with sorted coordinates - [min, max]</returns>
         /// <remarks>If any value is <c>double.NaN</c> the other is used for min and max.</remarks>
-        private double[] SortCoordinates(double c1, double c2) {
-            if (double.IsNaN(c1)) {
+        private double[] SortCoordinates(double c1, double c2)
+        {
+            if (double.IsNaN(c1))
+            {
                 c1 = c2;
             }
 
-            if (double.IsNaN(c2)) {
+            if (double.IsNaN(c2))
+            {
                 c2 = c1;
             }
 
-            if (c1 > c2) {
+            if (c1 > c2)
+            {
                 return new double[] { c2, c1 };
-            } else {
+            }
+            else
+            {
                 return new double[] { c1, c2 };
             }
         }

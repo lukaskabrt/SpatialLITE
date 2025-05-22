@@ -9,59 +9,71 @@ using SpatialLite.Gps.IO;
 using Xunit;
 using Tests.SpatialLite.Gps.Data;
 
-namespace Tests.SpatialLite.Gps.IO {
-    public class GpxReaderTests {
+namespace Tests.SpatialLite.Gps.IO
+{
+    public class GpxReaderTests
+    {
 
         [Fact]
-        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist() {
+        public void Constructor_StringSettings_ThrowsExceptionIfFileDoesnotExist()
+        {
             Assert.Throws<FileNotFoundException>(delegate { new GpxReader("non-existing-file.gpx", new GpxReaderSettings() { ReadMetadata = false }); });
         }
 
         [Fact]
-        public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly() {
+        public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly()
+        {
             string path = "../../../Data/Gpx/gpx-real-file.gpx";
             var settings = new GpxReaderSettings() { ReadMetadata = false };
-            using (var target = new GpxReader(path, settings)) {
+            using (var target = new GpxReader(path, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly() {
+        public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly()
+        {
             var settings = new GpxReaderSettings() { ReadMetadata = false };
-            using (var target = new GpxReader(TestDataReader.Open("gpx-real-file.gpx"), settings)) {
+            using (var target = new GpxReader(TestDataReader.Open("gpx-real-file.gpx"), settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsExceptionIfVersionIsnt10or11() {
+        public void Constructor_StreamSettings_ThrowsExceptionIfVersionIsnt10or11()
+        {
             Assert.Throws<InvalidDataException>(delegate { new GpxReader(TestDataReader.Open("gpx-version-2_0.gpx"), new GpxReaderSettings() { ReadMetadata = false }); });
         }
 
         [Fact]
-        public void Constructor_StreamSettings_ThrowsExceptionXmlContainsInvalidRootElement() {
+        public void Constructor_StreamSettings_ThrowsExceptionXmlContainsInvalidRootElement()
+        {
             Assert.Throws<InvalidDataException>(delegate { new GpxReader(TestDataReader.Open("gpx-invalid-root-element.gpx"), new GpxReaderSettings() { ReadMetadata = false }); });
         }
 
         [Fact]
-        public void Read_ThrowsExceptionIfWaypointHasntLat() {
+        public void Read_ThrowsExceptionIfWaypointHasntLat()
+        {
             GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lat.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
             Assert.Throws<InvalidDataException>(() => target.Read());
         }
 
         [Fact]
-        public void Read_ThrowsExceptionIfWaypointHasntLon() {
+        public void Read_ThrowsExceptionIfWaypointHasntLon()
+        {
             GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lon.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
             Assert.Throws<InvalidDataException>(() => target.Read());
         }
 
         [Fact]
-        public void Read_SetsMetadataIfReadMetadataIsTrue() {
+        public void Read_SetsMetadataIfReadMetadataIsTrue()
+        {
             var data = TestDataReader.Open("gpx-waypoint-simple.gpx");
             var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
 
@@ -72,7 +84,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_DoesntSetMetadataIfReadMetadataIsFalse() {
+        public void Read_DoesntSetMetadataIfReadMetadataIsFalse()
+        {
             var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
             var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
 
@@ -83,7 +96,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesWaypointWithLatLonElevationAndTime() {
+        public void Read_ParsesWaypointWithLatLonElevationAndTime()
+        {
             var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
             Coordinate expectedCoordinate = new Coordinate(-71.119277, 42.438878, 44.586548);
             DateTime expectedTime = new DateTime(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
@@ -96,7 +110,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesWaypointWithExtensions() {
+        public void Read_ParsesWaypointWithExtensions()
+        {
             var data = TestDataReader.Open("gpx-waypoint-extensions.gpx");
             Coordinate expectedCoordinate = new Coordinate(-71.119277, 42.438878, 44.586548);
             DateTime expectedTime = new DateTime(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
@@ -109,14 +124,16 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesMultipleWaypoints() {
+        public void Read_ParsesMultipleWaypoints()
+        {
             var data = TestDataReader.Open("gpx-waypoint-multiple.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
             GpxPoint result = null;
 
             int count = 0;
-            while ((result = target.Read() as GpxPoint) != null) {
+            while ((result = target.Read() as GpxPoint) != null)
+            {
                 count++;
             }
 
@@ -124,7 +141,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ReadsWaypointMetadata() {
+        public void Read_ReadsWaypointMetadata()
+        {
             var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
@@ -153,7 +171,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ReadsWaypointUnsortedMetadataAndExtension() {
+        public void Read_ReadsWaypointUnsortedMetadataAndExtension()
+        {
             var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
@@ -182,7 +201,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesTrackWithSingleSegment() {
+        public void Read_ParsesTrackWithSingleSegment()
+        {
             var data = TestDataReader.Open("gpx-track-single-track-segment.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -200,7 +220,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesTrackWithSingleSegmentAndExtensions() {
+        public void Read_ParsesTrackWithSingleSegmentAndExtensions()
+        {
             var data = TestDataReader.Open("gpx-track-single-track-segment.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -212,7 +233,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesTrackWithMultipleSegments() {
+        public void Read_ParsesTrackWithMultipleSegments()
+        {
             var data = TestDataReader.Open("gpx-track-2-track-segments.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -226,7 +248,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesMultipleTracks() {
+        public void Read_ParsesMultipleTracks()
+        {
             var data = TestDataReader.Open("gpx-track-multiple-tracks.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -246,7 +269,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesEmptyTrack() {
+        public void Read_ParsesEmptyTrack()
+        {
             var data = TestDataReader.Open("gpx-track-empty.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -256,7 +280,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesTrackWithEmptySegment() {
+        public void Read_ParsesTrackWithEmptySegment()
+        {
             var data = TestDataReader.Open("gpx-track-empty-track-segment.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -267,7 +292,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesTrackMetadata() {
+        public void Read_ParsesTrackMetadata()
+        {
             var data = TestDataReader.Open("gpx-track-with-metadata.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
@@ -286,7 +312,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_SetsTrackMetadataToNullIfReadMetadataIsFalse() {
+        public void Read_SetsTrackMetadataToNullIfReadMetadataIsFalse()
+        {
             var data = TestDataReader.Open("gpx-track-with-metadata.gpx");
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
@@ -296,9 +323,10 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesEmptyRoute() {
+        public void Read_ParsesEmptyRoute()
+        {
             var data = TestDataReader.Open("gpx-route-empty.gpx");
-            GpxReader target = new GpxReader(data, new GpxReaderSettings() {ReadMetadata = false});
+            GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
 
             var result = target.Read() as GpxRoute;
 
@@ -306,7 +334,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesSingleRoute() {
+        public void Read_ParsesSingleRoute()
+        {
             var data = TestDataReader.Open("gpx-route-single-route.gpx");
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
 
@@ -321,7 +350,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesSingleRouteWithExtensions() {
+        public void Read_ParsesSingleRouteWithExtensions()
+        {
             var data = TestDataReader.Open("gpx-route-with-metadata-and-extensions.gpx");
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
 
@@ -331,7 +361,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesMultipleRoutes() {
+        public void Read_ParsesMultipleRoutes()
+        {
             var data = TestDataReader.Open("gpx-route-multiple-routes.gpx");
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
 
@@ -343,7 +374,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ParsesRouteWithMetadata() {
+        public void Read_ParsesRouteWithMetadata()
+        {
             var data = TestDataReader.Open("gpx-route-with-metadata.gpx");
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
 
@@ -363,7 +395,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_SetsRouteMetadataToNullIfReadMetadataIsFalse() {
+        public void Read_SetsRouteMetadataToNullIfReadMetadataIsFalse()
+        {
             var data = TestDataReader.Open("gpx-route-with-metadata.gpx");
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
 
@@ -373,7 +406,8 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+        public void Dispose_ClosesOutputStreamIfWritingToFiles()
+        {
             string filename = "../../../Data/Gpx/gpx-real-file.gpx";
 
             var target = new GpxReader(filename, new GpxReaderSettings() { ReadMetadata = false });
@@ -385,14 +419,16 @@ namespace Tests.SpatialLite.Gps.IO {
         }
 
         [Fact]
-        public void Read_ReadsAllEntitiesFromRealGpxFile() {
+        public void Read_ReadsAllEntitiesFromRealGpxFile()
+        {
             var data = TestDataReader.Open("gpx-real-file.gpx");
             List<IGpxGeometry> parsed = new List<IGpxGeometry>();
 
             GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
 
             IGpxGeometry geometry = null;
-            while ((geometry = target.Read()) != null) {
+            while ((geometry = target.Read()) != null)
+            {
                 parsed.Add(geometry);
             }
 

@@ -1,8 +1,10 @@
-﻿namespace SpatialLite.Gps.Geometries {
+﻿namespace SpatialLite.Gps.Geometries
+{
     /// <summary>
     /// Contains additional information about Gpx point
     /// </summary>
-    public class GpxPointMetadata : GpxMetadata {
+    public class GpxPointMetadata : GpxMetadata
+    {
         /// <summary>
         /// Gets or sets magnetic variation (in degrees) at the point
         /// </summary>

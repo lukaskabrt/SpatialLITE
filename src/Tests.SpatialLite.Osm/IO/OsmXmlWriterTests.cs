@@ -9,8 +9,10 @@ using System.Xml.Linq;
 using SpatialLite.Osm.IO;
 using SpatialLite.Osm;
 
-namespace Tests.SpatialLite.Osm.IO {
-    public class OsmXmlWriterTests {
+namespace Tests.SpatialLite.Osm.IO
+{
+    public class OsmXmlWriterTests
+    {
         //resolution for default granularity
         private const double _resolution = 1E-07;
 
@@ -19,8 +21,10 @@ namespace Tests.SpatialLite.Osm.IO {
         private WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
         private RelationInfo _relationNode, _relationWay, _relationRelation, _relationNodeProperties, _relationTags;
 
-        public OsmXmlWriterTests() {
-            _details = new EntityMetadata() {
+        public OsmXmlWriterTests()
+        {
+            _details = new EntityMetadata()
+            {
                 Timestamp = new DateTime(2010, 11, 19, 22, 5, 56, DateTimeKind.Utc),
                 Uid = 127998,
                 User = "Luk@s",
@@ -49,32 +53,38 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Constructor_StreamSettings_SetsSettingsAndMakesThemReadOnly() {
+        public void Constructor_StreamSettings_SetsSettingsAndMakesThemReadOnly()
+        {
             MemoryStream stream = new MemoryStream();
             OsmWriterSettings settings = new OsmWriterSettings();
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, settings)) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(target.Settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly() {
+        public void Constructor_PathSettings_SetsSettingsAndMakesThemReadOnly()
+        {
             string path = PathHelper.GetTempFilePath("xmlwriter-constructor-test.osm");
 
             OsmWriterSettings settings = new OsmWriterSettings();
-            using (OsmXmlWriter target = new OsmXmlWriter(path, settings)) {
+            using (OsmXmlWriter target = new OsmXmlWriter(path, settings))
+            {
                 Assert.Same(settings, target.Settings);
                 Assert.True(target.Settings.IsReadOnly);
             }
         }
 
         [Fact]
-        public void Constructor_PathSettings_CreatesOutputFile() {
+        public void Constructor_PathSettings_CreatesOutputFile()
+        {
             string filename = PathHelper.GetTempFilePath("osmwriter-constructor-creates-output-test.pbf");
 
             OsmWriterSettings settings = new OsmWriterSettings();
-            using (OsmXmlWriter target = new OsmXmlWriter(filename, settings)) {
+            using (OsmXmlWriter target = new OsmXmlWriter(filename, settings))
+            {
                 ;
             }
 
@@ -82,7 +92,8 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Dispose_ClosesOutputStreamIfWritingToFiles() {
+        public void Dispose_ClosesOutputStreamIfWritingToFiles()
+        {
             string path = PathHelper.GetTempFilePath("xmlwriter-closes-output-filestream-test.osm");
 
             OsmXmlWriter target = new OsmXmlWriter(path, new OsmWriterSettings());
@@ -94,29 +105,35 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata() {
+        public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+            {
                 Assert.Throws<ArgumentException>(() => target.Write(_node));
             }
         }
 
         [Fact]
-        public void Write_DoesNotThrowsExceptionIfMetadataContainsNullInsteadUsername() {
+        public void Write_DoesNotThrowsExceptionIfMetadataContainsNullInsteadUsername()
+        {
             MemoryStream stream = new MemoryStream();
             _nodeProperties.Metadata.User = null;
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_nodeProperties);
             }
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesNode() {
+        public void Write_IEntityInfo_WritesNode()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_node);
             }
 
@@ -124,10 +141,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesNodeWithTags() {
+        public void Write_IEntityInfo_WritesNodeWithTags()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_nodeTags);
             }
 
@@ -135,10 +154,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesNodeWithMetadata() {
+        public void Write_IEntityInfo_WritesNodeWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_nodeProperties);
             }
 
@@ -146,28 +167,34 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_DoesntWriteNodeMetadataIfWriteMedataIsFalse() {
+        public void Write_IEntityInfo_DoesntWriteNodeMetadataIfWriteMedataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_nodeProperties);
             }
 
             stream = new MemoryStream(stream.ToArray());
 
-            using (TextReader reader = new StreamReader(stream)) {
+            using (TextReader reader = new StreamReader(stream))
+            {
                 string line = null;
-                while ((line = reader.ReadLine()) != null) {
+                while ((line = reader.ReadLine()) != null)
+                {
                     Assert.DoesNotContain("timestamp", line);
                 }
             }
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesWay() {
+        public void Write_IEntityInfo_WritesWay()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_way);
             }
 
@@ -175,10 +202,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesWayWithTags() {
+        public void Write_IEntityInfo_WritesWayWithTags()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_wayTags);
             }
 
@@ -186,10 +215,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesWayWithMetadata() {
+        public void Write_IEntityInfo_WritesWayWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_wayProperties);
             }
 
@@ -197,28 +228,34 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_DoesntWriteWayMetadataIfWriteMedataIsFalse() {
+        public void Write_IEntityInfo_DoesntWriteWayMetadataIfWriteMedataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_wayProperties);
             }
 
             stream = new MemoryStream(stream.ToArray());
 
-            using (TextReader reader = new StreamReader(stream)) {
+            using (TextReader reader = new StreamReader(stream))
+            {
                 string line = null;
-                while ((line = reader.ReadLine()) != null) {
+                while ((line = reader.ReadLine()) != null)
+                {
                     Assert.DoesNotContain("timestamp", line);
                 }
             }
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesRelationWithNode() {
+        public void Write_IEntityInfo_WritesRelationWithNode()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_relationNode);
             }
 
@@ -226,10 +263,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesRelationWithWay() {
+        public void Write_IEntityInfo_WritesRelationWithWay()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_relationWay);
             }
 
@@ -237,10 +276,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesRelationWithRelation() {
+        public void Write_IEntityInfo_WritesRelationWithRelation()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_relationRelation);
             }
 
@@ -248,10 +289,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesRelationWithTags() {
+        public void Write_IEntityInfo_WritesRelationWithTags()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_relationTags);
             }
 
@@ -259,10 +302,12 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_WritesRelationWithMetadata() {
+        public void Write_IEntityInfo_WritesRelationWithMetadata()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+            {
                 target.Write(_relationNodeProperties);
             }
 
@@ -270,30 +315,36 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IEntityInfo_DoesntWriteRelationMetadataIfWriteMedataIsFalse() {
+        public void Write_IEntityInfo_DoesntWriteRelationMetadataIfWriteMedataIsFalse()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(_relationNodeProperties);
             }
 
             stream = new MemoryStream(stream.ToArray());
 
-            using (TextReader reader = new StreamReader(stream)) {
+            using (TextReader reader = new StreamReader(stream))
+            {
                 string line = null;
-                while ((line = reader.ReadLine()) != null) {
+                while ((line = reader.ReadLine()) != null)
+                {
                     Assert.DoesNotContain("timestamp", line);
                 }
             }
         }
 
         [Fact]
-        public void Write_IOsmGeometry_WritesNode() {
+        public void Write_IOsmGeometry_WritesNode()
+        {
             Node node = new Node(1, 11.1, 12.1);
 
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(node);
             }
 
@@ -301,12 +352,14 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IOsmGeometry_WritesWay() {
+        public void Write_IOsmGeometry_WritesWay()
+        {
             Way way = new Way(10, new Node[] { new Node(1), new Node(2), new Node(3) });
 
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(way);
             }
 
@@ -314,12 +367,14 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IOsmGeometry_WritesRelation() {
+        public void Write_IOsmGeometry_WritesRelation()
+        {
             Relation relation = new Relation(100, new RelationMember[] { new RelationMember(new Node(1), "test-role") });
 
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 target.Write(relation);
             }
 
@@ -327,33 +382,41 @@ namespace Tests.SpatialLite.Osm.IO {
         }
 
         [Fact]
-        public void Write_IOsmGeometry_ThrowsExceptionIfEntityIsNull() {
+        public void Write_IOsmGeometry_ThrowsExceptionIfEntityIsNull()
+        {
             MemoryStream stream = new MemoryStream();
 
-            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false })) {
+            using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+            {
                 IOsmGeometry entity = null;
                 Assert.Throws<ArgumentNullException>(() => target.Write(entity));
             }
         }
 
-        private void TestXmlOutput(MemoryStream xmlStream, IEntityInfo expected, bool readMetadata) {
-            if (xmlStream.CanSeek) {
+        private void TestXmlOutput(MemoryStream xmlStream, IEntityInfo expected, bool readMetadata)
+        {
+            if (xmlStream.CanSeek)
+            {
                 xmlStream.Seek(0, SeekOrigin.Begin);
-            } else {
+            }
+            else
+            {
                 xmlStream = new MemoryStream(xmlStream.ToArray());
             }
 
             OsmXmlReader reader = new OsmXmlReader(xmlStream, new OsmXmlReaderSettings() { ReadMetadata = readMetadata });
             IEntityInfo read = reader.Read();
 
-            switch (expected.EntityType) {
+            switch (expected.EntityType)
+            {
                 case EntityType.Node: this.CompareNodes(expected as NodeInfo, read as NodeInfo); break;
                 case EntityType.Way: this.CompareWays(expected as WayInfo, read as WayInfo); break;
                 case EntityType.Relation: this.CompareRelation(expected as RelationInfo, read as RelationInfo); break;
             }
         }
 
-        private void CompareNodes(NodeInfo expected, NodeInfo actual) {
+        private void CompareNodes(NodeInfo expected, NodeInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.InRange(actual.Longitude, expected.Longitude - _resolution, expected.Longitude + _resolution);
             Assert.InRange(actual.Latitude, expected.Latitude - _resolution, expected.Latitude + _resolution);
@@ -362,10 +425,12 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareWays(WayInfo expected, WayInfo actual) {
+        private void CompareWays(WayInfo expected, WayInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.Equal(expected.Nodes.Count, actual.Nodes.Count);
-            for (int i = 0; i < expected.Nodes.Count; i++) {
+            for (int i = 0; i < expected.Nodes.Count; i++)
+            {
                 Assert.Equal(expected.Nodes[i], actual.Nodes[i]);
             }
 
@@ -373,10 +438,12 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareRelation(RelationInfo expected, RelationInfo actual) {
+        private void CompareRelation(RelationInfo expected, RelationInfo actual)
+        {
             Assert.Equal(expected.ID, actual.ID);
             Assert.Equal(expected.Members.Count, actual.Members.Count);
-            for (int i = 0; i < expected.Members.Count; i++) {
+            for (int i = 0; i < expected.Members.Count; i++)
+            {
                 Assert.Equal(expected.Members[i], actual.Members[i]);
             }
 
@@ -384,8 +451,10 @@ namespace Tests.SpatialLite.Osm.IO {
             this.CompareEntityDetails(expected.Metadata, actual.Metadata);
         }
 
-        private void CompareTags(TagsCollection expected, TagsCollection actual) {
-            if (expected == null && actual == null) {
+        private void CompareTags(TagsCollection expected, TagsCollection actual)
+        {
+            if (expected == null && actual == null)
+            {
                 return;
             }
 
@@ -393,8 +462,10 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.True(expected.All(tag => actual.Contains(tag)));
         }
 
-        private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual) {
-            if (expected == null && actual == null) {
+        private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual)
+        {
+            if (expected == null && actual == null)
+            {
                 return;
             }
 
@@ -408,7 +479,8 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.Equal(expected.Changeset, actual.Changeset);
         }
 
-        private void CheckNode(XElement element) {
+        private void CheckNode(XElement element)
+        {
             Assert.Equal("15", element.Attribute("id").Value);
             Assert.Equal("46.8", element.Attribute("lon").Value);
             Assert.Equal("-15.6", element.Attribute("lat").Value);
@@ -418,7 +490,8 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.Equal("survey", tagE.Attribute("v").Value);
         }
 
-        private void CheckWay(XElement element) {
+        private void CheckWay(XElement element)
+        {
             Assert.Equal("25", element.Attribute("id").Value);
 
             var nodesElement = element.Elements("nd");
@@ -432,7 +505,8 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.Equal("survey", tagE.Attribute("v").Value);
         }
 
-        private void CheckRelation(XElement element) {
+        private void CheckRelation(XElement element)
+        {
             Assert.Equal("25", element.Attribute("id").Value);
 
             XElement tagE = element.Elements("tag").Single();
@@ -440,15 +514,19 @@ namespace Tests.SpatialLite.Osm.IO {
             Assert.Equal("survey", tagE.Attribute("v").Value);
         }
 
-        private void CheckOsmDetails(EntityMetadata details, XElement element) {
-            if (details == null) {
+        private void CheckOsmDetails(EntityMetadata details, XElement element)
+        {
+            if (details == null)
+            {
                 Assert.Null(element.Attribute("version"));
                 Assert.Null(element.Attribute("changeset"));
                 Assert.Null(element.Attribute("uid"));
                 Assert.Null(element.Attribute("user"));
                 Assert.Null(element.Attribute("visible"));
                 Assert.Null(element.Attribute("timestamp"));
-            } else {
+            }
+            else
+            {
                 Assert.Equal("2", element.Attribute("version").Value);
                 Assert.Equal("123", element.Attribute("changeset").Value);
                 Assert.Equal("4587", element.Attribute("uid").Value);

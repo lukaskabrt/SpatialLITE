@@ -3,11 +3,13 @@ using System.IO;
 using System.Xml;
 using SpatialLite.Gps.Geometries;
 
-namespace SpatialLite.Gps.IO {
+namespace SpatialLite.Gps.IO
+{
     /// <summary>
     /// Implements data reader that can read GPX data from streams and files.
     /// </summary>
-    public class GpxReader : IGpxReader, IDisposable {
+    public class GpxReader : IGpxReader, IDisposable
+    {
 
         private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
@@ -27,7 +29,8 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="path">Path to the .gpx file.</param>
         /// <param name="settings">The GpxReaderSettings object that determines behaviour of the reader.</param>
-        public GpxReader(string path, GpxReaderSettings settings) {
+        public GpxReader(string path, GpxReaderSettings settings)
+        {
             _input = new FileStream(path, FileMode.Open, FileAccess.Read);
             _ownsInputStream = true;
 
@@ -41,7 +44,8 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="stream">The stream with osm xml data.</param>
         /// <param name="settings">The GpxReaderSettings object that determines behaviour of the reader.</param>
-        public GpxReader(Stream stream, GpxReaderSettings settings) {
+        public GpxReader(Stream stream, GpxReaderSettings settings)
+        {
             _input = stream;
 
             this.Settings = settings;
@@ -57,7 +61,8 @@ namespace SpatialLite.Gps.IO {
         /// <summary>
         /// Releases all resources used by the GpxReader.
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -65,9 +70,12 @@ namespace SpatialLite.Gps.IO {
         /// <summary>
         /// Parses next element of the GPX file
         /// </summary>
-        public IGpxGeometry Read() {
-            while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "gpx") == false) {
-                switch (_xmlReader.Name) {
+        public IGpxGeometry Read()
+        {
+            while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "gpx") == false)
+            {
+                switch (_xmlReader.Name)
+                {
                     case "wpt":
                         return ReadPoint("wpt");
                     case "trk":
@@ -88,7 +96,8 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="pointElementName">The name of the surrounding xml element</param>
         /// <returns>the point parsed from the XmlReader</returns>
-        private GpxPoint ReadPoint(string pointElementName) {
+        private GpxPoint ReadPoint(string pointElementName)
+        {
             string latValue = _xmlReader.GetAttribute("lat");
             if (string.IsNullOrEmpty(latValue))
                 throw new InvalidDataException("Requested attribute 'lat' not found.");
@@ -103,33 +112,40 @@ namespace SpatialLite.Gps.IO {
             DateTime timestamp = new DateTime();
 
             GpxPointMetadata metadata = null;
-            if (this.Settings.ReadMetadata) {
+            if (this.Settings.ReadMetadata)
+            {
                 metadata = new GpxPointMetadata();
             }
 
-            if (_xmlReader.IsEmptyElement == false) {
+            if (_xmlReader.IsEmptyElement == false)
+            {
                 _xmlReader.Read();
 
-                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == pointElementName) == false) {
+                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == pointElementName) == false)
+                {
                     bool elementParsed = false;
 
-                    if (_xmlReader.Name == "ele") {
+                    if (_xmlReader.Name == "ele")
+                    {
                         string eleValue = _xmlReader.ReadElementContentAsString();
                         ele = double.Parse(eleValue, _invariantCulture);
                         elementParsed = true;
                     }
 
-                    if (_xmlReader.Name == "time") {
+                    if (_xmlReader.Name == "time")
+                    {
                         string timeValue = _xmlReader.ReadElementContentAsString();
                         timestamp = DateTime.ParseExact(timeValue, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", _invariantCulture);
                         elementParsed = true;
                     }
 
-                    if (this.Settings.ReadMetadata) {
+                    if (this.Settings.ReadMetadata)
+                    {
                         elementParsed = elementParsed || this.TryReadPointMetadata(metadata);
                     }
 
-                    if (!elementParsed) {
+                    if (!elementParsed)
+                    {
                         _xmlReader.Skip();
                     }
                 }
@@ -146,30 +162,37 @@ namespace SpatialLite.Gps.IO {
         /// Reades a GPX track from the internal XmlReader
         /// </summary>
         /// <returns>the track parsed form the XmlReader</returns>
-        private GpxTrack ReadTrack() {
+        private GpxTrack ReadTrack()
+        {
             GpxTrack result = new GpxTrack();
 
-            if (_xmlReader.IsEmptyElement == false) {
+            if (_xmlReader.IsEmptyElement == false)
+            {
                 _xmlReader.Read();
 
                 GpxTrackMetadata metadata = null;
-                if (this.Settings.ReadMetadata) {
+                if (this.Settings.ReadMetadata)
+                {
                     metadata = new GpxTrackMetadata();
                 }
 
-                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "trk") == false) {
+                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "trk") == false)
+                {
                     bool elementParsed = false;
-                    if (_xmlReader.Name == "trkseg") {
+                    if (_xmlReader.Name == "trkseg")
+                    {
                         GpxTrackSegment segment = ReadTrackSegment();
                         result.Geometries.Add(segment);
                         elementParsed = true;
                     }
 
-                    if (this.Settings.ReadMetadata) {
+                    if (this.Settings.ReadMetadata)
+                    {
                         elementParsed = elementParsed || this.TryReadTrackMetadata(metadata);
                     }
 
-                    if (!elementParsed) {
+                    if (!elementParsed)
+                    {
                         _xmlReader.Skip();
                     }
                 }
@@ -185,17 +208,23 @@ namespace SpatialLite.Gps.IO {
         /// Reads a GPX traxk segment from the intrnal XmlReader.
         /// </summary>
         /// <returns>the track parsed from the XmlReader</returns>
-        private GpxTrackSegment ReadTrackSegment() {
+        private GpxTrackSegment ReadTrackSegment()
+        {
             GpxTrackSegment result = new GpxTrackSegment();
 
-            if (_xmlReader.IsEmptyElement == false) {
+            if (_xmlReader.IsEmptyElement == false)
+            {
                 _xmlReader.Read();
 
-                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "trkseg") == false) {
-                    if (_xmlReader.Name == "trkpt") {
+                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "trkseg") == false)
+                {
+                    if (_xmlReader.Name == "trkpt")
+                    {
                         GpxPoint point = ReadPoint("trkpt");
                         result.Points.Add(point);
-                    } else {
+                    }
+                    else
+                    {
                         _xmlReader.Skip();
                     }
                 }
@@ -209,30 +238,37 @@ namespace SpatialLite.Gps.IO {
         /// Reads a GPX route from the internal XmlReader
         /// </summary>
         /// <returns>the route parsed from the XmlReader</returns>
-        private GpxRoute ReadRoute() {
+        private GpxRoute ReadRoute()
+        {
             GpxRoute result = new GpxRoute();
 
-            if (_xmlReader.IsEmptyElement == false) {
+            if (_xmlReader.IsEmptyElement == false)
+            {
                 _xmlReader.Read();
 
                 GpxTrackMetadata metadata = null;
-                if (this.Settings.ReadMetadata) {
+                if (this.Settings.ReadMetadata)
+                {
                     metadata = new GpxTrackMetadata();
                 }
 
-                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "rte") == false) {
+                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "rte") == false)
+                {
                     bool elementParsed = false;
 
-                    if (_xmlReader.Name == "rtept") {
+                    if (_xmlReader.Name == "rtept")
+                    {
                         result.Points.Add(ReadPoint("rtept"));
                         elementParsed = true;
                     }
 
-                    if (this.Settings.ReadMetadata) {
+                    if (this.Settings.ReadMetadata)
+                    {
                         elementParsed = elementParsed || this.TryReadTrackMetadata(metadata);
                     }
 
-                    if (!elementParsed) {
+                    if (!elementParsed)
+                    {
                         _xmlReader.Skip();
                     }
                 }
@@ -247,7 +283,8 @@ namespace SpatialLite.Gps.IO {
         /// <summary>
         /// Initializes internal properties
         /// </summary>
-        private void InitializeReader() {
+        private void InitializeReader()
+        {
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.IgnoreComments = true;
             xmlReaderSettings.IgnoreProcessingInstructions = true;
@@ -256,9 +293,12 @@ namespace SpatialLite.Gps.IO {
             _xmlReader = XmlReader.Create(_input, xmlReaderSettings);
 
             _xmlReader.Read();
-            while (_xmlReader.EOF == false && _insideGpx == false) {
-                if (_xmlReader.NodeType == XmlNodeType.Element) {
-                    if (_xmlReader.Name != "gpx") {
+            while (_xmlReader.EOF == false && _insideGpx == false)
+            {
+                if (_xmlReader.NodeType == XmlNodeType.Element)
+                {
+                    if (_xmlReader.Name != "gpx")
+                    {
                         throw new InvalidDataException("Invalid gpx root element. Expected <gpx>.");
                     }
 
@@ -268,7 +308,9 @@ namespace SpatialLite.Gps.IO {
 
                     _insideGpx = true;
 
-                } else {
+                }
+                else
+                {
                     _xmlReader.Read();
                 }
             }
@@ -278,16 +320,20 @@ namespace SpatialLite.Gps.IO {
         /// Reads a GPX Link from the internal XmlReader
         /// </summary>
         /// <returns>the link parsed from the XmlReader</returns>
-        private GpxLink ReadLink() {
+        private GpxLink ReadLink()
+        {
             string href = _xmlReader.GetAttribute("href");
             string linkText = null;
             string linkType = null;
 
-            if (_xmlReader.IsEmptyElement == false) {
+            if (_xmlReader.IsEmptyElement == false)
+            {
                 _xmlReader.Read();
 
-                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "link") == false) {
-                    switch (_xmlReader.Name) {
+                while ((_xmlReader.NodeType == XmlNodeType.EndElement && _xmlReader.Name == "link") == false)
+                {
+                    switch (_xmlReader.Name)
+                    {
                         case "text":
                             linkText = _xmlReader.ReadElementContentAsString(); break;
                         case "type":
@@ -308,8 +354,10 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="metadata">Objecto to store read metadata</param>
         /// <returns>true if piece of metadata was read, otherwise returns false</returns>
-        private bool TryReadTrackMetadata(GpxTrackMetadata metadata) {
-            switch (_xmlReader.Name) {
+        private bool TryReadTrackMetadata(GpxTrackMetadata metadata)
+        {
+            switch (_xmlReader.Name)
+            {
                 case "name":
                     metadata.Name = _xmlReader.ReadElementContentAsString(); return true;
                 case "cmt":
@@ -332,8 +380,10 @@ namespace SpatialLite.Gps.IO {
         /// </summary>
         /// <param name="metadata">Objecto to store read metadata</param>
         /// <returns>true if piece of metadata was read, otherwise returns false</returns>
-        private bool TryReadPointMetadata(GpxPointMetadata metadata) {
-            switch (_xmlReader.Name) {
+        private bool TryReadPointMetadata(GpxPointMetadata metadata)
+        {
+            switch (_xmlReader.Name)
+            {
                 case "name":
                     metadata.Name = _xmlReader.ReadElementContentAsString(); return true;
                 case "cmt":
@@ -380,12 +430,16 @@ namespace SpatialLite.Gps.IO {
         /// Releases the unmanaged resources used by the GpxReader and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-        private void Dispose(bool disposing) {
-            if (!this._disposed) {
-                if (disposing) {
+        private void Dispose(bool disposing)
+        {
+            if (!this._disposed)
+            {
+                if (disposing)
+                {
                     _xmlReader.Dispose();
 
-                    if (_ownsInputStream) {
+                    if (_ownsInputStream)
+                    {
                         _input.Dispose();
                     }
                 }

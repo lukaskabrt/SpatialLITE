@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace SpatialLite.Gps.Geometries {
+namespace SpatialLite.Gps.Geometries
+{
     /// <summary>
     /// Represents route - an ordered list of waypoints representing a series of turn points leading to a destination.
     /// </summary>
-    public class GpxRoute : GpxTrackSegment, IGpxGeometry {
+    public class GpxRoute : GpxTrackSegment, IGpxGeometry
+    {
         /// <summary>
         /// Get or sets additional info about the route
         /// </summary>
@@ -13,7 +15,8 @@ namespace SpatialLite.Gps.Geometries {
         /// <summary>
         /// Get the type of geometry
         /// </summary>
-        public GpxGeometryType GeometryType {
+        public GpxGeometryType GeometryType
+        {
             get { return GpxGeometryType.Route; }
         }
 
@@ -21,7 +24,8 @@ namespace SpatialLite.Gps.Geometries {
         /// Creates a new, empty instance of the GpxRoute class
         /// </summary>
         public GpxRoute()
-            : base() {
+            : base()
+        {
         }
 
         /// <summary>
@@ -29,7 +33,8 @@ namespace SpatialLite.Gps.Geometries {
         /// </summary>
         /// <param name="points">The points to be added to the route</param>
         public GpxRoute(IEnumerable<GpxPoint> points)
-            : base(points) {
+            : base(points)
+        {
         }
     }
 }
