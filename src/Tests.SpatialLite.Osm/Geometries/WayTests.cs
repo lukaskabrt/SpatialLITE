@@ -13,19 +13,19 @@ namespace Tests.SpatialLite.Osm.Geometries;
 
 public class WayTests
 {
-    List<Node> _nodes = new List<Node>(new Node[] {
-        new Node(1, 1.1, 2.2),
-        new Node(2, 10.1, -20.2),
-        new Node(3, -30.1, 40.2) });
+    List<Node> _nodes = new(new Node[] {
+        new(1, 1.1, 2.2),
+        new(2, 10.1, -20.2),
+        new(3, -30.1, 40.2) });
 
-    WayInfo _wayEmptyInfo = new WayInfo(10, new TagsCollection(), new List<long>(), new EntityMetadata());
-    WayInfo _wayInfo = new WayInfo(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
+    WayInfo _wayEmptyInfo = new(10, new TagsCollection(), new List<long>(), new EntityMetadata());
+    WayInfo _wayInfo = new(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
 
     IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
     public WayTests()
     {
-        Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new Mock<IEntityCollection<IOsmGeometry>>();
+        Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new();
         _nodesCollectionM.SetupGet(c => c[1, EntityType.Node]).Returns(_nodes[0]);
         _nodesCollectionM.SetupGet(c => c[2, EntityType.Node]).Returns(_nodes[1]);
         _nodesCollectionM.SetupGet(c => c[3, EntityType.Node]).Returns(_nodes[2]);
@@ -37,7 +37,7 @@ public class WayTests
     {
         int id = 11;
 
-        Way target = new Way(id);
+        Way target = new(id);
 
         Assert.Equal(id, target.ID);
         Assert.Empty(target.Nodes);
@@ -49,7 +49,7 @@ public class WayTests
     public void Constructor_ID_Nodes_CreatesWayAddsNodesAndInitializesProperties()
     {
         int id = 11;
-        Way target = new Way(id, _nodes);
+        Way target = new(id, _nodes);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(_nodes.Count, target.Nodes.Count);
@@ -66,9 +66,9 @@ public class WayTests
     public void Constructor_ID_Nodes_Tags_CreatesWayAddsNodesAndInitializesProperties()
     {
         int id = 11;
-        TagsCollection tags = new TagsCollection();
+        TagsCollection tags = new();
 
-        Way target = new Way(id, _nodes, tags);
+        Way target = new(id, _nodes, tags);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(_nodes.Count, target.Nodes.Count);
@@ -136,7 +136,7 @@ public class WayTests
     public void Coordinates_GetsPositionOfNodes()
     {
         int id = 11;
-        Way target = new Way(id, _nodes);
+        Way target = new(id, _nodes);
 
         Assert.Equal(_nodes.Count, target.Coordinates.Count);
         for (int i = 0; i < _nodes.Count; i++)
@@ -149,7 +149,7 @@ public class WayTests
     public void Coordinates_GetsPositionOfNodesIfWayCastedToLineString()
     {
         int id = 11;
-        Way way = new Way(id, _nodes);
+        Way way = new(id, _nodes);
         LineString target = (LineString)way;
 
         Assert.Equal(_nodes.Count, target.Coordinates.Count);
@@ -162,7 +162,7 @@ public class WayTests
     [Fact]
     public void EntityType_Returns_Way()
     {
-        Way target = new Way(10);
+        Way target = new(10);
 
         Assert.Equal(EntityType.Way, target.EntityType);
     }

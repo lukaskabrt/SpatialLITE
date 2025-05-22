@@ -11,7 +11,7 @@ public class OsmWriterSettingsTests
     [Fact]
     public void Constructor__CreatesSettingsWithDefaultValues()
     {
-        OsmWriterSettings target = new OsmWriterSettings();
+        OsmWriterSettings target = new();
 
         Assert.True(target.WriteMetadata);
     }
@@ -19,7 +19,7 @@ public class OsmWriterSettingsTests
     [Fact]
     public void WriteMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        OsmWriterSettings target = new OsmWriterSettings();
+        OsmWriterSettings target = new();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.WriteMetadata = true);
@@ -28,7 +28,7 @@ public class OsmWriterSettingsTests
     [Fact]
     public void ProgramNameSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        OsmWriterSettings target = new OsmWriterSettings();
+        OsmWriterSettings target = new();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.ProgramName = "TEST");

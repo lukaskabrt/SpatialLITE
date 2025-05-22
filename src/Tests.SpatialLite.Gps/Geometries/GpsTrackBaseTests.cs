@@ -13,16 +13,16 @@ public class GpsTrackBaseTests
     public GpsTrackBaseTests()
     {
         _points = new List<GpsPoint> {
-        new GpsPoint(16.5, 45.9, 100, new DateTime(2011, 2, 24, 20, 00, 00)),
-        new GpsPoint(16.6, 46.0, 110, new DateTime(2011, 2, 24, 20, 00, 10)),
-        new GpsPoint(16.5, 46.1, 200, new DateTime(2011, 2, 24, 20, 00, 20))};
+        new(16.5, 45.9, 100, new DateTime(2011, 2, 24, 20, 00, 00)),
+        new(16.6, 46.0, 110, new DateTime(2011, 2, 24, 20, 00, 10)),
+        new(16.5, 46.1, 200, new DateTime(2011, 2, 24, 20, 00, 20))};
 
     }
 
     [Fact]
     public void Constructor__CreatesEmptyGpsTrack()
     {
-        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>();
+        GpsTrackBase<GpsPoint> target = new();
 
         Assert.Equal(0, target.Coordinates.Count);
     }
@@ -31,7 +31,7 @@ public class GpsTrackBaseTests
     public void Constructor_IEnumerablePoints_CreatesGpsTrackWithPoints()
     {
 
-        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
+        GpsTrackBase<GpsPoint> target = new(_points);
 
         Assert.Equal(_points.Count, target.Points.Count);
         for (int i = 0; i < target.Points.Count; i++)
@@ -43,7 +43,7 @@ public class GpsTrackBaseTests
     [Fact]
     public void Coordinates_GetsPositionOfPoints()
     {
-        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
+        GpsTrackBase<GpsPoint> target = new(_points);
 
         Assert.Equal(_points.Count, target.Coordinates.Count);
         for (int i = 0; i < _points.Count; i++)
@@ -55,7 +55,7 @@ public class GpsTrackBaseTests
     [Fact]
     public void Coordinates_GetsPositionOfPointsIfWayCastedToLineString()
     {
-        GpsTrackBase<GpsPoint> line = new GpsTrackBase<GpsPoint>(_points);
+        GpsTrackBase<GpsPoint> line = new(_points);
         LineString target = line;
 
         Assert.Equal(_points.Count, target.Coordinates.Count);

@@ -7,17 +7,17 @@ namespace Tests.SpatialLite.Core.Geometries;
 
 public class CoordinateListTests
 {
-    private Coordinate _coordinate = new Coordinate(-10, -20, -200);
+    private Coordinate _coordinate = new(-10, -20, -200);
     private readonly Coordinate[] _coordinates = new Coordinate[] {
-            new Coordinate(12,10,100),
-            new Coordinate(22,20,200),
-            new Coordinate(32,30,300)
+            new(12,10,100),
+            new(22,20,200),
+            new(32,30,300)
     };
 
     [Fact]
     public void Constructor__CreatesEmptyList()
     {
-        CoordinateList target = new CoordinateList();
+        CoordinateList target = new();
 
         Assert.Empty(target);
     }
@@ -25,7 +25,7 @@ public class CoordinateListTests
     [Fact]
     public void Constructor_IEnumerable_CreatesListWithSpecifiedItems()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
 
         for (int i = 0; i < _coordinates.Length; i++)
         {
@@ -36,7 +36,7 @@ public class CoordinateListTests
     [Fact]
     public void Indexer_GetsAndSetsValues()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
 
         Assert.Equal(_coordinates[1], target[1]);
 
@@ -47,7 +47,7 @@ public class CoordinateListTests
     [Fact]
     public void Count_Returns0ForEmptyList()
     {
-        CoordinateList target = new CoordinateList();
+        CoordinateList target = new();
 
         Assert.Equal(0, target.Count);
     }
@@ -55,7 +55,7 @@ public class CoordinateListTests
     [Fact]
     public void Count_ReturnsNumberOfCoordinates()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
 
         Assert.Equal(_coordinates.Length, target.Count);
     }
@@ -63,7 +63,7 @@ public class CoordinateListTests
     [Fact]
     public void Add_AppendsCoordinateToTheEndOfList()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Add(_coordinate);
 
         Assert.Equal(_coordinate, target.Last());
@@ -72,7 +72,7 @@ public class CoordinateListTests
     [Fact]
     public void Add_IncresesCount()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Add(_coordinate);
 
         Assert.Equal(_coordinates.Length + 1, target.Count);
@@ -81,7 +81,7 @@ public class CoordinateListTests
     [Fact]
     public void Add_AppendsCollectionOfCoordinatesToTheEndOfList()
     {
-        CoordinateList target = new CoordinateList(new Coordinate[] { _coordinate });
+        CoordinateList target = new(new Coordinate[] { _coordinate });
         target.Add(_coordinates);
 
         for (int i = 0; i < _coordinates.Length; i++)
@@ -93,7 +93,7 @@ public class CoordinateListTests
     [Fact]
     public void Add_IncresesCount2()
     {
-        CoordinateList target = new CoordinateList(new Coordinate[] { _coordinate });
+        CoordinateList target = new(new Coordinate[] { _coordinate });
         target.Add(_coordinates);
 
         Assert.Equal(_coordinates.Length + 1, target.Count);
@@ -103,7 +103,7 @@ public class CoordinateListTests
     public void Insert_InsertsCoordinateToSpecifiedIndex()
     {
         int index = 1;
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Insert(index, _coordinate);
 
         Assert.Equal(_coordinate, target[index]);
@@ -113,7 +113,7 @@ public class CoordinateListTests
     public void Insert_IncresesCount()
     {
         int index = 1;
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Insert(index, _coordinate);
 
         Assert.Equal(_coordinates.Length + 1, target.Count);
@@ -122,7 +122,7 @@ public class CoordinateListTests
     [Fact]
     public void Insert_AppendsCoordinateToListIfIndexEqulasCount()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Insert(target.Count, _coordinate);
 
         Assert.Equal(_coordinate, target.Last());
@@ -132,7 +132,7 @@ public class CoordinateListTests
     [Fact]
     public void RemoveAt_RemovesCoordinateAtIndex()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.RemoveAt(1);
 
         Assert.Equal(_coordinates[0], target[0]);
@@ -142,7 +142,7 @@ public class CoordinateListTests
     [Fact]
     public void RemoveAt_DecreasesCount()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.RemoveAt(1);
 
         Assert.Equal(_coordinates.Length - 1, target.Count);
@@ -151,7 +151,7 @@ public class CoordinateListTests
     [Fact]
     public void Clear_RemovesAllCoordinatesFromList()
     {
-        CoordinateList target = new CoordinateList(_coordinates);
+        CoordinateList target = new(_coordinates);
         target.Clear();
 
         Assert.Empty(target.ToArray());

@@ -11,14 +11,14 @@ namespace Tests.SpatialLite.Osm.Geometries;
 
 public class RelationTests
 {
-    RelationInfo _relationEmptyInfo = new RelationInfo(100, new TagsCollection(), new List<RelationMemberInfo>(), new EntityMetadata());
-    RelationInfo _relationInfo = new RelationInfo(100, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { Reference = 1, MemberType = EntityType.Node } }, new EntityMetadata());
+    RelationInfo _relationEmptyInfo = new(100, new TagsCollection(), new List<RelationMemberInfo>(), new EntityMetadata());
+    RelationInfo _relationInfo = new(100, new TagsCollection(), new RelationMemberInfo[] { new() { Reference = 1, MemberType = EntityType.Node } }, new EntityMetadata());
 
     IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
     public RelationTests()
     {
-        Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new Mock<IEntityCollection<IOsmGeometry>>();
+        Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new();
         _nodesCollectionM.SetupGet(c => c[1, EntityType.Node]).Returns(new Node(1, 1.1, 2.2));
         _nodesCollectionM.Setup(c => c.Contains(1, EntityType.Node)).Returns(true);
 
@@ -29,7 +29,7 @@ public class RelationTests
     public void Constructor_int_CreatesNewRelationAndInitializesProperties()
     {
         int id = 11;
-        Relation target = new Relation(id);
+        Relation target = new(id);
 
         Assert.Equal(id, target.ID);
         Assert.Empty(target.Tags);
@@ -40,8 +40,8 @@ public class RelationTests
     public void Constructor_int_IEnumerable_CreatesRelationWithMembersAndInitializesProperties()
     {
         int id = 11;
-        var members = new RelationMember[] { new RelationMember(new Node(1)), new RelationMember(new Node(2)), new RelationMember(new Node(3)) };
-        Relation target = new Relation(id, members);
+        var members = new RelationMember[] { new(new Node(1)), new(new Node(2)), new(new Node(3)) };
+        Relation target = new(id, members);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(members.Length, target.Geometries.Count);
@@ -57,9 +57,9 @@ public class RelationTests
     public void Constructor_int_tags_CreatesRelationAndIntializesProperties()
     {
         int id = 11;
-        var members = new RelationMember[] { new RelationMember(new Node(1)), new RelationMember(new Node(2)), new RelationMember(new Node(3)) };
-        TagsCollection tags = new TagsCollection();
-        Relation target = new Relation(id, members, tags);
+        var members = new RelationMember[] { new(new Node(1)), new(new Node(2)), new(new Node(3)) };
+        TagsCollection tags = new();
+        Relation target = new(id, members, tags);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(members.Length, target.Geometries.Count);
@@ -109,7 +109,7 @@ public class RelationTests
     [Fact]
     public void EntityType_Returns_Relation()
     {
-        Relation target = new Relation(100);
+        Relation target = new(100);
 
         Assert.Equal(EntityType.Relation, target.EntityType);
     }

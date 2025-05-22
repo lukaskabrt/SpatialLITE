@@ -33,7 +33,7 @@ public class OsmEntityInfoDatabase : OsmDatabase<IEntityInfo, NodeInfo, WayInfo,
     /// <returns>New instance of the OsmDAtabase class with data loaded from specified reader.</returns>
     public static OsmEntityInfoDatabase Load(IOsmReader reader)
     {
-        OsmEntityInfoDatabase db = new OsmEntityInfoDatabase();
+        OsmEntityInfoDatabase db = new();
 
         IEntityInfo entityInfo;
         while ((entityInfo = reader.Read()) != null)

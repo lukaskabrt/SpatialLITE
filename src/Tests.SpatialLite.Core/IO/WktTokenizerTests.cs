@@ -88,7 +88,7 @@ public class WktTokenizerTests
     [Fact]
     private void Tokenize_TextReader_ProcessesComplexText()
     {
-        StringReader reader = new StringReader("point z (-10 -15 -100.1)");
+        StringReader reader = new("point z (-10 -15 -100.1)");
 
         var tokens = WktTokenizer.Tokenize(reader).ToArray();
 

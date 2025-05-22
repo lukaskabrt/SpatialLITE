@@ -11,7 +11,7 @@ public class OsmReaderSettingsTests
     [Fact]
     public void Constructor__CreatesSettingsWithDefaultValues()
     {
-        OsmReaderSettings target = new OsmReaderSettings();
+        OsmReaderSettings target = new();
 
         Assert.True(target.ReadMetadata);
     }
@@ -19,7 +19,7 @@ public class OsmReaderSettingsTests
     [Fact]
     public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        OsmReaderSettings target = new OsmReaderSettings();
+        OsmReaderSettings target = new();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);

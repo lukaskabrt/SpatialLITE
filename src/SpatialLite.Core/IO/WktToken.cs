@@ -8,7 +8,7 @@ internal struct WktToken
     /// <summary>
     /// Special token that represents end of available data.
     /// </summary>
-    public static WktToken EndOfDataToken = new WktToken() { Type = TokenType.END_OF_DATA, Value = string.Empty };
+    public static WktToken EndOfDataToken = new() { Type = TokenType.END_OF_DATA, Value = string.Empty };
 
     /// <summary>
     /// The type of the tooken.

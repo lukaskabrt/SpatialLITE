@@ -27,7 +27,7 @@ public class PointTests
     [Fact]
     public void Constructor__CreatesPointWithEmptyPosition()
     {
-        Point target = new Point();
+        Point target = new();
 
         Assert.Equal(Coordinate.Empty, target.Position);
     }
@@ -35,7 +35,7 @@ public class PointTests
     [Fact]
     public void Constructor_XY_SetsCoordinates()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate);
+        Point target = new(_xOrdinate, _yOrdinate);
 
         ChenckPosition(target, _xOrdinate, _yOrdinate, double.NaN, double.NaN);
     }
@@ -43,7 +43,7 @@ public class PointTests
     [Fact]
     public void Constructor_XYZ_SetsCoordinates()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate);
+        Point target = new(_xOrdinate, _yOrdinate, _zOrdinate);
 
         ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, double.NaN);
     }
@@ -51,7 +51,7 @@ public class PointTests
     [Fact]
     public void Constructor_XYZM_SetsCoordinates()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);
+        Point target = new(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);
 
         ChenckPosition(target, _xOrdinate, _yOrdinate, _zOrdinate, _mValue);
     }
@@ -59,7 +59,7 @@ public class PointTests
     [Fact]
     public void Constructor_Coordinate_SetsCoordinates()
     {
-        Point target = new Point(_coordinate);
+        Point target = new(_coordinate);
 
         Assert.Equal(_coordinate, target.Position);
     }
@@ -67,7 +67,7 @@ public class PointTests
     [Fact]
     public void Is3D_ReturnsTrueFor3DPoint()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate, _zOrdinate);
+        Point target = new(_xOrdinate, _yOrdinate, _zOrdinate);
 
         Assert.True(target.Is3D);
     }
@@ -75,7 +75,7 @@ public class PointTests
     [Fact]
     public void Is3D_ReturnsFalseFor2DPoint()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate);
+        Point target = new(_xOrdinate, _yOrdinate);
 
         Assert.False(target.Is3D);
     }
@@ -83,7 +83,7 @@ public class PointTests
     [Fact]
     public void IsMeasured_ReturnsTrueForMeasuredPoint()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate, double.NaN, _mValue);
+        Point target = new(_xOrdinate, _yOrdinate, double.NaN, _mValue);
 
         Assert.True(target.IsMeasured);
     }
@@ -91,7 +91,7 @@ public class PointTests
     [Fact]
     public void IsMeasured_ReturnsFalseForNonMeasuredPoint()
     {
-        Point target = new Point(_xOrdinate, _yOrdinate);
+        Point target = new(_xOrdinate, _yOrdinate);
 
         Assert.False(target.IsMeasured);
     }
@@ -99,7 +99,7 @@ public class PointTests
     [Fact]
     public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPoint()
     {
-        Point target = new Point();
+        Point target = new();
         Envelope envelope = target.GetEnvelope();
 
         Assert.Equal(double.NaN, envelope.MinX);
@@ -115,7 +115,7 @@ public class PointTests
     [Fact]
     public void GetEnvelope_ReturnsEnvelopeThatCoversOnePoint()
     {
-        Point target = new Point(_coordinate);
+        Point target = new(_coordinate);
         Envelope envelope = target.GetEnvelope();
 
         Assert.Equal(_coordinate.X, envelope.MinX);

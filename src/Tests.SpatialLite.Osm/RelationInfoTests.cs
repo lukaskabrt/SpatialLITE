@@ -15,10 +15,10 @@ public class RelationMemberTests
     public void Constructor_PropertiesWithoutEntityDetails_SetsProperties()
     {
         int id = 45;
-        TagsCollection tags = new TagsCollection();
-        List<RelationMemberInfo> members = new List<RelationMemberInfo>();
+        TagsCollection tags = new();
+        List<RelationMemberInfo> members = new();
 
-        RelationInfo target = new RelationInfo(id, tags, members);
+        RelationInfo target = new(id, tags, members);
 
         Assert.Equal(EntityType.Relation, target.EntityType);
         Assert.Equal(id, target.ID);
@@ -31,11 +31,11 @@ public class RelationMemberTests
     public void Constructor_Properties_SetsProperties()
     {
         int id = 45;
-        TagsCollection tags = new TagsCollection();
-        List<RelationMemberInfo> members = new List<RelationMemberInfo>();
-        EntityMetadata details = new EntityMetadata();
+        TagsCollection tags = new();
+        List<RelationMemberInfo> members = new();
+        EntityMetadata details = new();
 
-        RelationInfo target = new RelationInfo(id, tags, members, details);
+        RelationInfo target = new(id, tags, members, details);
 
         Assert.Equal(EntityType.Relation, target.EntityType);
         Assert.Equal(id, target.ID);
@@ -47,9 +47,9 @@ public class RelationMemberTests
     [Fact]
     public void Constructor_Relation_SetsProperties()
     {
-        Relation relation = new Relation(100, new RelationMember[0], new TagsCollection()) { Metadata = new EntityMetadata() };
+        Relation relation = new(100, new RelationMember[0], new TagsCollection()) { Metadata = new EntityMetadata() };
 
-        RelationInfo target = new RelationInfo(relation);
+        RelationInfo target = new(relation);
 
         Assert.Equal(relation.ID, target.ID);
         Assert.Same(relation.Tags, target.Tags);
@@ -59,9 +59,9 @@ public class RelationMemberTests
     [Fact]
     public void Constructor_Relation_SetsRelationMembers()
     {
-        Relation relation = new Relation(100, new RelationMember[] { new RelationMember(new Node(1)), new RelationMember(new Node(2)) }, new TagsCollection()) { Metadata = new EntityMetadata() };
+        Relation relation = new(100, new RelationMember[] { new(new Node(1)), new(new Node(2)) }, new TagsCollection()) { Metadata = new EntityMetadata() };
 
-        RelationInfo target = new RelationInfo(relation);
+        RelationInfo target = new(relation);
 
         Assert.Equal(relation.Geometries.Count, target.Members.Count);
         for (int i = 0; i < relation.Geometries.Count; i++)

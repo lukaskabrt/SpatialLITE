@@ -18,11 +18,11 @@ public class PbfReaderPbfWriterComplianceTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void PbfReaderCanReadFileCreatedByPbfWriter_NoDenseNoCompression()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (PbfWriter writer = new PbfWriter(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = false, Compression = CompressionMode.None }))
+        using (PbfWriter writer = new(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = false, Compression = CompressionMode.None }))
         {
-            foreach (var info in this.GetTestData())
+            foreach (var info in GetTestData())
             {
                 writer.Write(info);
             }
@@ -30,9 +30,9 @@ public class PbfReaderPbfWriterComplianceTests
             writer.Flush();
 
             stream.Seek(0, SeekOrigin.Begin);
-            using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true }))
+            using (PbfReader reader = new(stream, new OsmReaderSettings() { ReadMetadata = true }))
             {
-                this.TestReader(reader);
+                TestReader(reader);
             }
         }
     }
@@ -40,11 +40,11 @@ public class PbfReaderPbfWriterComplianceTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void PbfReaderCanReadFileCreatedByPbfWriter_DenseNoCompression()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (PbfWriter writer = new PbfWriter(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = true, Compression = CompressionMode.None }))
+        using (PbfWriter writer = new(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = true, Compression = CompressionMode.None }))
         {
-            foreach (var info in this.GetTestData())
+            foreach (var info in GetTestData())
             {
                 writer.Write(info);
             }
@@ -52,9 +52,9 @@ public class PbfReaderPbfWriterComplianceTests
             writer.Flush();
 
             stream.Seek(0, SeekOrigin.Begin);
-            using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true }))
+            using (PbfReader reader = new(stream, new OsmReaderSettings() { ReadMetadata = true }))
             {
-                this.TestReader(reader);
+                TestReader(reader);
             }
         }
     }
@@ -62,11 +62,11 @@ public class PbfReaderPbfWriterComplianceTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void PbfReaderCanReadFileCreatedByPbfWriter_NoDenseDeflate()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (PbfWriter writer = new PbfWriter(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = false, Compression = CompressionMode.ZlibDeflate }))
+        using (PbfWriter writer = new(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = false, Compression = CompressionMode.ZlibDeflate }))
         {
-            foreach (var info in this.GetTestData())
+            foreach (var info in GetTestData())
             {
                 writer.Write(info);
             }
@@ -74,9 +74,9 @@ public class PbfReaderPbfWriterComplianceTests
             writer.Flush();
 
             stream.Seek(0, SeekOrigin.Begin);
-            using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true }))
+            using (PbfReader reader = new(stream, new OsmReaderSettings() { ReadMetadata = true }))
             {
-                this.TestReader(reader);
+                TestReader(reader);
             }
         }
     }
@@ -84,11 +84,11 @@ public class PbfReaderPbfWriterComplianceTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void PbfReaderCanReadFileCreatedByPbfWriter_DenseDeflate()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (PbfWriter writer = new PbfWriter(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = true, Compression = CompressionMode.ZlibDeflate }))
+        using (PbfWriter writer = new(stream, new PbfWriterSettings() { WriteMetadata = true, UseDenseFormat = true, Compression = CompressionMode.ZlibDeflate }))
         {
-            foreach (var info in this.GetTestData())
+            foreach (var info in GetTestData())
             {
                 writer.Write(info);
             }
@@ -96,9 +96,9 @@ public class PbfReaderPbfWriterComplianceTests
             writer.Flush();
 
             stream.Seek(0, SeekOrigin.Begin);
-            using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true }))
+            using (PbfReader reader = new(stream, new OsmReaderSettings() { ReadMetadata = true }))
             {
-                this.TestReader(reader);
+                TestReader(reader);
             }
         }
     }
@@ -124,11 +124,11 @@ public class PbfReaderPbfWriterComplianceTests
 
     private IEnumerable<IEntityInfo> GetTestData()
     {
-        List<IEntityInfo> data = new List<IEntityInfo>();
+        List<IEntityInfo> data = new();
 
         using (var stream = TestDataReader.OpenPbf("pbf-real-file.pbf"))
         {
-            using (PbfReader reader = new PbfReader(stream, new OsmReaderSettings() { ReadMetadata = true }))
+            using (PbfReader reader = new(stream, new OsmReaderSettings() { ReadMetadata = true }))
             {
                 IEntityInfo info = null;
                 while ((info = reader.Read()) != null)

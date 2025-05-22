@@ -17,7 +17,7 @@ public struct Coordinate : IEquatable<Coordinate>
     /// <remarks>
     /// The empty coordinate has all coordinates equal to NaN.
     /// </remarks>
-    public static Coordinate Empty = new Coordinate(double.NaN, double.NaN, double.NaN, double.NaN);
+    public static readonly Coordinate Empty = new(double.NaN, double.NaN, double.NaN, double.NaN);
 
     /// <summary>
     /// Initializes a new instance of the <c>Coordinate</c> struct with X, Y ordinates.
@@ -139,7 +139,7 @@ public struct Coordinate : IEquatable<Coordinate>
     /// </summary>
     /// <param name="obj">The <c>object</c> to compare with the current <c>Coordinate</c></param>
     /// <returns>true if the specified  <c>object</c> is equal to the current <c>Coordinate</c>; otherwise, false.</returns>
-    public override bool Equals(object obj)
+    public override readonly bool Equals(object obj)
     {
         Coordinate? other = obj as Coordinate?;
         if (other == null)

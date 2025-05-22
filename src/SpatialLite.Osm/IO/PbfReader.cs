@@ -26,7 +26,7 @@ public class PbfReader : IOsmReader
     private bool _disposed = false;
     private readonly Stream _input;
     private readonly Queue<IEntityInfo> _cache;
-    private readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+    private readonly DateTime _unixEpoch = new(1970, 1, 1, 0, 0, 0);
 
     /// <summary>
     /// Initializes a new instance of the PbfReader class that read data form specified stream.
@@ -194,7 +194,7 @@ public class PbfReader : IOsmReader
         }
         else if (blob.ZlibData != null)
         {
-            MemoryStream deflateStreamData = new MemoryStream(blob.ZlibData);
+            MemoryStream deflateStreamData = new(blob.ZlibData);
 
             //skip ZLIB header
             deflateStreamData.Seek(2, SeekOrigin.Begin);
@@ -283,7 +283,7 @@ public class PbfReader : IOsmReader
             double lat = 1E-09 * (block.LatOffset + (block.Granularity * node.Latitude));
             double lon = 1E-09 * (block.LonOffset + (block.Granularity * node.Longitude));
 
-            List<Tag> tags = new List<Tag>();
+            List<Tag> tags = new();
             if (node.Keys != null)
             {
                 for (int i = 0; i < node.Keys.Count; i++)
@@ -294,7 +294,7 @@ public class PbfReader : IOsmReader
 
             EntityMetadata metadata = ProcessMetadata(node.Metadata, block);
 
-            NodeInfo parsed = new NodeInfo(node.ID, lat, lon, new TagsCollection(tags), metadata);
+            NodeInfo parsed = new(node.ID, lat, lon, new TagsCollection(tags), metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -331,7 +331,7 @@ public class PbfReader : IOsmReader
             double lat = 1E-09 * (block.LatOffset + (block.Granularity * latStore));
             double lon = 1E-09 * (block.LonOffset + (block.Granularity * lonStore));
 
-            List<Tag> tags = new List<Tag>();
+            List<Tag> tags = new();
             if (group.DenseNodes.KeysVals.Count > 0)
             {
                 while (group.DenseNodes.KeysVals[keyValueIndex] != 0)
@@ -370,7 +370,7 @@ public class PbfReader : IOsmReader
                 }
             }
 
-            NodeInfo parsed = new NodeInfo(idStore, lat, lon, new TagsCollection(tags), metadata);
+            NodeInfo parsed = new(idStore, lat, lon, new TagsCollection(tags), metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -390,7 +390,7 @@ public class PbfReader : IOsmReader
         foreach (var way in group.Ways)
         {
             long refStore = 0;
-            List<long> refs = new List<long>(way.Refs.Count);
+            List<long> refs = new(way.Refs.Count);
 
             for (int i = 0; i < way.Refs.Count; i++)
             {
@@ -398,7 +398,7 @@ public class PbfReader : IOsmReader
                 refs.Add(refStore);
             }
 
-            List<Tag> tags = new List<Tag>();
+            List<Tag> tags = new();
             if (way.Keys != null)
             {
                 for (int i = 0; i < way.Keys.Count; i++)
@@ -409,7 +409,7 @@ public class PbfReader : IOsmReader
 
             EntityMetadata metadata = ProcessMetadata(way.Metadata, block);
 
-            WayInfo parsed = new WayInfo(way.ID, new TagsCollection(tags), refs, metadata);
+            WayInfo parsed = new(way.ID, new TagsCollection(tags), refs, metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -430,7 +430,7 @@ public class PbfReader : IOsmReader
         {
             long memberRefStore = 0;
 
-            List<RelationMemberInfo> members = new List<RelationMemberInfo>();
+            List<RelationMemberInfo> members = new();
             for (int i = 0; i < relation.MemberIds.Count; i++)
             {
                 memberRefStore += relation.MemberIds[i];
@@ -447,7 +447,7 @@ public class PbfReader : IOsmReader
                 members.Add(new RelationMemberInfo() { MemberType = memberType, Reference = memberRefStore, Role = role });
             }
 
-            List<Tag> tags = new List<Tag>();
+            List<Tag> tags = new();
             if (relation.Keys != null)
             {
                 for (int i = 0; i < relation.Keys.Count; i++)
@@ -458,7 +458,7 @@ public class PbfReader : IOsmReader
 
             EntityMetadata metadata = ProcessMetadata(relation.Metadata, block);
 
-            RelationInfo parsed = new RelationInfo(relation.ID, new TagsCollection(tags), members, metadata);
+            RelationInfo parsed = new(relation.ID, new TagsCollection(tags), members, metadata);
             _cache.Enqueue(parsed);
         }
     }

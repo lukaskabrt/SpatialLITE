@@ -14,7 +14,7 @@ public class NodeTests
     public void Constructor_int_CreatesNodeAndInitializeProperties()
     {
         int id = 11;
-        Node target = new Node(id);
+        Node target = new(id);
 
         Assert.Equal(Coordinate.Empty, target.Position);
         Assert.Equal(id, target.ID);
@@ -26,8 +26,8 @@ public class NodeTests
     public void Constructor_int_double_double_CreatesNodeAndInitializeProperties()
     {
         int id = 11;
-        Coordinate coord = new Coordinate(-15.6, 68.7);
-        Node target = new Node(id, coord.X, coord.Y);
+        Coordinate coord = new(-15.6, 68.7);
+        Node target = new(id, coord.X, coord.Y);
 
         Assert.Equal(target.Position.X, coord.X);
         Assert.Equal(target.Position.Y, coord.Y);
@@ -40,10 +40,10 @@ public class NodeTests
     public void Constructor_int_double_double_Tags_CreatesNodeAndInitializesProperties()
     {
         int id = 11;
-        Coordinate coord = new Coordinate(-15.6, 68.7);
-        TagsCollection tags = new TagsCollection();
+        Coordinate coord = new(-15.6, 68.7);
+        TagsCollection tags = new();
 
-        Node target = new Node(id, coord.X, coord.Y, tags);
+        Node target = new(id, coord.X, coord.Y, tags);
 
         Assert.Equal(target.Position.X, coord.X);
         Assert.Equal(target.Position.Y, coord.Y);
@@ -56,8 +56,8 @@ public class NodeTests
     public void Constructor_int_Coordinate_CreatesNodeAndInitializeProperties()
     {
         int id = 11;
-        Coordinate coord = new Coordinate(-15.6, 68.7);
-        Node target = new Node(id, coord);
+        Coordinate coord = new(-15.6, 68.7);
+        Node target = new(id, coord);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(target.Position.X, coord.X);
@@ -69,10 +69,10 @@ public class NodeTests
     public void Constructor_int_Coordinate_Tags_CreatesNodeAndInitializeProperties()
     {
         int id = 11;
-        Coordinate coord = new Coordinate(-15.6, 68.7);
-        TagsCollection tags = new TagsCollection();
+        Coordinate coord = new(-15.6, 68.7);
+        TagsCollection tags = new();
 
-        Node target = new Node(id, coord, tags);
+        Node target = new(id, coord, tags);
 
         Assert.Equal(id, target.ID);
         Assert.Equal(target.Position.X, coord.X);
@@ -83,7 +83,7 @@ public class NodeTests
     [Fact]
     public void Constructor_NodeInfo_CreatesNodeFromNodeInfo()
     {
-        NodeInfo info = new NodeInfo(1, 15.6, 20.4, new TagsCollection(), new EntityMetadata());
+        NodeInfo info = new(1, 15.6, 20.4, new TagsCollection(), new EntityMetadata());
 
         Node target = Node.FromNodeInfo(info);
 
@@ -97,7 +97,7 @@ public class NodeTests
     [Fact]
     public void EntityType_Returns_Node()
     {
-        Node target = new Node(1);
+        Node target = new(1);
 
         Assert.Equal(EntityType.Node, target.EntityType);
     }

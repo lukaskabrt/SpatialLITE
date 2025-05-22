@@ -84,7 +84,7 @@ public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : 
     /// </returns>
     public override Envelope GetEnvelope()
     {
-        Envelope result = new Envelope();
+        Envelope result = new();
         foreach (var item in _geometries)
         {
             result.Extend(item.GetEnvelope());

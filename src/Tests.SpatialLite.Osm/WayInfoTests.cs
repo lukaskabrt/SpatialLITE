@@ -15,10 +15,10 @@ public class WayInfoTests
     public void Constructor_PropertiesWithoutEntityDetails_SetsProperties()
     {
         int id = 45;
-        TagsCollection tags = new TagsCollection();
-        List<long> nodes = new List<long>();
+        TagsCollection tags = new();
+        List<long> nodes = new();
 
-        WayInfo target = new WayInfo(id, tags, nodes);
+        WayInfo target = new(id, tags, nodes);
 
         Assert.Equal(EntityType.Way, target.EntityType);
         Assert.Equal(id, target.ID);
@@ -31,11 +31,11 @@ public class WayInfoTests
     public void Constructor_Properties_SetsProperties()
     {
         int id = 45;
-        TagsCollection tags = new TagsCollection();
-        List<long> nodes = new List<long>();
-        EntityMetadata details = new EntityMetadata();
+        TagsCollection tags = new();
+        List<long> nodes = new();
+        EntityMetadata details = new();
 
-        WayInfo target = new WayInfo(id, tags, nodes, details);
+        WayInfo target = new(id, tags, nodes, details);
 
         Assert.Equal(EntityType.Way, target.EntityType);
         Assert.Equal(id, target.ID);
@@ -47,9 +47,9 @@ public class WayInfoTests
     [Fact]
     public void Constructor_Way_SetsProperties()
     {
-        Way way = new Way(10, new Node[0], new TagsCollection()) { Metadata = new EntityMetadata() };
+        Way way = new(10, new Node[0], new TagsCollection()) { Metadata = new EntityMetadata() };
 
-        WayInfo target = new WayInfo(way);
+        WayInfo target = new(way);
 
         Assert.Equal(way.ID, target.ID);
         Assert.Same(way.Tags, target.Tags);
@@ -59,9 +59,9 @@ public class WayInfoTests
     [Fact]
     public void Constructor_Way_SetsNodesReferences()
     {
-        Way way = new Way(10, new Node[] { new Node(1), new Node(2), new Node(3) }, new TagsCollection()) { Metadata = new EntityMetadata() };
+        Way way = new(10, new Node[] { new(1), new(2), new(3) }, new TagsCollection()) { Metadata = new EntityMetadata() };
 
-        WayInfo target = new WayInfo(way);
+        WayInfo target = new(way);
 
         Assert.Equal(way.Nodes.Count, target.Nodes.Count);
         for (int i = 0; i < way.Nodes.Count; i++)

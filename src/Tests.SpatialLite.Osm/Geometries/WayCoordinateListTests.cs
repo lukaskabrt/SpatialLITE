@@ -11,16 +11,16 @@ namespace Tests.SpatialLite.Osm.Geometries;
 
 public class WayCoordinateListTests
 {
-    List<Node> _nodes = new List<Node>(new Node[] {
-        new Node(5, 1.1, 2.2),
-        new Node(6, 10.1, -20.2),
-        new Node(7, -30.1, 40.2) });
+    List<Node> _nodes = new(new Node[] {
+        new(5, 1.1, 2.2),
+        new(6, 10.1, -20.2),
+        new(7, -30.1, 40.2) });
 
 
     [Fact]
     public void Constructor_Source_SetsSource()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Same(_nodes, target.Source);
     }
@@ -28,7 +28,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Indexer_Get_ReturnsCoordinatesFromSourceList()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         for (int i = 0; i < _nodes.Count; i++)
         {
@@ -39,7 +39,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Indexer_Set_ThrowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target[0] = new Coordinate(10.1, 11.2));
     }
@@ -47,7 +47,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Count_GetsNumberOfItemsInSourceCollection()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Equal(_nodes.Count, target.Count);
     }
@@ -55,7 +55,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Add_Coordinate_ThowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target.Add(Coordinate.Empty));
     }
@@ -63,7 +63,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Add_Coordinates_ThowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target.Add(new Coordinate[] { Coordinate.Empty }));
     }
@@ -71,7 +71,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Insert_Index_Coordinate_ThowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target.Insert(0, Coordinate.Empty));
     }
@@ -79,7 +79,7 @@ public class WayCoordinateListTests
     [Fact]
     public void RemoveAt_Index_ThowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target.RemoveAt(0));
     }
@@ -87,7 +87,7 @@ public class WayCoordinateListTests
     [Fact]
     public void Clear_ThowsNotSupportedException()
     {
-        WayCoordinateList target = new WayCoordinateList(_nodes);
+        WayCoordinateList target = new(_nodes);
 
         Assert.Throws<NotSupportedException>(() => target.Clear());
     }

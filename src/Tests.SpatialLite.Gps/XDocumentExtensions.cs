@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Tests.SpatialLite.Gps;
@@ -28,7 +29,7 @@ public static class XDocumentExtensions
                 {
                     return false;
                 }
-                if (attr.Value.ToLower() != ele2.Attribute(attr.Name.LocalName).Value.ToLower())
+                if (attr.Value.ToLower(CultureInfo.InvariantCulture) != ele2.Attribute(attr.Name.LocalName).Value.ToLower(CultureInfo.InvariantCulture))
                 {
                     return false;
                 }

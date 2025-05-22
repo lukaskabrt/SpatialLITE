@@ -29,8 +29,8 @@ public class OsmGeometryDatabaseTests
         _wayData[1] = new Way(11, _nodeData.Skip(1));
 
         _relationData = new Relation[2];
-        _relationData[0] = new Relation(100, new RelationMember[] { new RelationMember(_wayData[0], "way"), new RelationMember(_nodeData[0], "node") });
-        _relationData[1] = new Relation(101, new RelationMember[] { new RelationMember(_relationData[0], "relation"), new RelationMember(_nodeData[0], "node") });
+        _relationData[0] = new Relation(100, new RelationMember[] { new(_wayData[0], "way"), new(_nodeData[0], "node") });
+        _relationData[1] = new Relation(101, new RelationMember[] { new(_relationData[0], "relation"), new(_nodeData[0], "node") });
 
         _data = _nodeData.Concat<IOsmGeometry>(_wayData).Concat<IOsmGeometry>(_relationData).ToArray();
     }
@@ -38,7 +38,7 @@ public class OsmGeometryDatabaseTests
     [Fact]
     public void Constructor__CreatesEmptyDatabase()
     {
-        OsmGeometryDatabase target = new OsmGeometryDatabase();
+        OsmGeometryDatabase target = new();
 
         Assert.Empty(target);
         Assert.Empty(target.Nodes);
@@ -49,7 +49,7 @@ public class OsmGeometryDatabaseTests
     [Fact]
     public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems()
     {
-        OsmGeometryDatabase target = new OsmGeometryDatabase(_data);
+        OsmGeometryDatabase target = new(_data);
 
         for (int i = 0; i < _data.Length; i++)
         {
@@ -60,7 +60,7 @@ public class OsmGeometryDatabaseTests
     [Fact]
     public void Constructor_IEnumerable_AddEnittiesToCorrextCollections()
     {
-        OsmGeometryDatabase target = new OsmGeometryDatabase(_data);
+        OsmGeometryDatabase target = new(_data);
 
         for (int i = 0; i < _nodeData.Length; i++)
         {
@@ -162,12 +162,12 @@ public class OsmGeometryDatabaseTests
     [Fact]
     public void Save_CallsIOsmWriterWriteForAllEntities()
     {
-        List<IOsmGeometry> written = new List<IOsmGeometry>();
-        Mock<IOsmWriter> writerM = new Mock<IOsmWriter>();
+        List<IOsmGeometry> written = new();
+        Mock<IOsmWriter> writerM = new();
 
         writerM.Setup(w => w.Write(It.IsAny<IOsmGeometry>())).Callback<IOsmGeometry>((e) => written.Add(e));
 
-        OsmGeometryDatabase target = new OsmGeometryDatabase(_data);
+        OsmGeometryDatabase target = new(_data);
         target.Save(writerM.Object);
 
         Assert.Equal(target.Count, written.Count);

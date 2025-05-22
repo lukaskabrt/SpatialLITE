@@ -30,22 +30,22 @@ public class OsmXmlReaderTests
         };
 
         _node = new NodeInfo(1, 50.4, 16.2, new TagsCollection());
-        _nodeTags = new NodeInfo(2, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
+        _nodeTags = new NodeInfo(2, 50.4, 16.2, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }));
         _nodeProperties = new NodeInfo(3, 50.4, 16.2, new TagsCollection(), _details);
 
         _way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
-        _wayTags = new WayInfo(2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });
+        _wayTags = new WayInfo(2, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }), new long[] { 10, 11, 12 });
         _wayProperties = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 }, _details);
         _wayWithoutNodes = new WayInfo(1, new TagsCollection(), new long[] { });
 
-        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
-        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
+        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
+        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
         _relationTags = new RelationInfo(
             2,
-            new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
-            new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
+            new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }),
+            new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
         _relationWithoutMembers = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { });
     }
 
@@ -59,8 +59,8 @@ public class OsmXmlReaderTests
     public void Constructor_StringSettings_SetsSettingsAndMakesItReadOnly()
     {
         string path = "../../../Data/Xml/osm-real-file.osm";
-        OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
-        using (OsmXmlReader target = new OsmXmlReader(path, settings))
+        OsmXmlReaderSettings settings = new() { ReadMetadata = false };
+        using (OsmXmlReader target = new(path, settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -70,8 +70,8 @@ public class OsmXmlReaderTests
     [Fact]
     public void Constructor_StreamSettings_SetsSettingsAndMakesItReadOnly()
     {
-        OsmXmlReaderSettings settings = new OsmXmlReaderSettings() { ReadMetadata = false };
-        using (OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-node.osm"), settings))
+        OsmXmlReaderSettings settings = new() { ReadMetadata = false };
+        using (OsmXmlReader target = new(TestDataReader.OpenXml("osm-simple-node.osm"), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -81,7 +81,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_SkipsUnknownElements()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-unknown-inner-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-unknown-inner-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         IEntityInfo result = target.Read();
 
         Assert.NotNull(result as NodeInfo);
@@ -91,7 +91,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfTagHasNotKey()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-tag-without-key.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-tag-without-key.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -100,7 +100,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfTagHasNotValue()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-tag-without-value.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-tag-without-value.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -108,21 +108,21 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIPieceOffMetadataIsMissingAndStrictModeIsTrue()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = true });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = true });
         Assert.Throws<XmlException>(() => target.Read());
     }
 
     [Fact]
     public void Read_DoesNotThrowExceptionIPieceOffMetadataIsMissingAndStrictModeIsFalse()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = false });
         target.Read();
     }
 
     [Fact]
     public void Read_ThrowsExceptionIfNodeHasNotID()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -130,7 +130,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfNodeHasNotLat()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-lat.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-lat.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -138,7 +138,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfNodeHasNotLon()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-without-lon.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-lon.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -146,19 +146,19 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ReadsSimpleNode()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-simple-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         NodeInfo readNode = target.Read() as NodeInfo;
 
-        this.CompareNodes(_node, readNode);
+        CompareNodes(_node, readNode);
     }
 
     [Fact]
     public void Read_ReadsNodeWithUnknownElement()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-with-tag-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-with-tag-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         NodeInfo readNode = target.Read() as NodeInfo;
 
-        this.CompareNodes(_node, readNode);
+        CompareNodes(_node, readNode);
 
         // nothing more left to read in the file
         Assert.Null(target.Read());
@@ -167,25 +167,25 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ReadsNodeWithTags()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         NodeInfo readNode = target.Read() as NodeInfo;
 
-        this.CompareNodes(_nodeTags, readNode);
+        CompareNodes(_nodeTags, readNode);
     }
 
     [Fact]
     public void Read_ReadsNodeWithAllAttributes()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-node-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         NodeInfo readNode = target.Read() as NodeInfo;
 
-        this.CompareNodes(_nodeProperties, readNode);
+        CompareNodes(_nodeProperties, readNode);
     }
 
     [Fact]
     public void Read_ThrowsExceptionIfWayHasNotID()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -193,7 +193,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfWayNDHasNotRef()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -201,52 +201,52 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ReadsWayWithoutNodes()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-without-nodes.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-without-nodes.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         WayInfo readWay = target.Read() as WayInfo;
 
-        this.CompareWays(_wayWithoutNodes, readWay);
+        CompareWays(_wayWithoutNodes, readWay);
     }
 
     [Fact]
     public void Read_ReadsSimpleWay()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-simple-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-simple-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         WayInfo readWay = target.Read() as WayInfo;
 
-        this.CompareWays(_way, readWay);
+        CompareWays(_way, readWay);
     }
 
     [Fact]
     public void Read_ReadsWayWithTags()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         WayInfo readWay = target.Read() as WayInfo;
 
-        this.CompareWays(_wayTags, readWay);
+        CompareWays(_wayTags, readWay);
     }
 
     [Fact]
     public void Read_ReadsWayWithUnknownElement()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         WayInfo readWay = target.Read() as WayInfo;
 
-        this.CompareWays(_wayTags, readWay);
+        CompareWays(_wayTags, readWay);
     }
 
     [Fact]
     public void Read_ReadsWayWithAllAttributes()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-way-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         WayInfo readWay = target.Read() as WayInfo;
 
-        this.CompareWays(_wayProperties, readWay);
+        CompareWays(_wayProperties, readWay);
     }
 
     [Fact]
     public void Read_ThrowsExceptionIfRelationHasNotID()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -254,7 +254,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfRelationMemberHasNotRef()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-member-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-member-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -262,7 +262,7 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfRelationMemberHasNotType()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-member-without-type.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-member-without-type.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<XmlException>(() => target.Read());
     }
@@ -270,64 +270,64 @@ public class OsmXmlReaderTests
     [Fact]
     public void Read_ReadsRelationWithoutMembers()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-without-members.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-without-members.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationWithoutMembers, readRelation);
+        CompareRelation(_relationWithoutMembers, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithNodeMember()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-node.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationNode, readRelation);
+        CompareRelation(_relationNode, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithWayMember()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-way.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationWay, readRelation);
+        CompareRelation(_relationWay, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithRelationMember()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationRelation, readRelation);
+        CompareRelation(_relationRelation, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithTags()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-with-tags.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationTags, readRelation);
+        CompareRelation(_relationTags, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithTagsAndUnknownElement()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-with-tags-and-unknown-element.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationTags, readRelation);
+        CompareRelation(_relationTags, readRelation);
     }
 
     [Fact]
     public void Read_ReadsRelationWithAllProperties()
     {
-        OsmXmlReader target = new OsmXmlReader(TestDataReader.OpenXml("osm-relation-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
+        OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-all-properties.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         RelationInfo readRelation = target.Read() as RelationInfo;
 
-        this.CompareRelation(_relationProperties, readRelation);
+        CompareRelation(_relationProperties, readRelation);
     }
 
     [Fact]
@@ -335,7 +335,7 @@ public class OsmXmlReaderTests
     {
         string filename = "../../../Data/Xml/osm-real-file.osm";
 
-        OsmXmlReader target = new OsmXmlReader(filename, new OsmXmlReaderSettings() { ReadMetadata = false });
+        OsmXmlReader target = new(filename, new OsmXmlReaderSettings() { ReadMetadata = false });
         target.Dispose();
 
         FileStream testStream = null;
@@ -349,8 +349,8 @@ public class OsmXmlReaderTests
         Assert.Equal(expected.Longitude, actual.Longitude);
         Assert.Equal(expected.Latitude, actual.Latitude);
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareWays(WayInfo expected, WayInfo actual)
@@ -362,8 +362,8 @@ public class OsmXmlReaderTests
             Assert.Equal(expected.Nodes[i], actual.Nodes[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareRelation(RelationInfo expected, RelationInfo actual)
@@ -375,8 +375,8 @@ public class OsmXmlReaderTests
             Assert.Equal(expected.Members[i], actual.Members[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareTags(TagsCollection expected, TagsCollection actual)

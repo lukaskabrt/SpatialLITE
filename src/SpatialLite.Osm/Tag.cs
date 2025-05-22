@@ -20,7 +20,7 @@ public class Tag
     {
         if (key == null)
         {
-            throw new ArgumentNullException("Parameter 'key' can't be null.");
+            throw new ArgumentNullException(nameof(key), "Parameter 'key' can't be null.");
         }
 
         if (key == string.Empty)
@@ -29,7 +29,7 @@ public class Tag
         }
 
         _key = key;
-        _value = value ?? throw new ArgumentNullException("Parameter 'value' can't be null.");
+        _value = value ?? throw new ArgumentNullException(nameof(value), "Parameter 'value' can't be null.");
     }
 
     /// <summary>

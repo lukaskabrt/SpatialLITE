@@ -58,7 +58,7 @@ public class GpxReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfWaypointHasntLat()
     {
-        GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lat.gpx"), new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(TestDataReader.Open("gpx-waypoint-without-lat.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<InvalidDataException>(target.Read);
     }
@@ -66,7 +66,7 @@ public class GpxReaderTests
     [Fact]
     public void Read_ThrowsExceptionIfWaypointHasntLon()
     {
-        GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lon.gpx"), new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(TestDataReader.Open("gpx-waypoint-without-lon.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
         Assert.Throws<InvalidDataException>(target.Read);
     }
@@ -77,7 +77,7 @@ public class GpxReaderTests
         var data = TestDataReader.Open("gpx-waypoint-simple.gpx");
         _ = new Coordinate(-71.119277, 42.438878);
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
         var result = target.Read() as GpxPoint;
 
         Assert.NotNull(result.Metadata);
@@ -89,7 +89,7 @@ public class GpxReaderTests
         var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
         _ = new Coordinate(-71.119277, 42.438878);
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxPoint;
 
         Assert.Null(result.Metadata);
@@ -99,10 +99,10 @@ public class GpxReaderTests
     public void Read_ParsesWaypointWithLatLonElevationAndTime()
     {
         var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
-        Coordinate expectedCoordinate = new Coordinate(-71.119277, 42.438878, 44.586548);
-        DateTime expectedTime = new DateTime(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
+        Coordinate expectedCoordinate = new(-71.119277, 42.438878, 44.586548);
+        DateTime expectedTime = new(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxPoint;
 
         Assert.Equal(result.Position, expectedCoordinate);
@@ -113,10 +113,10 @@ public class GpxReaderTests
     public void Read_ParsesWaypointWithExtensions()
     {
         var data = TestDataReader.Open("gpx-waypoint-extensions.gpx");
-        Coordinate expectedCoordinate = new Coordinate(-71.119277, 42.438878, 44.586548);
-        DateTime expectedTime = new DateTime(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
+        Coordinate expectedCoordinate = new(-71.119277, 42.438878, 44.586548);
+        DateTime expectedTime = new(2001, 11, 28, 21, 5, 28, DateTimeKind.Utc);
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxPoint;
 
         Assert.Equal(result.Position, expectedCoordinate);
@@ -128,8 +128,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-waypoint-multiple.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
-        GpxPoint result = null;
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         int count = 0;
         while ((_ = target.Read() as GpxPoint) != null)
@@ -145,7 +144,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
         var result = target.Read() as GpxPoint;
 
         Assert.Equal(0.98, result.Metadata.MagVar);
@@ -175,7 +174,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
         var result = target.Read() as GpxPoint;
 
         Assert.Equal(0.98, result.Metadata.MagVar);
@@ -205,7 +204,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-single-track-segment.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         Assert.Single(result.Geometries);
@@ -224,7 +223,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-single-track-segment.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         Assert.Single(result.Geometries);
@@ -236,7 +235,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-2-track-segments.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         //segments
@@ -251,7 +250,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-multiple-tracks.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result1 = target.Read() as GpxTrack;
         var result2 = target.Read() as GpxTrack;
 
@@ -272,7 +271,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-empty.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         Assert.Empty(result.Geometries);
@@ -283,7 +282,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-empty-track-segment.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         Assert.Single(result.Geometries);
@@ -295,7 +294,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-with-metadata.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
         var result = target.Read() as GpxTrack;
 
         Assert.Equal("TRK Comment", result.Metadata.Comment);
@@ -315,7 +314,7 @@ public class GpxReaderTests
     {
         var data = TestDataReader.Open("gpx-track-with-metadata.gpx");
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxTrack;
 
         Assert.Null(result.Metadata);
@@ -325,7 +324,7 @@ public class GpxReaderTests
     public void Read_ParsesEmptyRoute()
     {
         var data = TestDataReader.Open("gpx-route-empty.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         var result = target.Read() as GpxRoute;
 
@@ -336,7 +335,7 @@ public class GpxReaderTests
     public void Read_ParsesSingleRoute()
     {
         var data = TestDataReader.Open("gpx-route-single-route.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         var result = target.Read() as GpxRoute;
 
@@ -352,7 +351,7 @@ public class GpxReaderTests
     public void Read_ParsesSingleRouteWithExtensions()
     {
         var data = TestDataReader.Open("gpx-route-with-metadata-and-extensions.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         var result = target.Read() as GpxRoute;
 
@@ -363,7 +362,7 @@ public class GpxReaderTests
     public void Read_ParsesMultipleRoutes()
     {
         var data = TestDataReader.Open("gpx-route-multiple-routes.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         var result1 = target.Read() as GpxRoute;
         var result2 = target.Read() as GpxRoute;
@@ -376,7 +375,7 @@ public class GpxReaderTests
     public void Read_ParsesRouteWithMetadata()
     {
         var data = TestDataReader.Open("gpx-route-with-metadata.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
 
         var result = target.Read() as GpxRoute;
 
@@ -397,7 +396,7 @@ public class GpxReaderTests
     public void Read_SetsRouteMetadataToNullIfReadMetadataIsFalse()
     {
         var data = TestDataReader.Open("gpx-route-with-metadata.gpx");
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = false });
 
         var result = target.Read() as GpxRoute;
 
@@ -412,8 +411,7 @@ public class GpxReaderTests
         var target = new GpxReader(filename, new GpxReaderSettings() { ReadMetadata = false });
         target.Dispose();
 
-        FileStream testStream = null;
-        testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
@@ -421,9 +419,9 @@ public class GpxReaderTests
     public void Read_ReadsAllEntitiesFromRealGpxFile()
     {
         var data = TestDataReader.Open("gpx-real-file.gpx");
-        List<IGpxGeometry> parsed = new List<IGpxGeometry>();
+        List<IGpxGeometry> parsed = new();
 
-        GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
+        GpxReader target = new(data, new GpxReaderSettings() { ReadMetadata = true });
 
         IGpxGeometry geometry = null;
         while ((geometry = target.Read()) != null)
@@ -432,10 +430,10 @@ public class GpxReaderTests
         }
 
         // waypoints
-        Assert.Equal(3, parsed.Where(g => g.GeometryType == GpxGeometryType.Waypoint).Count());
+        Assert.Equal(3, parsed.Count(g => g.GeometryType == GpxGeometryType.Waypoint));
 
         // routes
-        Assert.Equal(2, parsed.Where(g => g.GeometryType == GpxGeometryType.Route).Count());
+        Assert.Equal(2, parsed.Count(g => g.GeometryType == GpxGeometryType.Route));
 
         // tracks
         Assert.Single(parsed.Where(g => g.GeometryType == GpxGeometryType.Track));

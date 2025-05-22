@@ -18,7 +18,7 @@ public class PbfWriter : IOsmWriter
     /// </summary>
     public const int MaxDataBlockSize = 16 * 1024 * 1024;
 
-    private readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+    private readonly DateTime _unixEpoch = new(1970, 1, 1, 0, 0, 0);
 
     private bool _disposed = false;
     private readonly Stream _output;
@@ -78,12 +78,12 @@ public class PbfWriter : IOsmWriter
         {
             if (entity.Metadata == null)
             {
-                throw new ArgumentException("Entity doesn't contain metadata obejct, but writer was created with WriteMetadata setting.");
+                throw new ArgumentException("Entity doesn't contain metadata object, but writer was created with WriteMetadata setting.");
             }
 
             if (entity.Metadata.User == null)
             {
-                throw new ArgumentNullException("Entity.Metadata.User cannot be null.");
+                throw new ArgumentException("Entity.Metadata.User cannot be null.");
             }
         }
 
@@ -173,7 +173,7 @@ public class PbfWriter : IOsmWriter
             return;
         }
 
-        MemoryStream primitiveBlockStream = new MemoryStream();
+        MemoryStream primitiveBlockStream = new();
         Serializer.Serialize<PrimitiveBlock>(primitiveBlockStream, primitiveBlock);
 
         //byte[] buffer = new byte[primitiveBlockStream.Length];
@@ -187,7 +187,7 @@ public class PbfWriter : IOsmWriter
     /// </summary>
     private void WriteHeader()
     {
-        OsmHeader header = new OsmHeader();
+        OsmHeader header = new();
         header.RequiredFeatures.Add("OsmSchema-V0.6");
 
         if (Settings.UseDenseFormat)
@@ -200,7 +200,7 @@ public class PbfWriter : IOsmWriter
             header.OptionalFeatures.Add("Has_Metadata");
         }
 
-        using (MemoryStream stream = new MemoryStream())
+        using (MemoryStream stream = new())
         {
             Serializer.Serialize<OsmHeader>(stream, header);
 
@@ -218,20 +218,20 @@ public class PbfWriter : IOsmWriter
     /// <param name="blobContent">The pbf serialized content of the blob.</param>
     private void WriteBlob(string blobType, byte[] blobContent)
     {
-        Blob blob = new Blob();
+        Blob blob = new();
         if (Settings.Compression == CompressionMode.None)
         {
             blob.Raw = blobContent;
         }
         else if (Settings.Compression == CompressionMode.ZlibDeflate)
         {
-            MemoryStream zlibStream = new MemoryStream();
+            MemoryStream zlibStream = new();
 
             //ZLIB header
             zlibStream.WriteByte(120);
             zlibStream.WriteByte(156);
 
-            using (System.IO.Compression.DeflateStream deflateSteram = new System.IO.Compression.DeflateStream(zlibStream, System.IO.Compression.CompressionMode.Compress, true))
+            using (System.IO.Compression.DeflateStream deflateSteram = new(zlibStream, System.IO.Compression.CompressionMode.Compress, true))
             {
                 deflateSteram.Write(blobContent, 0, blobContent.Length);
             }
@@ -240,10 +240,10 @@ public class PbfWriter : IOsmWriter
             blob.ZlibData = zlibStream.ToArray();
         }
 
-        MemoryStream blobStream = new MemoryStream();
+        MemoryStream blobStream = new();
         Serializer.Serialize<Blob>(blobStream, blob);
 
-        BlobHeader header = new BlobHeader();
+        BlobHeader header = new();
         header.Type = blobType;
         header.DataSize = (int)blobStream.Length;
         Serializer.SerializeWithLengthPrefix(_output, header, PrefixStyle.Fixed32BigEndian);
@@ -258,7 +258,7 @@ public class PbfWriter : IOsmWriter
     /// <returns>PrimitiveBlock with entities of specified type or null if tokens doesn't contain any entities of specified type.</returns>
     private PrimitiveBlock BuildPrimitiveBlock(EntityType entityType)
     {
-        PrimitiveBlock result = new PrimitiveBlock();
+        PrimitiveBlock result = new();
 
         result.PrimitiveGroup = new List<PrimitiveGroup>();
         PrimitiveGroup entityGroup = null;
@@ -368,10 +368,10 @@ public class PbfWriter : IOsmWriter
     /// <returns>The DenseNode obejct with data from nodes in tokens.</returns>
     private List<PbfNode> BuildNodes(int timestampGranularity, int positionGranularity, long latOffset, long lonOffset)
     {
-        List<PbfNode> result = new List<PbfNode>(_nodesBuffer.Count);
+        List<PbfNode> result = new(_nodesBuffer.Count);
         foreach (var node in _nodesBuffer)
         {
-            PbfNode toAdd = new PbfNode();
+            PbfNode toAdd = new();
 
             toAdd.ID = node.ID;
             toAdd.Latitude = (long)Math.Round(((node.Latitude / 1E-09) - latOffset) / positionGranularity);
@@ -410,7 +410,7 @@ public class PbfWriter : IOsmWriter
     /// <returns>The DenseNode obejct with data from nodes in tokens.</returns>
     private PbfDenseNodes BuildDenseNodes(int timestampGranularity, int positionGranularity, long latOffset, long lonOffset)
     {
-        PbfDenseNodes result = new PbfDenseNodes(_nodesBuffer.Count);
+        PbfDenseNodes result = new(_nodesBuffer.Count);
 
         long lastID = 0;
         long lastLat = 0;
@@ -453,13 +453,13 @@ public class PbfWriter : IOsmWriter
     /// <returns>The collection of PbfWay objects created from relations in tokens.</returns>
     private List<PbfWay> BuildWays(int timestampGranularity)
     {
-        List<PbfWay> result = new List<PbfWay>();
+        List<PbfWay> result = new();
 
         foreach (var way in _wayBuffer)
         {
             long lastRef = 0;
 
-            PbfWay toAdd = new PbfWay();
+            PbfWay toAdd = new();
 
             toAdd.ID = way.ID;
 
@@ -504,11 +504,11 @@ public class PbfWriter : IOsmWriter
     /// <returns>The collection of PbfRelation objects created from relations in tokens.</returns>
     private List<PbfRelation> BuildRelations(int timestampGranularity)
     {
-        List<PbfRelation> result = new List<PbfRelation>();
+        List<PbfRelation> result = new();
 
         foreach (var relation in _relationBuffer)
         {
-            PbfRelation toAdd = new PbfRelation();
+            PbfRelation toAdd = new();
             toAdd.ID = relation.ID;
 
             long lastRef = 0;
@@ -559,7 +559,7 @@ public class PbfWriter : IOsmWriter
     /// <returns>DenseInfo object with metadata for noes in tokens.</returns>
     private PbfDenseMetadata BuildDenseInfo(int timestampGranularity)
     {
-        PbfDenseMetadata result = new PbfDenseMetadata(_nodesBuffer.Count);
+        PbfDenseMetadata result = new(_nodesBuffer.Count);
 
         long lastChangeset = 0;
         long lastTimestamp = 0;
@@ -600,7 +600,7 @@ public class PbfWriter : IOsmWriter
     /// <returns>PbfMetadata obejct with data from specified metadata object.</returns>
     private PbfMetadata BuildInfo(EntityMetadata metadata, int timestampGranularity, IStringTableBuilder stringTableBuilder)
     {
-        PbfMetadata result = new PbfMetadata();
+        PbfMetadata result = new();
         result.Changeset = metadata.Changeset;
         result.Timestamp = (long)Math.Round((metadata.Timestamp - _unixEpoch).TotalMilliseconds / timestampGranularity);
         result.UserID = metadata.Uid;

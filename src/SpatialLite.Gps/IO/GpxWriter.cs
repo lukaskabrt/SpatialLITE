@@ -27,7 +27,7 @@ public class GpxWriter : IDisposable, IGpxWriter
         Settings = settings;
         settings.IsReadOnly = true;
 
-        XmlWriterSettings writerSetting = new XmlWriterSettings();
+        XmlWriterSettings writerSetting = new();
         writerSetting.Indent = true;
 
         _streamWriter = new StreamWriter(stream, new UTF8Encoding(false));
@@ -47,7 +47,7 @@ public class GpxWriter : IDisposable, IGpxWriter
         Settings = settings;
         settings.IsReadOnly = true;
 
-        XmlWriterSettings writerSetting = new XmlWriterSettings();
+        XmlWriterSettings writerSetting = new();
         writerSetting.Indent = true;
 
         var fileStream = new FileStream(path, FileMode.Create);

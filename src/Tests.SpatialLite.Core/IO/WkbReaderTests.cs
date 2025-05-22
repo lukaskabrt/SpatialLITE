@@ -28,9 +28,9 @@ public class WkbReaderTests
     {
         string filename = "../../../Data/IO/point-3DM.wkb";
 
-        WkbReader target = new WkbReader(filename);
+        WkbReader target = new(filename);
         target.Dispose();
-        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
@@ -39,7 +39,7 @@ public class WkbReaderTests
     {
         var stream = TestDataReader.Open("point-3DM.wkb");
 
-        WkbReader target = new WkbReader(stream);
+        WkbReader target = new(stream);
         target.Dispose();
 
         Assert.False(stream.CanRead);
@@ -48,9 +48,9 @@ public class WkbReaderTests
     [Fact]
     public void Read_ReturnsNullIfStreamIsEmpty()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        WkbReader target = new WkbReader(stream);
+        WkbReader target = new(stream);
         Geometry read = target.Read();
 
         Assert.Null(read);
@@ -61,7 +61,7 @@ public class WkbReaderTests
     {
         Point expected = (Point)ParseWKT("point zm (-10.1 15.5 100.5 1000.5)");
 
-        WkbReader target = new WkbReader(TestDataReader.Open("point-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("point-3DM.wkb"));
         Point parsed = (Point)target.Read();
 
         ComparePoints(parsed, expected);
@@ -73,7 +73,7 @@ public class WkbReaderTests
         Point expected1 = (Point)ParseWKT("point zm (-10.1 15.5 100.5 1000.5)");
         Point expected2 = (Point)ParseWKT("point zm (-10.2 15.6 100.6 1000.6)");
 
-        WkbReader target = new WkbReader(TestDataReader.Open("two-points-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("two-points-3DM.wkb"));
 
         Point parsed1 = (Point)target.Read();
         ComparePoints(parsed1, expected1);
@@ -85,7 +85,7 @@ public class WkbReaderTests
     [Fact]
     public void Read_ReturnsNullIfNoMoreGeometriesAreAvailable()
     {
-        WkbReader target = new WkbReader(TestDataReader.Open("point-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("point-3DM.wkb"));
 
         target.Read();
         Geometry parsed = target.Read();
@@ -97,9 +97,9 @@ public class WkbReaderTests
     public void Read_ThrowsExceptionIfWKBDoesNotRepresentGeometry()
     {
         byte[] wkb = new byte[] { 12, 0, 0, 45, 78, 124, 36, 0 };
-        using (MemoryStream ms = new MemoryStream(wkb))
+        using (MemoryStream ms = new(wkb))
         {
-            WkbReader target = new WkbReader(ms);
+            WkbReader target = new(ms);
 
             Assert.Throws<WkbFormatException>(target.Read);
         }
@@ -108,9 +108,9 @@ public class WkbReaderTests
     [Fact]
     public void ReadT_ReturnsNullIfStreamIsEmpty()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        WkbReader target = new WkbReader(stream);
+        WkbReader target = new(stream);
         Geometry read = target.Read<Geometry>();
 
         Assert.Null(read);
@@ -121,7 +121,7 @@ public class WkbReaderTests
     {
         Point expected = (Point)ParseWKT("point zm (-10.1 15.5 100.5 1000.5)");
 
-        WkbReader target = new WkbReader(TestDataReader.Open("point-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("point-3DM.wkb"));
         Point parsed = target.Read<Point>();
 
         ComparePoints(parsed, expected);
@@ -130,7 +130,7 @@ public class WkbReaderTests
     [Fact]
     public void ReadT_ReturnsNullIfNoMoreGeometriesAreAvailable()
     {
-        WkbReader target = new WkbReader(TestDataReader.Open("point-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("point-3DM.wkb"));
 
         target.Read<Point>();
         Geometry parsed = target.Read<Point>();
@@ -142,9 +142,9 @@ public class WkbReaderTests
     public void ReadT_ThrowsExceptionIfWKBDoesNotRepresentGeometry()
     {
         byte[] wkb = new byte[] { 12, 0, 0, 45, 78, 124, 36, 0 };
-        using (MemoryStream ms = new MemoryStream(wkb))
+        using (MemoryStream ms = new(wkb))
         {
-            WkbReader target = new WkbReader(ms);
+            WkbReader target = new(ms);
 
             Assert.Throws<WkbFormatException>(target.Read<Point>);
         }
@@ -153,7 +153,7 @@ public class WkbReaderTests
     [Fact]
     public void ReadT_ThrowsExceptionIfWKBDoesNotRepresentSpecifiecGeometryType()
     {
-        WkbReader target = new WkbReader(TestDataReader.Open("point-3DM.wkb"));
+        WkbReader target = new(TestDataReader.Open("point-3DM.wkb"));
         Assert.Throws<WkbFormatException>(target.Read<LineString>);
     }
 

@@ -14,7 +14,7 @@ public class OsmDatabaseTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void OsmEntityInfoDatabase_LoadesRealFile()
     {
-        OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
+        OsmXmlReader reader = new(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         OsmEntityInfoDatabase target = OsmEntityInfoDatabase.Load(reader);
 
         Assert.Equal(6688, target.Nodes.Count);
@@ -25,7 +25,7 @@ public class OsmDatabaseTests
     [Fact, Trait("Category", "Osm.Integration")]
     public void OsmGeometryDatabase_LoadesRealFile()
     {
-        OsmXmlReader reader = new OsmXmlReader(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
+        OsmXmlReader reader = new(TestDataReader.OpenXml("osm-real-file.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         OsmGeometryDatabase target = OsmGeometryDatabase.Load(reader, true);
 
         Assert.Equal(6688, target.Nodes.Count);

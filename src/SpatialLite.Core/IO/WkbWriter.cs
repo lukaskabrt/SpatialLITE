@@ -80,11 +80,11 @@ public class WkbWriter : IDisposable
     /// <returns>The binary array with WKB representation of the Geometry.</returns>
     public static byte[] WriteToArray(IGeometry geometry)
     {
-        using (MemoryStream dataStream = new MemoryStream())
+        using (MemoryStream dataStream = new())
         {
-            using (BinaryWriter writer = new BinaryWriter(dataStream))
+            using (BinaryWriter writer = new(dataStream))
             {
-                WkbWriterSettings defaultSettings = new WkbWriterSettings();
+                WkbWriterSettings defaultSettings = new();
 
                 WriteEncoding(writer, defaultSettings.Encoding);
                 Write(geometry, writer);

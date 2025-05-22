@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace SpatialLite.Osm;
@@ -98,7 +99,7 @@ public class TagsCollection : ICollection<Tag>
 
         if (Contains(tag.Key))
         {
-            throw new ArgumentException(string.Format("Tag with key '{0}' is already present in the collection.", tag.Key));
+            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Tag with key '{0}' is already present in the collection.", tag.Key));
         }
 
         _tags.Add(tag);
@@ -175,7 +176,7 @@ public class TagsCollection : ICollection<Tag>
     {
         if (_tags == null)
         {
-            throw new ArgumentException(string.Format("Tag with key '{0}' is not present in the collection.", key));
+            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Tag with key '{0}' is not present in the collection.", key));
         }
 
         for (int i = 0; i < _tags.Count; i++)
@@ -186,7 +187,7 @@ public class TagsCollection : ICollection<Tag>
             }
         }
 
-        throw new ArgumentException(string.Format("Tag with key '{0}' is not present in the collection.", key));
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Tag with key '{0}' is not present in the collection.", key));
     }
 
     /// <summary>

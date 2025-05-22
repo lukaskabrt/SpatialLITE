@@ -18,7 +18,7 @@ internal static class WktTokenizer
     /// <returns>The list of parsed tokens of the input string.</returns>
     public static IEnumerable<WktToken> Tokenize(string text)
     {
-        StringReader reader = new StringReader(text);
+        StringReader reader = new(text);
         return Tokenize(reader);
     }
 
@@ -29,7 +29,7 @@ internal static class WktTokenizer
     /// <returns>The collection parsed tokens of the input string</returns>
     public static IEnumerable<WktToken> Tokenize(TextReader reader)
     {
-        StringBuilder stringBuffer = new StringBuilder();
+        StringBuilder stringBuffer = new();
 
         if (reader.Peek() == -1)
         {

@@ -11,7 +11,7 @@ public class PbfWriterSettingsTests
     [Fact]
     public void Constructor__SetsDefaultValues()
     {
-        PbfWriterSettings target = new PbfWriterSettings();
+        PbfWriterSettings target = new();
 
         Assert.True(target.UseDenseFormat);
         Assert.Equal(CompressionMode.ZlibDeflate, target.Compression);
@@ -21,7 +21,7 @@ public class PbfWriterSettingsTests
     [Fact]
     public void UseDenseFormatSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        PbfWriterSettings target = new PbfWriterSettings();
+        PbfWriterSettings target = new();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.UseDenseFormat = false);
@@ -30,7 +30,7 @@ public class PbfWriterSettingsTests
     [Fact]
     public void ConpressionSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        PbfWriterSettings target = new PbfWriterSettings();
+        PbfWriterSettings target = new();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.Compression = CompressionMode.ZlibDeflate);

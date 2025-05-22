@@ -90,7 +90,7 @@ public class WktWriter : IDisposable
     /// <returns>The WKT representation of the Geometry.</returns>
     public static string WriteToString(IGeometry geometry)
     {
-        StringWriter tw = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        StringWriter tw = new(System.Globalization.CultureInfo.InvariantCulture);
         Write(geometry, tw);
 
         return tw.ToString();

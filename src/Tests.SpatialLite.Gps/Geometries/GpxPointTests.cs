@@ -58,7 +58,7 @@ public class GpxPointTests
     [Fact]
     public void GeometryType_ReturnsWaypoint()
     {
-        GpxPoint target = new GpxPoint();
+        GpxPoint target = new();
 
         Assert.Equal(GpxGeometryType.Waypoint, target.GeometryType);
     }

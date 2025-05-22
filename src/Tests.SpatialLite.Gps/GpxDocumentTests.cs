@@ -129,7 +129,7 @@ public class GpxDocumentTests
         var route = new GpxRoute();
         var track = new GpxTrack();
 
-        Mock<IGpxWriter> writerM = new Mock<IGpxWriter>();
+        Mock<IGpxWriter> writerM = new();
         writerM.Setup(w => w.Write(waypoint)).Verifiable();
         writerM.Setup(w => w.Write(route)).Verifiable();
         writerM.Setup(w => w.Write(track)).Verifiable();

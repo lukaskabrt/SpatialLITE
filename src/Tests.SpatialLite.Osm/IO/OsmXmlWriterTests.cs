@@ -34,30 +34,30 @@ public class OsmXmlWriterTests
         };
 
         _node = new NodeInfo(1, 50.4, 16.2, new TagsCollection());
-        _nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
+        _nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }));
         _nodeProperties = new NodeInfo(1, 50.4, 16.2, new TagsCollection(), _details);
 
         _way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
-        _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });
+        _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }), new long[] { 10, 11, 12 });
         _wayProperties = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 }, _details);
         _wayWithoutNodes = new WayInfo(1, new TagsCollection(), new long[] { });
 
-        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
-        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
+        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
+        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
         _relationTags = new RelationInfo(
             1,
-            new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
-            new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
+            new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }),
+            new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
     }
 
     [Fact]
     public void Constructor_StreamSettings_SetsSettingsAndMakesThemReadOnly()
     {
-        MemoryStream stream = new MemoryStream();
-        OsmWriterSettings settings = new OsmWriterSettings();
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, settings))
+        MemoryStream stream = new();
+        OsmWriterSettings settings = new();
+        using (OsmXmlWriter target = new(stream, settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(target.Settings.IsReadOnly);
@@ -69,8 +69,8 @@ public class OsmXmlWriterTests
     {
         string path = PathHelper.GetTempFilePath("xmlwriter-constructor-test.osm");
 
-        OsmWriterSettings settings = new OsmWriterSettings();
-        using (OsmXmlWriter target = new OsmXmlWriter(path, settings))
+        OsmWriterSettings settings = new();
+        using (OsmXmlWriter target = new(path, settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(target.Settings.IsReadOnly);
@@ -82,8 +82,8 @@ public class OsmXmlWriterTests
     {
         string filename = PathHelper.GetTempFilePath("osmwriter-constructor-creates-output-test.pbf");
 
-        OsmWriterSettings settings = new OsmWriterSettings();
-        using (OsmXmlWriter target = new OsmXmlWriter(filename, settings))
+        OsmWriterSettings settings = new();
+        using (OsmXmlWriter target = new(filename, settings))
         {
             ;
         }
@@ -96,7 +96,7 @@ public class OsmXmlWriterTests
     {
         string path = PathHelper.GetTempFilePath("xmlwriter-closes-output-filestream-test.osm");
 
-        OsmXmlWriter target = new OsmXmlWriter(path, new OsmWriterSettings());
+        OsmXmlWriter target = new(path, new OsmWriterSettings());
         target.Dispose();
 
         FileStream testStream = null;
@@ -107,9 +107,9 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = true }))
         {
             Assert.Throws<ArgumentException>(() => target.Write(_node));
         }
@@ -118,10 +118,10 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_DoesNotThrowsExceptionIfMetadataContainsNullInsteadUsername()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
         _nodeProperties.Metadata.User = null;
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = true }))
         {
             target.Write(_nodeProperties);
         }
@@ -130,48 +130,48 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_IEntityInfo_WritesNode()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_node);
         }
 
-        this.TestXmlOutput(stream, _node, false);
+        TestXmlOutput(stream, _node, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithTags()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_nodeTags);
         }
 
-        this.TestXmlOutput(stream, _nodeTags, false);
+        TestXmlOutput(stream, _nodeTags, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithMetadata()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = true }))
         {
             target.Write(_nodeProperties);
         }
 
-        this.TestXmlOutput(stream, _nodeProperties, true);
+        TestXmlOutput(stream, _nodeProperties, true);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWriteNodeMetadataIfWriteMedataIsFalse()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_nodeProperties);
         }
@@ -191,48 +191,48 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_IEntityInfo_WritesWay()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_way);
         }
 
-        this.TestXmlOutput(stream, _way, false);
+        TestXmlOutput(stream, _way, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesWayWithTags()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_wayTags);
         }
 
-        this.TestXmlOutput(stream, _wayTags, false);
+        TestXmlOutput(stream, _wayTags, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesWayWithMetadata()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = true }))
         {
             target.Write(_wayProperties);
         }
 
-        this.TestXmlOutput(stream, _wayProperties, true);
+        TestXmlOutput(stream, _wayProperties, true);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWriteWayMetadataIfWriteMedataIsFalse()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_wayProperties);
         }
@@ -252,74 +252,74 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithNode()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_relationNode);
         }
 
-        this.TestXmlOutput(stream, _relationNode, false);
+        TestXmlOutput(stream, _relationNode, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithWay()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_relationWay);
         }
 
-        this.TestXmlOutput(stream, _relationWay, false);
+        TestXmlOutput(stream, _relationWay, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithRelation()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_relationRelation);
         }
 
-        this.TestXmlOutput(stream, _relationRelation, false);
+        TestXmlOutput(stream, _relationRelation, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithTags()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_relationTags);
         }
 
-        this.TestXmlOutput(stream, _relationTags, false);
+        TestXmlOutput(stream, _relationTags, false);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithMetadata()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = true }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = true }))
         {
             target.Write(_relationNodeProperties);
         }
 
-        this.TestXmlOutput(stream, _relationNodeProperties, true);
+        TestXmlOutput(stream, _relationNodeProperties, true);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWriteRelationMetadataIfWriteMedataIsFalse()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(_relationNodeProperties);
         }
@@ -339,54 +339,54 @@ public class OsmXmlWriterTests
     [Fact]
     public void Write_IOsmGeometry_WritesNode()
     {
-        Node node = new Node(1, 11.1, 12.1);
+        Node node = new(1, 11.1, 12.1);
 
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(node);
         }
 
-        this.TestXmlOutput(stream, new NodeInfo(node), false);
+        TestXmlOutput(stream, new NodeInfo(node), false);
     }
 
     [Fact]
     public void Write_IOsmGeometry_WritesWay()
     {
-        Way way = new Way(10, new Node[] { new Node(1), new Node(2), new Node(3) });
+        Way way = new(10, new Node[] { new(1), new(2), new(3) });
 
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(way);
         }
 
-        this.TestXmlOutput(stream, new WayInfo(way), false);
+        TestXmlOutput(stream, new WayInfo(way), false);
     }
 
     [Fact]
     public void Write_IOsmGeometry_WritesRelation()
     {
-        Relation relation = new Relation(100, new RelationMember[] { new RelationMember(new Node(1), "test-role") });
+        Relation relation = new(100, new RelationMember[] { new(new Node(1), "test-role") });
 
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             target.Write(relation);
         }
 
-        this.TestXmlOutput(stream, new RelationInfo(relation), false);
+        TestXmlOutput(stream, new RelationInfo(relation), false);
     }
 
     [Fact]
     public void Write_IOsmGeometry_ThrowsExceptionIfEntityIsNull()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        using (OsmXmlWriter target = new OsmXmlWriter(stream, new OsmWriterSettings() { WriteMetadata = false }))
+        using (OsmXmlWriter target = new(stream, new OsmWriterSettings() { WriteMetadata = false }))
         {
             IOsmGeometry entity = null;
             Assert.Throws<ArgumentNullException>(() => target.Write(entity));
@@ -404,14 +404,14 @@ public class OsmXmlWriterTests
             xmlStream = new MemoryStream(xmlStream.ToArray());
         }
 
-        OsmXmlReader reader = new OsmXmlReader(xmlStream, new OsmXmlReaderSettings() { ReadMetadata = readMetadata });
+        OsmXmlReader reader = new(xmlStream, new OsmXmlReaderSettings() { ReadMetadata = readMetadata });
         IEntityInfo read = reader.Read();
 
         switch (expected.EntityType)
         {
-            case EntityType.Node: this.CompareNodes(expected as NodeInfo, read as NodeInfo); break;
-            case EntityType.Way: this.CompareWays(expected as WayInfo, read as WayInfo); break;
-            case EntityType.Relation: this.CompareRelation(expected as RelationInfo, read as RelationInfo); break;
+            case EntityType.Node: CompareNodes(expected as NodeInfo, read as NodeInfo); break;
+            case EntityType.Way: CompareWays(expected as WayInfo, read as WayInfo); break;
+            case EntityType.Relation: CompareRelation(expected as RelationInfo, read as RelationInfo); break;
         }
     }
 
@@ -421,8 +421,8 @@ public class OsmXmlWriterTests
         Assert.InRange(actual.Longitude, expected.Longitude - _resolution, expected.Longitude + _resolution);
         Assert.InRange(actual.Latitude, expected.Latitude - _resolution, expected.Latitude + _resolution);
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareWays(WayInfo expected, WayInfo actual)
@@ -434,8 +434,8 @@ public class OsmXmlWriterTests
             Assert.Equal(expected.Nodes[i], actual.Nodes[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareRelation(RelationInfo expected, RelationInfo actual)
@@ -447,8 +447,8 @@ public class OsmXmlWriterTests
             Assert.Equal(expected.Members[i], actual.Members[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareTags(TagsCollection expected, TagsCollection actual)

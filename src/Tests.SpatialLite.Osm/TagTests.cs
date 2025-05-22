@@ -15,7 +15,7 @@ public class TagTests
         string key = "test-key";
         string value = "test-value";
 
-        Tag target = new Tag(key, value);
+        Tag target = new(key, value);
 
         Assert.Equal(key, target.Key);
         Assert.Equal(value, target.Value);
@@ -51,8 +51,8 @@ public class TagTests
     [Fact]
     public void Equals_ReturnTrueForSameKeyAndValue()
     {
-        Tag target = new Tag("test-key", "test-value");
-        Tag other = new Tag("test-key", "test-value");
+        Tag target = new("test-key", "test-value");
+        Tag other = new("test-key", "test-value");
 
         Assert.True(target.Equals(other));
     }
@@ -60,8 +60,8 @@ public class TagTests
     [Fact]
     public void Equals_ReturnTrueForSameKeyAndValueAsObject()
     {
-        Tag target = new Tag("test-key", "test-value");
-        Tag other = new Tag("test-key", "test-value");
+        Tag target = new("test-key", "test-value");
+        Tag other = new("test-key", "test-value");
 
         Assert.True(target.Equals((object)other));
     }
@@ -69,8 +69,8 @@ public class TagTests
     [Fact]
     public void Equals_ReturnFalseForDifferentKeys()
     {
-        Tag target = new Tag("test-key", "test-value");
-        Tag other = new Tag("different-key", "test-value");
+        Tag target = new("test-key", "test-value");
+        Tag other = new("different-key", "test-value");
 
         Assert.False(target.Equals(other));
     }
@@ -78,8 +78,8 @@ public class TagTests
     [Fact]
     public void Equals_ReturnFalseForDifferentValues()
     {
-        Tag target = new Tag("test-key", "test-value");
-        Tag other = new Tag("test-key", "different-value");
+        Tag target = new("test-key", "test-value");
+        Tag other = new("test-key", "different-value");
 
         Assert.False(target.Equals(other));
     }
@@ -87,7 +87,7 @@ public class TagTests
     [Fact]
     public void Equals_ReturnFalseForOtherObject()
     {
-        Tag target = new Tag("test-key", "test-value");
+        Tag target = new("test-key", "test-value");
         string other = "Test";
 
         Assert.False(target.Equals(other));
@@ -96,7 +96,7 @@ public class TagTests
     [Fact]
     public void Equals_ReturnFalseForNull()
     {
-        Tag target = new Tag("test-key", "test-value");
+        Tag target = new("test-key", "test-value");
         object other = null;
 
         Assert.False(target.Equals(other));

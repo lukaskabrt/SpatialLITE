@@ -53,9 +53,9 @@ public class WkbReader : IDisposable
             throw new ArgumentNullException(nameof(wkb));
         }
 
-        using (MemoryStream ms = new MemoryStream(wkb))
+        using (MemoryStream ms = new(wkb))
         {
-            using (BinaryReader reader = new BinaryReader(ms))
+            using (BinaryReader reader = new(ms))
             {
                 if (reader.PeekChar() == -1)
                 {
@@ -197,7 +197,7 @@ public class WkbReader : IDisposable
     {
         int pointCount = (int)reader.ReadUInt32();
 
-        List<Coordinate> result = new List<Coordinate>(pointCount);
+        List<Coordinate> result = new(pointCount);
         for (int i = 0; i < pointCount; i++)
         {
             result.Add(ReadCoordinate(reader, is3D, isMeasured));
@@ -275,7 +275,7 @@ public class WkbReader : IDisposable
         }
 
         IEnumerable<Coordinate> exterior = ReadCoordinates(reader, is3D, isMeasured);
-        Polygon result = new Polygon(new CoordinateList(exterior));
+        Polygon result = new(new CoordinateList(exterior));
 
         for (int i = 1; i < ringsCount; i++)
         {
@@ -297,7 +297,7 @@ public class WkbReader : IDisposable
     {
         int pointsCount = (int)reader.ReadUInt32();
 
-        MultiPoint result = new MultiPoint();
+        MultiPoint result = new();
         for (int i = 0; i < pointsCount; i++)
         {
             result.Geometries.Add(ReadPoint(reader, is3D, isMeasured));
@@ -317,7 +317,7 @@ public class WkbReader : IDisposable
     {
         int pointsCount = (int)reader.ReadUInt32();
 
-        MultiLineString result = new MultiLineString();
+        MultiLineString result = new();
         for (int i = 0; i < pointsCount; i++)
         {
             result.Geometries.Add(ReadLineString(reader, is3D, isMeasured));
@@ -337,7 +337,7 @@ public class WkbReader : IDisposable
     {
         int pointsCount = (int)reader.ReadUInt32();
 
-        MultiPolygon result = new MultiPolygon();
+        MultiPolygon result = new();
         for (int i = 0; i < pointsCount; i++)
         {
             result.Geometries.Add(ReadPolygon(reader, is3D, isMeasured));
@@ -357,7 +357,7 @@ public class WkbReader : IDisposable
     {
         int pointsCount = (int)reader.ReadUInt32();
 
-        GeometryCollection<Geometry> result = new GeometryCollection<Geometry>();
+        GeometryCollection<Geometry> result = new();
         for (int i = 0; i < pointsCount; i++)
         {
             result.Geometries.Add(ReadGeometry(reader));

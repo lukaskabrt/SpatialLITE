@@ -11,7 +11,7 @@ public class Envelope
     /// <summary>
     /// Empty Envelope, that has all it's bounds set to double.NaN
     /// </summary>
-    public static Envelope Empty = new Envelope();
+    public static readonly Envelope Empty = new();
 
     private const int XIndex = 0;
     private const int YIndex = 1;

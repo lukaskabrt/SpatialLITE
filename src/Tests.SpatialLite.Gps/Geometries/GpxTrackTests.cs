@@ -9,7 +9,7 @@ public class GpxTrackTests
     [Fact]
     public void Constructor_Parameterless_CreateEmptyGpxTrack()
     {
-        GpxTrack target = new GpxTrack();
+        GpxTrack target = new();
 
         Assert.Empty(target.Geometries);
     }
@@ -17,9 +17,9 @@ public class GpxTrackTests
     [Fact]
     public void Constructor_Segments_CreateGpxTrackWithSegments()
     {
-        GpxTrackSegment[] segments = new GpxTrackSegment[] { new GpxTrackSegment(), new GpxTrackSegment(), new GpxTrackSegment() };
+        GpxTrackSegment[] segments = new GpxTrackSegment[] { new(), new(), new() };
 
-        GpxTrack target = new GpxTrack(segments);
+        GpxTrack target = new(segments);
 
         Assert.Equal(segments.Length, target.Geometries.Count);
         for (int i = 0; i < target.Geometries.Count; i++)
@@ -31,7 +31,7 @@ public class GpxTrackTests
     [Fact]
     public void GeometryType_ReturnsTrack()
     {
-        GpxTrack target = new GpxTrack();
+        GpxTrack target = new();
 
         Assert.Equal(GpxGeometryType.Track, target.GeometryType);
     }

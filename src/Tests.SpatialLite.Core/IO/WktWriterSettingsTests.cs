@@ -9,7 +9,7 @@ public class WktWriterSettingsTests
     [Fact]
     public void Constructor__SetsDefaultValues()
     {
-        WktWriterSettings target = new WktWriterSettings();
+        WktWriterSettings target = new();
 
         Assert.False(target.IsReadOnly);
     }

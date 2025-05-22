@@ -11,20 +11,20 @@ namespace Tests.SpatialLite.Osm;
 public class TagsCollectionTests
 {
     Tag[] _tags = new Tag[] {
-        new Tag("test-key-1", "test-value-1"),
-        new Tag("test-key-2", "test-value-2"),
-        new Tag("test-key-3", "test-value-3")
+        new("test-key-1", "test-value-1"),
+        new("test-key-2", "test-value-2"),
+        new("test-key-3", "test-value-3")
     };
 
     Tag[] _tagsDuplicitKeys = new Tag[] {
-        new Tag("test-key-1", "test-value-1"),
-        new Tag("test-key-1", "test-value-2")
+        new("test-key-1", "test-value-1"),
+        new("test-key-1", "test-value-2")
     };
 
     [Fact]
     public void Constructor_CreatesEmptyTagsCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.Empty(target);
     }
@@ -32,7 +32,7 @@ public class TagsCollectionTests
     [Fact]
     public void Constructor_IEnumerable_CreatesCollectionWithGivetTags()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Equal(_tags.Count(), target.Count());
         Assert.Contains(_tags[0], target);
@@ -48,7 +48,7 @@ public class TagsCollectionTests
     [Fact]
     public void Add_AddsTag()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
         target.Add(_tags[0]);
 
         Assert.Contains(_tags[0], target);
@@ -57,7 +57,7 @@ public class TagsCollectionTests
     [Fact]
     public void Add_ThrowsExceptionIfTagAlreadyPresent()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
         target.Add(_tagsDuplicitKeys[0]);
 
         Assert.Throws<ArgumentException>(delegate { target.Add(_tagsDuplicitKeys[1]); });
@@ -66,7 +66,7 @@ public class TagsCollectionTests
     [Fact]
     public void Clear_DoesNothingOnEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         target.Clear();
     }
@@ -74,7 +74,7 @@ public class TagsCollectionTests
     [Fact]
     public void Clear_RemovesAllItems()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
         target.Clear();
 
         Assert.Empty(target);
@@ -83,7 +83,7 @@ public class TagsCollectionTests
     [Fact]
     public void Contains_Tag_ReturnsFalseForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.DoesNotContain(new Tag("key", "value"), target);
     }
@@ -91,16 +91,16 @@ public class TagsCollectionTests
     [Fact]
     public void Contains_Tag_ReturnsFalseIfCollectionDoesNotContainTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
-        Tag testTag = new Tag("test-key-1", "other-value");
+        Tag testTag = new("test-key-1", "other-value");
         Assert.DoesNotContain(testTag, target);
     }
 
     [Fact]
     public void Contains_Tag_ReturnsTrueIfCollectionContainsTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Contains(_tags[0], target);
     }
@@ -108,7 +108,7 @@ public class TagsCollectionTests
     [Fact]
     public void Contains_string_ReturnsFalseForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.False(target.Contains("key"));
     }
@@ -116,7 +116,7 @@ public class TagsCollectionTests
     [Fact]
     public void Contains_string_ReturnsFalseIfCollectionDoesNotContainTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.False(target.Contains("non-existing-key"));
     }
@@ -124,7 +124,7 @@ public class TagsCollectionTests
     [Fact]
     public void Contains_string_ReturnsTrueIfCollectionContainsTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.True(target.Contains(_tags[0].Key));
     }
@@ -132,7 +132,7 @@ public class TagsCollectionTests
     [Fact]
     public void CopyTo_ThrowsArgumentNullExceptionIfArrayIsNull()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Throws<ArgumentNullException>(() => target.CopyTo(null, 0));
     }
@@ -141,7 +141,7 @@ public class TagsCollectionTests
     public void CopyTo_ThrowsArgumentOutOfRangeExceptionIfIndexIsLessThenZero()
     {
         Tag[] array = new Tag[5];
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Throws<ArgumentOutOfRangeException>(() => target.CopyTo(array, -4));
     }
@@ -150,7 +150,7 @@ public class TagsCollectionTests
     public void CopyTo_ThrowsArgumentExceptionIfSpaceDesignedForCollectionInArrayIsShort()
     {
         Tag[] array = new Tag[5];
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Throws<ArgumentException>(() => target.CopyTo(array, 4));
     }
@@ -159,7 +159,7 @@ public class TagsCollectionTests
     public void CopyTo_CopiesElementsToArray()
     {
         Tag[] array = new Tag[5];
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         target.CopyTo(array, 1);
 
@@ -173,7 +173,7 @@ public class TagsCollectionTests
     [Fact]
     public void GetTag_ReturnsNullForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.Throws<ArgumentException>(() => target.GetTag("other-key"));
     }
@@ -181,7 +181,7 @@ public class TagsCollectionTests
     [Fact]
     public void GetTag_ReturnsNullIfCollectionDoesNotContainTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Throws<ArgumentException>(() => target.GetTag("other-key"));
     }
@@ -189,7 +189,7 @@ public class TagsCollectionTests
     [Fact]
     public void GetTag_ReturnsTagIfCollectionContainsTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
         Tag returned = target.GetTag(_tags[0].Key);
 
         Assert.Same(_tags[0], returned);
@@ -198,7 +198,7 @@ public class TagsCollectionTests
     [Fact]
     public void Remove_Tag_ReturnsFalseForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
         bool removed = target.Remove(new Tag("key", "value"));
 
         Assert.False(removed);
@@ -207,26 +207,26 @@ public class TagsCollectionTests
     [Fact]
     public void Remove_Tag_DoNothingAndReturnsFalseIfCollectionDoesNotContainTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
-        Tag testTag = new Tag("other-key", "other-value");
+        Tag testTag = new("other-key", "other-value");
         Assert.False(target.Remove(testTag));
-        this.CompareCollections(_tags, target);
+        CompareCollections(_tags, target);
     }
 
     [Fact]
     public void Remove_Tag_RemovesItemAndReturnsTrueIfCollectionContainsTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.True(target.Remove(_tags[0]));
-        this.CompareCollections(_tags.Skip(1), target);
+        CompareCollections(_tags.Skip(1), target);
     }
 
     [Fact]
     public void Remove_string_ReturnsFalseForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
         bool removed = target.Remove("key");
 
         Assert.False(removed);
@@ -235,9 +235,9 @@ public class TagsCollectionTests
     [Fact]
     public void Remove_string_DoNothingAndReturnsFalseIfCollectionDoesNotContainTag()
     {
-        Tag[] tags = new Tag[] { new Tag("test-key-1", "test-value"), new Tag("test-key-2", "test-value") };
+        Tag[] tags = new Tag[] { new("test-key-1", "test-value"), new("test-key-2", "test-value") };
 
-        TagsCollection target = new TagsCollection(tags);
+        TagsCollection target = new(tags);
 
         Assert.False(target.Remove("non-existing-tag"));
     }
@@ -245,9 +245,9 @@ public class TagsCollectionTests
     [Fact]
     public void Remove_string_RemovesItemAndReturnsTrueIfCollectionContainsTag()
     {
-        Tag[] tags = new Tag[] { new Tag("test-key-1", "test-value"), new Tag("test-key-2", "test-value") };
+        Tag[] tags = new Tag[] { new("test-key-1", "test-value"), new("test-key-2", "test-value") };
 
-        TagsCollection target = new TagsCollection(tags);
+        TagsCollection target = new(tags);
 
         Assert.True(target.Remove(tags[1].Key));
         Assert.Single(target);
@@ -257,7 +257,7 @@ public class TagsCollectionTests
     [Fact]
     public void Count_ReturnsZeroForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.Empty(target);
     }
@@ -265,7 +265,7 @@ public class TagsCollectionTests
     [Fact]
     public void Count_ReturnsTagsCount()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Equal(_tags.Length, target.Count);
     }
@@ -273,7 +273,7 @@ public class TagsCollectionTests
     [Fact]
     public void IsReadOnly_ReturnsFalse()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.False(target.IsReadOnly);
     }
@@ -281,7 +281,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Get_ThrowsExceptionForEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         Assert.Throws<ArgumentException>(() => target["other-key"]);
     }
@@ -289,7 +289,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Get_ThrowsExceptionIfCollectionDoesNotContainTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         Assert.Throws<ArgumentException>(() => target["other-key"]);
     }
@@ -297,7 +297,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Get_ReturnsTagValueIfCollectionContainsTag()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
         string returnedValue = target[_tags[0].Key];
 
         Assert.Equal(_tags[0].Value, returnedValue);
@@ -306,7 +306,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Set_AddsItemToEmptyCollection()
     {
-        TagsCollection target = new TagsCollection();
+        TagsCollection target = new();
 
         target["test-key"] = "test-value";
 
@@ -317,7 +317,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Set_AddsItemToCollection()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
 
         target["test-key-101"] = "test-value-101";
 
@@ -328,7 +328,7 @@ public class TagsCollectionTests
     [Fact]
     public void Item_Set_SetsTagValue()
     {
-        TagsCollection target = new TagsCollection(_tags);
+        TagsCollection target = new(_tags);
         target[_tags[0].Key] = "new-value";
 
         Assert.Equal("new-value", target[_tags[0].Key]);

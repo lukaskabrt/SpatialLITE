@@ -8,19 +8,19 @@ namespace Tests.SpatialLite.Core.Geometries;
 public class LineStringTests
 {
     private readonly Coordinate[] _coordinatesXY = new Coordinate[] {
-            new Coordinate(12,10),
-            new Coordinate(22,20),
-            new Coordinate(32,30)
+            new(12,10),
+            new(22,20),
+            new(32,30)
     };
     private readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
-            new Coordinate(12,10,100),
-            new Coordinate(22,20,200),
-            new Coordinate(32,30,300)
+            new(12,10,100),
+            new(22,20,200),
+            new(32,30,300)
     };
     private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
-            new Coordinate(12,10,100, 1000),
-            new Coordinate(22,20,200, 2000),
-            new Coordinate(32,30,300, 3000)
+            new(12,10,100, 1000),
+            new(22,20,200, 2000),
+            new(32,30,300, 3000)
     };
 
 
@@ -37,7 +37,7 @@ public class LineStringTests
     [Fact]
     public void Constructor__CreatesEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.Equal(0, target.Coordinates.Count);
     }
@@ -45,7 +45,7 @@ public class LineStringTests
     [Fact]
     public void Constructor_IEnumerable_CreatesLineStringFromCoordinates()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         CheckCoordinates(target, _coordinatesXYZ);
     }
@@ -53,7 +53,7 @@ public class LineStringTests
     [Fact]
     public void Is3D_ReturnsFalseForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.False(target.Is3D);
     }
@@ -61,7 +61,7 @@ public class LineStringTests
     [Fact]
     public void Is3D_ReturnsFalseForAll2DCoords()
     {
-        LineString target = new LineString(_coordinatesXY);
+        LineString target = new(_coordinatesXY);
 
         Assert.False(target.Is3D);
     }
@@ -69,7 +69,7 @@ public class LineStringTests
     [Fact]
     public void Is3D_ReturnsTrueForAll3DCoords()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         Assert.True(target.Is3D);
     }
@@ -77,7 +77,7 @@ public class LineStringTests
     [Fact]
     public void IsMeasured_ReturnsFalseForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.False(target.IsMeasured);
     }
@@ -85,7 +85,7 @@ public class LineStringTests
     [Fact]
     public void IsMeasured_ReturnsFalseForNonMeasuredCoords()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         Assert.False(target.IsMeasured);
     }
@@ -93,7 +93,7 @@ public class LineStringTests
     [Fact]
     public void IsMeasured_ReturnsTrueForMeasuredCoords()
     {
-        LineString target = new LineString(_coordinatesXYZM);
+        LineString target = new(_coordinatesXYZM);
 
         Assert.True(target.IsMeasured);
     }
@@ -101,7 +101,7 @@ public class LineStringTests
     [Fact]
     public void Start_ReturnsEmptyCoordinateForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.Equal(Coordinate.Empty, target.Start);
     }
@@ -109,7 +109,7 @@ public class LineStringTests
     [Fact]
     public void Start_ReturnsFirstCoordinate()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         Assert.Equal(_coordinatesXYZ.First(), target.Start);
     }
@@ -117,7 +117,7 @@ public class LineStringTests
     [Fact]
     public void End_ReturnsEmptyCoordinateForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.Equal(Coordinate.Empty, target.End);
     }
@@ -125,7 +125,7 @@ public class LineStringTests
     [Fact]
     public void End_ReturnsLastCoordinate()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         Assert.Equal(_coordinatesXYZ.Last(), target.End);
     }
@@ -133,7 +133,7 @@ public class LineStringTests
     [Fact]
     public void IsClosed_ReturnsTrueForClosedLineString()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
         target.Coordinates.Add(target.Coordinates[0]);
 
         Assert.True(target.IsClosed);
@@ -142,7 +142,7 @@ public class LineStringTests
     [Fact]
     public void IsClosed_ReturnsFalseForOpenLineString()
     {
-        LineString target = new LineString(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
 
         Assert.False(target.IsClosed);
     }
@@ -150,7 +150,7 @@ public class LineStringTests
     [Fact]
     public void IsClosed_ReturnsFalseForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
 
         Assert.False(target.IsClosed);
     }
@@ -158,7 +158,7 @@ public class LineStringTests
     [Fact]
     public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyLineString()
     {
-        LineString target = new LineString();
+        LineString target = new();
         Envelope envelope = target.GetEnvelope();
 
         Assert.Equal(Envelope.Empty, envelope);
@@ -167,8 +167,8 @@ public class LineStringTests
     [Fact]
     public void GetEnvelope_ReturnsEnvelopeOfLineString()
     {
-        LineString target = new LineString(_coordinatesXYZ);
-        Envelope expected = new Envelope(_coordinatesXYZ);
+        LineString target = new(_coordinatesXYZ);
+        Envelope expected = new(_coordinatesXYZ);
 
         Assert.Equal(expected, target.GetEnvelope());
     }

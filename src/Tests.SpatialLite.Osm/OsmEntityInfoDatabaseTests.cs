@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-
-using Xunit;
-using Moq;
-
+﻿using Moq;
 using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
+using System.Collections.Generic;
+using System.Linq;
 using Tests.SpatialLite.Osm.Data;
+using Xunit;
 
-namespace Tests.SpatialLite.Osm.Geometries;
+namespace Tests.SpatialLite.Osm;
 
 public class OsmEntityInfoDatabaseTests
 {
-    NodeInfo[] _nodeData;
-    WayInfo[] _wayData;
-    RelationInfo[] _relationData;
-    IEntityInfo[] _data;
+    private readonly NodeInfo[] _nodeData;
+    private readonly WayInfo[] _wayData;
+    private readonly RelationInfo[] _relationData;
+    private readonly IEntityInfo[] _data;
 
     public OsmEntityInfoDatabaseTests()
     {
@@ -30,8 +27,8 @@ public class OsmEntityInfoDatabaseTests
         _wayData[1] = new WayInfo(11, new TagsCollection(), _nodeData.Select(n => n.ID).Skip(1).ToArray());
 
         _relationData = new RelationInfo[2];
-        _relationData[0] = new RelationInfo(100, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { Reference = 10, Role = "way" }, new RelationMemberInfo() { Reference = 1, Role = "node" } });
-        _relationData[1] = new RelationInfo(101, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { Reference = 101, Role = "relation" }, new RelationMemberInfo() { Reference = 1, Role = "node" } });
+        _relationData[0] = new RelationInfo(100, new TagsCollection(), new RelationMemberInfo[] { new() { Reference = 10, Role = "way" }, new() { Reference = 1, Role = "node" } });
+        _relationData[1] = new RelationInfo(101, new TagsCollection(), new RelationMemberInfo[] { new() { Reference = 101, Role = "relation" }, new() { Reference = 1, Role = "node" } });
 
         _data = _nodeData.Concat<IEntityInfo>(_wayData).Concat<IEntityInfo>(_relationData).ToArray();
     }
@@ -39,7 +36,7 @@ public class OsmEntityInfoDatabaseTests
     [Fact]
     public void Constructor__CreatesEmptyDatabase()
     {
-        OsmEntityInfoDatabase target = new OsmEntityInfoDatabase();
+        OsmEntityInfoDatabase target = new();
 
         Assert.Empty(target);
         Assert.Empty(target.Nodes);
@@ -50,7 +47,7 @@ public class OsmEntityInfoDatabaseTests
     [Fact]
     public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems()
     {
-        OsmEntityInfoDatabase target = new OsmEntityInfoDatabase(_data);
+        OsmEntityInfoDatabase target = new(_data);
 
         for (int i = 0; i < _data.Length; i++)
         {
@@ -61,7 +58,7 @@ public class OsmEntityInfoDatabaseTests
     [Fact]
     public void Constructor_IEnumerable_AddEnittiesToCorrextCollections()
     {
-        OsmEntityInfoDatabase target = new OsmEntityInfoDatabase(_data);
+        OsmEntityInfoDatabase target = new(_data);
 
         for (int i = 0; i < _nodeData.Length; i++)
         {
@@ -102,7 +99,7 @@ public class OsmEntityInfoDatabaseTests
         Assert.True(target.Nodes.Contains(2));
         Assert.True(target.Nodes.Contains(3));
 
-        Assert.Equal(1, target.Ways.Count);
+        Assert.Single(target.Ways);
         Assert.True(target.Ways.Contains(10));
     }
 
@@ -112,22 +109,22 @@ public class OsmEntityInfoDatabaseTests
         IOsmReader reader = new OsmXmlReader(TestDataReader.OpenOsmDB("osm-relation.osm"), new OsmXmlReaderSettings() { ReadMetadata = true });
         OsmEntityInfoDatabase target = OsmEntityInfoDatabase.Load(reader);
 
-        Assert.Equal(1, target.Nodes.Count);
+        Assert.Single(target.Nodes);
         Assert.True(target.Nodes.Contains(1));
 
-        Assert.Equal(1, target.Relations.Count);
+        Assert.Single(target.Relations);
         Assert.True(target.Relations.Contains(100));
     }
 
     [Fact]
     public void Save_CallsIOsmWriterWriteForAllEntities()
     {
-        List<IEntityInfo> written = new List<IEntityInfo>();
-        Mock<IOsmWriter> writerM = new Mock<IOsmWriter>();
+        List<IEntityInfo> written = new();
+        Mock<IOsmWriter> writerM = new();
 
-        writerM.Setup(w => w.Write(It.IsAny<IEntityInfo>())).Callback<IEntityInfo>((e) => written.Add(e));
+        writerM.Setup(w => w.Write(It.IsAny<IEntityInfo>())).Callback<IEntityInfo>(written.Add);
 
-        OsmEntityInfoDatabase target = new OsmEntityInfoDatabase(_data);
+        OsmEntityInfoDatabase target = new(_data);
         target.Save(writerM.Object);
 
         Assert.Equal(target.Count, written.Count);

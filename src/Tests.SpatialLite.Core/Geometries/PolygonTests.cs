@@ -7,13 +7,13 @@ namespace Tests.SpatialLite.Core.Geometries;
 public class PolygonTests
 {
     private readonly Coordinate[] _coordinatesXY = new Coordinate[] {
-                new Coordinate(1, 2), new Coordinate(1.1, 2.1), new Coordinate(1.2, 2.2), new Coordinate(1.3, 2.3)
+                new(1, 2), new(1.1, 2.1), new(1.2, 2.2), new(1.3, 2.3)
     };
     private readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
-                new Coordinate(1, 2, 3), new Coordinate(1.1, 2.1, 3.1), new Coordinate(1.2, 2.2, 3.2), new Coordinate(1.3, 2.3, 3.3)
+                new(1, 2, 3), new(1.1, 2.1, 3.1), new(1.2, 2.2, 3.2), new(1.3, 2.3, 3.3)
     };
     private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
-                new Coordinate(1, 2, 3, 10), new Coordinate(1.1, 2.1, 3.1, 20), new Coordinate(1.2, 2.2, 3.2, 30), new Coordinate(1.3, 2.3, 3.3, 40)
+                new(1, 2, 3, 10), new(1.1, 2.1, 3.1, 20), new(1.2, 2.2, 3.2, 30), new(1.3, 2.3, 3.3, 40)
     };
     private readonly CoordinateList _exteriorRing3D;
     private readonly CoordinateList[] _interiorRings3D;
@@ -39,7 +39,7 @@ public class PolygonTests
     [Fact]
     public void Constructor__CreatesEmptyPolygonAndInitializesProperties()
     {
-        Polygon target = new Polygon();
+        Polygon target = new();
 
         Assert.NotNull(target.ExteriorRing);
         Assert.Empty(target.ExteriorRing);
@@ -51,7 +51,7 @@ public class PolygonTests
     [Fact]
     public void Constructor_ExteriorRing_CreatesPolygonWithExteriorBoundary()
     {
-        Polygon target = new Polygon(_exteriorRing3D);
+        Polygon target = new(_exteriorRing3D);
 
         Assert.Same(_exteriorRing3D, target.ExteriorRing);
 
@@ -62,7 +62,7 @@ public class PolygonTests
     [Fact]
     public void Is3D_ReturnsTrueFor3DExteriorRing()
     {
-        Polygon target = new Polygon(_exteriorRing3D);
+        Polygon target = new(_exteriorRing3D);
 
         Assert.True(target.Is3D);
     }
@@ -70,7 +70,7 @@ public class PolygonTests
     [Fact]
     public void Is3D_ReturnsFalseForEmptyPolygon()
     {
-        Polygon target = new Polygon();
+        Polygon target = new();
 
         Assert.False(target.Is3D);
     }
@@ -78,7 +78,7 @@ public class PolygonTests
     [Fact]
     public void Is3D_ReturnsFalseFor2DExteriorRing()
     {
-        Polygon target = new Polygon(new CoordinateList(_coordinatesXY));
+        Polygon target = new(new CoordinateList(_coordinatesXY));
 
         Assert.False(target.Is3D);
     }
@@ -86,7 +86,7 @@ public class PolygonTests
     [Fact]
     public void IsMeasured_ReturnsTrueForMeasuredExteriorRing()
     {
-        Polygon target = new Polygon(new CoordinateList(_coordinatesXYZM));
+        Polygon target = new(new CoordinateList(_coordinatesXYZM));
 
         Assert.True(target.IsMeasured);
     }
@@ -94,7 +94,7 @@ public class PolygonTests
     [Fact]
     public void IsMeasured_ReturnsFalseForEmptyPolygon()
     {
-        Polygon target = new Polygon();
+        Polygon target = new();
 
         Assert.False(target.IsMeasured);
     }
@@ -102,7 +102,7 @@ public class PolygonTests
     [Fact]
     public void IsMeasured_ReturnsFalseForNonMeasuredExteriorRing()
     {
-        Polygon target = new Polygon(new CoordinateList(_coordinatesXYZ));
+        Polygon target = new(new CoordinateList(_coordinatesXYZ));
 
         Assert.False(target.IsMeasured);
     }
@@ -110,7 +110,7 @@ public class PolygonTests
     [Fact]
     public void GetEnvelope_ReturnsEmptyEnvelopeForEmptyPolygon()
     {
-        Polygon target = new Polygon();
+        Polygon target = new();
         Envelope envelope = target.GetEnvelope();
 
         Assert.Equal(Envelope.Empty, envelope);
@@ -119,9 +119,9 @@ public class PolygonTests
     [Fact]
     public void GetEnvelopeReturnsEnvelopeOfLineString()
     {
-        Envelope expectedEnvelope = new Envelope(_coordinatesXYZ);
+        Envelope expectedEnvelope = new(_coordinatesXYZ);
 
-        Polygon target = new Polygon(_exteriorRing3D);
+        Polygon target = new(_exteriorRing3D);
         Envelope envelope = target.GetEnvelope();
 
         Assert.Equal(expectedEnvelope, envelope);

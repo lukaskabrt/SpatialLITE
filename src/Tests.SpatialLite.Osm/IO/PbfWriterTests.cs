@@ -33,22 +33,22 @@ public class PbfWriterTests
         };
 
         _node = new NodeInfo(1, 50.4, 16.2, new TagsCollection());
-        _nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }));
+        _nodeTags = new NodeInfo(1, 50.4, 16.2, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }));
         _nodeProperties = new NodeInfo(1, 50.4, 16.2, new TagsCollection(), _details);
 
         _way = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 });
-        _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }), new long[] { 10, 11, 12 });
+        _wayTags = new WayInfo(1, new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }), new long[] { 10, 11, 12 });
         _wayProperties = new WayInfo(1, new TagsCollection(), new long[] { 10, 11, 12 }, _details);
         _wayWithoutNodes = new WayInfo(1, new TagsCollection(), new long[] { });
 
-        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
-        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
+        _relationNode = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationWay = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Way, Reference = 10, Role = "test" } });
+        _relationRelation = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Relation, Reference = 10, Role = "test" } });
         _relationTags = new RelationInfo(
             1,
-            new TagsCollection(new Tag[] { new Tag("name", "test"), new Tag("name-2", "test-2") }),
-            new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
-        _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new RelationMemberInfo() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
+            new TagsCollection(new Tag[] { new("name", "test"), new("name-2", "test-2") }),
+            new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } });
+        _relationNodeProperties = new RelationInfo(1, new TagsCollection(), new RelationMemberInfo[] { new() { MemberType = EntityType.Node, Reference = 10, Role = "test" } }, _details);
     }
 
     [Fact]
@@ -56,8 +56,8 @@ public class PbfWriterTests
     {
         string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-test.pbf");
 
-        PbfWriterSettings settings = new PbfWriterSettings();
-        using (PbfWriter target = new PbfWriter(filename, settings))
+        PbfWriterSettings settings = new();
+        using (PbfWriter target = new(filename, settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -69,8 +69,8 @@ public class PbfWriterTests
     {
         string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-creates-output-test.pbf");
 
-        PbfWriterSettings settings = new PbfWriterSettings();
-        using (PbfWriter target = new PbfWriter(filename, settings))
+        PbfWriterSettings settings = new();
+        using (PbfWriter target = new(filename, settings))
         {
             ;
         }
@@ -83,21 +83,21 @@ public class PbfWriterTests
     {
         string filename = PathHelper.GetTempFilePath("pbfwriter-constructor-writes-header-test.pbf");
 
-        PbfWriterSettings settings = new PbfWriterSettings();
-        using (PbfWriter target = new PbfWriter(filename, settings))
+        PbfWriterSettings settings = new();
+        using (PbfWriter target = new(filename, settings))
         {
             ;
         }
 
-        FileInfo fi = new FileInfo(filename);
+        FileInfo fi = new(filename);
         Assert.True(fi.Length > 0);
     }
 
     [Fact]
     public void Constructor_StreamSettings_SetsSettingsAndMakeThemReadOnly()
     {
-        PbfWriterSettings settings = new PbfWriterSettings();
-        using (PbfWriter target = new PbfWriter(new MemoryStream(), settings))
+        PbfWriterSettings settings = new();
+        using (PbfWriter target = new(new MemoryStream(), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -107,9 +107,9 @@ public class PbfWriterTests
     [Fact]
     public void Constructor_StreamSettings_WritesOsmHeader()
     {
-        MemoryStream stream = new MemoryStream();
-        PbfWriterSettings settings = new PbfWriterSettings();
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        MemoryStream stream = new();
+        PbfWriterSettings settings = new();
+        using (PbfWriter target = new(stream, settings))
         {
             ;
         }
@@ -122,8 +122,8 @@ public class PbfWriterTests
     {
         string filename = PathHelper.GetTempFilePath("pbfwriter-closes-output-filestream-test.pbf");
 
-        PbfWriterSettings settings = new PbfWriterSettings();
-        PbfWriter target = new PbfWriter(filename, settings);
+        PbfWriterSettings settings = new();
+        PbfWriter target = new(filename, settings);
         target.Dispose();
 
         new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
@@ -132,7 +132,7 @@ public class PbfWriterTests
     [Fact]
     public void Write_ThrowsArgumentExceptionIfWriteMetadataIsTrueButEntityDoesntHaveMetadata()
     {
-        using (PbfWriter target = new PbfWriter(new MemoryStream(), new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true }))
+        using (PbfWriter target = new(new MemoryStream(), new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true }))
         {
             Assert.Throws<ArgumentException>(() => target.Write(_node));
         }
@@ -143,7 +143,7 @@ public class PbfWriterTests
     {
         _nodeProperties.Metadata.User = null;
 
-        using (PbfWriter target = new PbfWriter(new MemoryStream(), new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true }))
+        using (PbfWriter target = new(new MemoryStream(), new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true }))
         {
             Assert.Throws<ArgumentNullException>(() => target.Write(_nodeProperties));
         }
@@ -152,308 +152,308 @@ public class PbfWriterTests
     [Fact]
     public void Write_IEntityInfo_WritesNode()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_node);
         }
 
-        this.TestPbfOutput(stream, _node);
+        TestPbfOutput(stream, _node);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithTags()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeTags);
         }
 
-        this.TestPbfOutput(stream, _nodeTags);
+        TestPbfOutput(stream, _nodeTags);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithMetadata()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeProperties);
         }
 
-        this.TestPbfOutput(stream, _nodeProperties);
+        TestPbfOutput(stream, _nodeProperties);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWritesNodeMetadataIfWriteMetasdataSettingsIsFalse()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeProperties);
         }
 
-        this.TestPbfOutput(stream, _node);
+        TestPbfOutput(stream, _node);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNode_Dense()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_node);
         }
 
-        this.TestPbfOutput(stream, _node);
+        TestPbfOutput(stream, _node);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithTags_Dense()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeTags);
         }
 
-        this.TestPbfOutput(stream, _nodeTags);
+        TestPbfOutput(stream, _nodeTags);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesNodeWithMetadata_Dense()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = true };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeProperties);
         }
 
-        this.TestPbfOutput(stream, _nodeProperties);
+        TestPbfOutput(stream, _nodeProperties);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWritesNodeMetadataIfWriteMetasdataSettingsIsFalse_Dense()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = true, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_nodeProperties);
         }
 
-        this.TestPbfOutput(stream, _node);
+        TestPbfOutput(stream, _node);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesWay()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_way);
         }
 
-        this.TestPbfOutput(stream, _way);
+        TestPbfOutput(stream, _way);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesWayWithTags()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_wayTags);
         }
 
-        this.TestPbfOutput(stream, _wayTags);
+        TestPbfOutput(stream, _wayTags);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesWayWithMetadata()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_wayProperties);
         }
 
-        this.TestPbfOutput(stream, _wayProperties);
+        TestPbfOutput(stream, _wayProperties);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWriteWayMetadataIfWriteMetadataSettingsIsFalse()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_wayProperties);
         }
 
-        this.TestPbfOutput(stream, _way);
+        TestPbfOutput(stream, _way);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithNode()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationNode);
         }
 
-        this.TestPbfOutput(stream, _relationNode);
+        TestPbfOutput(stream, _relationNode);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithWay()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationWay);
         }
 
-        this.TestPbfOutput(stream, _relationWay);
+        TestPbfOutput(stream, _relationWay);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithRelation()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationRelation);
         }
 
-        this.TestPbfOutput(stream, _relationRelation);
+        TestPbfOutput(stream, _relationRelation);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithTags()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationTags);
         }
 
-        this.TestPbfOutput(stream, _relationTags);
+        TestPbfOutput(stream, _relationTags);
     }
 
     [Fact]
     public void Write_IEntityInfo_WritesRelationWithMetadata()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = true };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationNodeProperties);
         }
 
-        this.TestPbfOutput(stream, _relationNodeProperties);
+        TestPbfOutput(stream, _relationNodeProperties);
     }
 
     [Fact]
     public void Write_IEntityInfo_DoesntWritesRelationMetadataIfWriteMetasdataSettingsIsFalse()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(_relationNodeProperties);
         }
 
-        this.TestPbfOutput(stream, _relationNode);
+        TestPbfOutput(stream, _relationNode);
     }
 
     [Fact]
     public void Write_IOsmGeometry_WritesNode()
     {
-        Node node = new Node(1, 11.1, 12.1);
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        Node node = new(1, 11.1, 12.1);
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(node);
         }
 
-        this.TestPbfOutput(stream, new NodeInfo(node));
+        TestPbfOutput(stream, new NodeInfo(node));
     }
 
     [Fact]
     public void Write_IOsmGeometry_WritesWay()
     {
-        Way way = new Way(10, new Node[] { new Node(1), new Node(2), new Node(3) });
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        Way way = new(10, new Node[] { new(1), new(2), new(3) });
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(way);
         }
 
-        this.TestPbfOutput(stream, new WayInfo(way));
+        TestPbfOutput(stream, new WayInfo(way));
     }
 
     [Fact]
     public void Write_IOsmGeometry_WritesRelation()
     {
-        Relation relation = new Relation(100, new RelationMember[] { new RelationMember(new Node(1), "test-role") });
+        Relation relation = new(100, new RelationMember[] { new(new Node(1), "test-role") });
 
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             target.Write(relation);
         }
 
-        this.TestPbfOutput(stream, new RelationInfo(relation));
+        TestPbfOutput(stream, new RelationInfo(relation));
     }
 
     [Fact]
     public void Write_IOsmGeometry_ThrowsExceptionIfEntityIsNull()
     {
-        PbfWriterSettings settings = new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
-        MemoryStream stream = new MemoryStream();
+        PbfWriterSettings settings = new() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false };
+        MemoryStream stream = new();
 
-        using (PbfWriter target = new PbfWriter(stream, settings))
+        using (PbfWriter target = new(stream, settings))
         {
             IOsmGeometry entity = null;
             Assert.Throws<ArgumentNullException>(() => target.Write(entity));
@@ -463,14 +463,14 @@ public class PbfWriterTests
     [Fact]
     public void Flush_ForcesWriterToWriteDataToUnderalyingStorage()
     {
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
 
-        PbfWriter target = new PbfWriter(stream, new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false });
+        PbfWriter target = new(stream, new PbfWriterSettings() { UseDenseFormat = false, Compression = CompressionMode.None, WriteMetadata = false });
 
         //1000 nodes should fit into tokens
         for (int i = 0; i < 1000; i++)
         {
-            NodeInfo node = new NodeInfo(i, 45.87, -126.5, new TagsCollection());
+            NodeInfo node = new(i, 45.87, -126.5, new TagsCollection());
             target.Write(node);
         }
         int minimalExpectedLengthIncrease = 1000 * 8;
@@ -492,14 +492,14 @@ public class PbfWriterTests
             pbfStream = new MemoryStream(pbfStream.ToArray());
         }
 
-        PbfReader reader = new PbfReader(pbfStream, new OsmReaderSettings() { ReadMetadata = true });
+        PbfReader reader = new(pbfStream, new OsmReaderSettings() { ReadMetadata = true });
         IEntityInfo read = reader.Read();
 
         switch (expected.EntityType)
         {
-            case EntityType.Node: this.CompareNodes(expected as NodeInfo, read as NodeInfo); break;
-            case EntityType.Way: this.CompareWays(expected as WayInfo, read as WayInfo); break;
-            case EntityType.Relation: this.CompareRelation(expected as RelationInfo, read as RelationInfo); break;
+            case EntityType.Node: CompareNodes(expected as NodeInfo, read as NodeInfo); break;
+            case EntityType.Way: CompareWays(expected as WayInfo, read as WayInfo); break;
+            case EntityType.Relation: CompareRelation(expected as RelationInfo, read as RelationInfo); break;
         }
     }
 
@@ -509,8 +509,8 @@ public class PbfWriterTests
         Assert.InRange(actual.Longitude, expected.Longitude - _resolution, expected.Longitude + _resolution);
         Assert.InRange(actual.Latitude, expected.Latitude - _resolution, expected.Latitude + _resolution);
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareWays(WayInfo expected, WayInfo actual)
@@ -522,8 +522,8 @@ public class PbfWriterTests
             Assert.Equal(expected.Nodes[i], actual.Nodes[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareRelation(RelationInfo expected, RelationInfo actual)
@@ -535,8 +535,8 @@ public class PbfWriterTests
             Assert.Equal(expected.Members[i], actual.Members[i]);
         }
 
-        this.CompareTags(expected.Tags, actual.Tags);
-        this.CompareEntityDetails(expected.Metadata, actual.Metadata);
+        CompareTags(expected.Tags, actual.Tags);
+        CompareEntityDetails(expected.Metadata, actual.Metadata);
     }
 
     private void CompareTags(TagsCollection expected, TagsCollection actual)

@@ -11,9 +11,9 @@ public class RelationMemberInfoTests
     [Fact]
     public void Constructor_RelationMember_SetsProperties()
     {
-        RelationMember member = new RelationMember(new Node(1), "test-role");
+        RelationMember member = new(new Node(1), "test-role");
 
-        RelationMemberInfo target = new RelationMemberInfo(member);
+        RelationMemberInfo target = new(member);
 
         Assert.Equal(member.Member.ID, target.Reference);
         Assert.Equal(member.MemberType, target.MemberType);
