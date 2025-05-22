@@ -15,7 +15,7 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
         private const int TestFileRelationsCount = 124;
 
 
-        [Fact, Trait("Category", "Osm.Integration")]
+        [Fact(Skip = "Test requires Windows-specific osmosis.bat file which is not available in Linux CI environment"), Trait("Category", "Osm.Integration")]
         public void XmlOsmReaderReadsFilesCreatedByOsmosis() {
             string xmlFile = PathHelper.GetTempFilePath("xmlreader-osmosis-compatibility-test-osmosis-real-file.osm");
             string osmosisArguments = string.Format("--read-pbf file={0} --write-xml file={1}", PathHelper.RealPbfFilePath, xmlFile);
@@ -26,7 +26,7 @@ namespace Tests.SpatialLite.Osm.Integration.Xml {
             }
         }
 
-        [Fact, Trait("Category", "Osm.Integration")]
+        [Fact(Skip = "Test requires Windows-specific osmosis.bat file which is not available in Linux CI environment"), Trait("Category", "Osm.Integration")]
         public void XmlOsmWriterWritesFilesCompatibleWithOsmosis() {
             string xmlFile = PathHelper.GetTempFilePath("xmlwriter-osmosis-compatibility-test-xmlwriter-real-file.osm");
             using (OsmXmlWriter writer = new OsmXmlWriter(xmlFile, new OsmWriterSettings() { WriteMetadata = true })) {

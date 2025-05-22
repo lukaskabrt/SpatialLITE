@@ -225,23 +225,32 @@ namespace Tests.SpatialLite.Core {
 
 		[Fact]
 		public void ComputeArea_IPolygon_ReturnsAreaOfPolygonWithoutHolesCalculatedByIDimensionsCalculator() {
-			Random generator = new Random();
-
+			// Create polygon with interior ring
 			Polygon polygon = new Polygon(new CoordinateList());
 			polygon.InteriorRings.Add(new CoordinateList());
 
-			double exteriorArea = generator.Next(100) + 10;
-			double interiorArea = generator.Next(10);
+			// Fixed test values
+			double exteriorArea = 50;
+			double interiorArea = 10;
+			double expectedArea = exteriorArea - interiorArea;
 
+			// Setup mock 
 			Mock<IDimensionsCalculator> calculatorM = new Mock<IDimensionsCalculator>();
-			calculatorM.Setup(calc => calc.CalculateArea(polygon.ExteriorRing)).Returns(exteriorArea);
-			calculatorM.Setup(calc => calc.CalculateArea(polygon.InteriorRings[0])).Returns(interiorArea);
+			calculatorM.Setup(calc => calc.CalculateArea(It.IsAny<ICoordinateList>()))
+				.Returns<ICoordinateList>(coords => {
+					if (coords == polygon.ExteriorRing) return exteriorArea;
+					if (coords == polygon.InteriorRings[0]) return interiorArea;
+					return 0;
+				});
 
+			// Create the object being tested
 			Measurements target = new Measurements(calculatorM.Object);
 
+			// Execute the method being tested
 			double area = target.ComputeArea(polygon);
 
-			Assert.Equal(exteriorArea - interiorArea, area);
+			// Verify the result
+			Assert.Equal(expectedArea, area);
 		}
 
 		[Fact]

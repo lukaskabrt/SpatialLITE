@@ -77,19 +77,19 @@ namespace Tests.SpatialLite.Osm.IO {
 
         [Fact]
         public void Constructor_StringSettings_ThrowsExceptionIfFileDoesntContainOSMHeaderBeforeOSMData() {
-            string filename = "..\\..\\..\\Data\\Pbf\\pbf-without-osm-header.pbf";
+            string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-without-osm-header.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(filename, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
         public void Constructor_StringSettings_ThrowsExceptionIfOSMHeaderDefinedUnsupportedRequiredFeature() {
-            string filename = "..\\..\\..\\Data\\Pbf\\pbf-unsupported-required-feature.pbf";
+            string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-unsupported-required-feature.pbf");
             Assert.Throws<InvalidDataException>(() => new PbfReader(filename, new OsmReaderSettings() { ReadMetadata = false }));
         }
 
         [Fact]
         public void Constructor_StringSettings_SetsSettingsAndMakesThemIsReadOnly() {
-            string filename = "..\\..\\..\\Data\\Pbf\\pbf-n-node.pbf";
+            string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings();
 
             using (PbfReader target = new PbfReader(filename, settings)) {
@@ -273,7 +273,7 @@ namespace Tests.SpatialLite.Osm.IO {
 
         [Fact]
         public void Dispose_ClosesOutputStreamIfWritingToFiles() {
-            string filename = "..\\..\\..\\Data\\Pbf\\pbf-n-node.pbf";
+            string filename = Path.Combine("..", "..", "..", "Data", "Pbf", "pbf-n-node.pbf");
             OsmReaderSettings settings = new OsmReaderSettings() { ReadMetadata = true };
 
             var aaa = Path.GetFullPath(filename);

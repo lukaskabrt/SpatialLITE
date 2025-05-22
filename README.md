@@ -2,7 +2,7 @@
 
 SpatialLITE is a lightweight .NET library for spatial data processing.
 
-![Build Status](https://kabrt.visualstudio.com/_apis/public/build/definitions/a0c2814c-9acd-4035-824a-a2548f8a8c1b/10/badge)
+![CI](https://github.com/lukaskabrt/SpatialLITE/workflows/CI/badge.svg?branch=develop)
 
 
 ## Features
@@ -64,8 +64,14 @@ Add-on for the SpatialLite library that adds support for OpenStreetMap data form
 * Have you find a bug? Do you have an idea for a new feature? ... [open an issue on GitHub](https://github.com/lukaskabrt/spatiallite-net/issues)
 * Do you have a question? ... [ask on StackOverflow](https://stackoverflow.com/questions/ask?tags=spatiallite)
 * Do you want to contribute piece of code? ... [submit a pull-request](https://github.com/lukaskabrt/spatiallite-net/pulls)
-    * `master` branch contains the code being worked on
+    * `master` branch contains released code
+    * `develop` branch contains code being worked on
 
+## Development
+
+### CI Pipeline
+
+The repository uses GitHub Actions for continuous integration. The CI pipeline automatically builds all projects and runs tests for pull requests to the `develop` branch.
 
 ## License [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
