@@ -25,5 +25,4 @@ public interface IOsmEntity
     /// Gets type of the entity.
     /// </summary>
     EntityType EntityType { get; }
-
 }

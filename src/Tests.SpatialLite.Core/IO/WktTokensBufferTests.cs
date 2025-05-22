@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SpatialLite.Core.IO;
+using System;
 using System.Linq;
-using System.Text;
-
 using Xunit;
-
-using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO;
 
 public class WktTokensBufferTests
 {
-    WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "},
+    private readonly WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "},
         new WktToken() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
 
     [Fact]

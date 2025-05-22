@@ -8,9 +8,9 @@ namespace SpatialLite.Gps.Geometries;
 public abstract class GpxMetadata
 {
     /// <summary>
-		/// Gets or sets the name of the entity
-		/// </summary>
-		public string Name { get; set; }
+    /// Gets or sets the name of the entity
+    /// </summary>
+    public string Name { get; set; }
 
     /// <summary>
     /// Gets or sets the comment for the entity

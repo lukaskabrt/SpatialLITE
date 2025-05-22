@@ -16,7 +16,7 @@ public class WkbWriterSettings
     public WkbWriterSettings()
         : base()
     {
-        this.Encoding = BinaryEncoding.LittleEndian;
+        Encoding = BinaryEncoding.LittleEndian;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class WkbWriterSettings
 
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'Encoding' property. The WkbWriterSettings instance is read-only");
             }
@@ -47,5 +47,4 @@ public class WkbWriterSettings
     /// Gets a value indicating whether properties of this OsmWriterSettings instance can be changed.
     /// </summary>
     protected internal bool IsReadOnly { get; internal set; }
-
 }

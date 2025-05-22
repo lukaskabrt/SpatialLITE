@@ -1,6 +1,5 @@
-﻿using System;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System;
 
 namespace SpatialLite.Core.Algorithms;
 
@@ -28,7 +27,7 @@ public class Sphere2DCalculator : IDimensionsCalculator
     /// </summary>
     public Sphere2DCalculator()
     {
-        this.Radius = Sphere2DCalculator.EarthRadius;
+        Radius = EarthRadius;
     }
 
     /// <summary>
@@ -55,7 +54,7 @@ public class Sphere2DCalculator : IDimensionsCalculator
         //length or arc in radians
         double c = 2 * Math.Asin(Math.Min(1, Math.Sqrt(a)));
 
-        return c * this.Radius;
+        return c * Radius;
     }
 
     /// <summary>
@@ -68,13 +67,13 @@ public class Sphere2DCalculator : IDimensionsCalculator
     /// <returns> The distance from c to great circle connecting points AB in units of the <see cref="Sphere2DCalculator.Radius"/> property.</returns>
     public double CalculateDistance(Coordinate c, Coordinate a, Coordinate b, LineMode mode)
     {
-        double bearingAB = this.CalculateBearing(a, b);
-        double bearingAC = this.CalculateBearing(a, c);
+        double bearingAB = CalculateBearing(a, b);
+        double bearingAC = CalculateBearing(a, c);
 
-        double distAC = this.CalculateDistance(a, c);
+        double distAC = CalculateDistance(a, c);
 
         //Sign can be used to determine if point is left/right of the great circle
-        double distCircleC = Math.Abs(Math.Asin(Math.Sin(distAC / Sphere2DCalculator.EarthRadius) * Math.Sin(bearingAC - bearingAB)) * Sphere2DCalculator.EarthRadius);
+        double distCircleC = Math.Abs(Math.Asin(Math.Sin(distAC / EarthRadius) * Math.Sin(bearingAC - bearingAB)) * EarthRadius);
 
         if (mode == LineMode.Line)
         {
@@ -82,8 +81,8 @@ public class Sphere2DCalculator : IDimensionsCalculator
         }
         else
         {
-            double bearingBA = this.CalculateBearing(b, a);
-            double bearingBC = this.CalculateBearing(b, c);
+            double bearingBA = CalculateBearing(b, a);
+            double bearingBC = CalculateBearing(b, c);
 
             if (Math.Abs(bearingAC - bearingAB) > Math.PI / 2)
             {
@@ -91,7 +90,7 @@ public class Sphere2DCalculator : IDimensionsCalculator
             }
             else if (Math.Abs(bearingBC - bearingBA) > Math.PI / 2)
             {
-                return this.CalculateDistance(b, c);
+                return CalculateDistance(b, c);
             }
             else
             {
@@ -122,10 +121,10 @@ public class Sphere2DCalculator : IDimensionsCalculator
 
         for (int i = 0; i <= maxIndex; i++)
         {
-            area += (this.ToRadians(vertices[(i + 1) % maxIndex].X) - this.ToRadians(vertices[(i - 1) % maxIndex].X)) * Math.Sin(this.ToRadians(vertices[i % maxIndex].Y));
+            area += (ToRadians(vertices[(i + 1) % maxIndex].X) - ToRadians(vertices[(i - 1) % maxIndex].X)) * Math.Sin(ToRadians(vertices[i % maxIndex].Y));
         }
 
-        return Math.Abs(area * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius);
+        return Math.Abs(area * EarthRadius * EarthRadius);
     }
 
     /// <summary>

@@ -1,42 +1,38 @@
-﻿using System;
-
-using Xunit;
-
+﻿using SpatialLite.Core.API;
 using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
+using System;
 using System.IO;
 using System.Xml.Linq;
-using SpatialLite.Core.API;
 using Tests.SpatialLite.Gps.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps.IO;
 
 public class GpxWriterTests
 {
-    GpxPoint _waypoint = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
-    GpxPoint _waypointWithMetadata = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
-    GpxPointMetadata _pointMetadata;
-
-    GpxRoute _route = new GpxRoute(new GpxPoint[] {
+    private readonly GpxPoint _waypoint = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
+    private readonly GpxPoint _waypointWithMetadata = new GpxPoint(-71.119277, 42.438878, 44.586548, new DateTime(2001, 11, 28, 21, 05, 28, DateTimeKind.Utc));
+    private readonly GpxPointMetadata _pointMetadata;
+    private readonly GpxRoute _route = new GpxRoute(new GpxPoint[] {
         new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
     });
-    GpxRoute _routeWithMetadata = new GpxRoute(new GpxPoint[] {
+    private readonly GpxRoute _routeWithMetadata = new GpxRoute(new GpxPoint[] {
         new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
     });
-    GpxTrackMetadata _routeMetadata;
-
-    GpxTrackSegment _segment = new GpxTrackSegment(new GpxPoint[] {
+    private readonly GpxTrackMetadata _routeMetadata;
+    private readonly GpxTrackSegment _segment = new GpxTrackSegment(new GpxPoint[] {
         new GpxPoint(new Coordinate(-76.638178825, 39.449270368), new DateTime(1970, 1, 1, 7, 10, 23, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.638012528, 39.449130893), new DateTime(1970, 1, 1, 7, 10, 28, DateTimeKind.Utc)),
         new GpxPoint(new Coordinate(-76.637980342, 39.449098706), new DateTime(1970, 1, 1, 7, 10, 33, DateTimeKind.Utc))
     });
-    GpxTrackMetadata _trackMetadata;
-    GpxTrack _track;
-    GpxTrack _trackWithMetadata;
+    private readonly GpxTrackMetadata _trackMetadata;
+    private readonly GpxTrack _track;
+    private readonly GpxTrack _trackWithMetadata;
     public GpxWriterTests()
     {
         _pointMetadata = new GpxPointMetadata();

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SpatialLite.Core.Geometries;
+﻿using SpatialLite.Core.Geometries;
+using System.Collections.Generic;
 
 namespace SpatialLite.Gps.Geometries;
 

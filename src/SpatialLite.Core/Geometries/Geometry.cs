@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 
 namespace SpatialLite.Core.Geometries;
 

@@ -1,7 +1,6 @@
-﻿using System.Linq;
-
+﻿using SpatialLite.Core.Algorithms;
 using SpatialLite.Core.API;
-using SpatialLite.Core.Algorithms;
+using System.Linq;
 
 namespace SpatialLite.Core;
 
@@ -29,7 +28,7 @@ public class Measurements
     /// <param name="distanceCalculator">The IDistance calculator to be used.</param>
     public Measurements(IDimensionsCalculator distanceCalculator)
     {
-        this.DimensionsCalculator = distanceCalculator;
+        DimensionsCalculator = distanceCalculator;
     }
 
     /// <summary>
@@ -67,7 +66,7 @@ public class Measurements
     /// <returns>distance between two point</returns>
     public double ComputeDistance(Coordinate c1, Coordinate c2)
     {
-        return this.DimensionsCalculator.CalculateDistance(c1, c2);
+        return DimensionsCalculator.CalculateDistance(c1, c2);
     }
 
     /// <summary>
@@ -87,7 +86,7 @@ public class Measurements
 
         for (int i = 1; i < linestring.Coordinates.Count; i++)
         {
-            double distance = this.DimensionsCalculator.CalculateDistance(point.Position, linestring.Coordinates[i - 1], linestring.Coordinates[i], LineMode.LineSegment);
+            double distance = DimensionsCalculator.CalculateDistance(point.Position, linestring.Coordinates[i - 1], linestring.Coordinates[i], LineMode.LineSegment);
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -113,7 +112,7 @@ public class Measurements
         double minDistance = double.PositiveInfinity;
         foreach (var linestring in multilinestring.Geometries)
         {
-            double distance = this.ComputeDistance(point, linestring);
+            double distance = ComputeDistance(point, linestring);
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -136,7 +135,7 @@ public class Measurements
             return double.NaN;
         }
 
-        return this.DimensionsCalculator.CalculateDistance(p1.Position, p2.Position);
+        return DimensionsCalculator.CalculateDistance(p1.Position, p2.Position);
     }
 
     /// <summary>
@@ -149,7 +148,7 @@ public class Measurements
         double length = 0;
         for (int i = 1; i < line.Coordinates.Count; i++)
         {
-            length += this.DimensionsCalculator.CalculateDistance(line.Coordinates[i - 1], line.Coordinates[i]);
+            length += DimensionsCalculator.CalculateDistance(line.Coordinates[i - 1], line.Coordinates[i]);
         }
 
         return length;
@@ -166,7 +165,7 @@ public class Measurements
 
         foreach (var line in multilinestring.Geometries)
         {
-            length += this.ComputeLength(line);
+            length += ComputeLength(line);
         }
 
         return length;
@@ -179,11 +178,11 @@ public class Measurements
     /// <returns>The area of the Polygon</returns>
     public double ComputeArea(IPolygon polygon)
     {
-        double area = this.DimensionsCalculator.CalculateArea(polygon.ExteriorRing);
+        double area = DimensionsCalculator.CalculateArea(polygon.ExteriorRing);
 
         foreach (var interiorRing in polygon.InteriorRings)
         {
-            area -= this.DimensionsCalculator.CalculateArea(interiorRing);
+            area -= DimensionsCalculator.CalculateArea(interiorRing);
         }
 
         return area;
@@ -200,7 +199,7 @@ public class Measurements
 
         foreach (var polygon in multiPolygon.Geometries)
         {
-            area += this.ComputeArea(polygon);
+            area += ComputeArea(polygon);
         }
 
         return area;

@@ -7,16 +7,15 @@ namespace SpatialLite.Osm.IO;
 /// </summary>
 public class OsmWriterSettings
 {
-
-    bool _writeMetadata = true;
-    string _programName = "SpatialLITE";
+    private bool _writeMetadata = true;
+    private string _programName = "SpatialLITE";
 
     /// <summary>
     /// Initializes a new instance of the OsmReaderSettings class with default values.
     /// </summary>
     public OsmWriterSettings()
     {
-        this.WriteMetadata = true;
+        WriteMetadata = true;
     }
 
     /// <summary>
@@ -30,7 +29,7 @@ public class OsmWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'WriteMetadata' property - OsmWriterSettings is read-only.");
             }
@@ -50,7 +49,7 @@ public class OsmWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'ProgramName' property - OsmWriterSettings is read-only.");
             }

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-
-using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 using SpatialLite.Core.IO;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Tests.SpatialLite.Core.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.IO;
 
@@ -18,23 +13,23 @@ namespace Tests.SpatialLite.Core.IO;
 public class WktReaderTests
 {
 
-    private Coordinate[] _coordinatesXY = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXY = new Coordinate[] {
             new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
     };
 
-    private Coordinate[] _coordinatesXYZ = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
             new Coordinate(-10.1, 15.5, 100.5), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
     };
 
-    private Coordinate[] _coordinatesXYM = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXYM = new Coordinate[] {
             new Coordinate(-10.1, 15.5, double.NaN, 1000.5), new Coordinate(20.2, -25.5, double.NaN, 2000.5), new Coordinate(30.3, 35.5, double.NaN, -3000.5)
     };
 
-    private Coordinate[] _coordinatesXYZM = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
             new Coordinate(-10.1, 15.5, 100.5, 1000.5), new Coordinate(20.2, -25.5, 200.5, 2000.5), new Coordinate(30.3, 35.5, -300.5, -3000.5)
     };
 
-    private Coordinate[] _coordinates2XYZM = new Coordinate[] {
+    private readonly Coordinate[] _coordinates2XYZM = new Coordinate[] {
             new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
     };
 
@@ -58,9 +53,7 @@ public class WktReaderTests
 
         WktReader target = new WktReader(filename);
         target.Dispose();
-
-        FileStream testStream = null;
-        testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
@@ -161,7 +154,7 @@ public class WktReaderTests
     {
         using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt")))
         {
-            Assert.Throws<WktParseException>(() => target.Read<LineString>());
+            Assert.Throws<WktParseException>(target.Read<LineString>);
         }
     }
 
@@ -171,7 +164,7 @@ public class WktReaderTests
         string wkt = "point empty";
 
         Point parsed = (Point)WktReader.Parse(wkt);
-        this.CompareCoordinate(Coordinate.Empty, parsed.Position);
+        CompareCoordinate(Coordinate.Empty, parsed.Position);
     }
 
     [Fact]
@@ -281,7 +274,7 @@ public class WktReaderTests
 
         Point parsed = WktReader.Parse<Point>(wkt);
 
-        this.CompareCoordinate(Coordinate.Empty, parsed.Position);
+        CompareCoordinate(Coordinate.Empty, parsed.Position);
     }
 
     [Fact]
@@ -293,7 +286,7 @@ public class WktReaderTests
 
         Assert.False(parsed.Is3D);
         Assert.False(parsed.IsMeasured);
-        this.CompareCoordinate(_coordinatesXY[0], parsed.Position);
+        CompareCoordinate(_coordinatesXY[0], parsed.Position);
     }
 
     [Fact]
@@ -305,7 +298,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.False(parsed.Is3D);
-        this.CompareCoordinate(_coordinatesXYM[0], parsed.Position);
+        CompareCoordinate(_coordinatesXYM[0], parsed.Position);
     }
 
     [Fact]
@@ -317,7 +310,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.False(parsed.IsMeasured);
-        this.CompareCoordinate(_coordinatesXYZ[0], parsed.Position);
+        CompareCoordinate(_coordinatesXYZ[0], parsed.Position);
     }
 
     [Fact]
@@ -328,7 +321,7 @@ public class WktReaderTests
         Point parsed = WktReader.Parse<Point>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinate(_coordinatesXYZM[0], parsed.Position);
+        CompareCoordinate(_coordinatesXYZM[0], parsed.Position);
     }
 
     [Fact]
@@ -358,7 +351,7 @@ public class WktReaderTests
         LineString parsed = WktReader.Parse<LineString>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXY, parsed.Coordinates);
+        CompareCoordinates(_coordinatesXY, parsed.Coordinates);
     }
 
     [Fact]
@@ -369,7 +362,7 @@ public class WktReaderTests
         LineString parsed = WktReader.Parse<LineString>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYM, parsed.Coordinates);
+        CompareCoordinates(_coordinatesXYM, parsed.Coordinates);
     }
 
     [Fact]
@@ -380,7 +373,7 @@ public class WktReaderTests
         LineString parsed = WktReader.Parse<LineString>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.Coordinates);
+        CompareCoordinates(_coordinatesXYZ, parsed.Coordinates);
     }
 
     [Fact]
@@ -391,7 +384,7 @@ public class WktReaderTests
         LineString parsed = WktReader.Parse<LineString>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.Coordinates);
+        CompareCoordinates(_coordinatesXYZM, parsed.Coordinates);
     }
 
     [Fact]
@@ -422,7 +415,7 @@ public class WktReaderTests
         Polygon parsed = WktReader.Parse<Polygon>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXY, parsed.ExteriorRing);
+        CompareCoordinates(_coordinatesXY, parsed.ExteriorRing);
         Assert.Empty(parsed.InteriorRings);
     }
 
@@ -434,7 +427,7 @@ public class WktReaderTests
         Polygon parsed = WktReader.Parse<Polygon>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.ExteriorRing);
+        CompareCoordinates(_coordinatesXYZ, parsed.ExteriorRing);
         Assert.Empty(parsed.InteriorRings);
     }
 
@@ -446,7 +439,7 @@ public class WktReaderTests
         Polygon parsed = WktReader.Parse<Polygon>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYM, parsed.ExteriorRing);
+        CompareCoordinates(_coordinatesXYM, parsed.ExteriorRing);
         Assert.Empty(parsed.InteriorRings);
     }
 
@@ -458,7 +451,7 @@ public class WktReaderTests
         Polygon parsed = WktReader.Parse<Polygon>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.ExteriorRing);
+        CompareCoordinates(_coordinatesXYZM, parsed.ExteriorRing);
         Assert.Empty(parsed.InteriorRings);
     }
 
@@ -470,10 +463,10 @@ public class WktReaderTests
         Polygon parsed = WktReader.Parse<Polygon>(wkt);
 
         Assert.NotNull(parsed);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.ExteriorRing);
+        CompareCoordinates(_coordinatesXYZM, parsed.ExteriorRing);
         Assert.Equal(2, parsed.InteriorRings.Count);
-        this.CompareCoordinates(_coordinates2XYZM, parsed.InteriorRings[0]);
-        this.CompareCoordinates(_coordinates2XYZM, parsed.InteriorRings[1]);
+        CompareCoordinates(_coordinates2XYZM, parsed.InteriorRings[0]);
+        CompareCoordinates(_coordinates2XYZM, parsed.InteriorRings[1]);
     }
 
     [Fact]
@@ -504,8 +497,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinate(_coordinatesXY[0], parsed.Geometries[0].Position);
-        this.CompareCoordinate(_coordinatesXY[1], parsed.Geometries[1].Position);
+        CompareCoordinate(_coordinatesXY[0], parsed.Geometries[0].Position);
+        CompareCoordinate(_coordinatesXY[1], parsed.Geometries[1].Position);
     }
 
     [Fact]
@@ -517,8 +510,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinate(_coordinatesXYM[0], parsed.Geometries[0].Position);
-        this.CompareCoordinate(_coordinatesXYM[1], parsed.Geometries[1].Position);
+        CompareCoordinate(_coordinatesXYM[0], parsed.Geometries[0].Position);
+        CompareCoordinate(_coordinatesXYM[1], parsed.Geometries[1].Position);
     }
 
     [Fact]
@@ -530,8 +523,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinate(_coordinatesXYZ[0], parsed.Geometries[0].Position);
-        this.CompareCoordinate(_coordinatesXYZ[1], parsed.Geometries[1].Position);
+        CompareCoordinate(_coordinatesXYZ[0], parsed.Geometries[0].Position);
+        CompareCoordinate(_coordinatesXYZ[1], parsed.Geometries[1].Position);
     }
 
     [Fact]
@@ -543,8 +536,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinate(_coordinatesXYZM[0], parsed.Geometries[0].Position);
-        this.CompareCoordinate(_coordinatesXYZM[1], parsed.Geometries[1].Position);
+        CompareCoordinate(_coordinatesXYZM[0], parsed.Geometries[0].Position);
+        CompareCoordinate(_coordinatesXYZM[1], parsed.Geometries[1].Position);
     }
 
     [Fact]
@@ -575,8 +568,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXY, parsed.Geometries[0].Coordinates);
-        this.CompareCoordinates(_coordinatesXY, parsed.Geometries[1].Coordinates);
+        CompareCoordinates(_coordinatesXY, parsed.Geometries[0].Coordinates);
+        CompareCoordinates(_coordinatesXY, parsed.Geometries[1].Coordinates);
     }
 
     [Fact]
@@ -588,8 +581,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYM, parsed.Geometries[0].Coordinates);
-        this.CompareCoordinates(_coordinatesXYM, parsed.Geometries[1].Coordinates);
+        CompareCoordinates(_coordinatesXYM, parsed.Geometries[0].Coordinates);
+        CompareCoordinates(_coordinatesXYM, parsed.Geometries[1].Coordinates);
     }
 
     [Fact]
@@ -601,8 +594,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.Geometries[0].Coordinates);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.Geometries[1].Coordinates);
+        CompareCoordinates(_coordinatesXYZ, parsed.Geometries[0].Coordinates);
+        CompareCoordinates(_coordinatesXYZ, parsed.Geometries[1].Coordinates);
     }
 
     [Fact]
@@ -614,8 +607,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.Geometries[0].Coordinates);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.Geometries[1].Coordinates);
+        CompareCoordinates(_coordinatesXYZM, parsed.Geometries[0].Coordinates);
+        CompareCoordinates(_coordinatesXYZM, parsed.Geometries[1].Coordinates);
     }
 
     [Fact]
@@ -646,8 +639,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXY, parsed.Geometries[0].ExteriorRing);
-        this.CompareCoordinates(_coordinatesXY, parsed.Geometries[1].ExteriorRing);
+        CompareCoordinates(_coordinatesXY, parsed.Geometries[0].ExteriorRing);
+        CompareCoordinates(_coordinatesXY, parsed.Geometries[1].ExteriorRing);
     }
 
     [Fact]
@@ -659,8 +652,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYM, parsed.Geometries[0].ExteriorRing);
-        this.CompareCoordinates(_coordinatesXYM, parsed.Geometries[1].ExteriorRing);
+        CompareCoordinates(_coordinatesXYM, parsed.Geometries[0].ExteriorRing);
+        CompareCoordinates(_coordinatesXYM, parsed.Geometries[1].ExteriorRing);
     }
 
     [Fact]
@@ -672,8 +665,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.Geometries[0].ExteriorRing);
-        this.CompareCoordinates(_coordinatesXYZ, parsed.Geometries[1].ExteriorRing);
+        CompareCoordinates(_coordinatesXYZ, parsed.Geometries[0].ExteriorRing);
+        CompareCoordinates(_coordinatesXYZ, parsed.Geometries[1].ExteriorRing);
     }
 
     [Fact]
@@ -685,8 +678,8 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(2, parsed.Geometries.Count);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.Geometries[0].ExteriorRing);
-        this.CompareCoordinates(_coordinatesXYZM, parsed.Geometries[1].ExteriorRing);
+        CompareCoordinates(_coordinatesXYZM, parsed.Geometries[0].ExteriorRing);
+        CompareCoordinates(_coordinatesXYZM, parsed.Geometries[1].ExteriorRing);
     }
 
     [Fact]
@@ -717,7 +710,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Single(parsed.Geometries);
-        this.CompareCoordinate(_coordinatesXY[0], ((Point)parsed.Geometries[0]).Position);
+        CompareCoordinate(_coordinatesXY[0], ((Point)parsed.Geometries[0]).Position);
     }
 
     [Fact]
@@ -729,7 +722,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Single(parsed.Geometries);
-        this.CompareCoordinate(_coordinatesXYM[0], ((Point)parsed.Geometries[0]).Position);
+        CompareCoordinate(_coordinatesXYM[0], ((Point)parsed.Geometries[0]).Position);
     }
 
     [Fact]
@@ -741,7 +734,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Single(parsed.Geometries);
-        this.CompareCoordinate(_coordinatesXYZ[0], ((Point)parsed.Geometries[0]).Position);
+        CompareCoordinate(_coordinatesXYZ[0], ((Point)parsed.Geometries[0]).Position);
     }
 
     [Fact]
@@ -753,7 +746,7 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Single(parsed.Geometries);
-        this.CompareCoordinate(_coordinatesXYZM[0], ((Point)parsed.Geometries[0]).Position);
+        CompareCoordinate(_coordinatesXYZM[0], ((Point)parsed.Geometries[0]).Position);
     }
 
     [Fact]
@@ -765,9 +758,9 @@ public class WktReaderTests
 
         Assert.NotNull(parsed);
         Assert.Equal(3, parsed.Geometries.Count);
-        this.CompareCoordinate(_coordinatesXY[0], ((Point)parsed.Geometries[0]).Position);
-        this.CompareCoordinates(_coordinatesXY, ((LineString)parsed.Geometries[1]).Coordinates);
-        this.CompareCoordinates(_coordinatesXY, ((Polygon)parsed.Geometries[2]).ExteriorRing);
+        CompareCoordinate(_coordinatesXY[0], ((Point)parsed.Geometries[0]).Position);
+        CompareCoordinates(_coordinatesXY, ((LineString)parsed.Geometries[1]).Coordinates);
+        CompareCoordinates(_coordinatesXY, ((Polygon)parsed.Geometries[2]).ExteriorRing);
     }
 
     [Fact]
@@ -780,7 +773,7 @@ public class WktReaderTests
         Assert.NotNull(parsed);
         Assert.Single(parsed.Geometries);
         GeometryCollection<Geometry> nested = (GeometryCollection<Geometry>)parsed.Geometries[0];
-        this.CompareCoordinate(_coordinatesXY[0], ((Point)nested.Geometries[0]).Position);
+        CompareCoordinate(_coordinatesXY[0], ((Point)nested.Geometries[0]).Position);
     }
 
     [Fact]

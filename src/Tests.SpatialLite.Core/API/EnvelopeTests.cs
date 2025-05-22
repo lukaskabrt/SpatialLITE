@@ -1,32 +1,22 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
 
 namespace Tests.SpatialLite.Core.API;
 
 public class EnvelopeTests
 {
-
-    Coordinate[] _coordinates = new Coordinate[] {
+    private readonly Coordinate[] _coordinates = new Coordinate[] {
             new Coordinate(1, 10, 100, 1000),
             new Coordinate(0, 0, 0, 0),
             new Coordinate(-1, -10, -100, -1000)
     };
+    private Coordinate _insideCoordinate = new Coordinate(0.5, 0.5, 0.5, 0.5);
+    private Coordinate _lowerValues = new Coordinate(-2, -20, -200, -2000);
+    private Coordinate _higherValues = new Coordinate(2, 20, 200, 2000);
+    private readonly double[] _expectedBounds = new double[] { -1, 1, -10, 10, -100, 100, -1000, 1000 };
 
-    Coordinate _insideCoordinate = new Coordinate(0.5, 0.5, 0.5, 0.5);
-    Coordinate _lowerValues = new Coordinate(-2, -20, -200, -2000);
-    Coordinate _higherValues = new Coordinate(2, 20, 200, 2000);
-
-    double[] _expectedBounds = new double[] { -1, 1, -10, 10, -100, 100, -1000, 1000 };
-
-    static public IEnumerable<object[]> _XYZEnvelopeDifferentBounds
+    public static IEnumerable<object[]> _XYZEnvelopeDifferentBounds
     {
         get
         {

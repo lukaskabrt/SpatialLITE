@@ -1,6 +1,6 @@
-﻿using System;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System;
 
 namespace SpatialLite.Gps.Geometries;
 

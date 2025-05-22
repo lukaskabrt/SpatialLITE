@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SpatialLite.Osm.IO;
+﻿using SpatialLite.Osm.IO;
+using System.Collections.Generic;
 
 namespace SpatialLite.Osm;
 
@@ -36,7 +35,7 @@ public class OsmEntityInfoDatabase : OsmDatabase<IEntityInfo, NodeInfo, WayInfo,
     {
         OsmEntityInfoDatabase db = new OsmEntityInfoDatabase();
 
-        IEntityInfo entityInfo = null;
+        IEntityInfo entityInfo;
         while ((entityInfo = reader.Read()) != null)
         {
             switch (entityInfo.EntityType)

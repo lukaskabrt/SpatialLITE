@@ -17,8 +17,8 @@ public class OsmXmlReader : IOsmReader
     /// <summary>
     /// Underlaying stream to read data from
     /// </summary>
-    private Stream _input;
-    private bool _ownsInputStream = false;
+    private readonly Stream _input;
+    private readonly bool _ownsInputStream = false;
 
     /// <summary>
     /// Contains bool value indicating whether XmlReader is inside osm element
@@ -35,9 +35,9 @@ public class OsmXmlReader : IOsmReader
         _input = new FileStream(path, FileMode.Open, FileAccess.Read);
         _ownsInputStream = true;
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
-        this.InitializeReader();
+        Settings = settings;
+        Settings.IsReadOnly = true;
+        InitializeReader();
     }
 
     /// <summary>
@@ -49,9 +49,9 @@ public class OsmXmlReader : IOsmReader
     {
         _input = stream;
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
-        this.InitializeReader();
+        Settings = settings;
+        Settings.IsReadOnly = true;
+        InitializeReader();
     }
 
     /// <summary>
@@ -72,13 +72,13 @@ public class OsmXmlReader : IOsmReader
             switch (_xmlReader.Name)
             {
                 case "node":
-                    result = this.ReadNode();
+                    result = ReadNode();
                     break;
                 case "way":
-                    result = this.ReadWay();
+                    result = ReadWay();
                     break;
                 case "relation":
-                    result = this.ReadRelation();
+                    result = ReadRelation();
                     break;
                 default:
                     _xmlReader.Read();
@@ -132,9 +132,9 @@ public class OsmXmlReader : IOsmReader
         double nodeLon = double.Parse(attLon, System.Globalization.CultureInfo.InvariantCulture);
 
         EntityMetadata additionalInfo = null;
-        if (this.Settings.ReadMetadata)
+        if (Settings.ReadMetadata)
         {
-            additionalInfo = this.ReadMetadata();
+            additionalInfo = ReadMetadata();
         }
 
         NodeInfo result = new NodeInfo(nodeId, nodeLat, nodeLon, new TagsCollection(), additionalInfo);
@@ -147,7 +147,7 @@ public class OsmXmlReader : IOsmReader
             {
                 if (_xmlReader.NodeType == Sys.XmlNodeType.Element && _xmlReader.Name == "tag")
                 {
-                    result.Tags.Add(this.ReadTag());
+                    result.Tags.Add(ReadTag());
                 }
                 else
                 {
@@ -175,9 +175,9 @@ public class OsmXmlReader : IOsmReader
         var wayId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
         EntityMetadata additionalInfo = null;
-        if (this.Settings.ReadMetadata)
+        if (Settings.ReadMetadata)
         {
-            additionalInfo = this.ReadMetadata();
+            additionalInfo = ReadMetadata();
         }
 
         WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<long>(), additionalInfo);
@@ -194,10 +194,10 @@ public class OsmXmlReader : IOsmReader
                         switch (_xmlReader.Name)
                         {
                             case "nd":
-                                way.Nodes.Add(this.ReadWayNd());
+                                way.Nodes.Add(ReadWayNd());
                                 continue;
                             case "tag":
-                                way.Tags.Add(this.ReadTag());
+                                way.Tags.Add(ReadTag());
                                 continue;
                             default:
                                 _xmlReader.Skip();
@@ -249,9 +249,9 @@ public class OsmXmlReader : IOsmReader
         var relationId = long.Parse(attId, System.Globalization.CultureInfo.InvariantCulture);
 
         EntityMetadata additionalInfo = null;
-        if (this.Settings.ReadMetadata)
+        if (Settings.ReadMetadata)
         {
-            additionalInfo = this.ReadMetadata();
+            additionalInfo = ReadMetadata();
         }
 
         RelationInfo relation = new RelationInfo(relationId, new TagsCollection(), new List<RelationMemberInfo>(), additionalInfo);
@@ -268,10 +268,10 @@ public class OsmXmlReader : IOsmReader
                         switch (_xmlReader.Name)
                         {
                             case "member":
-                                relation.Members.Add(this.ReadRelationMember());
+                                relation.Members.Add(ReadRelationMember());
                                 continue;
                             case "tag":
-                                relation.Tags.Add(this.ReadTag());
+                                relation.Tags.Add(ReadTag());
                                 continue;
                             default:
                                 _xmlReader.Skip();
@@ -368,7 +368,7 @@ public class OsmXmlReader : IOsmReader
         string attVersion = _xmlReader.GetAttribute("version");
         if (attVersion == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 throw new Sys.XmlException("Attribute 'version' is missing.");
             }
@@ -382,7 +382,7 @@ public class OsmXmlReader : IOsmReader
         string attChangeset = _xmlReader.GetAttribute("changeset");
         if (attChangeset == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 throw new Sys.XmlException("Attribute 'changeset' is missing.");
             }
@@ -396,7 +396,7 @@ public class OsmXmlReader : IOsmReader
         string attUid = _xmlReader.GetAttribute("uid");
         if (attUid == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 throw new Sys.XmlException("Attribute 'uid' is missing.");
             }
@@ -410,7 +410,7 @@ public class OsmXmlReader : IOsmReader
         string attrUser = _xmlReader.GetAttribute("user");
         if (attrUser == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 throw new Sys.XmlException("Attribute 'user' is missing.");
             }
@@ -424,7 +424,7 @@ public class OsmXmlReader : IOsmReader
         string attVisible = _xmlReader.GetAttribute("visible");
         if (attVisible == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 result.Visible = true;
             }
@@ -438,7 +438,7 @@ public class OsmXmlReader : IOsmReader
         string attTimestamp = _xmlReader.GetAttribute("timestamp");
         if (attTimestamp == null)
         {
-            if (this.Settings.StrictMode)
+            if (Settings.StrictMode)
             {
                 throw new Sys.XmlException("Attribute 'timestamp' is missing.");
             }
@@ -490,7 +490,7 @@ public class OsmXmlReader : IOsmReader
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {

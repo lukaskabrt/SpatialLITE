@@ -60,8 +60,8 @@ public class Node : Point, IOsmGeometry
     public Node(long id, Coordinate position, TagsCollection tags)
         : base(position)
     {
-        this.ID = id;
-        this.Tags = tags;
+        ID = id;
+        Tags = tags;
     }
 
     /// <summary>

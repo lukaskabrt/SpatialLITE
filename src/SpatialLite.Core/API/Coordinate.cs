@@ -84,22 +84,22 @@ public struct Coordinate : IEquatable<Coordinate>
     /// <summary>
     /// Gets a value indicating whether this coordinate has assigned <see cref="Coordinate.Z"/> coordinate.
     /// </summary>
-    public bool Is3D
+    public readonly bool Is3D
     {
         get
         {
-            return !double.IsNaN(this.Z);
+            return !double.IsNaN(Z);
         }
     }
 
     /// <summary>
     /// Gets a value indicating whether this coordinate has assigned <see cref="Coordinate.M"/> value.
     /// </summary>
-    public bool IsMeasured
+    public readonly bool IsMeasured
     {
         get
         {
-            return !double.IsNaN(this.M);
+            return !double.IsNaN(M);
         }
     }
 
@@ -129,9 +129,9 @@ public struct Coordinate : IEquatable<Coordinate>
     /// Returns a <c>string</c> that represents the current <c>Coordinate</c>.
     /// </summary>
     /// <returns>A <c>string</c> that represents the current <c>Coordinate</c></returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
-        return string.Format(System.Globalization.CultureInfo.InvariantCulture, "[{0}; {1}; {2}, {3}]", this.X, this.Y, this.Z, this.M);
+        return string.Format(System.Globalization.CultureInfo.InvariantCulture, "[{0}; {1}; {2}, {3}]", X, Y, Z, M);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public struct Coordinate : IEquatable<Coordinate>
             return false;
         }
 
-        return this.Equals(other.Value);
+        return Equals(other.Value);
     }
 
     /// <summary>
@@ -155,19 +155,19 @@ public struct Coordinate : IEquatable<Coordinate>
     /// </summary>
     /// <param name="other">The <c>Coordinate</c> to compare with the current <c>Coordinate</c></param>
     /// <returns>true if the specified  <c>Coordinate</c> is equal to the current <c>Coordinate</c>; otherwise, false.</returns>
-    public bool Equals(Coordinate other)
+    public readonly bool Equals(Coordinate other)
     {
-        return ((this.X == other.X) || (double.IsNaN(this.X) && double.IsNaN(other.X))) &&
-            ((this.Y == other.Y) || (double.IsNaN(this.Y) && double.IsNaN(other.Y))) &&
-            ((this.Z == other.Z) || (double.IsNaN(this.Z) && double.IsNaN(other.Z))) &&
-            ((this.M == other.M) || (double.IsNaN(this.M) && double.IsNaN(other.M)));
+        return ((X == other.X) || (double.IsNaN(X) && double.IsNaN(other.X))) &&
+            ((Y == other.Y) || (double.IsNaN(Y) && double.IsNaN(other.Y))) &&
+            ((Z == other.Z) || (double.IsNaN(Z) && double.IsNaN(other.Z))) &&
+            ((M == other.M) || (double.IsNaN(M) && double.IsNaN(other.M)));
     }
 
     /// <summary>
     /// Serves as a hash function for the <c>Coordinate</c> structure.
     /// </summary>
     /// <returns>Hash code for current Coordinate value.</returns>
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return X.GetHashCode() + 7 * Y.GetHashCode() + 13 * Z.GetHashCode() + 17 * M.GetHashCode();
     }
@@ -177,9 +177,9 @@ public struct Coordinate : IEquatable<Coordinate>
     /// </summary>
     /// <param name="other">The <c>Coordinate</c> to compare with the current <c>Coordinate</c></param>
     /// <returns>true if the specified  <c>Coordinate</c> is equal to the current <c>Coordinate</c> in 2D space otherwise, false.</returns>
-    public bool Equals2D(Coordinate other)
+    public readonly bool Equals2D(Coordinate other)
     {
-        return ((this.X == other.X) || (double.IsNaN(this.X) && double.IsNaN(other.X))) &&
-            ((this.Y == other.Y) || (double.IsNaN(this.Y) && double.IsNaN(other.Y)));
+        return ((X == other.X) || (double.IsNaN(X) && double.IsNaN(other.X))) &&
+            ((Y == other.Y) || (double.IsNaN(Y) && double.IsNaN(other.Y)));
     }
 }

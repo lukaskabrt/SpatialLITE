@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System;
+using System.Collections.Generic;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -12,7 +11,7 @@ namespace SpatialLite.Osm.Geometries;
 public class Way : LineString, IOsmGeometry
 {
 
-    private WayCoordinateList _coordinatesAdapter;
+    private readonly WayCoordinateList _coordinatesAdapter;
 
     /// <summary>
     /// Initializes a new instance of the Way class with specified ID.
@@ -42,11 +41,11 @@ public class Way : LineString, IOsmGeometry
     public Way(long id, IEnumerable<Node> nodes, TagsCollection tags)
         : base()
     {
-        this.ID = id;
-        this.Tags = tags;
-        this.Nodes = new List<Node>(nodes);
+        ID = id;
+        Tags = tags;
+        Nodes = new List<Node>(nodes);
 
-        _coordinatesAdapter = new WayCoordinateList(this.Nodes);
+        _coordinatesAdapter = new WayCoordinateList(Nodes);
     }
 
     /// <summary>
@@ -102,8 +101,7 @@ public class Way : LineString, IOsmGeometry
         result.Nodes.Capacity = info.Nodes.Count;
         foreach (var nodeID in info.Nodes)
         {
-            Node node = entities[nodeID, EntityType.Node] as Node;
-            if (node != null)
+            if (entities[nodeID, EntityType.Node] is Node node)
             {
                 result.Nodes.Add(node);
             }

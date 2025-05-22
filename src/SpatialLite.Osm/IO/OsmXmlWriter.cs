@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text;
+﻿using SpatialLite.Osm.Geometries;
+using System;
 using System.IO;
+using System.Text;
 using System.Xml;
-
-using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm.IO;
 
@@ -13,16 +12,16 @@ namespace SpatialLite.Osm.IO;
 public class OsmXmlWriter : IOsmWriter
 {
 
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.InvariantCulture;
-    private Stream _output;
-    private bool _ownsOutputStream;
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.InvariantCulture;
+    private readonly Stream _output;
+    private readonly bool _ownsOutputStream;
 
-    private XmlWriter _writer;
+    private readonly XmlWriter _writer;
     private bool _isInsideOsm = false;
     private bool _disposed = false;
 
     // underlaying stream writer for writing to files
-    private StreamWriter _streamWriter;
+    private readonly StreamWriter _streamWriter;
 
     /// <summary>
     /// Initializes a new instance of the OsmXmlWriter class that writes OSM entities to the specified stream.
@@ -31,8 +30,8 @@ public class OsmXmlWriter : IOsmWriter
     /// <param name="settings">The settings defining behaviour of the writer.</param>
     public OsmXmlWriter(Stream stream, OsmWriterSettings settings)
     {
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
 
         _output = stream;
         _ownsOutputStream = false;
@@ -51,8 +50,8 @@ public class OsmXmlWriter : IOsmWriter
     /// <remarks>If the file exists, it is overwritten, otherwise, a new file is created.</remarks>
     public OsmXmlWriter(string path, OsmWriterSettings settings)
     {
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
 
         _output = new FileStream(path, FileMode.Create, FileAccess.Write);
         _ownsOutputStream = true;
@@ -91,14 +90,14 @@ public class OsmXmlWriter : IOsmWriter
 
         if (_isInsideOsm == false)
         {
-            this.StartDocument();
+            StartDocument();
         }
 
         switch (entity.EntityType)
         {
-            case EntityType.Node: this.Write(new NodeInfo((Node)entity)); break;
-            case EntityType.Way: this.Write(new WayInfo((Way)entity)); break;
-            case EntityType.Relation: this.Write(new RelationInfo((Relation)entity)); break;
+            case EntityType.Node: Write(new NodeInfo((Node)entity)); break;
+            case EntityType.Way: Write(new WayInfo((Way)entity)); break;
+            case EntityType.Relation: Write(new RelationInfo((Relation)entity)); break;
         }
     }
 
@@ -108,7 +107,7 @@ public class OsmXmlWriter : IOsmWriter
     /// <param name="info">Entity data-transfer object to write.</param>
     public void Write(IEntityInfo info)
     {
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
             if (info.Metadata == null)
             {
@@ -118,14 +117,14 @@ public class OsmXmlWriter : IOsmWriter
 
         if (_isInsideOsm == false)
         {
-            this.StartDocument();
+            StartDocument();
         }
 
         switch (info.EntityType)
         {
-            case EntityType.Node: this.WriteNode((NodeInfo)info); break;
-            case EntityType.Way: this.WriteWay((WayInfo)info); break;
-            case EntityType.Relation: this.WriteRelation((RelationInfo)info); break;
+            case EntityType.Node: WriteNode((NodeInfo)info); break;
+            case EntityType.Way: WriteWay((WayInfo)info); break;
+            case EntityType.Relation: WriteRelation((RelationInfo)info); break;
         }
     }
 
@@ -143,9 +142,9 @@ public class OsmXmlWriter : IOsmWriter
     private void StartDocument()
     {
         _writer.WriteStartElement("osm");
-        if (string.IsNullOrEmpty(this.Settings.ProgramName) == false)
+        if (string.IsNullOrEmpty(Settings.ProgramName) == false)
         {
-            _writer.WriteAttributeString("generator", this.Settings.ProgramName);
+            _writer.WriteAttributeString("generator", Settings.ProgramName);
         }
 
         _isInsideOsm = true;
@@ -171,12 +170,12 @@ public class OsmXmlWriter : IOsmWriter
         _writer.WriteAttributeString("lat", info.Latitude.ToString(_culture));
         _writer.WriteAttributeString("id", info.ID.ToString(_culture));
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WriteMetadata(info.Metadata);
+            WriteMetadata(info.Metadata);
         }
 
-        this.WriteTags(info.Tags);
+        WriteTags(info.Tags);
 
         _writer.WriteEndElement();
     }
@@ -190,12 +189,12 @@ public class OsmXmlWriter : IOsmWriter
         _writer.WriteStartElement("way");
         _writer.WriteAttributeString("id", info.ID.ToString(_culture));
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WriteMetadata(info.Metadata);
+            WriteMetadata(info.Metadata);
         }
 
-        this.WriteTags(info.Tags);
+        WriteTags(info.Tags);
 
         for (int i = 0; i < info.Nodes.Count; i++)
         {
@@ -216,12 +215,12 @@ public class OsmXmlWriter : IOsmWriter
         _writer.WriteStartElement("relation");
         _writer.WriteAttributeString("id", info.ID.ToString(_culture));
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WriteMetadata(info.Metadata);
+            WriteMetadata(info.Metadata);
         }
 
-        this.WriteTags(info.Tags);
+        WriteTags(info.Tags);
 
         for (int i = 0; i < info.Members.Count; i++)
         {
@@ -276,7 +275,7 @@ public class OsmXmlWriter : IOsmWriter
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (_writer != null)
             {

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SpatialLite.Core.Geometries;
+﻿using SpatialLite.Core.Geometries;
+using System.Collections.Generic;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -38,8 +37,8 @@ public class Relation : GeometryCollection<RelationMember>, IOsmGeometry
     public Relation(long id, IEnumerable<RelationMember> members, TagsCollection tags)
         : base(members)
     {
-        this.ID = id;
-        this.Tags = tags;
+        ID = id;
+        Tags = tags;
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SpatialLite.Gps.Geometries;
+using System;
 using System.IO;
 using System.Xml;
-using SpatialLite.Gps.Geometries;
 
 namespace SpatialLite.Gps.IO;
 
@@ -11,7 +11,7 @@ namespace SpatialLite.Gps.IO;
 public class GpxReader : IGpxReader, IDisposable
 {
 
-    private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+    private readonly System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
     private bool _disposed = false;
     private XmlReader _xmlReader;
@@ -19,8 +19,8 @@ public class GpxReader : IGpxReader, IDisposable
     /// <summary>
     /// Underlaying stream to read data from
     /// </summary>
-    private Stream _input;
-    private bool _ownsInputStream = false;
+    private readonly Stream _input;
+    private readonly bool _ownsInputStream = false;
 
     private bool _insideGpx = false;
 
@@ -34,9 +34,9 @@ public class GpxReader : IGpxReader, IDisposable
         _input = new FileStream(path, FileMode.Open, FileAccess.Read);
         _ownsInputStream = true;
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
-        this.InitializeReader();
+        Settings = settings;
+        Settings.IsReadOnly = true;
+        InitializeReader();
     }
 
     /// <summary>
@@ -48,9 +48,9 @@ public class GpxReader : IGpxReader, IDisposable
     {
         _input = stream;
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
-        this.InitializeReader();
+        Settings = settings;
+        Settings.IsReadOnly = true;
+        InitializeReader();
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class GpxReader : IGpxReader, IDisposable
         DateTime timestamp = new DateTime();
 
         GpxPointMetadata metadata = null;
-        if (this.Settings.ReadMetadata)
+        if (Settings.ReadMetadata)
         {
             metadata = new GpxPointMetadata();
         }
@@ -139,9 +139,9 @@ public class GpxReader : IGpxReader, IDisposable
                     elementParsed = true;
                 }
 
-                if (this.Settings.ReadMetadata)
+                if (Settings.ReadMetadata)
                 {
-                    elementParsed = elementParsed || this.TryReadPointMetadata(metadata);
+                    elementParsed = elementParsed || TryReadPointMetadata(metadata);
                 }
 
                 if (!elementParsed)
@@ -171,7 +171,7 @@ public class GpxReader : IGpxReader, IDisposable
             _xmlReader.Read();
 
             GpxTrackMetadata metadata = null;
-            if (this.Settings.ReadMetadata)
+            if (Settings.ReadMetadata)
             {
                 metadata = new GpxTrackMetadata();
             }
@@ -186,9 +186,9 @@ public class GpxReader : IGpxReader, IDisposable
                     elementParsed = true;
                 }
 
-                if (this.Settings.ReadMetadata)
+                if (Settings.ReadMetadata)
                 {
-                    elementParsed = elementParsed || this.TryReadTrackMetadata(metadata);
+                    elementParsed = elementParsed || TryReadTrackMetadata(metadata);
                 }
 
                 if (!elementParsed)
@@ -247,7 +247,7 @@ public class GpxReader : IGpxReader, IDisposable
             _xmlReader.Read();
 
             GpxTrackMetadata metadata = null;
-            if (this.Settings.ReadMetadata)
+            if (Settings.ReadMetadata)
             {
                 metadata = new GpxTrackMetadata();
             }
@@ -262,9 +262,9 @@ public class GpxReader : IGpxReader, IDisposable
                     elementParsed = true;
                 }
 
-                if (this.Settings.ReadMetadata)
+                if (Settings.ReadMetadata)
                 {
-                    elementParsed = elementParsed || this.TryReadTrackMetadata(metadata);
+                    elementParsed = elementParsed || TryReadTrackMetadata(metadata);
                 }
 
                 if (!elementParsed)
@@ -304,7 +304,7 @@ public class GpxReader : IGpxReader, IDisposable
 
                 string version = _xmlReader.GetAttribute("version");
                 if (version == null || (version != "1.0" && version != "1.1"))
-                    throw new InvalidDataException(String.Format("Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
+                    throw new InvalidDataException(string.Format("Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
 
                 _insideGpx = true;
 
@@ -432,7 +432,7 @@ public class GpxReader : IGpxReader, IDisposable
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {

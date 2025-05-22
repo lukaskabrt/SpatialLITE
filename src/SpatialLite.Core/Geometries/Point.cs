@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -104,7 +103,7 @@ public class Point : Geometry, IPoint
     /// <returns>Envelope, that covers this Point.</returns>
     public override Envelope GetEnvelope()
     {
-        return new Envelope(this.Position);
+        return new Envelope(Position);
     }
 
     /// <summary>
@@ -113,6 +112,6 @@ public class Point : Geometry, IPoint
     /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
     public override IEnumerable<Coordinate> GetCoordinates()
     {
-        yield return this.Position;
+        yield return Position;
     }
 }

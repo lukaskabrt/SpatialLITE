@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using System;
 using System.IO;
-using SpatialLite.Core.API;
 using System.Linq;
 
 namespace SpatialLite.Core.IO;
@@ -11,11 +11,11 @@ namespace SpatialLite.Core.IO;
 public class WktWriter : IDisposable
 {
 
-    private static System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+    private static readonly System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
     private bool _disposed = false;
-    private TextWriter _writer;
-    private Stream _outputStream;
+    private readonly TextWriter _writer;
+    private readonly Stream _outputStream;
 
     /// <summary>
     /// Initializes a new instance of the WkbWriter class with specific settings.
@@ -23,13 +23,8 @@ public class WktWriter : IDisposable
     /// <param name="settings">The settings defining behaviour of the writer.</param>
     protected WktWriter(WktWriterSettings settings)
     {
-        if (settings == null)
-        {
-            throw new ArgumentNullException(nameof(settings));
-        }
-
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        Settings.IsReadOnly = true;
     }
 
     /// <summary>
@@ -76,7 +71,7 @@ public class WktWriter : IDisposable
     /// <param name="geometry">The geometry to write.</param>
     public void Write(IGeometry geometry)
     {
-        WktWriter.Write(geometry, _writer);
+        Write(geometry, _writer);
     }
 
     /// <summary>
@@ -96,7 +91,7 @@ public class WktWriter : IDisposable
     public static string WriteToString(IGeometry geometry)
     {
         StringWriter tw = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        WktWriter.Write(geometry, tw);
+        Write(geometry, tw);
 
         return tw.ToString();
     }
@@ -110,31 +105,31 @@ public class WktWriter : IDisposable
     {
         if (geometry is IPoint)
         {
-            WktWriter.AppendPointTaggedText((IPoint)geometry, writer);
+            AppendPointTaggedText((IPoint)geometry, writer);
         }
         else if (geometry is ILineString)
         {
-            WktWriter.AppendLineStringTaggedText((ILineString)geometry, writer);
+            AppendLineStringTaggedText((ILineString)geometry, writer);
         }
         else if (geometry is IPolygon)
         {
-            WktWriter.AppendPolygonTaggedText((IPolygon)geometry, writer);
+            AppendPolygonTaggedText((IPolygon)geometry, writer);
         }
         else if (geometry is IMultiPoint)
         {
-            WktWriter.AppendMultiPointTaggedText((IMultiPoint)geometry, writer);
+            AppendMultiPointTaggedText((IMultiPoint)geometry, writer);
         }
         else if (geometry is IMultiLineString)
         {
-            WktWriter.AppendMultiLineStringTaggedText((IMultiLineString)geometry, writer);
+            AppendMultiLineStringTaggedText((IMultiLineString)geometry, writer);
         }
         else if (geometry is IMultiPolygon)
         {
-            WktWriter.AppendMultiPolygonTaggetText((IMultiPolygon)geometry, writer);
+            AppendMultiPolygonTaggetText((IMultiPolygon)geometry, writer);
         }
         else if (geometry is IGeometryCollection<IGeometry>)
         {
-            WktWriter.AppendGeometryCollectionTaggedText((IGeometryCollection<IGeometry>)geometry, writer);
+            AppendGeometryCollectionTaggedText((IGeometryCollection<IGeometry>)geometry, writer);
         }
     }
 
@@ -180,12 +175,12 @@ public class WktWriter : IDisposable
             writer.Write("(");
         }
 
-        WktWriter.AppendCoordinate(coordinates[0], writer);
+        AppendCoordinate(coordinates[0], writer);
 
         for (int i = 1; i < coordinates.Count; i++)
         {
             writer.Write(", ");
-            WktWriter.AppendCoordinate(coordinates[i], writer);
+            AppendCoordinate(coordinates[i], writer);
         }
 
         if (wrap)
@@ -203,14 +198,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("point ");
 
-        string dimension = WktWriter.GetDimensionText(point);
+        string dimension = GetDimensionText(point);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendPointText(point, writer);
+        AppendPointText(point, writer);
     }
 
     /// <summary>
@@ -227,7 +222,7 @@ public class WktWriter : IDisposable
         else
         {
             writer.Write("(");
-            WktWriter.AppendCoordinate(point.Position, writer);
+            AppendCoordinate(point.Position, writer);
             writer.Write(")");
         }
     }
@@ -241,14 +236,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("linestring ");
 
-        string dimension = WktWriter.GetDimensionText(linestring);
+        string dimension = GetDimensionText(linestring);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendLineStringText(linestring, writer);
+        AppendLineStringText(linestring, writer);
     }
 
     /// <summary>
@@ -264,7 +259,7 @@ public class WktWriter : IDisposable
         }
         else
         {
-            WktWriter.AppendCoordinates(linestring.Coordinates, writer, true);
+            AppendCoordinates(linestring.Coordinates, writer, true);
         }
     }
 
@@ -277,14 +272,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("polygon ");
 
-        string dimension = WktWriter.GetDimensionText(polygon);
+        string dimension = GetDimensionText(polygon);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendPolygonText(polygon, writer);
+        AppendPolygonText(polygon, writer);
     }
 
     /// <summary>
@@ -301,17 +296,17 @@ public class WktWriter : IDisposable
         else
         {
             writer.Write("(");
-            WktWriter.AppendCoordinates(polygon.ExteriorRing, writer, true);
+            AppendCoordinates(polygon.ExteriorRing, writer, true);
 
             if (polygon.InteriorRings.Count() > 0)
             {
                 writer.Write(",");
-                WktWriter.AppendCoordinates(polygon.InteriorRings.First(), writer, true);
+                AppendCoordinates(polygon.InteriorRings.First(), writer, true);
 
                 foreach (var ring in polygon.InteriorRings.Skip(1))
                 {
                     writer.Write(",");
-                    WktWriter.AppendCoordinates(ring, writer, true);
+                    AppendCoordinates(ring, writer, true);
                 }
             }
 
@@ -328,14 +323,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("multipoint ");
 
-        string dimension = WktWriter.GetDimensionText(multipoint);
+        string dimension = GetDimensionText(multipoint);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendMultiPointText(multipoint, writer);
+        AppendMultiPointText(multipoint, writer);
     }
 
     /// <summary>
@@ -355,12 +350,12 @@ public class WktWriter : IDisposable
 
             if (multipoint.Geometries.Count() > 0)
             {
-                WktWriter.AppendPointText(multipoint.Geometries.First(), writer);
+                AppendPointText(multipoint.Geometries.First(), writer);
 
                 foreach (var point in multipoint.Geometries.Skip(1))
                 {
                     writer.Write(",");
-                    WktWriter.AppendPointText(point, writer);
+                    AppendPointText(point, writer);
                 }
             }
 
@@ -377,14 +372,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("multilinestring ");
 
-        string dimension = WktWriter.GetDimensionText(mls);
+        string dimension = GetDimensionText(mls);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendMultiLineStringText(mls, writer);
+        AppendMultiLineStringText(mls, writer);
     }
 
     /// <summary>
@@ -402,12 +397,12 @@ public class WktWriter : IDisposable
         {
             writer.Write("(");
 
-            WktWriter.AppendLineStringText(mls.Geometries.First(), writer);
+            AppendLineStringText(mls.Geometries.First(), writer);
 
             foreach (var linestring in mls.Geometries.Skip(1))
             {
                 writer.Write(",");
-                WktWriter.AppendLineStringText(linestring, writer);
+                AppendLineStringText(linestring, writer);
             }
 
             writer.Write(")");
@@ -423,14 +418,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("multipolygon ");
 
-        string dimension = WktWriter.GetDimensionText(mp);
+        string dimension = GetDimensionText(mp);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendMultiPolygonText(mp, writer);
+        AppendMultiPolygonText(mp, writer);
     }
 
     /// <summary>
@@ -448,12 +443,12 @@ public class WktWriter : IDisposable
         {
             writer.Write("(");
 
-            WktWriter.AppendPolygonText(multipolygon.Geometries.First(), writer);
+            AppendPolygonText(multipolygon.Geometries.First(), writer);
 
             foreach (var polygon in multipolygon.Geometries.Skip(1))
             {
                 writer.Write(",");
-                WktWriter.AppendPolygonText(polygon, writer);
+                AppendPolygonText(polygon, writer);
             }
 
             writer.Write(")");
@@ -469,14 +464,14 @@ public class WktWriter : IDisposable
     {
         writer.Write("geometrycollection ");
 
-        string dimension = WktWriter.GetDimensionText(collection);
+        string dimension = GetDimensionText(collection);
         if (string.IsNullOrEmpty(dimension) == false)
         {
             writer.Write(dimension);
             writer.Write(" ");
         }
 
-        WktWriter.AppendGeometryCollectionText(collection, writer);
+        AppendGeometryCollectionText(collection, writer);
     }
 
     /// <summary>
@@ -493,12 +488,12 @@ public class WktWriter : IDisposable
         else
         {
             writer.Write("(");
-            WktWriter.Write(collection.Geometries.First(), writer);
+            Write(collection.Geometries.First(), writer);
 
             foreach (var geometry in collection.Geometries.Skip(1))
             {
                 writer.Write(",");
-                WktWriter.Write(geometry, writer);
+                Write(geometry, writer);
             }
 
             writer.Write(")");

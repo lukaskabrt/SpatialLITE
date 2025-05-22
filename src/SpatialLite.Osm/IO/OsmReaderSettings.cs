@@ -7,15 +7,14 @@ namespace SpatialLite.Osm.IO;
 /// </summary>
 public class OsmReaderSettings
 {
-
-    bool _readMetadata = true;
+    private bool _readMetadata = true;
 
     /// <summary>
     /// Initializes a new instance of the OsmReaderSettings class with default values.
     /// </summary>
     public OsmReaderSettings()
     {
-        this.ReadMetadata = true;
+        ReadMetadata = true;
     }
 
     /// <summary>
@@ -29,7 +28,7 @@ public class OsmReaderSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'ReadMetadata' property OsmReaderSettings is read-only.");
             }

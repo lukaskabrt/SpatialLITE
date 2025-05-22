@@ -2,11 +2,11 @@
 
 namespace Tests.SpatialLite.Gps;
 
-static class PathHelper
+internal static class PathHelper
 {
     private const string TempDirectoryName = "Temp";
 
-    private static string _realGpxFilePath = Path.GetFullPath(Path.Combine("Data", "Gpx", "gpx-real-file.gpx"));
+    private static readonly string _realGpxFilePath = Path.GetFullPath(Path.Combine("Data", "Gpx", "gpx-real-file.gpx"));
     public static string RealGpxFilePath => _realGpxFilePath;
 
     public static string GetTempFilePath(string filename)

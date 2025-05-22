@@ -1,7 +1,6 @@
-﻿using System;
-
-using SpatialLite.Core.Algorithms;
+﻿using SpatialLite.Core.Algorithms;
 using SpatialLite.Core.API;
+using System;
 
 namespace SpatialLite.Core;
 
@@ -11,7 +10,7 @@ namespace SpatialLite.Core;
 public class Topology
 {
 
-    private static Topology _euclidean2D;
+    private static readonly Topology _euclidean2D;
 
     /// <summary>
     /// Initializes static members of the Topology class.
@@ -38,12 +37,7 @@ public class Topology
     /// <param name="geometryLocator">The IGeometryLocator object to use.</param>
     public Topology(IGeometryLocator geometryLocator)
     {
-        if (geometryLocator == null)
-        {
-            throw new ArgumentNullException(nameof(geometryLocator), "GeometryLocator can't be null");
-        }
-
-        this.GeometryLocator = geometryLocator;
+        GeometryLocator = geometryLocator ?? throw new ArgumentNullException(nameof(geometryLocator), "GeometryLocator can't be null");
     }
 
     /// <summary>
@@ -60,13 +54,13 @@ public class Topology
     /// <returns>true if coordinate lies inside outer polygon boundary and outside polygon's inner boundaries (holes), otherwise returns false.</returns>
     public bool IsInside(Coordinate c, IPolygon polygon, bool includeBoundaries)
     {
-        bool insideExterior = this.GeometryLocator.IsInRing(c, polygon.ExteriorRing);
+        bool insideExterior = GeometryLocator.IsInRing(c, polygon.ExteriorRing);
 
         if (insideExterior == false)
         {
             if (includeBoundaries)
             {
-                return this.GeometryLocator.IsOnLine(c, polygon.ExteriorRing);
+                return GeometryLocator.IsOnLine(c, polygon.ExteriorRing);
             }
             else
             {
@@ -77,11 +71,11 @@ public class Topology
         {
             foreach (var ring in polygon.InteriorRings)
             {
-                if (this.GeometryLocator.IsInRing(c, ring))
+                if (GeometryLocator.IsInRing(c, ring))
                 {
                     return false;
                 }
-                else if (includeBoundaries && this.GeometryLocator.IsOnLine(c, ring))
+                else if (includeBoundaries && GeometryLocator.IsOnLine(c, ring))
                 {
                     return true;
                 }
@@ -102,7 +96,7 @@ public class Topology
     {
         foreach (var polygon in multipolygon.Geometries)
         {
-            if (this.IsInside(c, polygon, includeBoundaries))
+            if (IsInside(c, polygon, includeBoundaries))
             {
                 return true;
             }
@@ -119,7 +113,7 @@ public class Topology
     /// <returns>true if coordinate lies on the polyline, otherwise false.</returns>
     public bool IsOnLine(Coordinate c, ILineString line)
     {
-        return this.GeometryLocator.IsOnLine(c, line.Coordinates);
+        return GeometryLocator.IsOnLine(c, line.Coordinates);
     }
 
     /// <summary>
@@ -132,7 +126,7 @@ public class Topology
     {
         foreach (var line in multiline.Geometries)
         {
-            if (this.IsOnLine(c, line))
+            if (IsOnLine(c, line))
             {
                 return true;
             }
@@ -149,6 +143,6 @@ public class Topology
     /// <returns>true if polylines intersets, otherwise false.</returns>
     public bool Intersects(ILineString line1, ILineString line2)
     {
-        return this.GeometryLocator.Intersects(line1.Coordinates, line2.Coordinates);
+        return GeometryLocator.Intersects(line1.Coordinates, line2.Coordinates);
     }
 }

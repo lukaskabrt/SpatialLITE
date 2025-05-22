@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using ProtoBuf;
+﻿using ProtoBuf;
 using SpatialLite.Osm.IO.Pbf;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace SpatialLite.Osm.IO;
 
@@ -24,9 +24,9 @@ public class PbfReader : IOsmReader
     public const int MaxHeaderBlockSize = 64 * 1024;
 
     private bool _disposed = false;
-    private Stream _input;
-    private Queue<IEntityInfo> _cache;
-    private DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+    private readonly Stream _input;
+    private readonly Queue<IEntityInfo> _cache;
+    private readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
 
     /// <summary>
     /// Initializes a new instance of the PbfReader class that read data form specified stream.
@@ -38,18 +38,18 @@ public class PbfReader : IOsmReader
         _input = input;
         _cache = new Queue<IEntityInfo>();
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
 
-        BlobHeader blobHeader = null;
-        while ((blobHeader = this.ReadBlobHeader()) != null)
+        BlobHeader blobHeader;
+        while ((blobHeader = ReadBlobHeader()) != null)
         {
             try
             {
                 if (blobHeader.Type == "OSMHeader")
                 {
-                    OsmHeader osmHeader = (OsmHeader)this.ReadBlob(blobHeader);
-                    this.ProcessOsmHeader(osmHeader);
+                    OsmHeader osmHeader = (OsmHeader)ReadBlob(blobHeader);
+                    ProcessOsmHeader(osmHeader);
                     return;
                 }
                 else if (blobHeader.Type == "OSMData")
@@ -80,18 +80,18 @@ public class PbfReader : IOsmReader
         _input = new FileStream(path, FileMode.Open, FileAccess.Read);
         _cache = new Queue<IEntityInfo>();
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
 
-        BlobHeader blobHeader = null;
-        while ((blobHeader = this.ReadBlobHeader()) != null)
+        BlobHeader blobHeader;
+        while ((blobHeader = ReadBlobHeader()) != null)
         {
             try
             {
                 if (blobHeader.Type == "OSMHeader")
                 {
-                    OsmHeader osmHeader = (OsmHeader)this.ReadBlob(blobHeader);
-                    this.ProcessOsmHeader(osmHeader);
+                    OsmHeader osmHeader = (OsmHeader)ReadBlob(blobHeader);
+                    ProcessOsmHeader(osmHeader);
                     return;
                 }
                 else if (blobHeader.Type == "OSMData")
@@ -129,15 +129,14 @@ public class PbfReader : IOsmReader
         }
         else
         {
-            BlobHeader blobHeader = null;
-            while (_cache.Count == 0 && (blobHeader = this.ReadBlobHeader()) != null)
+            BlobHeader blobHeader;
+            while (_cache.Count == 0 && (blobHeader = ReadBlobHeader()) != null)
             {
-                PrimitiveBlock data = this.ReadBlob(blobHeader) as PrimitiveBlock;
-                if (data != null)
+                if (ReadBlob(blobHeader) is PrimitiveBlock data)
                 {
                     foreach (PrimitiveGroup group in data.PrimitiveGroup)
                     {
-                        this.ProcessPrimitiveGroup(data, group);
+                        ProcessPrimitiveGroup(data, group);
                     }
                 }
             }
@@ -261,10 +260,10 @@ public class PbfReader : IOsmReader
     /// <param name="group">The PrimitiveGroup to process.</param>
     private void ProcessPrimitiveGroup(PrimitiveBlock block, PrimitiveGroup group)
     {
-        this.ProcessNodes(block, group);
-        this.ProcessDenseNodes(block, group);
-        this.ProcessWays(block, group);
-        this.ProcessRelations(block, group);
+        ProcessNodes(block, group);
+        ProcessDenseNodes(block, group);
+        ProcessWays(block, group);
+        ProcessRelations(block, group);
     }
 
     /// <summary>
@@ -293,9 +292,9 @@ public class PbfReader : IOsmReader
                 }
             }
 
-            EntityMetadata metadata = this.ProcessMetadata(node.Metadata, block);
+            EntityMetadata metadata = ProcessMetadata(node.Metadata, block);
 
-            NodeInfo parsed = new NodeInfo((long)node.ID, lat, lon, new TagsCollection(tags), metadata);
+            NodeInfo parsed = new NodeInfo(node.ID, lat, lon, new TagsCollection(tags), metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -348,7 +347,7 @@ public class PbfReader : IOsmReader
             }
 
             EntityMetadata metadata = null;
-            if (this.Settings.ReadMetadata && group.DenseNodes.DenseInfo != null)
+            if (Settings.ReadMetadata && group.DenseNodes.DenseInfo != null)
             {
                 timestampStore += group.DenseNodes.DenseInfo.Timestamp[i];
                 changesetStore += group.DenseNodes.DenseInfo.Changeset[i];
@@ -371,7 +370,7 @@ public class PbfReader : IOsmReader
                 }
             }
 
-            NodeInfo parsed = new NodeInfo((long)idStore, lat, lon, new TagsCollection(tags), metadata);
+            NodeInfo parsed = new NodeInfo(idStore, lat, lon, new TagsCollection(tags), metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -395,7 +394,7 @@ public class PbfReader : IOsmReader
 
             for (int i = 0; i < way.Refs.Count; i++)
             {
-                refStore += (long)way.Refs[i];
+                refStore += way.Refs[i];
                 refs.Add(refStore);
             }
 
@@ -408,9 +407,9 @@ public class PbfReader : IOsmReader
                 }
             }
 
-            EntityMetadata metadata = this.ProcessMetadata(way.Metadata, block);
+            EntityMetadata metadata = ProcessMetadata(way.Metadata, block);
 
-            WayInfo parsed = new WayInfo((long)way.ID, new TagsCollection(tags), refs, metadata);
+            WayInfo parsed = new WayInfo(way.ID, new TagsCollection(tags), refs, metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -434,7 +433,7 @@ public class PbfReader : IOsmReader
             List<RelationMemberInfo> members = new List<RelationMemberInfo>();
             for (int i = 0; i < relation.MemberIds.Count; i++)
             {
-                memberRefStore += (long)relation.MemberIds[i];
+                memberRefStore += relation.MemberIds[i];
                 string role = block.StringTable[relation.RolesIndexes[i]];
 
                 EntityType memberType = 0;
@@ -457,9 +456,9 @@ public class PbfReader : IOsmReader
                 }
             }
 
-            EntityMetadata metadata = this.ProcessMetadata(relation.Metadata, block);
+            EntityMetadata metadata = ProcessMetadata(relation.Metadata, block);
 
-            RelationInfo parsed = new RelationInfo((long)relation.ID, new TagsCollection(tags), members, metadata);
+            RelationInfo parsed = new RelationInfo(relation.ID, new TagsCollection(tags), members, metadata);
             _cache.Enqueue(parsed);
         }
     }
@@ -474,7 +473,7 @@ public class PbfReader : IOsmReader
     {
         EntityMetadata metadata = null;
 
-        if (this.Settings.ReadMetadata && serializedMetadata != null)
+        if (Settings.ReadMetadata && serializedMetadata != null)
         {
             //PBF has no field for 'visible' property, true is default value for OSM entity read from PBF file
             metadata = new EntityMetadata() { Visible = true };
@@ -513,7 +512,7 @@ public class PbfReader : IOsmReader
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {

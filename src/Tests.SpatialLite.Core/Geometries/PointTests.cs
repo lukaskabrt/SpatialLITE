@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-
-using SpatialLite.Core;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.Geometries;
 
 public class PointTests
 {
-
-    double _xOrdinate = 3.5;
-    double _yOrdinate = 4.2;
-    double _zOrdinate = 10.5;
-    double _mValue = 100.4;
-
-    Coordinate _coordinate;
+    private readonly double _xOrdinate = 3.5;
+    private readonly double _yOrdinate = 4.2;
+    private readonly double _zOrdinate = 10.5;
+    private readonly double _mValue = 100.4;
+    private Coordinate _coordinate;
     public PointTests()
     {
         _coordinate = new Coordinate(_xOrdinate, _yOrdinate, _zOrdinate, _mValue);

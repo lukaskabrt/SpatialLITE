@@ -7,9 +7,8 @@ namespace SpatialLite.Gps.IO;
 /// </summary>
 public class GpxWriterSettings
 {
-
-    bool _writeMetadata = true;
-    string _generatorName;
+    private bool _writeMetadata = true;
+    private string _generatorName;
 
     /// <summary>
     /// Initializes a new instance of the GpxWriterSettings class with default values.
@@ -29,7 +28,7 @@ public class GpxWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'WriteMetadata' property - GpxWriterSettings is read-only.");
             }
@@ -49,7 +48,7 @@ public class GpxWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'GeneratorName' property - GpxWriterSettings is read-only.");
             }

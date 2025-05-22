@@ -29,7 +29,7 @@ public class OsmXmlReaderSettings : OsmReaderSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'StrictMode' property - OsmXmlReaderSettings is read-only.");
             }

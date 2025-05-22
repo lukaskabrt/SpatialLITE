@@ -1,5 +1,5 @@
-﻿using System;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System;
 
 namespace SpatialLite.Core.Algorithms;
 
@@ -35,7 +35,7 @@ public class Euclidean2DCalculator : IDimensionsCalculator
     {
         if (a.Equals2D(b))
         {
-            return this.CalculateDistance(c, a);
+            return CalculateDistance(c, a);
         }
 
         double deltaX = b.X - a.X;
@@ -65,12 +65,12 @@ public class Euclidean2DCalculator : IDimensionsCalculator
 
             if (r <= 0.0)
             {
-                return this.CalculateDistance(c, a);
+                return CalculateDistance(c, a);
             }
 
             if (r >= 1.0)
             {
-                return this.CalculateDistance(c, b);
+                return CalculateDistance(c, b);
             }
         }
 

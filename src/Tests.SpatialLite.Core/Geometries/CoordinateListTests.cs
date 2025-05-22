@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System.Linq;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.Geometries;
 
 public class CoordinateListTests
 {
-
-    Coordinate _coordinate = new Coordinate(-10, -20, -200);
-
-    Coordinate[] _coordinates = new Coordinate[] {
+    private Coordinate _coordinate = new Coordinate(-10, -20, -200);
+    private readonly Coordinate[] _coordinates = new Coordinate[] {
             new Coordinate(12,10,100),
             new Coordinate(22,20,200),
             new Coordinate(32,30,300)

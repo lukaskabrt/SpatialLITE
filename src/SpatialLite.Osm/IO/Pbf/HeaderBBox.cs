@@ -32,5 +32,4 @@ internal class HeaderBBox
     /// </summary>
     [ProtoMember(3, Name = "top", IsRequired = true, DataFormat = DataFormat.ZigZag)]
     public long Top { get; set; }
-
 }

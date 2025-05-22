@@ -7,15 +7,14 @@ namespace SpatialLite.Gps.IO;
 /// </summary>
 public class GpxReaderSettings
 {
-
-    bool _readMetadata = true;
+    private bool _readMetadata = true;
 
     /// <summary>
     /// Initializes a new instance of the GpxReaderSettings class with default values.
     /// </summary>
     public GpxReaderSettings()
     {
-        this.ReadMetadata = true;
+        ReadMetadata = true;
     }
 
     /// <summary>
@@ -29,7 +28,7 @@ public class GpxReaderSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'ReadMetadata' property GpxReaderSettings is read-only.");
             }

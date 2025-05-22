@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using SpatialLite.Gps.Geometries;
+﻿using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
+using System;
+using System.Collections.Generic;
 
 namespace SpatialLite.Gps;
 
@@ -15,9 +15,9 @@ public class GpxDocument
     /// </summary>
     public GpxDocument()
     {
-        this.Waypoints = new List<GpxPoint>();
-        this.Routes = new List<GpxRoute>();
-        this.Tracks = new List<GpxTrack>();
+        Waypoints = new List<GpxPoint>();
+        Routes = new List<GpxRoute>();
+        Tracks = new List<GpxTrack>();
     }
 
     /// <summary>
@@ -28,9 +28,9 @@ public class GpxDocument
     /// <param name="tracks">A collection of tracks to add to the document.</param>
     public GpxDocument(IEnumerable<GpxPoint> waypoints, IEnumerable<GpxRoute> routes, IEnumerable<GpxTrack> tracks)
     {
-        this.Waypoints = new List<GpxPoint>(waypoints);
-        this.Routes = new List<GpxRoute>(routes);
-        this.Tracks = new List<GpxTrack>(tracks);
+        Waypoints = new List<GpxPoint>(waypoints);
+        Routes = new List<GpxRoute>(routes);
+        Tracks = new List<GpxTrack>(tracks);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class GpxDocument
     {
         using (GpxWriter writer = new GpxWriter(path, new GpxWriterSettings() { WriteMetadata = true }))
         {
-            this.Save(writer);
+            Save(writer);
         }
     }
 
@@ -71,17 +71,17 @@ public class GpxDocument
             throw new ArgumentNullException(nameof(writer));
         }
 
-        foreach (var waypoint in this.Waypoints)
+        foreach (var waypoint in Waypoints)
         {
             writer.Write(waypoint);
         }
 
-        foreach (var route in this.Routes)
+        foreach (var route in Routes)
         {
             writer.Write(route);
         }
 
-        foreach (var track in this.Tracks)
+        foreach (var track in Tracks)
         {
             writer.Write(track);
         }
@@ -93,14 +93,14 @@ public class GpxDocument
     /// <param name="reader">The reader to read data from</param>
     private void LoadFromReader(IGpxReader reader)
     {
-        IGpxGeometry geometry = null;
+        IGpxGeometry geometry;
         while ((geometry = reader.Read()) != null)
         {
             switch (geometry.GeometryType)
             {
-                case GpxGeometryType.Waypoint: this.Waypoints.Add((GpxPoint)geometry); break;
-                case GpxGeometryType.Route: this.Routes.Add((GpxRoute)geometry); break;
-                case GpxGeometryType.Track: this.Tracks.Add((GpxTrack)geometry); break;
+                case GpxGeometryType.Waypoint: Waypoints.Add((GpxPoint)geometry); break;
+                case GpxGeometryType.Route: Routes.Add((GpxRoute)geometry); break;
+                case GpxGeometryType.Track: Tracks.Add((GpxTrack)geometry); break;
             }
         }
     }

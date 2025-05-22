@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Gps.Geometries;
+using System;
 using Xunit;
-using SpatialLite.Gps.Geometries;
 
 namespace Tests.SpatialLite.Gps.Geometries;
 

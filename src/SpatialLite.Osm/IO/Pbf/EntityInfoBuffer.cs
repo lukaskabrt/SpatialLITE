@@ -9,12 +9,12 @@ namespace SpatialLite.Osm.IO.Pbf;
 internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T : class, IEntityInfo
 {
 
-    private List<T> _storage = null;
-    private Dictionary<string, uint> _stringTable;
+    private readonly List<T> _storage = null;
+    private readonly Dictionary<string, uint> _stringTable;
 
     private int _stringTableSize = 0;
     private int _estimatedEntityDataSize = 0;
-    private bool _writeMetadata;
+    private readonly bool _writeMetadata;
 
     /// <summary>
     /// Initializes a new instance of the EntityInfoBuffer class.
@@ -31,7 +31,7 @@ internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T
         _writeMetadata = writeMetadata;
 
         //add dummy value to the string table to get rid of 0 index
-        this.GetStringIndex(string.Empty);
+        GetStringIndex(string.Empty);
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T
 
         foreach (var tag in item.Tags)
         {
-            this.GetStringIndex(tag.Key);
-            this.GetStringIndex(tag.Value);
+            GetStringIndex(tag.Key);
+            GetStringIndex(tag.Value);
 
             _estimatedEntityDataSize += 8;
         }
@@ -108,7 +108,7 @@ internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T
         _stringTableSize = 0;
 
         //add dummy value to the string table to get rid of 0 index
-        this.GetStringIndex(string.Empty);
+        GetStringIndex(string.Empty);
     }
 
     /// <summary>

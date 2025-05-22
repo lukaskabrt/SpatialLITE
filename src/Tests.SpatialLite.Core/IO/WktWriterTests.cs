@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
 using SpatialLite.Core.IO;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.IO;
 
@@ -17,23 +12,23 @@ public class WktWriterTests
 {
 
 
-    private static Coordinate[] _coordinatesXY = new Coordinate[] {
+    private static readonly Coordinate[] _coordinatesXY = new Coordinate[] {
             new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
     };
 
-    private static Coordinate[] _coordinatesXYZ = new Coordinate[] {
+    private static readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
             new Coordinate(-10.1, 15.5, 100.5), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
     };
 
-    private static Coordinate[] _coordinatesXYM = new Coordinate[] {
+    private static readonly Coordinate[] _coordinatesXYM = new Coordinate[] {
             new Coordinate(-10.1, 15.5, double.NaN, 1000.5), new Coordinate(20.2, -25.5, double.NaN, 2000.5), new Coordinate(30.3, 35.5, double.NaN, -3000.5)
     };
 
-    private static Coordinate[] _coordinatesXYZM = new Coordinate[] {
+    private static readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
             new Coordinate(-10.1, 15.5, 100.5, 1000.5), new Coordinate(20.2, -25.5, 200.5, 2000.5), new Coordinate(30.3, 35.5, -300.5, -3000.5)
     };
 
-    private static Coordinate[] _coordinates2XYZM = new Coordinate[] {
+    private static readonly Coordinate[] _coordinates2XYZM = new Coordinate[] {
             new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
     };
 
@@ -121,7 +116,7 @@ public class WktWriterTests
     [MemberData(nameof(WriteToStringTestData))]
     public void WriteToString_WritesAllGeometryTypes(Geometry toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     [Fact]
@@ -132,9 +127,7 @@ public class WktWriterTests
         WktWriterSettings settings = new WktWriterSettings();
         WktWriter target = new WktWriter(filename, settings);
         target.Dispose();
-
-        FileStream testStream = null;
-        testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
@@ -165,7 +158,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesPointsOfAllDimensionsTestData))]
     public void Write_WritesPointsOfAllDimensions(Point toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     public static IEnumerable<object[]> Write_WritesLinestringOfAllDimensionsTestData
@@ -184,7 +177,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesLinestringOfAllDimensionsTestData))]
     public void Write_WritesLinestringsOfAllDimensions(LineString toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     public static IEnumerable<object[]> Write_WritesPolygonsOfAllDimensionsTestData
@@ -203,7 +196,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesPolygonsOfAllDimensionsTestData))]
     public void Write_WritesPolygonsOfAllDimensions(Polygon toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     [Fact]
@@ -214,7 +207,7 @@ public class WktWriterTests
         polygon.InteriorRings.Add(new CoordinateList(_coordinates2XYZM));
         polygon.InteriorRings.Add(new CoordinateList(_coordinates2XYZM));
 
-        this.TestWriteGeometry(polygon, wkt);
+        TestWriteGeometry(polygon, wkt);
     }
 
     public static IEnumerable<object[]> Write_WritesMultiPoinsOfAllDimensionsTestData
@@ -233,7 +226,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesMultiPoinsOfAllDimensionsTestData))]
     public void Write_WritesMultiPointsOfAllDimensions(MultiPoint toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     public static IEnumerable<object[]> Write_WritesMultiLineStringsOfAllDimensionsTestData
@@ -256,7 +249,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesMultiLineStringsOfAllDimensionsTestData))]
     public void Write_WritesMultiLineStringsOfAllDimensions(MultiLineString toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     public static IEnumerable<object[]> Write_WritesMultiPolygonsOfAllDimensionsTestData
@@ -279,7 +272,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesMultiPolygonsOfAllDimensionsTestData))]
     public void Write_WritesMultiPolygonsOfAllDimensions(MultiPolygon toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     public static IEnumerable<object[]> Write_WritesGeometryCollectionOfAllDimensionsTestData
@@ -298,7 +291,7 @@ public class WktWriterTests
     [MemberData(nameof(Write_WritesGeometryCollectionOfAllDimensionsTestData))]
     public void Write_WritesGeometryCollectionOfAllDimensions(GeometryCollection<Geometry> toWrite, string expectedWkt)
     {
-        this.TestWriteGeometry(toWrite, expectedWkt);
+        TestWriteGeometry(toWrite, expectedWkt);
     }
 
     [Fact]
@@ -313,7 +306,7 @@ public class WktWriterTests
         collection.Geometries.Add(new MultiLineString());
         collection.Geometries.Add(new MultiPolygon());
 
-        this.TestWriteGeometry(collection, wkt);
+        TestWriteGeometry(collection, wkt);
     }
 
     [Fact]
@@ -325,7 +318,7 @@ public class WktWriterTests
         nested.Geometries.Add(new Point(_coordinatesXY[0]));
         collection.Geometries.Add(nested);
 
-        this.TestWriteGeometry(collection, wkt);
+        TestWriteGeometry(collection, wkt);
     }
 
     private void TestWriteGeometry(IGeometry geometry, string expectedWkt)

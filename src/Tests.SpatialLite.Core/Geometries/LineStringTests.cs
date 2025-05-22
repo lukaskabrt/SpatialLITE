@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-
-using SpatialLite.Core;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System.Linq;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.Geometries;
 
 public class LineStringTests
 {
-
-    Coordinate[] _coordinatesXY = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXY = new Coordinate[] {
             new Coordinate(12,10),
             new Coordinate(22,20),
             new Coordinate(32,30)
     };
-
-    Coordinate[] _coordinatesXYZ = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
             new Coordinate(12,10,100),
             new Coordinate(22,20,200),
             new Coordinate(32,30,300)
     };
-
-    Coordinate[] _coordinatesXYZM = new Coordinate[] {
+    private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
             new Coordinate(12,10,100, 1000),
             new Coordinate(22,20,200, 2000),
             new Coordinate(32,30,300, 3000)

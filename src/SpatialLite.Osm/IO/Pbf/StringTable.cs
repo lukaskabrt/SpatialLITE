@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ProtoBuf;
+using System;
 using System.Collections.Generic;
 using System.Text;
-
-using ProtoBuf;
 
 namespace SpatialLite.Osm.IO.Pbf;
 
@@ -35,21 +34,21 @@ public class StringTable
     {
         get
         {
-            if (index >= this.Storage.Count)
+            if (index >= Storage.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            return Encoding.UTF8.GetString(this.Storage[index], 0, this.Storage[index].Length);
+            return Encoding.UTF8.GetString(Storage[index], 0, Storage[index].Length);
         }
         set
         {
-            if (index >= this.Storage.Count)
+            if (index >= Storage.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            this.Storage[index] = Encoding.UTF8.GetBytes(value);
+            Storage[index] = Encoding.UTF8.GetBytes(value);
         }
     }
 

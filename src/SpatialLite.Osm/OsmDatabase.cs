@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Osm.IO;
+using System;
 using System.Collections.Generic;
-using SpatialLite.Osm.IO;
 
 namespace SpatialLite.Osm;
 
@@ -19,9 +19,9 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     /// </summary>
     internal OsmDatabase()
     {
-        this.Nodes = new EntityCollection<N>();
-        this.Ways = new EntityCollection<W>();
-        this.Relations = new EntityCollection<R>();
+        Nodes = new EntityCollection<N>();
+        Ways = new EntityCollection<W>();
+        Relations = new EntityCollection<R>();
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     {
         foreach (var entity in entities)
         {
-            this.Add(entity);
+            Add(entity);
         }
     }
 
@@ -59,7 +59,7 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     {
         get
         {
-            return this.Nodes.Count + this.Ways.Count + this.Relations.Count;
+            return Nodes.Count + Ways.Count + Relations.Count;
         }
     }
 
@@ -84,22 +84,22 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     {
         get
         {
-            if (type == EntityType.Node && this.Nodes.Contains(id))
+            if (type == EntityType.Node && Nodes.Contains(id))
             {
-                return (T)this.Nodes[id];
+                return Nodes[id];
             }
 
-            if (type == EntityType.Way && this.Ways.Contains(id))
+            if (type == EntityType.Way && Ways.Contains(id))
             {
-                return (T)this.Ways[id];
+                return Ways[id];
             }
 
-            if (type == EntityType.Relation && this.Relations.Contains(id))
+            if (type == EntityType.Relation && Relations.Contains(id))
             {
-                return (T)this.Relations[id];
+                return Relations[id];
             }
 
-            return default(T);
+            return default;
         }
     }
 
@@ -119,19 +119,19 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     /// <returns>true if entity was successfully removed from the ICollection; otherwise, false. This method also returns false if entity is not found in the original collection.</returns>
     public bool Remove(long id, EntityType type)
     {
-        if (this.Nodes.Contains(id))
+        if (Nodes.Contains(id))
         {
-            return this.Nodes.Remove(id);
+            return Nodes.Remove(id);
         }
 
-        if (this.Ways.Contains(id))
+        if (Ways.Contains(id))
         {
-            return this.Ways.Remove(id);
+            return Ways.Remove(id);
         }
 
-        if (this.Relations.Contains(id))
+        if (Relations.Contains(id))
         {
-            return this.Relations.Remove(id);
+            return Relations.Remove(id);
         }
 
         return false;
@@ -147,9 +147,9 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     {
         switch (type)
         {
-            case EntityType.Node: return this.Nodes.Contains(id);
-            case EntityType.Way: return this.Ways.Contains(id);
-            case EntityType.Relation: return this.Relations.Contains(id);
+            case EntityType.Node: return Nodes.Contains(id);
+            case EntityType.Way: return Ways.Contains(id);
+            case EntityType.Relation: return Relations.Contains(id);
         }
 
         throw new NotImplementedException();
@@ -166,16 +166,16 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
             throw new ArgumentNullException(nameof(entity), "Cannot add null to EntityCollection");
         }
 
-        if (this.Contains(entity.ID, entity.EntityType))
+        if (Contains(entity.ID, entity.EntityType))
         {
             throw new ArgumentException("An entity with the same ID has already been added.");
         }
 
         switch (entity.EntityType)
         {
-            case EntityType.Node: this.Nodes.Add((N)entity); break;
-            case EntityType.Way: this.Ways.Add((W)entity); break;
-            case EntityType.Relation: this.Relations.Add((R)entity); break;
+            case EntityType.Node: Nodes.Add((N)entity); break;
+            case EntityType.Way: Ways.Add((W)entity); break;
+            case EntityType.Relation: Relations.Add((R)entity); break;
         }
     }
 
@@ -184,9 +184,9 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     /// </summary>
     public void Clear()
     {
-        this.Nodes.Clear();
-        this.Ways.Clear();
-        this.Relations.Clear();
+        Nodes.Clear();
+        Ways.Clear();
+        Relations.Clear();
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
             return false;
         }
 
-        return this.Contains(item.ID, item.EntityType);
+        return Contains(item.ID, item.EntityType);
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
             return false;
         }
 
-        return this.Remove(entity.ID, entity.EntityType);
+        return Remove(entity.ID, entity.EntityType);
     }
 
     /// <summary>
@@ -238,17 +238,17 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     /// <returns>A IEnumerator&lt;T&gt; that can be used to iterate through the collection.</returns>
     public IEnumerator<T> GetEnumerator()
     {
-        foreach (var node in this.Nodes)
+        foreach (var node in Nodes)
         {
             yield return node;
         }
 
-        foreach (var way in this.Ways)
+        foreach (var way in Ways)
         {
             yield return way;
         }
 
-        foreach (var relation in this.Relations)
+        foreach (var relation in Relations)
         {
             yield return relation;
         }
@@ -260,6 +260,6 @@ public class OsmDatabase<T, N, W, R> : IEntityCollection<T> where T : IOsmEntity
     /// <returns>A IEnumerator that can be used to iterate through the collection.</returns>
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
-        return this.GetEnumerator();
+        return GetEnumerator();
     }
 }

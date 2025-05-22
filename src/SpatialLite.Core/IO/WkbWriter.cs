@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using System;
 using System.IO;
 using System.Linq;
-
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.IO;
 
@@ -13,8 +12,8 @@ public class WkbWriter : IDisposable
 {
 
     private bool _disposed = false;
-    private BinaryWriter _writer = null;
-    private Stream _output = null;
+    private readonly BinaryWriter _writer = null;
+    private readonly Stream _output = null;
 
     /// <summary>
     /// Initializes a new instance of the WkbWriter class with specific settings.
@@ -32,8 +31,8 @@ public class WkbWriter : IDisposable
             throw new NotSupportedException("BigEndian encoding is not supported in current version of the WkbWriter.");
         }
 
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
     }
 
     /// <summary>
@@ -87,8 +86,8 @@ public class WkbWriter : IDisposable
             {
                 WkbWriterSettings defaultSettings = new WkbWriterSettings();
 
-                WkbWriter.WriteEncoding(writer, defaultSettings.Encoding);
-                WkbWriter.Write(geometry, writer);
+                WriteEncoding(writer, defaultSettings.Encoding);
+                Write(geometry, writer);
 
                 return dataStream.ToArray();
             }
@@ -110,8 +109,8 @@ public class WkbWriter : IDisposable
     /// <param name="geometry">The geometry to write.</param>
     public void Write(IGeometry geometry)
     {
-        WkbWriter.WriteEncoding(_writer, this.Settings.Encoding);
-        WkbWriter.Write(geometry, _writer);
+        WriteEncoding(_writer, Settings.Encoding);
+        Write(geometry, _writer);
     }
 
     /// <summary>
@@ -133,31 +132,31 @@ public class WkbWriter : IDisposable
     {
         if (geometry is IPoint)
         {
-            WkbWriter.WritePoint((IPoint)geometry, writer);
+            WritePoint((IPoint)geometry, writer);
         }
         else if (geometry is ILineString)
         {
-            WkbWriter.WriteLineString((ILineString)geometry, writer);
+            WriteLineString((ILineString)geometry, writer);
         }
         else if (geometry is IPolygon)
         {
-            WkbWriter.WritePolygon((IPolygon)geometry, writer);
+            WritePolygon((IPolygon)geometry, writer);
         }
         else if (geometry is IMultiPoint)
         {
-            WkbWriter.WriteMultiPoint((IMultiPoint)geometry, writer);
+            WriteMultiPoint((IMultiPoint)geometry, writer);
         }
         else if (geometry is IMultiLineString)
         {
-            WkbWriter.WriteMultiLineString((IMultiLineString)geometry, writer);
+            WriteMultiLineString((IMultiLineString)geometry, writer);
         }
         else if (geometry is IMultiPolygon)
         {
-            WkbWriter.WriteMultiPolygon((IMultiPolygon)geometry, writer);
+            WriteMultiPolygon((IMultiPolygon)geometry, writer);
         }
         else if (geometry is IGeometryCollection<IGeometry>)
         {
-            WkbWriter.WriteGeometryCollection((IGeometryCollection<IGeometry>)geometry, writer);
+            WriteGeometryCollection((IGeometryCollection<IGeometry>)geometry, writer);
         }
     }
 
@@ -193,7 +192,7 @@ public class WkbWriter : IDisposable
 
         for (int i = 0; i < coordinates.Count; i++)
         {
-            WkbWriter.WriteCoordinate(coordinates[i], writer);
+            WriteCoordinate(coordinates[i], writer);
         }
     }
 
@@ -211,8 +210,8 @@ public class WkbWriter : IDisposable
         }
         else
         {
-            writer.Write((uint)WkbWriter.AdjustGeometryType(point, WkbGeometryType.Point));
-            WkbWriter.WriteCoordinate(point.Position, writer);
+            writer.Write((uint)AdjustGeometryType(point, WkbGeometryType.Point));
+            WriteCoordinate(point.Position, writer);
         }
     }
 
@@ -223,8 +222,8 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WriteLineString(ILineString linestring, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(linestring, WkbGeometryType.LineString));
-        WkbWriter.WriteCoordinates(linestring.Coordinates, writer);
+        writer.Write((uint)AdjustGeometryType(linestring, WkbGeometryType.LineString));
+        WriteCoordinates(linestring.Coordinates, writer);
     }
 
     /// <summary>
@@ -234,8 +233,8 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WritePolygon(IPolygon polygon, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(polygon, WkbGeometryType.Polygon));
-        WkbWriter.WritePolygonContent(polygon, writer);
+        writer.Write((uint)AdjustGeometryType(polygon, WkbGeometryType.Polygon));
+        WritePolygonContent(polygon, writer);
     }
 
     /// <summary>
@@ -252,11 +251,11 @@ public class WkbWriter : IDisposable
         else
         {
             writer.Write((uint)(1 + polygon.InteriorRings.Count()));
-            WkbWriter.WriteCoordinates(polygon.ExteriorRing, writer);
+            WriteCoordinates(polygon.ExteriorRing, writer);
 
             foreach (var ring in polygon.InteriorRings)
             {
-                WkbWriter.WriteCoordinates(ring, writer);
+                WriteCoordinates(ring, writer);
             }
         }
     }
@@ -268,11 +267,11 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WriteMultiPoint(IMultiPoint multipoint, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(multipoint, WkbGeometryType.MultiPoint));
+        writer.Write((uint)AdjustGeometryType(multipoint, WkbGeometryType.MultiPoint));
         writer.Write((uint)multipoint.Geometries.Count());
         foreach (var point in multipoint.Geometries)
         {
-            WkbWriter.WriteCoordinate(point.Position, writer);
+            WriteCoordinate(point.Position, writer);
         }
     }
 
@@ -283,11 +282,11 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WriteMultiLineString(IMultiLineString multiLineString, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(multiLineString, WkbGeometryType.MultiLineString));
+        writer.Write((uint)AdjustGeometryType(multiLineString, WkbGeometryType.MultiLineString));
         writer.Write((uint)multiLineString.Geometries.Count());
         foreach (var linestring in multiLineString.Geometries)
         {
-            WkbWriter.WriteCoordinates(linestring.Coordinates, writer);
+            WriteCoordinates(linestring.Coordinates, writer);
         }
     }
 
@@ -298,11 +297,11 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WriteMultiPolygon(IMultiPolygon multiPolygon, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(multiPolygon, WkbGeometryType.MultiPolygon));
+        writer.Write((uint)AdjustGeometryType(multiPolygon, WkbGeometryType.MultiPolygon));
         writer.Write((uint)multiPolygon.Geometries.Count());
         foreach (var polygon in multiPolygon.Geometries)
         {
-            WkbWriter.WritePolygonContent(polygon, writer);
+            WritePolygonContent(polygon, writer);
         }
     }
 
@@ -313,11 +312,11 @@ public class WkbWriter : IDisposable
     /// <param name="writer">The BinaryWriter used to write geometry to the output.</param>
     private static void WriteGeometryCollection(IGeometryCollection<IGeometry> collection, BinaryWriter writer)
     {
-        writer.Write((uint)WkbWriter.AdjustGeometryType(collection, WkbGeometryType.GeometryCollection));
+        writer.Write((uint)AdjustGeometryType(collection, WkbGeometryType.GeometryCollection));
         writer.Write((uint)collection.Geometries.Count());
         foreach (var geometry in collection.Geometries)
         {
-            WkbWriter.Write(geometry, writer);
+            Write(geometry, writer);
         }
     }
 

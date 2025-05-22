@@ -1,5 +1,5 @@
-﻿using System;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System;
 
 namespace SpatialLite.Gps;
 

@@ -38,5 +38,4 @@ internal class PbfMetadata
     /// </summary>
     [ProtoMember(1, Name = "version", IsRequired = false)]
     public int? Version { get; set; }
-
 }

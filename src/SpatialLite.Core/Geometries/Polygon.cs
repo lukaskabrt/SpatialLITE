@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 using System.Linq;
-
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -16,8 +15,8 @@ public class Polygon : Geometry, IPolygon
     public Polygon()
         : base()
     {
-        this.ExteriorRing = new CoordinateList();
-        this.InteriorRings = new List<ICoordinateList>(0);
+        ExteriorRing = new CoordinateList();
+        InteriorRings = new List<ICoordinateList>(0);
     }
 
     /// <summary>
@@ -26,8 +25,8 @@ public class Polygon : Geometry, IPolygon
     /// <param name="exteriorRing">The exterior boundary of the polygon.</param>
     public Polygon(ICoordinateList exteriorRing)
     {
-        this.ExteriorRing = exteriorRing;
-        this.InteriorRings = new List<ICoordinateList>(0);
+        ExteriorRing = exteriorRing;
+        InteriorRings = new List<ICoordinateList>(0);
     }
 
     /// <summary>
@@ -40,7 +39,7 @@ public class Polygon : Geometry, IPolygon
     /// </summary>
     ICoordinateList IPolygon.ExteriorRing
     {
-        get { return this.ExteriorRing; }
+        get { return ExteriorRing; }
     }
 
     /// <summary>
@@ -53,7 +52,7 @@ public class Polygon : Geometry, IPolygon
     /// </summary>
     IEnumerable<ICoordinateList> IPolygon.InteriorRings
     {
-        get { return this.InteriorRings; }
+        get { return InteriorRings; }
     }
 
     /// <summary>
@@ -62,7 +61,7 @@ public class Polygon : Geometry, IPolygon
     public override bool Is3D
     {
         //TODO consider using InteriorRings as well
-        get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.Is3D); }
+        get { return ExteriorRing != null && ExteriorRing.Any(c => c.Is3D); }
     }
 
     /// <summary>
@@ -71,7 +70,7 @@ public class Polygon : Geometry, IPolygon
     public override bool IsMeasured
     {
         //TODO consider using InteriorRings as well
-        get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.IsMeasured); }
+        get { return ExteriorRing != null && ExteriorRing.Any(c => c.IsMeasured); }
     }
 
     /// <summary>
@@ -82,7 +81,7 @@ public class Polygon : Geometry, IPolygon
     /// </returns>
     public override Envelope GetEnvelope()
     {
-        return this.ExteriorRing.Count == 0 ? new Envelope() : new Envelope(this.ExteriorRing);
+        return ExteriorRing.Count == 0 ? new Envelope() : new Envelope(ExteriorRing);
     }
 
     /// <summary>
@@ -91,6 +90,6 @@ public class Polygon : Geometry, IPolygon
     /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
     public override IEnumerable<Coordinate> GetCoordinates()
     {
-        return this.ExteriorRing.Concat(this.InteriorRings.SelectMany(o => o));
+        return ExteriorRing.Concat(InteriorRings.SelectMany(o => o));
     }
 }

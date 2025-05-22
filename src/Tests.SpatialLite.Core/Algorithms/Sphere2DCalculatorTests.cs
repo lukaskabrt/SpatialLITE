@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
+﻿using Moq;
 using SpatialLite.Core.Algorithms;
-
+using SpatialLite.Core.API;
+using System;
 using Xunit;
-using Moq;
 
 namespace Tests.SpatialLite.Core.Algorithms;
 

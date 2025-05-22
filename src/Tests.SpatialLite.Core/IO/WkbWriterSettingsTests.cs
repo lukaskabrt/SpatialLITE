@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using SpatialLite.Core.IO;
+using System;
 using Xunit;
-
-using SpatialLite.Core.IO;
 
 namespace Tests.SpatialLite.Core.IO;
 

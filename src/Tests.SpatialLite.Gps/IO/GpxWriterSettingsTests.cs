@@ -1,5 +1,5 @@
-﻿using System;
-using SpatialLite.Gps.IO;
+﻿using SpatialLite.Gps.IO;
+using System;
 using Xunit;
 
 namespace Tests.SpatialLite.Gps.IO;

@@ -17,8 +17,8 @@ public class PbfWriterSettings : OsmWriterSettings
     public PbfWriterSettings()
         : base()
     {
-        this.UseDenseFormat = true;
-        this.Compression = CompressionMode.ZlibDeflate;
+        UseDenseFormat = true;
+        Compression = CompressionMode.ZlibDeflate;
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class PbfWriterSettings : OsmWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'UseDenseFromat' property - PbfReaderSettings is read-only");
             }
@@ -52,7 +52,7 @@ public class PbfWriterSettings : OsmWriterSettings
         }
         set
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new InvalidOperationException("Cannot change the 'Compression' property - PbfReaderSettings is read-only");
             }

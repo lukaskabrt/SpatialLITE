@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using SpatialLite.Core.Geometries;
+using System;
 using System.Collections.Generic;
 using System.IO;
-
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
 
 namespace SpatialLite.Core.IO;
 
@@ -13,8 +12,8 @@ namespace SpatialLite.Core.IO;
 public class WkbReader : IDisposable
 {
 
-    private BinaryReader _inputReader;
-    private FileStream _inputFileStream;
+    private readonly BinaryReader _inputReader;
+    private readonly FileStream _inputFileStream;
     private bool _disposed = false;
 
     /// <summary>
@@ -71,7 +70,7 @@ public class WkbReader : IDisposable
                         throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
                     }
 
-                    Geometry parsed = WkbReader.ReadGeometry(reader);
+                    Geometry parsed = ReadGeometry(reader);
 
                     return parsed;
                 }
@@ -92,12 +91,11 @@ public class WkbReader : IDisposable
     /// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
     public static T Parse<T>(byte[] wkb) where T : Geometry
     {
-        Geometry parsed = WkbReader.Parse(wkb);
+        Geometry parsed = Parse(wkb);
 
         if (parsed != null)
         {
-            T result = parsed as T;
-            if (result == null)
+            if (parsed is not T result)
             {
                 throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
             }
@@ -138,7 +136,7 @@ public class WkbReader : IDisposable
                 throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
             }
 
-            return WkbReader.ReadGeometry(_inputReader);
+            return ReadGeometry(_inputReader);
         }
         catch (EndOfStreamException)
         {
@@ -154,12 +152,11 @@ public class WkbReader : IDisposable
     /// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
     public T Read<T>() where T : Geometry
     {
-        Geometry parsed = this.Read();
+        Geometry parsed = Read();
 
         if (parsed != null)
         {
-            T result = parsed as T;
-            if (result == null)
+            if (parsed is not T result)
             {
                 throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
             }
@@ -203,7 +200,7 @@ public class WkbReader : IDisposable
         List<Coordinate> result = new List<Coordinate>(pointCount);
         for (int i = 0; i < pointCount; i++)
         {
-            result.Add(WkbReader.ReadCoordinate(reader, is3D, isMeasured));
+            result.Add(ReadCoordinate(reader, is3D, isMeasured));
         }
 
         return result;
@@ -220,17 +217,17 @@ public class WkbReader : IDisposable
 
         bool is3D, isMeasured;
         WkbGeometryType basicType;
-        WkbReader.GetGeometryTypeDetails(geometryType, out basicType, out is3D, out isMeasured);
+        GetGeometryTypeDetails(geometryType, out basicType, out is3D, out isMeasured);
 
         switch (basicType)
         {
-            case WkbGeometryType.Point: return WkbReader.ReadPoint(reader, is3D, isMeasured);
-            case WkbGeometryType.LineString: return WkbReader.ReadLineString(reader, is3D, isMeasured);
-            case WkbGeometryType.Polygon: return WkbReader.ReadPolygon(reader, is3D, isMeasured);
-            case WkbGeometryType.MultiPoint: return WkbReader.ReadMultiPoint(reader, is3D, isMeasured);
-            case WkbGeometryType.MultiLineString: return WkbReader.ReadMultiLineString(reader, is3D, isMeasured);
-            case WkbGeometryType.MultiPolygon: return WkbReader.ReadMultiPolygon(reader, is3D, isMeasured);
-            case WkbGeometryType.GeometryCollection: return WkbReader.ReadGeometryCollection(reader, is3D, isMeasured);
+            case WkbGeometryType.Point: return ReadPoint(reader, is3D, isMeasured);
+            case WkbGeometryType.LineString: return ReadLineString(reader, is3D, isMeasured);
+            case WkbGeometryType.Polygon: return ReadPolygon(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiPoint: return ReadMultiPoint(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiLineString: return ReadMultiLineString(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiPolygon: return ReadMultiPolygon(reader, is3D, isMeasured);
+            case WkbGeometryType.GeometryCollection: return ReadGeometryCollection(reader, is3D, isMeasured);
             default: throw new WkbFormatException("Unknown geometry type.");
         }
     }
@@ -244,7 +241,7 @@ public class WkbReader : IDisposable
     /// <returns>Point read from the input</returns>
     private static Point ReadPoint(BinaryReader reader, bool is3D, bool isMeasured)
     {
-        Coordinate position = WkbReader.ReadCoordinate(reader, is3D, isMeasured);
+        Coordinate position = ReadCoordinate(reader, is3D, isMeasured);
         return new Point(position);
     }
 
@@ -257,7 +254,7 @@ public class WkbReader : IDisposable
     /// <returns>Linestring read from the input.</returns>
     private static LineString ReadLineString(BinaryReader reader, bool is3D, bool isMeasured)
     {
-        IEnumerable<Coordinate> coordinates = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+        IEnumerable<Coordinate> coordinates = ReadCoordinates(reader, is3D, isMeasured);
         return new LineString(coordinates);
     }
 
@@ -277,12 +274,12 @@ public class WkbReader : IDisposable
             return new Polygon();
         }
 
-        IEnumerable<Coordinate> exterior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+        IEnumerable<Coordinate> exterior = ReadCoordinates(reader, is3D, isMeasured);
         Polygon result = new Polygon(new CoordinateList(exterior));
 
         for (int i = 1; i < ringsCount; i++)
         {
-            IEnumerable<Coordinate> interior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
+            IEnumerable<Coordinate> interior = ReadCoordinates(reader, is3D, isMeasured);
             result.InteriorRings.Add(new CoordinateList(interior));
         }
 
@@ -303,7 +300,7 @@ public class WkbReader : IDisposable
         MultiPoint result = new MultiPoint();
         for (int i = 0; i < pointsCount; i++)
         {
-            result.Geometries.Add(WkbReader.ReadPoint(reader, is3D, isMeasured));
+            result.Geometries.Add(ReadPoint(reader, is3D, isMeasured));
         }
 
         return result;
@@ -323,7 +320,7 @@ public class WkbReader : IDisposable
         MultiLineString result = new MultiLineString();
         for (int i = 0; i < pointsCount; i++)
         {
-            result.Geometries.Add(WkbReader.ReadLineString(reader, is3D, isMeasured));
+            result.Geometries.Add(ReadLineString(reader, is3D, isMeasured));
         }
 
         return result;
@@ -343,7 +340,7 @@ public class WkbReader : IDisposable
         MultiPolygon result = new MultiPolygon();
         for (int i = 0; i < pointsCount; i++)
         {
-            result.Geometries.Add(WkbReader.ReadPolygon(reader, is3D, isMeasured));
+            result.Geometries.Add(ReadPolygon(reader, is3D, isMeasured));
         }
 
         return result;
@@ -363,7 +360,7 @@ public class WkbReader : IDisposable
         GeometryCollection<Geometry> result = new GeometryCollection<Geometry>();
         for (int i = 0; i < pointsCount; i++)
         {
-            result.Geometries.Add(WkbReader.ReadGeometry(reader));
+            result.Geometries.Add(ReadGeometry(reader));
         }
 
         return result;
@@ -389,7 +386,7 @@ public class WkbReader : IDisposable
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {
@@ -404,5 +401,4 @@ public class WkbReader : IDisposable
             _disposed = true;
         }
     }
-
 }

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -32,6 +31,6 @@ public class MultiLineString : GeometryCollection<LineString>, IMultiLineString
     /// </summary>
     IEnumerable<ILineString> IGeometryCollection<ILineString>.Geometries
     {
-        get { return base.Geometries; }
+        get { return Geometries; }
     }
 }

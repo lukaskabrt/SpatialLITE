@@ -1,5 +1,5 @@
-﻿using System;
-using SpatialLite.Osm.Geometries;
+﻿using SpatialLite.Osm.Geometries;
+using System;
 
 namespace SpatialLite.Osm.IO;
 

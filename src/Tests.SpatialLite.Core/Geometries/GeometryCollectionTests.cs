@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-
-using SpatialLite.Core;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.Geometries;
 
 public class GeometryCollectionTests
 {
-
-    Point[] _geometries;
-
-    Coordinate[] _coordinatesXYZM = new Coordinate[] {
+    private readonly Point[] _geometries;
+    private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
             new Coordinate(12,10,100, 1000),
             new Coordinate(22,20,200, 2000),
             new Coordinate(32,30,300, 3000)

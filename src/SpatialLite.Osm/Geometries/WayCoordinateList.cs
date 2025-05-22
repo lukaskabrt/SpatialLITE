@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -18,7 +17,7 @@ internal class WayCoordinateList : ICoordinateList
     /// <param name="source">The list of Nodes to be used as source for this WayCoordinateList</param>
     public WayCoordinateList(IList<Node> source)
     {
-        this.Source = source;
+        Source = source;
     }
 
     /// <summary>
@@ -28,7 +27,7 @@ internal class WayCoordinateList : ICoordinateList
     {
         get
         {
-            return this.Source.Count;
+            return Source.Count;
         }
     }
 
@@ -46,7 +45,7 @@ internal class WayCoordinateList : ICoordinateList
     {
         get
         {
-            return this.Source[index].Position;
+            return Source[index].Position;
         }
         set
         {
@@ -106,7 +105,7 @@ internal class WayCoordinateList : ICoordinateList
     /// <returns>The Enumerator for the CoordinateList</returns>
     public IEnumerator<Coordinate> GetEnumerator()
     {
-        foreach (var node in this.Source)
+        foreach (var node in Source)
         {
             yield return node.Position;
         }
@@ -118,6 +117,6 @@ internal class WayCoordinateList : ICoordinateList
     /// <returns>The Enumerator for the CoordinateList</returns>
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return this.GetEnumerator();
+        return GetEnumerator();
     }
 }

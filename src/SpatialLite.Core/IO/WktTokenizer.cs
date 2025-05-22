@@ -19,7 +19,7 @@ internal static class WktTokenizer
     public static IEnumerable<WktToken> Tokenize(string text)
     {
         StringReader reader = new StringReader(text);
-        return WktTokenizer.Tokenize(reader);
+        return Tokenize(reader);
     }
 
     /// <summary>
@@ -38,12 +38,12 @@ internal static class WktTokenizer
 
         char ch = (char)reader.Read();
         stringBuffer.Append(ch);
-        TokenType lastToken = WktTokenizer.GetTokenType(ch);
+        TokenType lastToken = GetTokenType(ch);
 
         while (reader.Peek() != -1)
         {
             ch = (char)reader.Read();
-            TokenType token = WktTokenizer.GetTokenType(ch);
+            TokenType token = GetTokenType(ch);
 
             // tokens COMMA, LEFT_PARENTHESIS and RIGHT_PARENTHESIS can not be grupped together
             if ((token != lastToken) || token == TokenType.COMMA || token == TokenType.LEFT_PARENTHESIS || token == TokenType.RIGHT_PARENTHESIS)

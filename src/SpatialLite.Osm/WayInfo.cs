@@ -1,7 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Osm.Geometries;
+using System;
 using System.Collections.Generic;
-
-using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm;
 
@@ -23,31 +22,31 @@ public class WayInfo : IEntityInfo
     /// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
     public WayInfo(long id, TagsCollection tags, IList<long> nodes, EntityMetadata additionalInfo = null)
     {
-        this.ID = id;
-        this.Tags = tags;
-        this.Nodes = nodes;
-        this.Metadata = additionalInfo;
+        ID = id;
+        Tags = tags;
+        Nodes = nodes;
+        Metadata = additionalInfo;
     }
 
     /// <summary>
     /// Initializes a new instance of the WayInfo class with data from specific Way
     /// </summary>
     /// <param name="way">The way to get data from</param>
-		public WayInfo(Way way)
+    public WayInfo(Way way)
     {
         if (way == null)
         {
             throw new ArgumentNullException(nameof(way), "Way parameter cannot be null");
         }
 
-        this.ID = way.ID;
-        this.Tags = way.Tags;
-        this.Metadata = way.Metadata;
+        ID = way.ID;
+        Tags = way.Tags;
+        Metadata = way.Metadata;
 
-        this.Nodes = new List<long>(way.Nodes.Count);
+        Nodes = new List<long>(way.Nodes.Count);
         foreach (var node in way.Nodes)
         {
-            this.Nodes.Add(node.ID);
+            Nodes.Add(node.ID);
         }
     }
 

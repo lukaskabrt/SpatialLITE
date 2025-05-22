@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using SpatialLite.Core.API;
+using System.Collections;
 using System.Collections.Generic;
-
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -11,7 +10,7 @@ namespace SpatialLite.Core.Geometries;
 public class CoordinateList : ICoordinateList
 {
 
-    private List<Coordinate> _storage;
+    private readonly List<Coordinate> _storage;
 
     /// <summary>
     /// Initializes a new instance of the CoordinateList class, that is empty.

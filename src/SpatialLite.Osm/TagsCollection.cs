@@ -29,7 +29,7 @@ public class TagsCollection : ICollection<Tag>
 
         foreach (var tag in tags)
         {
-            this.Add(tag);
+            Add(tag);
         }
     }
 
@@ -68,19 +68,19 @@ public class TagsCollection : ICollection<Tag>
     {
         get
         {
-            Tag tag = this.GetTag(key);
+            Tag tag = GetTag(key);
             return tag.Value;
         }
         set
         {
-            if (this.Contains(key))
+            if (Contains(key))
             {
-                this.Remove(key);
-                this.Add(new Tag(key, value));
+                Remove(key);
+                Add(new Tag(key, value));
             }
             else
             {
-                this.Add(new Tag(key, value));
+                Add(new Tag(key, value));
             }
         }
     }
@@ -96,7 +96,7 @@ public class TagsCollection : ICollection<Tag>
             _tags = new List<Tag>();
         }
 
-        if (this.Contains(tag.Key))
+        if (Contains(tag.Key))
         {
             throw new ArgumentException(string.Format("Tag with key '{0}' is already present in the collection.", tag.Key));
         }
@@ -211,10 +211,10 @@ public class TagsCollection : ICollection<Tag>
     /// <returns>true if item was successfully removed from the TagsCollection, otherwise false. This method also returns false if item is not found in the original TagsCollection.</returns>
     public bool Remove(string key)
     {
-        if (this.Contains(key))
+        if (Contains(key))
         {
-            Tag tag = this.GetTag(key);
-            return this.Remove(tag);
+            Tag tag = GetTag(key);
+            return Remove(tag);
         }
         else
         {
@@ -230,7 +230,7 @@ public class TagsCollection : ICollection<Tag>
     {
         if (_tags == null)
         {
-            return this.GetEmptyEnumerator();
+            return GetEmptyEnumerator();
         }
         else
         {
@@ -246,7 +246,7 @@ public class TagsCollection : ICollection<Tag>
     {
         if (_tags == null)
         {
-            return this.GetEmptyEnumerator();
+            return GetEmptyEnumerator();
         }
         else
         {

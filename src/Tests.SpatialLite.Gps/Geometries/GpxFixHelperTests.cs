@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SpatialLite.Gps.Geometries;
+﻿using SpatialLite.Gps.Geometries;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries;

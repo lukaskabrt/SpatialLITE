@@ -26,5 +26,4 @@ internal class Blob
     /// </summary>
     [ProtoMember(3, IsRequired = false, Name = "zlib_data")]
     public byte[] ZlibData { get; set; }
-
 }

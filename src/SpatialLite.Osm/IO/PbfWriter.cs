@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-using ProtoBuf;
+﻿using ProtoBuf;
 using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm.IO.Pbf;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SpatialLite.Osm.IO;
 
@@ -19,11 +18,11 @@ public class PbfWriter : IOsmWriter
     /// </summary>
     public const int MaxDataBlockSize = 16 * 1024 * 1024;
 
-    private DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
+    private readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
 
     private bool _disposed = false;
-    private Stream _output;
-    private bool _ownsOutputStream;
+    private readonly Stream _output;
+    private readonly bool _ownsOutputStream;
 
     private EntityInfoBuffer<NodeInfo> _nodesBuffer;
     private EntityInfoBuffer<WayInfo> _wayBuffer;
@@ -36,13 +35,13 @@ public class PbfWriter : IOsmWriter
     /// <param name="settings">The settings defining behaviour of the writer.</param>
     public PbfWriter(Stream stream, PbfWriterSettings settings)
     {
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
         _output = stream;
         _ownsOutputStream = false;
 
-        this.InitializeBuffers();
-        this.WriteHeader();
+        InitializeBuffers();
+        WriteHeader();
     }
 
     /// <summary>
@@ -52,13 +51,13 @@ public class PbfWriter : IOsmWriter
     /// <param name="settings">The settings defining behaviour of the writer.</param>
     public PbfWriter(string filename, PbfWriterSettings settings)
     {
-        this.Settings = settings;
-        this.Settings.IsReadOnly = true;
+        Settings = settings;
+        Settings.IsReadOnly = true;
         _output = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
         _ownsOutputStream = true;
 
-        this.InitializeBuffers();
-        this.WriteHeader();
+        InitializeBuffers();
+        WriteHeader();
     }
 
     /// <summary>
@@ -75,7 +74,7 @@ public class PbfWriter : IOsmWriter
     /// </remarks>
     public void Write(IEntityInfo entity)
     {
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
             if (entity.Metadata == null)
             {
@@ -97,17 +96,17 @@ public class PbfWriter : IOsmWriter
 
         if (_nodesBuffer.EstimatedMaxSize > MaxDataBlockSize)
         {
-            this.Flush(EntityType.Node);
+            Flush(EntityType.Node);
         }
 
         if (_wayBuffer.EstimatedMaxSize > MaxDataBlockSize)
         {
-            this.Flush(EntityType.Way);
+            Flush(EntityType.Way);
         }
 
         if (_relationBuffer.EstimatedMaxSize > MaxDataBlockSize)
         {
-            this.Flush(EntityType.Relation);
+            Flush(EntityType.Relation);
         }
     }
 
@@ -127,9 +126,9 @@ public class PbfWriter : IOsmWriter
 
         switch (entity.EntityType)
         {
-            case EntityType.Node: this.Write(new NodeInfo((Geometries.Node)entity)); break;
-            case EntityType.Way: this.Write(new WayInfo((Geometries.Way)entity)); break;
-            case EntityType.Relation: this.Write(new RelationInfo((Geometries.Relation)entity)); break;
+            case EntityType.Node: Write(new NodeInfo((Geometries.Node)entity)); break;
+            case EntityType.Way: Write(new WayInfo((Geometries.Way)entity)); break;
+            case EntityType.Relation: Write(new RelationInfo((Geometries.Relation)entity)); break;
         }
     }
 
@@ -138,9 +137,9 @@ public class PbfWriter : IOsmWriter
     /// </summary>
     public void Flush()
     {
-        this.Flush(EntityType.Node);
-        this.Flush(EntityType.Way);
-        this.Flush(EntityType.Relation);
+        Flush(EntityType.Node);
+        Flush(EntityType.Way);
+        Flush(EntityType.Relation);
     }
 
     /// <summary>
@@ -157,9 +156,9 @@ public class PbfWriter : IOsmWriter
     /// </summary>
     private void InitializeBuffers()
     {
-        _nodesBuffer = new EntityInfoBuffer<NodeInfo>(this.Settings.WriteMetadata);
-        _wayBuffer = new EntityInfoBuffer<WayInfo>(this.Settings.WriteMetadata);
-        _relationBuffer = new EntityInfoBuffer<RelationInfo>(this.Settings.WriteMetadata);
+        _nodesBuffer = new EntityInfoBuffer<NodeInfo>(Settings.WriteMetadata);
+        _wayBuffer = new EntityInfoBuffer<WayInfo>(Settings.WriteMetadata);
+        _relationBuffer = new EntityInfoBuffer<RelationInfo>(Settings.WriteMetadata);
     }
 
     /// <summary>
@@ -168,7 +167,7 @@ public class PbfWriter : IOsmWriter
     /// <param name="entityType">The type of entity to process</param>
     private void Flush(EntityType entityType)
     {
-        PrimitiveBlock primitiveBlock = this.BuildPrimitiveBlock(entityType);
+        PrimitiveBlock primitiveBlock = BuildPrimitiveBlock(entityType);
         if (primitiveBlock == null)
         {
             return;
@@ -180,7 +179,7 @@ public class PbfWriter : IOsmWriter
         //byte[] buffer = new byte[primitiveBlockStream.Length];
         //Array.Copy(primitiveBlockStream.GetBuffer(), buffer, primitiveBlockStream.Length);
 
-        this.WriteBlob("OSMData", primitiveBlockStream.ToArray());
+        WriteBlob("OSMData", primitiveBlockStream.ToArray());
     }
 
     /// <summary>
@@ -191,12 +190,12 @@ public class PbfWriter : IOsmWriter
         OsmHeader header = new OsmHeader();
         header.RequiredFeatures.Add("OsmSchema-V0.6");
 
-        if (this.Settings.UseDenseFormat)
+        if (Settings.UseDenseFormat)
         {
             header.RequiredFeatures.Add("DenseNodes");
         }
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
             header.OptionalFeatures.Add("Has_Metadata");
         }
@@ -208,7 +207,7 @@ public class PbfWriter : IOsmWriter
             //byte[] buffer = new byte[stream.Length];
             //Array.Copy(stream.GetBuffer(), buffer, stream.Length);
 
-            this.WriteBlob("OSMHeader", stream.ToArray());
+            WriteBlob("OSMHeader", stream.ToArray());
         }
     }
 
@@ -220,11 +219,11 @@ public class PbfWriter : IOsmWriter
     private void WriteBlob(string blobType, byte[] blobContent)
     {
         Blob blob = new Blob();
-        if (this.Settings.Compression == CompressionMode.None)
+        if (Settings.Compression == CompressionMode.None)
         {
             blob.Raw = blobContent;
         }
-        else if (this.Settings.Compression == CompressionMode.ZlibDeflate)
+        else if (Settings.Compression == CompressionMode.ZlibDeflate)
         {
             MemoryStream zlibStream = new MemoryStream();
 
@@ -237,7 +236,7 @@ public class PbfWriter : IOsmWriter
                 deflateSteram.Write(blobContent, 0, blobContent.Length);
             }
 
-            blob.RawSize = (int)blobContent.Length;
+            blob.RawSize = blobContent.Length;
             blob.ZlibData = zlibStream.ToArray();
         }
 
@@ -266,17 +265,17 @@ public class PbfWriter : IOsmWriter
         switch (entityType)
         {
             case EntityType.Node:
-                entityGroup = this.BuildNodesPrimitiveGroup(result.DateGranularity, result.Granularity, result.LatOffset, result.LonOffset);
+                entityGroup = BuildNodesPrimitiveGroup(result.DateGranularity, result.Granularity, result.LatOffset, result.LonOffset);
                 result.StringTable = _nodesBuffer.BuildStringTable();
                 _nodesBuffer.Clear();
                 break;
             case EntityType.Way:
-                entityGroup = this.BuildWaysPrimitiveGroup(result.DateGranularity);
+                entityGroup = BuildWaysPrimitiveGroup(result.DateGranularity);
                 result.StringTable = _wayBuffer.BuildStringTable();
                 _wayBuffer.Clear();
                 break;
             case EntityType.Relation:
-                entityGroup = this.BuildRelationsPrimitiveGroup(result.DateGranularity);
+                entityGroup = BuildRelationsPrimitiveGroup(result.DateGranularity);
                 result.StringTable = _relationBuffer.BuildStringTable();
                 _relationBuffer.Clear();
                 break;
@@ -308,13 +307,13 @@ public class PbfWriter : IOsmWriter
         {
             result = new PrimitiveGroup();
 
-            if (this.Settings.UseDenseFormat)
+            if (Settings.UseDenseFormat)
             {
-                result.DenseNodes = this.BuildDenseNodes(timestampGranularity, positionGranularity, latOffset, lonOffset);
+                result.DenseNodes = BuildDenseNodes(timestampGranularity, positionGranularity, latOffset, lonOffset);
             }
             else
             {
-                result.Nodes = this.BuildNodes(timestampGranularity, positionGranularity, latOffset, lonOffset);
+                result.Nodes = BuildNodes(timestampGranularity, positionGranularity, latOffset, lonOffset);
             }
         }
 
@@ -334,7 +333,7 @@ public class PbfWriter : IOsmWriter
         {
             result = new PrimitiveGroup();
 
-            result.Ways = this.BuildWays(timestampGranularity);
+            result.Ways = BuildWays(timestampGranularity);
         }
 
         return result;
@@ -353,7 +352,7 @@ public class PbfWriter : IOsmWriter
         {
             result = new PrimitiveGroup();
 
-            result.Relations = this.BuildRelations(timestampGranularity);
+            result.Relations = BuildRelations(timestampGranularity);
         }
 
         return result;
@@ -390,9 +389,9 @@ public class PbfWriter : IOsmWriter
                 }
             }
 
-            if (node.Metadata != null && this.Settings.WriteMetadata)
+            if (node.Metadata != null && Settings.WriteMetadata)
             {
-                toAdd.Metadata = this.BuildInfo(node.Metadata, timestampGranularity, _nodesBuffer);
+                toAdd.Metadata = BuildInfo(node.Metadata, timestampGranularity, _nodesBuffer);
             }
 
             result.Add(toAdd);
@@ -439,9 +438,9 @@ public class PbfWriter : IOsmWriter
             result.KeysVals.Add(0);
         }
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            result.DenseInfo = this.BuildDenseInfo(timestampGranularity);
+            result.DenseInfo = BuildDenseInfo(timestampGranularity);
         }
 
         return result;
@@ -487,9 +486,9 @@ public class PbfWriter : IOsmWriter
                 }
             }
 
-            if (way.Metadata != null && this.Settings.WriteMetadata)
+            if (way.Metadata != null && Settings.WriteMetadata)
             {
-                toAdd.Metadata = this.BuildInfo(way.Metadata, timestampGranularity, _wayBuffer);
+                toAdd.Metadata = BuildInfo(way.Metadata, timestampGranularity, _wayBuffer);
             }
 
             result.Add(toAdd);
@@ -542,9 +541,9 @@ public class PbfWriter : IOsmWriter
                 }
             }
 
-            if (relation.Metadata != null && this.Settings.WriteMetadata)
+            if (relation.Metadata != null && Settings.WriteMetadata)
             {
-                toAdd.Metadata = this.BuildInfo(relation.Metadata, timestampGranularity, _relationBuffer);
+                toAdd.Metadata = BuildInfo(relation.Metadata, timestampGranularity, _relationBuffer);
             }
 
             result.Add(toAdd);
@@ -621,7 +620,7 @@ public class PbfWriter : IOsmWriter
         {
             if (disposing)
             {
-                this.Flush();
+                Flush();
 
                 if (_output != null)
                 {

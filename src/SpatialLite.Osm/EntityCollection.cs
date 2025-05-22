@@ -10,7 +10,7 @@ namespace SpatialLite.Osm;
 public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntity
 {
 
-    private Dictionary<long, T> _storage = null;
+    private readonly Dictionary<long, T> _storage = null;
 
     /// <summary>
     /// Initializes a new instance of the EntityCollection class that is empty.
@@ -70,7 +70,7 @@ public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntit
                 return value;
             }
 
-            return default(T);
+            return default;
         }
     }
 
@@ -176,6 +176,6 @@ public class EntityCollection<T> : ITypedEntityCollection<T> where T : IOsmEntit
     /// <returns>A IEnumerator that can be used to iterate through the collection.</returns>
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
-        return this.GetEnumerator();
+        return GetEnumerator();
     }
 }

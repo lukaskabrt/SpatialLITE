@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Osm.Geometries;
+using System;
 using System.Collections.Generic;
-using SpatialLite.Osm.Geometries;
 
 namespace SpatialLite.Osm;
 
@@ -19,10 +19,10 @@ public class RelationInfo : IEntityInfo
     /// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param> 
     public RelationInfo(long id, TagsCollection tags, IList<RelationMemberInfo> members, EntityMetadata additionalInfo = null)
     {
-        this.ID = id;
-        this.Tags = tags;
-        this.Members = members;
-        this.Metadata = additionalInfo;
+        ID = id;
+        Tags = tags;
+        Members = members;
+        Metadata = additionalInfo;
     }
 
     /// <summary>
@@ -36,14 +36,14 @@ public class RelationInfo : IEntityInfo
             throw new ArgumentNullException(nameof(source), "Source relation cannot be null");
         }
 
-        this.ID = source.ID;
-        this.Tags = source.Tags;
-        this.Metadata = source.Metadata;
+        ID = source.ID;
+        Tags = source.Tags;
+        Metadata = source.Metadata;
 
-        this.Members = new List<RelationMemberInfo>(source.Geometries.Count);
+        Members = new List<RelationMemberInfo>(source.Geometries.Count);
         foreach (var member in source.Geometries)
         {
-            this.Members.Add(new RelationMemberInfo(member));
+            Members.Add(new RelationMemberInfo(member));
         }
     }
 

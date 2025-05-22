@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.IO;
+﻿using SpatialLite.Core.IO;
 using System.IO;
+using System.Linq;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.IO;
 
@@ -15,7 +9,7 @@ public class WktTokenizerTests
 {
 
     [Fact]
-    void Tokenize_String_ReturnsEmptyTokenForEmptyString()
+    private void Tokenize_String_ReturnsEmptyTokenForEmptyString()
     {
         string data = string.Empty;
         var tokens = WktTokenizer.Tokenize(data);
@@ -33,7 +27,7 @@ public class WktTokenizerTests
     [InlineData(")", TokenType.RIGHT_PARENTHESIS)]
     [InlineData(",", TokenType.COMMA)]
     [InlineData("-123456780.9", TokenType.NUMBER)]
-    void Tokenize_String_CorrectlyRecognizesTokenTypes(string str, TokenType expectedType)
+    private void Tokenize_String_CorrectlyRecognizesTokenTypes(string str, TokenType expectedType)
     {
         var tokens = WktTokenizer.Tokenize(str).ToArray();
 
@@ -45,7 +39,7 @@ public class WktTokenizerTests
     }
 
     [Fact]
-    void Tokenize_String_ProcessesComplexText()
+    private void Tokenize_String_ProcessesComplexText()
     {
         string data = "point z (-10 -15 -100.1)";
         var tokens = WktTokenizer.Tokenize(data).ToArray();
@@ -92,7 +86,7 @@ public class WktTokenizerTests
     }
 
     [Fact]
-    void Tokenize_TextReader_ProcessesComplexText()
+    private void Tokenize_TextReader_ProcessesComplexText()
     {
         StringReader reader = new StringReader("point z (-10 -15 -100.1)");
 

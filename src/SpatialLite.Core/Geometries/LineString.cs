@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 using System.Linq;
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -10,7 +10,7 @@ namespace SpatialLite.Core.Geometries;
 public class LineString : Geometry, ILineString
 {
 
-    private CoordinateList _coordinates;
+    private readonly CoordinateList _coordinates;
 
     /// <summary>
     /// Initializes a new instance of the <c>LineString</c> class that is empty and has assigned WSG84 coordinate reference system.
@@ -66,7 +66,7 @@ public class LineString : Geometry, ILineString
     /// </summary>
     ICoordinateList ILineString.Coordinates
     {
-        get { return this.Coordinates; }
+        get { return Coordinates; }
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public class LineString : Geometry, ILineString
             }
             else
             {
-                return this.Start.Equals(this.End);
+                return Start.Equals(End);
             }
         }
     }
@@ -139,6 +139,6 @@ public class LineString : Geometry, ILineString
     /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
     public override IEnumerable<Coordinate> GetCoordinates()
     {
-        return this.Coordinates;
+        return Coordinates;
     }
 }

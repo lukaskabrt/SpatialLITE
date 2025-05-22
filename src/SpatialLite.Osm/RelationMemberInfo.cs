@@ -29,9 +29,8 @@ public struct RelationMemberInfo
     /// <param name="source">The RelationMember object to copy valyes from.</param>
     public RelationMemberInfo(RelationMember source)
     {
-        this.Reference = source.Member.ID;
-        this.MemberType = source.MemberType;
-        this.Role = source.Role;
+        Reference = source.Member.ID;
+        MemberType = source.MemberType;
+        Role = source.Role;
     }
-
 }

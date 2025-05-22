@@ -10,9 +10,9 @@ namespace Benchmark.SpatialLite.Osm;
 
 public class Program
 {
-    static List<IEntityInfo> _entities;
+    private static List<IEntityInfo> _entities;
 
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         List<Tuple<string, Action>> benchmarks = new List<Tuple<string, Action>>();
         benchmarks.Add(new Tuple<string, Action>("XmlReader with metadata", TestXmlReaderSpeed));
@@ -48,7 +48,7 @@ public class Program
         }
     }
 
-    static long DoTest(Action testAction, string testName)
+    private static long DoTest(Action testAction, string testName)
     {
         Console.WriteLine(string.Format("Starting benchmark '{0}'", testName));
 
@@ -71,7 +71,7 @@ public class Program
         return totalTime / 10;
     }
 
-    static void LoadSourceData()
+    private static void LoadSourceData()
     {
         _entities = new List<IEntityInfo>();
 
@@ -85,13 +85,13 @@ public class Program
         }
     }
 
-    static void TestXmlReaderSpeed()
+    private static void TestXmlReaderSpeed()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (OsmXmlReader reader = new OsmXmlReader("TestFiles\\test-file.osm", new OsmXmlReaderSettings() { ReadMetadata = true }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -99,13 +99,13 @@ public class Program
         }
     }
 
-    static void TestXmlReaderSpeedWithoutMetadata()
+    private static void TestXmlReaderSpeedWithoutMetadata()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (OsmXmlReader reader = new OsmXmlReader("TestFiles\\test-file.osm", new OsmXmlReaderSettings() { ReadMetadata = false }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -113,7 +113,7 @@ public class Program
         }
     }
 
-    static void TestXmlWriterSpeed()
+    private static void TestXmlWriterSpeed()
     {
         using (OsmXmlWriter writer = new OsmXmlWriter("TestFiles\\temp.osm", new OsmWriterSettings() { WriteMetadata = true }))
         {
@@ -124,7 +124,7 @@ public class Program
         }
     }
 
-    static void TestXmlWriterSpeedWithoutMetadata()
+    private static void TestXmlWriterSpeedWithoutMetadata()
     {
         using (OsmXmlWriter writer = new OsmXmlWriter("TestFiles\\temp.osm", new OsmWriterSettings() { WriteMetadata = false }))
         {
@@ -135,13 +135,13 @@ public class Program
         }
     }
 
-    static void TestPbfReaderSpeedNoDenseNoCompression()
+    private static void TestPbfReaderSpeedNoDenseNoCompression()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (PbfReader reader = new PbfReader("TestFiles\\test-file.pbf", new OsmReaderSettings() { ReadMetadata = true }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -149,13 +149,13 @@ public class Program
         }
     }
 
-    static void TestPbfReaderSpeedNoDenseNoCompressionWithoutMetadata()
+    private static void TestPbfReaderSpeedNoDenseNoCompressionWithoutMetadata()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (PbfReader reader = new PbfReader("TestFiles\\test-file.pbf", new OsmReaderSettings() { ReadMetadata = false }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -163,13 +163,13 @@ public class Program
         }
     }
 
-    static void TestPbfReaderSpeedDenseDeflate()
+    private static void TestPbfReaderSpeedDenseDeflate()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = true }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -177,13 +177,13 @@ public class Program
         }
     }
 
-    static void TestPbfReaderSpeedDenseDeflateWithoutMetadata()
+    private static void TestPbfReaderSpeedDenseDeflateWithoutMetadata()
     {
         int entitiesRead = 0;
-
-        IEntityInfo info = null;
         using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = false }))
         {
+
+            IEntityInfo info;
             while ((info = reader.Read()) != null)
             {
                 entitiesRead++;
@@ -191,7 +191,7 @@ public class Program
         }
     }
 
-    static void TestPbfWriterSpeed()
+    private static void TestPbfWriterSpeed()
     {
         using (PbfWriter writer = new PbfWriter("TestFiles\\temp.pbf", new PbfWriterSettings() { WriteMetadata = true, Compression = CompressionMode.None, UseDenseFormat = false }))
         {
@@ -202,7 +202,7 @@ public class Program
         }
     }
 
-    static void TestPbfWriterSpeedWithoutMetadata()
+    private static void TestPbfWriterSpeedWithoutMetadata()
     {
         using (PbfWriter writer = new PbfWriter("TestFiles\\temp.pbf", new PbfWriterSettings() { WriteMetadata = false, Compression = CompressionMode.None, UseDenseFormat = false }))
         {
@@ -213,7 +213,7 @@ public class Program
         }
     }
 
-    static void TestPbfWriterSpeedDenseDeflate()
+    private static void TestPbfWriterSpeedDenseDeflate()
     {
         using (PbfWriter writer = new PbfWriter("TestFiles\\temp.pbf", new PbfWriterSettings() { WriteMetadata = true, Compression = CompressionMode.ZlibDeflate, UseDenseFormat = true }))
         {
@@ -224,7 +224,7 @@ public class Program
         }
     }
 
-    static void TestPbfWriterSpeedDenseDeflateWithoutMetadata()
+    private static void TestPbfWriterSpeedDenseDeflateWithoutMetadata()
     {
         using (PbfWriter writer = new PbfWriter("TestFiles\\temp.pbf", new PbfWriterSettings() { WriteMetadata = false, Compression = CompressionMode.ZlibDeflate, UseDenseFormat = true }))
         {
@@ -235,7 +235,7 @@ public class Program
         }
     }
 
-    static void TestOsmGeometryDatabaseLoadFromPbfReader()
+    private static void TestOsmGeometryDatabaseLoadFromPbfReader()
     {
         using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = true }))
         {
@@ -243,7 +243,7 @@ public class Program
         }
     }
 
-    static void TestOsmEntityInfoDatabaseLoadFromPbfReader()
+    private static void TestOsmEntityInfoDatabaseLoadFromPbfReader()
     {
         using (PbfReader reader = new PbfReader("TestFiles\\test-file-dc.pbf", new OsmReaderSettings() { ReadMetadata = true }))
         {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SpatialLite.Gps.Geometries;
+using System;
 using System.IO;
 using System.Text;
 using System.Xml;
-using SpatialLite.Gps.Geometries;
 
 namespace SpatialLite.Gps.IO;
 
@@ -11,10 +11,10 @@ namespace SpatialLite.Gps.IO;
 /// </summary>
 public class GpxWriter : IDisposable, IGpxWriter
 {
-    private System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+    private readonly System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
-    private XmlWriter _xmlWriter;
-    private StreamWriter _streamWriter;
+    private readonly XmlWriter _xmlWriter;
+    private readonly StreamWriter _streamWriter;
     private bool _disposed = false;
 
     /// <summary>
@@ -24,7 +24,7 @@ public class GpxWriter : IDisposable, IGpxWriter
     /// <param name="settings">The settings defining behaviour of the writer.</param>
     public GpxWriter(Stream stream, GpxWriterSettings settings)
     {
-        this.Settings = settings;
+        Settings = settings;
         settings.IsReadOnly = true;
 
         XmlWriterSettings writerSetting = new XmlWriterSettings();
@@ -44,7 +44,7 @@ public class GpxWriter : IDisposable, IGpxWriter
     /// <remarks>If the file exists, it is overwritten, otherwise, a new file is created.</remarks>
     public GpxWriter(string path, GpxWriterSettings settings)
     {
-        this.Settings = settings;
+        Settings = settings;
         settings.IsReadOnly = true;
 
         XmlWriterSettings writerSetting = new XmlWriterSettings();
@@ -65,7 +65,7 @@ public class GpxWriter : IDisposable, IGpxWriter
         _xmlWriter.WriteStartDocument();
         _xmlWriter.WriteStartElement("gpx", "http://www.topografix.com/GPX/1/1");
         _xmlWriter.WriteAttributeString("version", "1.1");
-        _xmlWriter.WriteAttributeString("creator", this.Settings.GeneratorName ?? "SpatialLite");
+        _xmlWriter.WriteAttributeString("creator", Settings.GeneratorName ?? "SpatialLite");
     }
 
     /// <summary>
@@ -94,9 +94,9 @@ public class GpxWriter : IDisposable, IGpxWriter
         {
             WritePoint(route.Points[i], "rtept");
         }
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WriteTrackMetadata(route.Metadata);
+            WriteTrackMetadata(route.Metadata);
         }
 
         _xmlWriter.WriteEndElement();
@@ -122,9 +122,9 @@ public class GpxWriter : IDisposable, IGpxWriter
             _xmlWriter.WriteEndElement();
         }
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WriteTrackMetadata(track.Metadata);
+            WriteTrackMetadata(track.Metadata);
         }
 
         _xmlWriter.WriteEndElement();
@@ -161,9 +161,9 @@ public class GpxWriter : IDisposable, IGpxWriter
             _xmlWriter.WriteElementString("time", point.Timestamp.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", _invariantCulture));
         }
 
-        if (this.Settings.WriteMetadata)
+        if (Settings.WriteMetadata)
         {
-            this.WritePointMetadata(point.Metadata);
+            WritePointMetadata(point.Metadata);
         }
 
         _xmlWriter.WriteEndElement();
@@ -187,7 +187,7 @@ public class GpxWriter : IDisposable, IGpxWriter
                 _xmlWriter.WriteElementString("src", metadata.Source);
             foreach (var link in metadata.Links)
             {
-                this.WriteLink(link);
+                WriteLink(link);
             }
             if (metadata.Comment != null)
                 _xmlWriter.WriteElementString("type", metadata.Type);
@@ -221,7 +221,7 @@ public class GpxWriter : IDisposable, IGpxWriter
 
             foreach (var link in metadata.Links)
             {
-                this.WriteLink(link);
+                WriteLink(link);
             }
 
             if (metadata.MagVar.HasValue)
@@ -290,7 +290,7 @@ public class GpxWriter : IDisposable, IGpxWriter
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {

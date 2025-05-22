@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SpatialLite.Core.API;
+using System.Collections.Generic;
 using System.Linq;
-
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -100,6 +99,6 @@ public class GeometryCollection<T> : Geometry, IGeometryCollection<T> where T : 
     /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
     public override IEnumerable<Coordinate> GetCoordinates()
     {
-        return this.Geometries.SelectMany(o => o.GetCoordinates());
+        return Geometries.SelectMany(o => o.GetCoordinates());
     }
 }

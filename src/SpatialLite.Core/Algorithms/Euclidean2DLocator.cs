@@ -1,6 +1,5 @@
-﻿using System;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
+using System;
 
 namespace SpatialLite.Core.Algorithms;
 
@@ -81,7 +80,7 @@ public class Euclidean2DLocator : IGeometryLocator
     {
         for (int i = 1; i < line.Count; i++)
         {
-            if (this.IsOnLine(c, line[i - 1], line[i], LineMode.LineSegment))
+            if (IsOnLine(c, line[i - 1], line[i], LineMode.LineSegment))
             {
                 return true;
             }
@@ -211,7 +210,7 @@ public class Euclidean2DLocator : IGeometryLocator
         {
             for (int ii = 1; ii < line2.Count; ii++)
             {
-                if (this.Intersects(line1[i - 1], line1[i], LineMode.LineSegment, line2[ii - 1], line2[ii], LineMode.LineSegment))
+                if (Intersects(line1[i - 1], line1[i], LineMode.LineSegment, line2[ii - 1], line2[ii], LineMode.LineSegment))
                 {
                     return true;
                 }

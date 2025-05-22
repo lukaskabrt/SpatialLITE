@@ -18,7 +18,7 @@ public class Envelope
     private const int ZIndex = 2;
     private const int MIndex = 3;
 
-    private double[][] _bounds = new double[][] {
+    private readonly double[][] _bounds = new double[][] {
         new double[] { double.NaN, double.NaN },
         new double[] { double.NaN, double.NaN },
         new double[] { double.NaN, double.NaN },
@@ -37,7 +37,7 @@ public class Envelope
     /// <param name="coord">The coordinate used initialize <c>Envelope</c></param>
     public Envelope(Coordinate coord)
     {
-        this.Initialize(coord.X, coord.X, coord.Y, coord.Y, coord.Z, coord.Z, coord.M, coord.M);
+        Initialize(coord.X, coord.X, coord.Y, coord.Y, coord.Z, coord.Z, coord.M, coord.M);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class Envelope
     /// <param name="coords">The coordinates to be covered.</param>
     public Envelope(IEnumerable<Coordinate> coords)
     {
-        this.Extend(coords);
+        Extend(coords);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class Envelope
     /// <param name="source">The <c>Envelope</c> object whose values are to be copied.</param>
     public Envelope(Envelope source)
     {
-        this.Initialize(source.MinX, source.MaxX, source.MinY, source.MaxY, source.MinZ, source.MaxZ, source.MinM, source.MaxM);
+        Initialize(source.MinX, source.MaxX, source.MinY, source.MaxY, source.MinZ, source.MaxZ, source.MinM, source.MaxM);
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class Envelope
     {
         get
         {
-            if (this.IsEmpty)
+            if (IsEmpty)
             {
                 return 0;
             }
@@ -147,7 +147,7 @@ public class Envelope
     {
         get
         {
-            if (this.IsEmpty)
+            if (IsEmpty)
             {
                 return 0;
             }
@@ -163,7 +163,7 @@ public class Envelope
     {
         get
         {
-            return this.Equals(Envelope.Empty);
+            return Equals(Empty);
         }
     }
 
@@ -204,7 +204,7 @@ public class Envelope
     {
         foreach (var coord in coords)
         {
-            this.Extend(coord);
+            Extend(coord);
         }
     }
 
@@ -251,13 +251,12 @@ public class Envelope
     /// <returns>true if the specified  <c>object</c> is equal to the current <c>Envelope</c>; otherwise, false.</returns>
     public override bool Equals(object obj)
     {
-        Envelope other = obj as Envelope;
-        if (other == null)
+        if (obj is not Envelope other)
         {
             return false;
         }
 
-        return this.Equals(other);
+        return Equals(other);
     }
 
     /// <summary>
@@ -267,14 +266,14 @@ public class Envelope
     /// <returns>true if the specified  <c>Envelope</c> is equal to the current <c>Envelope</c>; otherwise, false.</returns>
     public bool Equals(Envelope other)
     {
-        return ((this.MinX == other.MinX) || (double.IsNaN(this.MinX) && double.IsNaN(other.MinX))) &&
-            ((this.MinY == other.MinY) || (double.IsNaN(this.MinY) && double.IsNaN(other.MinY))) &&
-            ((this.MinZ == other.MinZ) || (double.IsNaN(this.MinZ) && double.IsNaN(other.MinZ))) &&
-            ((this.MinM == other.MinM) || (double.IsNaN(this.MinM) && double.IsNaN(other.MinM))) &&
-            ((this.MaxX == other.MaxX) || (double.IsNaN(this.MaxX) && double.IsNaN(other.MaxX))) &&
-            ((this.MaxY == other.MaxY) || (double.IsNaN(this.MaxY) && double.IsNaN(other.MaxY))) &&
-            ((this.MaxZ == other.MaxZ) || (double.IsNaN(this.MaxZ) && double.IsNaN(other.MaxZ))) &&
-            ((this.MaxM == other.MaxM) || (double.IsNaN(this.MaxM) && double.IsNaN(other.MaxM)));
+        return ((MinX == other.MinX) || (double.IsNaN(MinX) && double.IsNaN(other.MinX))) &&
+            ((MinY == other.MinY) || (double.IsNaN(MinY) && double.IsNaN(other.MinY))) &&
+            ((MinZ == other.MinZ) || (double.IsNaN(MinZ) && double.IsNaN(other.MinZ))) &&
+            ((MinM == other.MinM) || (double.IsNaN(MinM) && double.IsNaN(other.MinM))) &&
+            ((MaxX == other.MaxX) || (double.IsNaN(MaxX) && double.IsNaN(other.MaxX))) &&
+            ((MaxY == other.MaxY) || (double.IsNaN(MaxY) && double.IsNaN(other.MaxY))) &&
+            ((MaxZ == other.MaxZ) || (double.IsNaN(MaxZ) && double.IsNaN(other.MaxZ))) &&
+            ((MaxM == other.MaxM) || (double.IsNaN(MaxM) && double.IsNaN(other.MaxM)));
     }
 
     /// <summary>
@@ -289,12 +288,12 @@ public class Envelope
     /// </returns>
     public bool Intersects(Envelope other)
     {
-        if (this.IsEmpty || other.IsEmpty)
+        if (IsEmpty || other.IsEmpty)
         {
             return false;
         }
 
-        return !(other.MinX > this.MaxX || other.MaxX < this.MinX || other.MinY > this.MaxY || other.MaxY < other.MinY);
+        return !(other.MinX > MaxX || other.MaxX < MinX || other.MinY > MaxY || other.MaxY < other.MinY);
     }
 
     ///<summary>
@@ -305,15 +304,15 @@ public class Envelope
     /// <returns> <c>true</c> if <c>(x, y)</c> lies in the interior or on the boundary of this <c>Envelope</c>.</returns>
     public bool Covers(double x, double y)
     {
-        if (this.IsEmpty)
+        if (IsEmpty)
         {
             return false;
         }
 
-        return x >= this.MinX &&
-            x <= this.MaxX &&
-            y >= this.MinY &&
-            y <= this.MaxY;
+        return x >= MinX &&
+            x <= MaxX &&
+            y >= MinY &&
+            y <= MaxY;
     }
 
     ///<summary>
@@ -333,15 +332,15 @@ public class Envelope
     /// <returns>true if this <c>Envelope</c> covers the <c>other</c></returns>
     public bool Covers(Envelope other)
     {
-        if (this.IsEmpty || other.IsEmpty)
+        if (IsEmpty || other.IsEmpty)
         {
             return false;
         }
 
-        return other.MinX >= this.MinX &&
-            other.MaxX <= this.MaxX &&
-            other.MinY >= this.MinY &&
-            other.MaxY <= this.MaxY;
+        return other.MinX >= MinX &&
+            other.MaxX <= MaxX &&
+            other.MinY >= MinY &&
+            other.MaxY <= MaxY;
     }
 
     /// <summary>
@@ -362,11 +361,11 @@ public class Envelope
     /// <param name="y2">Second y-coordinate.</param>
     public void Initialize(double x1, double x2, double y1, double y2)
     {
-        var sortedX = this.SortCoordinates(x1, x2);
+        var sortedX = SortCoordinates(x1, x2);
         _bounds[XIndex][0] = sortedX[0];
         _bounds[XIndex][1] = sortedX[1];
 
-        var sortedY = this.SortCoordinates(y1, y2);
+        var sortedY = SortCoordinates(y1, y2);
         _bounds[YIndex][0] = sortedY[0];
         _bounds[YIndex][1] = sortedY[1];
     }
@@ -382,15 +381,15 @@ public class Envelope
     /// <param name="z2">Second z-coordinate.</param>
     public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2)
     {
-        var sortedX = this.SortCoordinates(x1, x2);
+        var sortedX = SortCoordinates(x1, x2);
         _bounds[XIndex][0] = sortedX[0];
         _bounds[XIndex][1] = sortedX[1];
 
-        var sortedY = this.SortCoordinates(y1, y2);
+        var sortedY = SortCoordinates(y1, y2);
         _bounds[YIndex][0] = sortedY[0];
         _bounds[YIndex][1] = sortedY[1];
 
-        var sortedZ = this.SortCoordinates(z1, z2);
+        var sortedZ = SortCoordinates(z1, z2);
         _bounds[ZIndex][0] = sortedZ[0];
         _bounds[ZIndex][1] = sortedZ[1];
     }
@@ -408,19 +407,19 @@ public class Envelope
     /// <param name="m2">Second measure value.</param>
     public void Initialize(double x1, double x2, double y1, double y2, double z1, double z2, double m1, double m2)
     {
-        var sortedX = this.SortCoordinates(x1, x2);
+        var sortedX = SortCoordinates(x1, x2);
         _bounds[XIndex][0] = sortedX[0];
         _bounds[XIndex][1] = sortedX[1];
 
-        var sortedY = this.SortCoordinates(y1, y2);
+        var sortedY = SortCoordinates(y1, y2);
         _bounds[YIndex][0] = sortedY[0];
         _bounds[YIndex][1] = sortedY[1];
 
-        var sortedZ = this.SortCoordinates(z1, z2);
+        var sortedZ = SortCoordinates(z1, z2);
         _bounds[ZIndex][0] = sortedZ[0];
         _bounds[ZIndex][1] = sortedZ[1];
 
-        var sortedM = this.SortCoordinates(m1, m2);
+        var sortedM = SortCoordinates(m1, m2);
         _bounds[MIndex][0] = sortedM[0];
         _bounds[MIndex][1] = sortedM[1];
     }

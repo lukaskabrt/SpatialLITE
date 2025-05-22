@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Gps;
 using SpatialLite.Gps.Geometries;
 using SpatialLite.Gps.IO;
-using Xunit;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Tests.SpatialLite.Gps.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps.IO;
 
@@ -60,7 +60,7 @@ public class GpxReaderTests
     {
         GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lat.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<InvalidDataException>(() => target.Read());
+        Assert.Throws<InvalidDataException>(target.Read);
     }
 
     [Fact]
@@ -68,14 +68,14 @@ public class GpxReaderTests
     {
         GpxReader target = new GpxReader(TestDataReader.Open("gpx-waypoint-without-lon.gpx"), new GpxReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<InvalidDataException>(() => target.Read());
+        Assert.Throws<InvalidDataException>(target.Read);
     }
 
     [Fact]
     public void Read_SetsMetadataIfReadMetadataIsTrue()
     {
         var data = TestDataReader.Open("gpx-waypoint-simple.gpx");
-        var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
+        _ = new Coordinate(-71.119277, 42.438878);
 
         GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = true });
         var result = target.Read() as GpxPoint;
@@ -87,7 +87,7 @@ public class GpxReaderTests
     public void Read_DoesntSetMetadataIfReadMetadataIsFalse()
     {
         var data = TestDataReader.Open("gpx-waypoint-with-metadata.gpx");
-        var expectedCoordinate = new Coordinate(-71.119277, 42.438878);
+        _ = new Coordinate(-71.119277, 42.438878);
 
         GpxReader target = new GpxReader(data, new GpxReaderSettings() { ReadMetadata = false });
         var result = target.Read() as GpxPoint;
@@ -132,7 +132,7 @@ public class GpxReaderTests
         GpxPoint result = null;
 
         int count = 0;
-        while ((result = target.Read() as GpxPoint) != null)
+        while ((_ = target.Read() as GpxPoint) != null)
         {
             count++;
         }
@@ -163,7 +163,7 @@ public class GpxReaderTests
         Assert.Equal("WPT Name", result.Metadata.Name);
         Assert.Equal("WPT Source", result.Metadata.Source);
 
-        Assert.Equal(1, result.Metadata.Links.Count);
+        Assert.Single(result.Metadata.Links);
         GpxLink link = result.Metadata.Links.Single();
         Assert.Equal("http://www.topografix.com", link.Url.OriginalString);
         Assert.Equal("Link text", link.Text);
@@ -193,7 +193,7 @@ public class GpxReaderTests
         Assert.Equal("WPT Name", result.Metadata.Name);
         Assert.Equal("WPT Source", result.Metadata.Source);
 
-        Assert.Equal(1, result.Metadata.Links.Count);
+        Assert.Single(result.Metadata.Links);
         GpxLink link = result.Metadata.Links.Single();
         Assert.Equal("http://www.topografix.com", link.Url.OriginalString);
         Assert.Equal("Link text", link.Text);
@@ -228,8 +228,7 @@ public class GpxReaderTests
         var result = target.Read() as GpxTrack;
 
         Assert.Single(result.Geometries);
-
-        GpxTrackSegment segment = result.Geometries[0];
+        _ = result.Geometries[0];
     }
 
     [Fact]
@@ -387,7 +386,7 @@ public class GpxReaderTests
         Assert.Equal("RTE Source", result.Metadata.Source);
         Assert.Equal("RTE Type", result.Metadata.Type);
 
-        Assert.Equal(1, result.Metadata.Links.Count);
+        Assert.Single(result.Metadata.Links);
         GpxLink link = result.Metadata.Links.Single();
         Assert.Equal("http://www.topografix.com", link.Url.OriginalString);
         Assert.Equal("Link text", link.Text);

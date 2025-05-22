@@ -29,5 +29,4 @@ internal class BlobHeader
     /// </summary>
     [ProtoMember(3, IsRequired = true, Name = "datasize")]
     public int DataSize { get; set; }
-
 }

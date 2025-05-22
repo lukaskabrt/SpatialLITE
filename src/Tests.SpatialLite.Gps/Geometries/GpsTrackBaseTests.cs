@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xunit;
+﻿using SpatialLite.Core.Geometries;
 using SpatialLite.Gps.Geometries;
-using SpatialLite.Core.Geometries;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries;
 
 public class GpsTrackBaseTests
 {
-    List<GpsPoint> _points;
+    private readonly List<GpsPoint> _points;
 
     public GpsTrackBaseTests()
     {
@@ -57,7 +56,7 @@ public class GpsTrackBaseTests
     public void Coordinates_GetsPositionOfPointsIfWayCastedToLineString()
     {
         GpsTrackBase<GpsPoint> line = new GpsTrackBase<GpsPoint>(_points);
-        LineString target = (LineString)line;
+        LineString target = line;
 
         Assert.Equal(_points.Count, target.Coordinates.Count);
         for (int i = 0; i < _points.Count; i++)

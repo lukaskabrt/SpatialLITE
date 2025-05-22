@@ -1,20 +1,16 @@
-﻿using System;
-
-using Xunit;
-
+﻿using SpatialLite.Core.API;
 using SpatialLite.Gps.Geometries;
-using SpatialLite.Core.API;
+using System;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries;
 
 public class GpsPointTests
 {
-
-    double _xOrdinate = 3.5;
-    double _yOrdinate = 4.2;
-    double _zOrdinate = 10.5;
-
-    Coordinate _coordinate;
+    private readonly double _xOrdinate = 3.5;
+    private readonly double _yOrdinate = 4.2;
+    private readonly double _zOrdinate = 10.5;
+    private Coordinate _coordinate;
 
     public GpsPointTests()
     {

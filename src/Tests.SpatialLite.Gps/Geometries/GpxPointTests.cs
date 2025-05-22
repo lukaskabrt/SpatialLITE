@@ -1,21 +1,17 @@
-﻿using System;
-
-using Xunit;
-
-using SpatialLite.Gps.Geometries;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Gps;
+using SpatialLite.Gps.Geometries;
+using System;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps.Geometries;
 
 public class GpxPointTests
 {
-
-    double _xOrdinate = 3.5;
-    double _yOrdinate = 4.2;
-    double _zOrdinate = 10.5;
-
-    Coordinate _coordinate;
+    private readonly double _xOrdinate = 3.5;
+    private readonly double _yOrdinate = 4.2;
+    private readonly double _zOrdinate = 10.5;
+    private Coordinate _coordinate;
     public GpxPointTests()
     {
         _coordinate = new Coordinate(_xOrdinate, _yOrdinate, _zOrdinate);

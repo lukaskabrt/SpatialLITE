@@ -1,11 +1,10 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using SpatialLite.Core.Geometries;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.IO;
-
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
+using System.Linq;
 
 namespace SpatialLite.Core.IO;
 
@@ -15,11 +14,11 @@ namespace SpatialLite.Core.IO;
 public class WktReader : IDisposable
 {
 
-    private static CultureInfo _invarianCulture = CultureInfo.InvariantCulture;
+    private static readonly CultureInfo _invarianCulture = CultureInfo.InvariantCulture;
 
-    private TextReader _inputReader;
-    private FileStream _inputFileStream;
-    private WktTokensBuffer _tokens;
+    private readonly TextReader _inputReader;
+    private readonly FileStream _inputFileStream;
+    private readonly WktTokensBuffer _tokens;
 
     private bool _disposed = false;
 
@@ -57,7 +56,7 @@ public class WktReader : IDisposable
     public static Geometry Parse(string wkt)
     {
         WktTokensBuffer tokens = new WktTokensBuffer(WktTokenizer.Tokenize(wkt));
-        return WktReader.ParseGeometryTaggedText(tokens);
+        return ParseGeometryTaggedText(tokens);
     }
 
     /// <summary>
@@ -68,12 +67,11 @@ public class WktReader : IDisposable
     /// <returns>The parsed Geometry of given type.</returns>
     public static T Parse<T>(string wkt) where T : Geometry
     {
-        Geometry parsed = WktReader.Parse(wkt);
+        Geometry parsed = Parse(wkt);
 
         if (parsed != null)
         {
-            T result = parsed as T;
-            if (result == null)
+            if (parsed is not T result)
             {
                 throw new WktParseException("Input doesn't contain valid WKB representation of the specified geometry type.");
             }
@@ -92,7 +90,7 @@ public class WktReader : IDisposable
     /// <returns>The geometry object read from the reader or null if no more geometries are available.</returns>
     public Geometry Read()
     {
-        return WktReader.ParseGeometryTaggedText(_tokens);
+        return ParseGeometryTaggedText(_tokens);
     }
 
     /// <summary>
@@ -102,12 +100,11 @@ public class WktReader : IDisposable
     /// <returns>The geometry object of specific type read from the reader or null if no more geometries are available.</returns>
     public T Read<T>() where T : Geometry
     {
-        Geometry parsed = WktReader.ParseGeometryTaggedText(_tokens);
+        Geometry parsed = ParseGeometryTaggedText(_tokens);
 
         if (parsed != null)
         {
-            T result = parsed as T;
-            if (result == null)
+            if (parsed is not T result)
             {
                 throw new WktParseException("Input doesn't contain valid WKB representation of the specified geometry type.");
             }
@@ -142,31 +139,31 @@ public class WktReader : IDisposable
         {
             if (t.Value.ToUpperInvariant() == "POINT")
             {
-                return WktReader.ParsePointTaggedText(tokens);
+                return ParsePointTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "LINESTRING")
             {
-                return WktReader.ParseLineStringTaggedText(tokens);
+                return ParseLineStringTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "POLYGON")
             {
-                return WktReader.ParsePolygonTaggedText(tokens);
+                return ParsePolygonTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "MULTIPOINT")
             {
-                return WktReader.ParseMultiPointTaggedText(tokens);
+                return ParseMultiPointTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "MULTILINESTRING")
             {
-                return WktReader.ParseMultiLineStringTaggedText(tokens);
+                return ParseMultiLineStringTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "MULTIPOLYGON")
             {
-                return WktReader.ParseMultiPolygonTaggedText(tokens);
+                return ParseMultiPolygonTaggedText(tokens);
             }
             else if (t.Value.ToUpperInvariant() == "GEOMETRYCOLLECTION")
             {
-                return WktReader.ParseGeometryCollectionTaggedText(tokens);
+                return ParseGeometryCollectionTaggedText(tokens);
             }
         }
 
@@ -186,20 +183,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[Point tagged text format: <point tagged text> ::=  point {z}{m} <point text>]]></remarks>
     private static Point ParsePointTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("point", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("point", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParsePointText(tokens, is3D, isMeasured);
+        return ParsePointText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -220,9 +217,9 @@ public class WktReader : IDisposable
             return new Point();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-        Point result = new Point(WktReader.ParseCoordinate(tokens, is3D, isMeasured));
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        Point result = new Point(ParseCoordinate(tokens, is3D, isMeasured));
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -238,13 +235,13 @@ public class WktReader : IDisposable
     {
         List<Point> points = new List<Point>();
 
-        points.Add(WktReader.ParsePointText(tokens, is3D, isMeasured));
+        points.Add(ParsePointText(tokens, is3D, isMeasured));
 
         WktToken t = tokens.Peek(true);
         while (t.Type == TokenType.COMMA)
         {
             tokens.GetToken(true);
-            points.Add(WktReader.ParsePointText(tokens, is3D, isMeasured));
+            points.Add(ParsePointText(tokens, is3D, isMeasured));
             t = tokens.Peek(true);
         }
 
@@ -261,12 +258,12 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<x> <y> {<z>} {<m>}]]></remarks>
     private static Coordinate ParseCoordinate(WktTokensBuffer tokens, bool is3D, bool isMeasured)
     {
-        WktToken t = WktReader.Expect(TokenType.NUMBER, tokens);
+        WktToken t = Expect(TokenType.NUMBER, tokens);
         double x = double.Parse(t.Value, _invarianCulture);
 
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
-        t = WktReader.Expect(TokenType.NUMBER, tokens);
+        t = Expect(TokenType.NUMBER, tokens);
         double y = double.Parse(t.Value, _invarianCulture);
 
         double z = double.NaN;
@@ -274,17 +271,17 @@ public class WktReader : IDisposable
 
         if (is3D)
         {
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
 
-            t = WktReader.Expect(TokenType.NUMBER, tokens);
+            t = Expect(TokenType.NUMBER, tokens);
             z = double.Parse(t.Value, _invarianCulture);
         }
 
         if (isMeasured)
         {
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
 
-            t = WktReader.Expect(TokenType.NUMBER, tokens);
+            t = Expect(TokenType.NUMBER, tokens);
             m = double.Parse(t.Value, _invarianCulture);
         }
 
@@ -302,14 +299,14 @@ public class WktReader : IDisposable
     {
         List<Coordinate> coordinates = new List<Coordinate>();
 
-        coordinates.Add(WktReader.ParseCoordinate(tokens, is3D, isMeasured));
+        coordinates.Add(ParseCoordinate(tokens, is3D, isMeasured));
 
         WktToken t = tokens.Peek(true);
         while (t.Type == TokenType.COMMA)
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
-            coordinates.Add(WktReader.ParseCoordinate(tokens, is3D, isMeasured));
+            Expect(TokenType.WHITESPACE, tokens);
+            coordinates.Add(ParseCoordinate(tokens, is3D, isMeasured));
             t = tokens.Peek(true);
         }
 
@@ -324,20 +321,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<linestring tagged text> ::=  linestring {z}{m} <linestring text>]]></remarks>
     private static LineString ParseLineStringTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("linestring", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("linestring", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParseLineStringText(tokens, is3D, isMeasured);
+        return ParseLineStringText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -358,9 +355,9 @@ public class WktReader : IDisposable
             return new LineString();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-        IEnumerable<Coordinate> coords = WktReader.ParseCoordinates(tokens, is3D, isMeasured);
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        IEnumerable<Coordinate> coords = ParseCoordinates(tokens, is3D, isMeasured);
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return new LineString(coords);
     }
@@ -376,13 +373,13 @@ public class WktReader : IDisposable
     {
         List<LineString> linestrigns = new List<LineString>();
 
-        linestrigns.Add(WktReader.ParseLineStringText(tokens, is3D, isMeasured));
+        linestrigns.Add(ParseLineStringText(tokens, is3D, isMeasured));
 
         WktToken t = tokens.Peek(true);
         while (t.Type == TokenType.COMMA)
         {
             tokens.GetToken(true);
-            linestrigns.Add(WktReader.ParseLineStringText(tokens, is3D, isMeasured));
+            linestrigns.Add(ParseLineStringText(tokens, is3D, isMeasured));
             t = tokens.Peek(true);
         }
 
@@ -397,20 +394,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<polygon tagged text> ::=  polygon {z}{m} <polygon text>]]></remarks>
     private static Polygon ParsePolygonTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("polygon", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("polygon", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParsePolygonText(tokens, is3D, isMeasured);
+        return ParsePolygonText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -431,9 +428,9 @@ public class WktReader : IDisposable
             return new Polygon();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
 
-        IEnumerable<LineString> linestrings = WktReader.ParseLineStrings(tokens, is3D, isMeasured);
+        IEnumerable<LineString> linestrings = ParseLineStrings(tokens, is3D, isMeasured);
         Polygon result = new Polygon(linestrings.First().Coordinates);
 
         foreach (var inner in linestrings.Skip(1))
@@ -441,7 +438,7 @@ public class WktReader : IDisposable
             result.InteriorRings.Add(inner.Coordinates);
         }
 
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -457,13 +454,13 @@ public class WktReader : IDisposable
     {
         List<Polygon> polygons = new List<Polygon>();
 
-        polygons.Add(WktReader.ParsePolygonText(tokens, is3D, isMeasured));
+        polygons.Add(ParsePolygonText(tokens, is3D, isMeasured));
 
         WktToken t = tokens.Peek(true);
         while (t.Type == TokenType.COMMA)
         {
             tokens.GetToken(true);
-            polygons.Add(WktReader.ParsePolygonText(tokens, is3D, isMeasured));
+            polygons.Add(ParsePolygonText(tokens, is3D, isMeasured));
             t = tokens.Peek(true);
         }
 
@@ -478,20 +475,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<multilinestring tagged text> ::=  multilinestring {z}{m} <multilinestring text>  ]]></remarks>
     private static MultiLineString ParseMultiLineStringTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("multilinestring", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("multilinestring", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParseMultiLineStringText(tokens, is3D, isMeasured);
+        return ParseMultiLineStringText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -512,9 +509,9 @@ public class WktReader : IDisposable
             return new MultiLineString();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-        MultiLineString result = new MultiLineString(WktReader.ParseLineStrings(tokens, is3D, isMeasured));
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        MultiLineString result = new MultiLineString(ParseLineStrings(tokens, is3D, isMeasured));
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -527,20 +524,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<multipoint tagged text> ::=  multipoint {z}{m} <multipoint text>  ]]></remarks>
     private static MultiPoint ParseMultiPointTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("multipoint", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("multipoint", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParseMultiPointText(tokens, is3D, isMeasured);
+        return ParseMultiPointText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -561,9 +558,9 @@ public class WktReader : IDisposable
             return new MultiPoint();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-        MultiPoint result = new MultiPoint(WktReader.ParsePoints(tokens, is3D, isMeasured));
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        MultiPoint result = new MultiPoint(ParsePoints(tokens, is3D, isMeasured));
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -576,20 +573,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<multipolygon tagged text> ::=  multipolygon {z}{m} <multipolygon text>]]></remarks>
     private static MultiPolygon ParseMultiPolygonTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("multipolygon", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("multipolygon", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParseMultiPolygonText(tokens, is3D, isMeasured);
+        return ParseMultiPolygonText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -610,9 +607,9 @@ public class WktReader : IDisposable
             return new MultiPolygon();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
-        MultiPolygon result = new MultiPolygon(WktReader.ParsePolygons(tokens, is3D, isMeasured));
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        MultiPolygon result = new MultiPolygon(ParsePolygons(tokens, is3D, isMeasured));
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -625,20 +622,20 @@ public class WktReader : IDisposable
     /// <remarks><![CDATA[<GeometryCollection tagged text> ::=  GeometryCollection {z}{m} <GeometryCollection text>]]></remarks>
     private static GeometryCollection<Geometry> ParseGeometryCollectionTaggedText(WktTokensBuffer tokens)
     {
-        WktReader.Expect("geometrycollection", tokens);
-        WktReader.Expect(TokenType.WHITESPACE, tokens);
+        Expect("geometrycollection", tokens);
+        Expect(TokenType.WHITESPACE, tokens);
 
         bool is3D = false;
         bool isMeasured = false;
 
         WktToken t = tokens.Peek(true);
-        if (WktReader.TryParseDimensions(t, out is3D, out isMeasured))
+        if (TryParseDimensions(t, out is3D, out isMeasured))
         {
             tokens.GetToken(true);
-            WktReader.Expect(TokenType.WHITESPACE, tokens);
+            Expect(TokenType.WHITESPACE, tokens);
         }
 
-        return WktReader.ParseGeometryCollectionText(tokens, is3D, isMeasured);
+        return ParseGeometryCollectionText(tokens, is3D, isMeasured);
     }
 
     /// <summary>
@@ -659,20 +656,20 @@ public class WktReader : IDisposable
             return new GeometryCollection<Geometry>();
         }
 
-        WktReader.Expect(TokenType.LEFT_PARENTHESIS, tokens);
+        Expect(TokenType.LEFT_PARENTHESIS, tokens);
 
         GeometryCollection<Geometry> result = new GeometryCollection<Geometry>();
-        result.Geometries.Add(WktReader.ParseGeometryTaggedText(tokens));
+        result.Geometries.Add(ParseGeometryTaggedText(tokens));
 
         t = tokens.Peek(true);
         while (t.Type == TokenType.COMMA)
         {
             tokens.GetToken(true);
-            result.Geometries.Add(WktReader.ParseGeometryTaggedText(tokens));
+            result.Geometries.Add(ParseGeometryTaggedText(tokens));
             t = tokens.Peek(true);
         }
 
-        WktReader.Expect(TokenType.RIGHT_PARENTHESIS, tokens);
+        Expect(TokenType.RIGHT_PARENTHESIS, tokens);
 
         return result;
     }
@@ -768,7 +765,7 @@ public class WktReader : IDisposable
     /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     private void Dispose(bool disposing)
     {
-        if (!this._disposed)
+        if (!_disposed)
         {
             if (disposing)
             {

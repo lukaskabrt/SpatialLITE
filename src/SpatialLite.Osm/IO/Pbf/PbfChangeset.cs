@@ -14,5 +14,4 @@ public class PbfChangeset
     /// </summary>
     [ProtoMember(1, IsRequired = true, Name = "id")]
     public long ID { get; set; }
-
 }

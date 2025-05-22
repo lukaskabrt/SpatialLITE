@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System;
+using System.Collections.Generic;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -29,25 +28,20 @@ public class RelationMember : Geometry
     public RelationMember(IOsmGeometry member, string role)
         : base()
     {
-        if (member == null)
-        {
-            throw new ArgumentNullException(nameof(member));
-        }
-
-        this.Member = member;
-        this.Role = role;
+        Member = member ?? throw new ArgumentNullException(nameof(member));
+        Role = role;
 
         if (member is Node)
         {
-            this.MemberType = EntityType.Node;
+            MemberType = EntityType.Node;
         }
         else if (member is Way)
         {
-            this.MemberType = EntityType.Way;
+            MemberType = EntityType.Way;
         }
         else if (member is Relation)
         {
-            this.MemberType = EntityType.Relation;
+            MemberType = EntityType.Relation;
         }
         else
         {
@@ -77,7 +71,7 @@ public class RelationMember : Geometry
     {
         get
         {
-            return ((Geometry)this.Member).Is3D;
+            return ((Geometry)Member).Is3D;
         }
     }
 
@@ -88,7 +82,7 @@ public class RelationMember : Geometry
     {
         get
         {
-            return ((Geometry)this.Member).IsMeasured;
+            return ((Geometry)Member).IsMeasured;
         }
     }
 
@@ -103,7 +97,7 @@ public class RelationMember : Geometry
     {
         if (info.MemberType == EntityType.Unknown)
         {
-            throw new ArgumentException("info.MemberType cannot be EntityType.Unknown");
+            throw new ArgumentException(null, nameof(info.MemberType cannot be EntityType.Unknown));
         }
 
         if (entities.Contains(info.Reference, info.MemberType) == false)
@@ -135,7 +129,7 @@ public class RelationMember : Geometry
     /// </returns>
     public override Envelope GetEnvelope()
     {
-        return ((Geometry)this.Member).GetEnvelope();
+        return ((Geometry)Member).GetEnvelope();
     }
 
     /// <summary>
@@ -144,6 +138,6 @@ public class RelationMember : Geometry
     /// <returns>the collection of all <see cref="Coordinate"/> of this object</returns>
     public override IEnumerable<Coordinate> GetCoordinates()
     {
-        return this.Member.GetCoordinates();
+        return Member.GetCoordinates();
     }
 }

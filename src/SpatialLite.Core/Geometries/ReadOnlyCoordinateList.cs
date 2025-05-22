@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using SpatialLite.Core.API;
 
 namespace SpatialLite.Core.Geometries;
 
@@ -16,7 +16,7 @@ public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
     /// <param name="source">The list of Points to be used as source for this ReadOnlyCoordinateList</param>
     public ReadOnlyCoordinateList(IReadOnlyList<T> source)
     {
-        this.Source = source;
+        Source = source;
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
     {
         get
         {
-            return this.Source.Count;
+            return Source.Count;
         }
     }
 
@@ -44,7 +44,7 @@ public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
     {
         get
         {
-            return this.Source[index].Position;
+            return Source[index].Position;
         }
         set
         {
@@ -104,7 +104,7 @@ public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
     /// <returns>The Enumerator for the CoordinateList</returns>
     public IEnumerator<Coordinate> GetEnumerator()
     {
-        foreach (var node in this.Source)
+        foreach (var node in Source)
         {
             yield return node.Position;
         }
@@ -116,6 +116,6 @@ public class ReadOnlyCoordinateList<T> : ICoordinateList where T : IPoint
     /// <returns>The Enumerator for the CoordinateList</returns>
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return this.GetEnumerator();
+        return GetEnumerator();
     }
 }

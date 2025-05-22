@@ -8,8 +8,8 @@ namespace SpatialLite.Osm;
 public class Tag
 {
 
-    private string _key;
-    private string _value;
+    private readonly string _key;
+    private readonly string _value;
 
     /// <summary>
     /// Initializes a new instance of the Tag class with specified key and value.
@@ -28,13 +28,8 @@ public class Tag
             throw new ArgumentException("Parameter 'key' can't be empty string.");
         }
 
-        if (value == null)
-        {
-            throw new ArgumentNullException("Parameter 'value' can't be null.");
-        }
-
         _key = key;
-        _value = value;
+        _value = value ?? throw new ArgumentNullException("Parameter 'value' can't be null.");
     }
 
     /// <summary>
@@ -71,8 +66,7 @@ public class Tag
             return false;
         }
 
-        Tag other = obj as Tag;
-        if (other != null)
+        if (obj is Tag other)
         {
             return Equals(other);
         }

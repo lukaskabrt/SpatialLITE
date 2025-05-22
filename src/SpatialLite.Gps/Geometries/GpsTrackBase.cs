@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
+using System.Collections.Generic;
 
 namespace SpatialLite.Gps.Geometries;
 
@@ -10,7 +10,7 @@ namespace SpatialLite.Gps.Geometries;
 /// <typeparam name="T">The type of the Gps points</typeparam>
 public class GpsTrackBase<T> : LineString where T : IGpsPoint
 {
-    private ICoordinateList _coordinatesAdapter;
+    private readonly ICoordinateList _coordinatesAdapter;
 
     /// <summary>
     /// Creates a new instance of the GpsTrackBase class
@@ -25,8 +25,8 @@ public class GpsTrackBase<T> : LineString where T : IGpsPoint
     /// <param name="points">The points of the track</param>
     public GpsTrackBase(IEnumerable<T> points)
     {
-        this.Points = new List<T>(points);
-        _coordinatesAdapter = new ReadOnlyCoordinateList<T>(this.Points);
+        Points = new List<T>(points);
+        _coordinatesAdapter = new ReadOnlyCoordinateList<T>(Points);
     }
 
     /// <summary>

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using SpatialLite.Core.API;
 using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.API;
 
 namespace Tests.SpatialLite.Core.API;
 
 public class CoordinateTests
 {
-    double xCoordinate = 3.5;
-    double yCoordinate = 4.2;
-    double zCoordinate = 10.5;
-    double mValue = 100.4;
+    private readonly double xCoordinate = 3.5;
+    private readonly double yCoordinate = 4.2;
+    private readonly double zCoordinate = 10.5;
+    private readonly double mValue = 100.4;
 
     [Fact]
     public void Constructor_XY_SetsXYValuesAndZMNaN()

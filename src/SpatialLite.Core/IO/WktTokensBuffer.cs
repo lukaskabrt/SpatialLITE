@@ -8,7 +8,7 @@ namespace SpatialLite.Core.IO;
 internal class WktTokensBuffer : IEnumerable<WktToken>
 {
 
-    private List<WktToken> _buffer;
+    private readonly List<WktToken> _buffer;
 
     /// <summary>
     /// Initializes a new instance of the WktTokenBuffer class that is empty.
@@ -71,7 +71,7 @@ internal class WktTokensBuffer : IEnumerable<WktToken>
     /// <returns>Next token form the tokens</returns>
     public WktToken Peek(bool ignoreWhitespace)
     {
-        if (this.Count == 0)
+        if (Count == 0)
         {
             return WktToken.EndOfDataToken;
         }
@@ -137,6 +137,6 @@ internal class WktTokensBuffer : IEnumerable<WktToken>
     /// <returns>An enumerator that iterates through the collection</returns>
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
-        return this.GetEnumerator();
+        return GetEnumerator();
     }
 }

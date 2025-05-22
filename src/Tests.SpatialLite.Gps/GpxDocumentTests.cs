@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xunit;
-
-using SpatialLite.Gps.IO;
+﻿using Moq;
 using SpatialLite.Gps;
 using SpatialLite.Gps.Geometries;
+using SpatialLite.Gps.IO;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
-using Moq;
 using Tests.SpatialLite.Gps.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Gps;
 

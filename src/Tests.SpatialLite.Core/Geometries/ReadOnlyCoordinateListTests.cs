@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-
+﻿using SpatialLite.Core.API;
 using SpatialLite.Core.Geometries;
-using SpatialLite.Core.API;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Tests.SpatialLite.Core.Geometries;
 
 public class ReadOnlyCoordinateListTests
 {
-    List<Point> _points = new List<Point>(new Point[] {
+    private readonly List<Point> _points = new List<Point>(new Point[] {
         new Point(5, 1.1, 2.2),
         new Point(6, 10.1, -20.2),
         new Point(7, -30.1, 40.2) });
@@ -90,6 +86,6 @@ public class ReadOnlyCoordinateListTests
     {
         ReadOnlyCoordinateList<Point> target = new ReadOnlyCoordinateList<Point>(_points);
 
-        Assert.Throws<NotSupportedException>(() => target.Clear());
+        Assert.Throws<NotSupportedException>(target.Clear);
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using SpatialLite.Osm.IO;
+using System;
 using System.Collections.Generic;
-
-using SpatialLite.Osm.IO;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -40,7 +39,7 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
 
         List<RelationInfo> relations = new List<RelationInfo>();
 
-        IEntityInfo entityInfo = null;
+        IEntityInfo entityInfo;
         while ((entityInfo = reader.Read()) != null)
         {
             switch (entityInfo.EntityType)

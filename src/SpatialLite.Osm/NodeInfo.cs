@@ -1,6 +1,5 @@
-﻿using System;
-
-using SpatialLite.Osm.Geometries;
+﻿using SpatialLite.Osm.Geometries;
+using System;
 
 namespace SpatialLite.Osm;
 
@@ -20,11 +19,11 @@ public class NodeInfo : IEntityInfo
     /// <param name="additionalInfo">The EntityMetadata structure with additinal properties. Default value is null.</param>
     public NodeInfo(long id, double latitude, double longitude, TagsCollection tags, EntityMetadata additionalInfo = null)
     {
-        this.ID = id;
-        this.Latitude = latitude;
-        this.Longitude = longitude;
-        this.Tags = tags;
-        this.Metadata = additionalInfo;
+        ID = id;
+        Latitude = latitude;
+        Longitude = longitude;
+        Tags = tags;
+        Metadata = additionalInfo;
     }
 
     /// <summary>
@@ -38,11 +37,11 @@ public class NodeInfo : IEntityInfo
             throw new ArgumentNullException(nameof(node), "Node parameter cannot be null");
         }
 
-        this.ID = node.ID;
-        this.Longitude = node.Position.X;
-        this.Latitude = node.Position.Y;
-        this.Tags = node.Tags;
-        this.Metadata = node.Metadata;
+        ID = node.ID;
+        Longitude = node.Position.X;
+        Latitude = node.Position.Y;
+        Tags = node.Tags;
+        Metadata = node.Metadata;
     }
 
     /// <summary>
