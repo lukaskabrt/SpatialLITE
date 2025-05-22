@@ -4,25 +4,24 @@ using Xunit;
 
 using SpatialLite.Osm.IO;
 
-namespace Tests.SpatialLite.Osm.IO
+namespace Tests.SpatialLite.Osm.IO;
+
+public class OsmReaderSettingsTests
 {
-    public class OsmReaderSettingsTests
+    [Fact]
+    public void Constructor__CreatesSettingsWithDefaultValues()
     {
-        [Fact]
-        public void Constructor__CreatesSettingsWithDefaultValues()
-        {
-            OsmReaderSettings target = new OsmReaderSettings();
+        OsmReaderSettings target = new OsmReaderSettings();
 
-            Assert.True(target.ReadMetadata);
-        }
+        Assert.True(target.ReadMetadata);
+    }
 
-        [Fact]
-        public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
-        {
-            OsmReaderSettings target = new OsmReaderSettings();
-            target.IsReadOnly = true;
+    [Fact]
+    public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
+    {
+        OsmReaderSettings target = new OsmReaderSettings();
+        target.IsReadOnly = true;
 
-            Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);
-        }
+        Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);
     }
 }

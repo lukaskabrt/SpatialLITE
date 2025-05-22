@@ -1,18 +1,17 @@
-﻿namespace SpatialLite.Core.Algorithms
+﻿namespace SpatialLite.Core.Algorithms;
+
+/// <summary>
+/// Specifies how algorithms treats line defined by two points.
+/// </summary>
+public enum LineMode
 {
     /// <summary>
-    /// Specifies how algorithms treats line defined by two points.
+    /// Line is treated as line segment.
     /// </summary>
-    public enum LineMode
-    {
-        /// <summary>
-        /// Line is treated as line segment.
-        /// </summary>
-        LineSegment,
+    LineSegment,
 
-        /// <summary>
-        /// Line is treated as infinite line.
-        /// </summary>
-        Line
-    }
+    /// <summary>
+    /// Line is treated as infinite line.
+    /// </summary>
+    Line
 }

@@ -1,23 +1,22 @@
-﻿namespace SpatialLite.Gps
+﻿namespace SpatialLite.Gps;
+
+/// <summary>
+/// Defines possible types of GpxGeometry
+/// </summary>
+public enum GpxGeometryType
 {
     /// <summary>
-    /// Defines possible types of GpxGeometry
+    /// Waypoint
     /// </summary>
-    public enum GpxGeometryType
-    {
-        /// <summary>
-        /// Waypoint
-        /// </summary>
-        Waypoint,
+    Waypoint,
 
-        /// <summary>
-        /// Route
-        /// </summary>
-        Route,
+    /// <summary>
+    /// Route
+    /// </summary>
+    Route,
 
-        /// <summary>
-        /// Recorder track
-        /// </summary>
-        Track
-    }
+    /// <summary>
+    /// Recorder track
+    /// </summary>
+    Track
 }

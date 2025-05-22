@@ -1,64 +1,63 @@
 ﻿using System;
 
-namespace SpatialLite.Osm.IO
+namespace SpatialLite.Osm.IO;
+
+/// <summary>
+///  Contains settings that determine behaviour of the PbfWriter.
+/// </summary>
+public class PbfWriterSettings : OsmWriterSettings
 {
+
+    private bool _useDenseFormat;
+    private CompressionMode _compression;
+
     /// <summary>
-    ///  Contains settings that determine behaviour of the PbfWriter.
+    /// Initializes a new instance of the PbfWriterSettings class with default values.
     /// </summary>
-    public class PbfWriterSettings : OsmWriterSettings
+    public PbfWriterSettings()
+        : base()
     {
+        this.UseDenseFormat = true;
+        this.Compression = CompressionMode.ZlibDeflate;
+    }
 
-        private bool _useDenseFormat;
-        private CompressionMode _compression;
-
-        /// <summary>
-        /// Initializes a new instance of the PbfWriterSettings class with default values.
-        /// </summary>
-        public PbfWriterSettings()
-            : base()
+    /// <summary>
+    /// Gets or sets a value indicating whether PbfWriter should use dense format for serializing nodes.
+    /// </summary>
+    public bool UseDenseFormat
+    {
+        get
         {
-            this.UseDenseFormat = true;
-            this.Compression = CompressionMode.ZlibDeflate;
+            return _useDenseFormat;
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether PbfWriter should use dense format for serializing nodes.
-        /// </summary>
-        public bool UseDenseFormat
+        set
         {
-            get
+            if (this.IsReadOnly)
             {
-                return _useDenseFormat;
+                throw new InvalidOperationException("Cannot change the 'UseDenseFromat' property - PbfReaderSettings is read-only");
             }
-            set
-            {
-                if (this.IsReadOnly)
-                {
-                    throw new InvalidOperationException("Cannot change the 'UseDenseFromat' property - PbfReaderSettings is read-only");
-                }
 
-                _useDenseFormat = value;
-            }
+            _useDenseFormat = value;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets a compression to be used by PbfWriter.
-        /// </summary>
-        public CompressionMode Compression
+    /// <summary>
+    /// Gets or sets a compression to be used by PbfWriter.
+    /// </summary>
+    public CompressionMode Compression
+    {
+        get
         {
-            get
+            return _compression;
+        }
+        set
+        {
+            if (this.IsReadOnly)
             {
-                return _compression;
+                throw new InvalidOperationException("Cannot change the 'Compression' property - PbfReaderSettings is read-only");
             }
-            set
-            {
-                if (this.IsReadOnly)
-                {
-                    throw new InvalidOperationException("Cannot change the 'Compression' property - PbfReaderSettings is read-only");
-                }
 
-                _compression = value;
-            }
+            _compression = value;
         }
     }
 }

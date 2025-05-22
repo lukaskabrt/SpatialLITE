@@ -10,16 +10,15 @@ using SpatialLite.Core.Algorithms;
 using Xunit;
 using Moq;
 
-namespace Tests.SpatialLite.Core
+namespace Tests.SpatialLite.Core;
+
+public class TopologyTests
 {
-    public class TopologyTests
+
+    [Fact]
+    public void Euclidean2D_GetTopologyInstanceWithEuclidean2DLocator()
     {
-
-        [Fact]
-        public void Euclidean2D_GetTopologyInstanceWithEuclidean2DLocator()
-        {
-            Assert.IsType<Euclidean2DLocator>(Topology.Euclidean2D.GeometryLocator);
-        }
-
+        Assert.IsType<Euclidean2DLocator>(Topology.Euclidean2D.GeometryLocator);
     }
+
 }

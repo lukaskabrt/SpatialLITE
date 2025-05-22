@@ -1,25 +1,24 @@
-﻿namespace SpatialLite.Osm
+﻿namespace SpatialLite.Osm;
+
+/// <summary>
+/// Defines possible type of object that IOsmGeometryInfo can represent.
+/// </summary>
+public enum EntityType
 {
     /// <summary>
-    /// Defines possible type of object that IOsmGeometryInfo can represent.
+    /// Unknown type of the entity.
     /// </summary>
-    public enum EntityType
-    {
-        /// <summary>
-        /// Unknown type of the entity.
-        /// </summary>
-        Unknown,
-        /// <summary>
-        /// Node
-        /// </summary>
-        Node,
-        /// <summary>
-        /// Way
-        /// </summary>
-        Way,
-        /// <summary>
-        /// Relation
-        /// </summary>
-        Relation
-    }
+    Unknown,
+    /// <summary>
+    /// Node
+    /// </summary>
+    Node,
+    /// <summary>
+    /// Way
+    /// </summary>
+    Way,
+    /// <summary>
+    /// Relation
+    /// </summary>
+    Relation
 }

@@ -1,18 +1,17 @@
-﻿namespace SpatialLite.Osm.IO
+﻿namespace SpatialLite.Osm.IO;
+
+/// <summary>
+/// Defines compressions that can be used in the PBF format.
+/// </summary>
+public enum CompressionMode
 {
     /// <summary>
-    /// Defines compressions that can be used in the PBF format.
+    /// No compresion is used.
     /// </summary>
-    public enum CompressionMode
-    {
-        /// <summary>
-        /// No compresion is used.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Zlib compression.
-        /// </summary>
-        ZlibDeflate
-    }
+    /// <summary>
+    /// Zlib compression.
+    /// </summary>
+    ZlibDeflate
 }

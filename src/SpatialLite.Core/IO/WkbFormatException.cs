@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace SpatialLite.Core.IO
+namespace SpatialLite.Core.IO;
+
+/// <summary>
+/// Represents exception that occurs if WkbReader encouters invalid data.
+/// </summary>
+public class WkbFormatException : Exception
 {
     /// <summary>
-    /// Represents exception that occurs if WkbReader encouters invalid data.
+    /// Initializes a new instance of the WktParseException class.
     /// </summary>
-    public class WkbFormatException : Exception
+    /// <param name="message">The message that describes the error.</param>
+    public WkbFormatException(string message)
+        : base(message)
     {
-        /// <summary>
-        /// Initializes a new instance of the WktParseException class.
-        /// </summary>
-        /// <param name="message">The message that describes the error.</param>
-        public WkbFormatException(string message)
-            : base(message)
-        {
-        }
     }
 }

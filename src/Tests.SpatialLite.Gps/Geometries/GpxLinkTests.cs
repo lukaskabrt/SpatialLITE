@@ -2,19 +2,18 @@
 using Xunit;
 using SpatialLite.Gps.Geometries;
 
-namespace Tests.SpatialLite.Gps.Geometries
+namespace Tests.SpatialLite.Gps.Geometries;
+
+public class GpxLinkTests
 {
-    public class GpxLinkTests
+
+    [Fact]
+    public void Constructor_Url_SetsUrl()
     {
+        Uri url = new Uri("http://spatial.litesolutions.net");
 
-        [Fact]
-        public void Constructor_Url_SetsUrl()
-        {
-            Uri url = new Uri("http://spatial.litesolutions.net");
+        GpxLink target = new GpxLink(url);
 
-            GpxLink target = new GpxLink(url);
-
-            Assert.Same(url, target.Url);
-        }
+        Assert.Same(url, target.Url);
     }
 }

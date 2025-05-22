@@ -5,65 +5,64 @@ using Xunit;
 using SpatialLite.Gps.Geometries;
 using SpatialLite.Core.Geometries;
 
-namespace Tests.SpatialLite.Gps.Geometries
+namespace Tests.SpatialLite.Gps.Geometries;
+
+public class GpsTrackBaseTests
 {
-    public class GpsTrackBaseTests
+    List<GpsPoint> _points;
+
+    public GpsTrackBaseTests()
     {
-        List<GpsPoint> _points;
+        _points = new List<GpsPoint> {
+        new GpsPoint(16.5, 45.9, 100, new DateTime(2011, 2, 24, 20, 00, 00)),
+        new GpsPoint(16.6, 46.0, 110, new DateTime(2011, 2, 24, 20, 00, 10)),
+        new GpsPoint(16.5, 46.1, 200, new DateTime(2011, 2, 24, 20, 00, 20))};
 
-        public GpsTrackBaseTests()
+    }
+
+    [Fact]
+    public void Constructor__CreatesEmptyGpsTrack()
+    {
+        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>();
+
+        Assert.Equal(0, target.Coordinates.Count);
+    }
+
+    [Fact]
+    public void Constructor_IEnumerablePoints_CreatesGpsTrackWithPoints()
+    {
+
+        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
+
+        Assert.Equal(_points.Count, target.Points.Count);
+        for (int i = 0; i < target.Points.Count; i++)
         {
-            _points = new List<GpsPoint> {
-            new GpsPoint(16.5, 45.9, 100, new DateTime(2011, 2, 24, 20, 00, 00)),
-            new GpsPoint(16.6, 46.0, 110, new DateTime(2011, 2, 24, 20, 00, 10)),
-            new GpsPoint(16.5, 46.1, 200, new DateTime(2011, 2, 24, 20, 00, 20))};
-
+            Assert.Same(_points[i], target.Points[i]);
         }
+    }
 
-        [Fact]
-        public void Constructor__CreatesEmptyGpsTrack()
+    [Fact]
+    public void Coordinates_GetsPositionOfPoints()
+    {
+        GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
+
+        Assert.Equal(_points.Count, target.Coordinates.Count);
+        for (int i = 0; i < _points.Count; i++)
         {
-            GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>();
-
-            Assert.Equal(0, target.Coordinates.Count);
+            Assert.Equal(_points[i].Position, target.Coordinates[i]);
         }
+    }
 
-        [Fact]
-        public void Constructor_IEnumerablePoints_CreatesGpsTrackWithPoints()
+    [Fact]
+    public void Coordinates_GetsPositionOfPointsIfWayCastedToLineString()
+    {
+        GpsTrackBase<GpsPoint> line = new GpsTrackBase<GpsPoint>(_points);
+        LineString target = (LineString)line;
+
+        Assert.Equal(_points.Count, target.Coordinates.Count);
+        for (int i = 0; i < _points.Count; i++)
         {
-
-            GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
-
-            Assert.Equal(_points.Count, target.Points.Count);
-            for (int i = 0; i < target.Points.Count; i++)
-            {
-                Assert.Same(_points[i], target.Points[i]);
-            }
-        }
-
-        [Fact]
-        public void Coordinates_GetsPositionOfPoints()
-        {
-            GpsTrackBase<GpsPoint> target = new GpsTrackBase<GpsPoint>(_points);
-
-            Assert.Equal(_points.Count, target.Coordinates.Count);
-            for (int i = 0; i < _points.Count; i++)
-            {
-                Assert.Equal(_points[i].Position, target.Coordinates[i]);
-            }
-        }
-
-        [Fact]
-        public void Coordinates_GetsPositionOfPointsIfWayCastedToLineString()
-        {
-            GpsTrackBase<GpsPoint> line = new GpsTrackBase<GpsPoint>(_points);
-            LineString target = (LineString)line;
-
-            Assert.Equal(_points.Count, target.Coordinates.Count);
-            for (int i = 0; i < _points.Count; i++)
-            {
-                Assert.Equal(_points[i].Position, target.Coordinates[i]);
-            }
+            Assert.Equal(_points[i].Position, target.Coordinates[i]);
         }
     }
 }
