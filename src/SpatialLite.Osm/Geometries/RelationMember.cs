@@ -97,7 +97,7 @@ public class RelationMember : Geometry
     {
         if (info.MemberType == EntityType.Unknown)
         {
-            throw new ArgumentException(null, nameof(info.MemberType cannot be EntityType.Unknown));
+            throw new ArgumentException("MemberType cannot be EntityType.Unknown", nameof(info));
         }
 
         if (entities.Contains(info.Reference, info.MemberType) == false)
