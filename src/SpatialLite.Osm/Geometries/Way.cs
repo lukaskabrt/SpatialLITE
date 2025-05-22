@@ -2,7 +2,6 @@
 using SpatialLite.Core.Geometries;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -97,7 +96,7 @@ public class Way : LineString, IOsmGeometry
     /// <returns>The Way object created from WayInfo or null if referenced node is missing</returns>
     public static Way FromWayInfo(WayInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing)
     {
-        Way result = new(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
+        Way result = new Way(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
 
         result.Nodes.Capacity = info.Nodes.Count;
         foreach (var nodeID in info.Nodes)
@@ -110,7 +109,7 @@ public class Way : LineString, IOsmGeometry
             {
                 if (throwOnMissing)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Referenced Node (ID = {0}) not found in entities collection.", nodeID), "info.ID");
+                    throw new ArgumentException(string.Format("Referenced Node (ID = {0}) not found in entities collection.", nodeID), "info.ID");
                 }
 
                 return null;

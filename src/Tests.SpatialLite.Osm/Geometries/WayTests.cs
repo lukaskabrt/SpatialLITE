@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xunit;
-using Moq;
-
-using SpatialLite.Core;
+﻿using Moq;
 using SpatialLite.Core.Geometries;
-using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm;
+using SpatialLite.Osm.Geometries;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.Geometries;
 
 public class WayTests
 {
-    List<Node> _nodes = new(new Node[] {
+    private readonly List<Node> _nodes = new(new Node[] {
         new(1, 1.1, 2.2),
         new(2, 10.1, -20.2),
         new(3, -30.1, 40.2) });
 
-    WayInfo _wayEmptyInfo = new(10, new TagsCollection(), new List<long>(), new EntityMetadata());
-    WayInfo _wayInfo = new(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
+    private readonly WayInfo _wayEmptyInfo = new(10, new TagsCollection(), new List<long>(), new EntityMetadata());
+    private readonly WayInfo _wayInfo = new(10, new TagsCollection(), new long[] { 1, 2, 3 }, new EntityMetadata());
 
-    IEntityCollection<IOsmGeometry> _nodesEntityCollection;
+    private readonly IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
     public WayTests()
     {

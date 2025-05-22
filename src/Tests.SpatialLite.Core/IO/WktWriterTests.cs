@@ -13,30 +13,30 @@ public class WktWriterTests
 
 
     private static readonly Coordinate[] _coordinatesXY = new Coordinate[] {
-            new(-10.1, 15.5), new(20.2, -25.5), new(30.3, 35.5)
+            new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
     };
 
     private static readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
-            new(-10.1, 15.5, 100.5), new(20.2, -25.5, 200.5), new(30.3, 35.5, -300.5)
+            new Coordinate(-10.1, 15.5, 100.5), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
     };
 
     private static readonly Coordinate[] _coordinatesXYM = new Coordinate[] {
-            new(-10.1, 15.5, double.NaN, 1000.5), new(20.2, -25.5, double.NaN, 2000.5), new(30.3, 35.5, double.NaN, -3000.5)
+            new Coordinate(-10.1, 15.5, double.NaN, 1000.5), new Coordinate(20.2, -25.5, double.NaN, 2000.5), new Coordinate(30.3, 35.5, double.NaN, -3000.5)
     };
 
     private static readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
-            new(-10.1, 15.5, 100.5, 1000.5), new(20.2, -25.5, 200.5, 2000.5), new(30.3, 35.5, -300.5, -3000.5)
+            new Coordinate(-10.1, 15.5, 100.5, 1000.5), new Coordinate(20.2, -25.5, 200.5, 2000.5), new Coordinate(30.3, 35.5, -300.5, -3000.5)
     };
 
     private static readonly Coordinate[] _coordinates2XYZM = new Coordinate[] {
-            new(-1.1, 1.5, 10.5, 100.5), new(2.2, -2.5, 20.5, 200.5), new(3.3, 3.5, -30.5, -300.5)
+            new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
     };
 
     [Fact]
     public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly()
     {
-        WktWriterSettings settings = new();
-        using (WktWriter target = new(new MemoryStream(), settings))
+        WktWriterSettings settings = new WktWriterSettings();
+        using (WktWriter target = new WktWriter(new MemoryStream(), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -59,8 +59,8 @@ public class WktWriterTests
     [Fact]
     public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly()
     {
-        WktWriterSettings settings = new();
-        using (WktWriter target = new(new MemoryStream(), settings))
+        WktWriterSettings settings = new WktWriterSettings();
+        using (WktWriter target = new WktWriter(new MemoryStream(), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -73,8 +73,8 @@ public class WktWriterTests
         string filename = PathHelper.GetTempFilePath("wktwriter-constructor-creates-output-test.wkt");
         File.Delete(filename);
 
-        WktWriterSettings settings = new();
-        using (WktWriter target = new(filename, settings))
+        WktWriterSettings settings = new WktWriterSettings();
+        using (WktWriter target = new WktWriter(filename, settings))
         {
             ;
         }
@@ -124,19 +124,19 @@ public class WktWriterTests
     {
         string filename = PathHelper.GetTempFilePath("wktwriter-closes-output-filestream-test.wkt");
 
-        WktWriterSettings settings = new();
-        WktWriter target = new(filename, settings);
+        WktWriterSettings settings = new WktWriterSettings();
+        WktWriter target = new WktWriter(filename, settings);
         target.Dispose();
-        FileStream testStream = new(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
     [Fact]
     public void Dispose_ClosesOutputStreamIfWritingToStream()
     {
-        MemoryStream stream = new();
+        MemoryStream stream = new MemoryStream();
 
-        WktWriter target = new(stream, new WktWriterSettings());
+        WktWriter target = new WktWriter(stream, new WktWriterSettings());
         target.Dispose();
 
         Assert.False(stream.CanRead);
@@ -203,7 +203,7 @@ public class WktWriterTests
     public void Write_WritesComplexPolygonWitOuterAndInnerRings()
     {
         string wkt = "polygon zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5))";
-        Polygon polygon = new(new CoordinateList(_coordinatesXYZM));
+        Polygon polygon = new Polygon(new CoordinateList(_coordinatesXYZM));
         polygon.InteriorRings.Add(new CoordinateList(_coordinates2XYZM));
         polygon.InteriorRings.Add(new CoordinateList(_coordinates2XYZM));
 
@@ -215,10 +215,10 @@ public class WktWriterTests
         get
         {
             yield return new object[] { new MultiPoint(), "multipoint empty" };
-            yield return new object[] { new MultiPoint(new Point[] { new(_coordinatesXY[0]), new(_coordinatesXY[1]) }), "multipoint ((-10.1 15.5),(20.2 -25.5))" };
-            yield return new object[] { new MultiPoint(new Point[] { new(_coordinatesXYM[0]), new(_coordinatesXYM[1]) }), "multipoint m ((-10.1 15.5 1000.5),(20.2 -25.5 2000.5))" };
-            yield return new object[] { new MultiPoint(new Point[] { new(_coordinatesXYZ[0]), new(_coordinatesXYZ[1]) }), "multipoint z ((-10.1 15.5 100.5),(20.2 -25.5 200.5))" };
-            yield return new object[] { new MultiPoint(new Point[] { new(_coordinatesXYZM[0]), new(_coordinatesXYZM[1]) }), "multipoint zm ((-10.1 15.5 100.5 1000.5),(20.2 -25.5 200.5 2000.5))" };
+            yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXY[0]), new Point(_coordinatesXY[1]) }), "multipoint ((-10.1 15.5),(20.2 -25.5))" };
+            yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXYM[0]), new Point(_coordinatesXYM[1]) }), "multipoint m ((-10.1 15.5 1000.5),(20.2 -25.5 2000.5))" };
+            yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXYZ[0]), new Point(_coordinatesXYZ[1]) }), "multipoint z ((-10.1 15.5 100.5),(20.2 -25.5 200.5))" };
+            yield return new object[] { new MultiPoint(new Point[] { new Point(_coordinatesXYZM[0]), new Point(_coordinatesXYZM[1]) }), "multipoint zm ((-10.1 15.5 100.5 1000.5),(20.2 -25.5 200.5 2000.5))" };
         }
     }
 
@@ -234,13 +234,13 @@ public class WktWriterTests
         get
         {
             yield return new object[] { new MultiLineString(), "multilinestring empty" };
-            yield return new object[] { new MultiLineString(new LineString[] { new(_coordinatesXY), new(_coordinatesXY) }),
+            yield return new object[] { new MultiLineString(new LineString[] { new LineString(_coordinatesXY), new LineString(_coordinatesXY) }),
                 "multilinestring ((-10.1 15.5, 20.2 -25.5, 30.3 35.5),(-10.1 15.5, 20.2 -25.5, 30.3 35.5))" };
-            yield return new object[] { new MultiLineString(new LineString[] { new(_coordinatesXYM), new(_coordinatesXYM) }),
+            yield return new object[] { new MultiLineString(new LineString[] { new LineString(_coordinatesXYM), new LineString(_coordinatesXYM) }),
                 "multilinestring m ((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5),(-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5))" };
-            yield return new object[] { new MultiLineString(new LineString[] { new(_coordinatesXYZ), new(_coordinatesXYZ) }),
+            yield return new object[] { new MultiLineString(new LineString[] { new LineString(_coordinatesXYZ), new LineString(_coordinatesXYZ) }),
                 "multilinestring z ((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5),(-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5))" };
-            yield return new object[] { new MultiLineString(new LineString[] { new(_coordinatesXYZM), new(_coordinatesXYZM) }),
+            yield return new object[] { new MultiLineString(new LineString[] { new LineString(_coordinatesXYZM), new LineString(_coordinatesXYZM) }),
                 "multilinestring zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5),(-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5))" };
         }
     }
@@ -257,13 +257,13 @@ public class WktWriterTests
         get
         {
             yield return new object[] { new MultiPolygon(), "multipolygon empty" };
-            yield return new object[] { new MultiPolygon(new Polygon[] { new(new CoordinateList(_coordinatesXY)), new(new CoordinateList(_coordinatesXY)) }),
+            yield return new object[] { new MultiPolygon(new Polygon[] { new Polygon(new CoordinateList(_coordinatesXY)), new Polygon(new CoordinateList(_coordinatesXY)) }),
                 "multipolygon (((-10.1 15.5, 20.2 -25.5, 30.3 35.5)),((-10.1 15.5, 20.2 -25.5, 30.3 35.5)))" };
-            yield return new object[] { new MultiPolygon(new Polygon[] { new(new CoordinateList(_coordinatesXYM)), new(new CoordinateList(_coordinatesXYM)) }),
+            yield return new object[] { new MultiPolygon(new Polygon[] { new Polygon(new CoordinateList(_coordinatesXYM)), new Polygon(new CoordinateList(_coordinatesXYM)) }),
                 "multipolygon m (((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)),((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)))" };
-            yield return new object[] { new MultiPolygon(new Polygon[] { new(new CoordinateList(_coordinatesXYZ)), new(new CoordinateList(_coordinatesXYZ)) }),
+            yield return new object[] { new MultiPolygon(new Polygon[] { new Polygon(new CoordinateList(_coordinatesXYZ)), new Polygon(new CoordinateList(_coordinatesXYZ)) }),
                 "multipolygon z (((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5)),((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5)))" };
-            yield return new object[] { new MultiPolygon(new Polygon[] { new(new CoordinateList(_coordinatesXYZM)), new(new CoordinateList(_coordinatesXYZM)) }),
+            yield return new object[] { new MultiPolygon(new Polygon[] { new Polygon(new CoordinateList(_coordinatesXYZM)), new Polygon(new CoordinateList(_coordinatesXYZM)) }),
                 "multipolygon zm (((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5)),((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5)))" };
         }
     }
@@ -298,7 +298,7 @@ public class WktWriterTests
     public void Write_WritesCollectionWithAllGeometryTypes()
     {
         string wkt = "geometrycollection (point (-10.1 15.5),linestring (-10.1 15.5, 20.2 -25.5, 30.3 35.5),polygon ((-10.1 15.5, 20.2 -25.5, 30.3 35.5)),multipoint empty,multilinestring empty,multipolygon empty)";
-        GeometryCollection<Geometry> collection = new();
+        GeometryCollection<Geometry> collection = new GeometryCollection<Geometry>();
         collection.Geometries.Add(new Point(_coordinatesXY[0]));
         collection.Geometries.Add(new LineString(_coordinatesXY));
         collection.Geometries.Add(new Polygon(new CoordinateList(_coordinatesXY)));
@@ -313,8 +313,8 @@ public class WktWriterTests
     public void Write_WritesNestedCollection()
     {
         string wkt = "geometrycollection (geometrycollection (point (-10.1 15.5)))";
-        GeometryCollection<Geometry> collection = new();
-        GeometryCollection<Geometry> nested = new();
+        GeometryCollection<Geometry> collection = new GeometryCollection<Geometry>();
+        GeometryCollection<Geometry> nested = new GeometryCollection<Geometry>();
         nested.Geometries.Add(new Point(_coordinatesXY[0]));
         collection.Geometries.Add(nested);
 
@@ -323,8 +323,8 @@ public class WktWriterTests
 
     private void TestWriteGeometry(IGeometry geometry, string expectedWkt)
     {
-        MemoryStream stream = new();
-        using (WktWriter writer = new(stream, new WktWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WktWriter writer = new WktWriter(stream, new WktWriterSettings()))
         {
             writer.Write(geometry);
         }

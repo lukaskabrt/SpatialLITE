@@ -10,7 +10,7 @@ public class WkbWriterSettingsTests
     [Fact]
     public void Constructor__SetsDefaultValues()
     {
-        WkbWriterSettings target = new();
+        WkbWriterSettings target = new WkbWriterSettings();
 
         Assert.Equal(BinaryEncoding.LittleEndian, target.Encoding);
     }
@@ -18,7 +18,7 @@ public class WkbWriterSettingsTests
     [Fact]
     public void UseDenseFormatSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
     {
-        WkbWriterSettings target = new();
+        WkbWriterSettings target = new WkbWriterSettings();
         target.IsReadOnly = true;
 
         Assert.Throws<InvalidOperationException>(() => target.Encoding = BinaryEncoding.BigEndian);

@@ -138,7 +138,7 @@ internal class EntityInfoBuffer<T> : IStringTableBuilder, IEnumerable<T> where T
     /// <returns>The StringTable object with data from the buffer.</returns>
     public StringTable BuildStringTable()
     {
-        StringTable result = new();
+        StringTable result = new StringTable();
         result.Storage = new List<byte[]>(_stringTable.Count);
         for (int i = 0; i < _stringTable.Count; i++)
         {

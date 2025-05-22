@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.IO;
-
-using Xunit;
-
-using SpatialLite.Osm;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
+using System;
+using System.IO;
+using System.Linq;
 using Tests.SpatialLite.Osm.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.IO;
 
@@ -15,10 +13,10 @@ public class PbfReaderTests
     //resolution for default granularity
     private const double _resolution = 1E-07;
 
-    private EntityMetadata _details;
-    private NodeInfo _node, _nodeTags, _nodeProperties;
-    private WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
-    private RelationInfo _relationNode, _relationWay, _relationRelation, _relationProperties, _relationTags;
+    private readonly EntityMetadata _details;
+    private readonly NodeInfo _node, _nodeTags, _nodeProperties;
+    private readonly WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
+    private readonly RelationInfo _relationNode, _relationWay, _relationRelation, _relationProperties, _relationTags;
 
     public PbfReaderTests()
     {

@@ -1,7 +1,6 @@
 ﻿using SpatialLite.Osm.IO;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -36,9 +35,9 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
     /// <returns>New instance of the OsmDatabase class with data loaded from specified reader.</returns>
     public static OsmGeometryDatabase Load(IOsmReader reader, bool ignoreReferentialErrors)
     {
-        OsmGeometryDatabase db = new();
+        OsmGeometryDatabase db = new OsmGeometryDatabase();
 
-        List<RelationInfo> relations = new();
+        List<RelationInfo> relations = new List<RelationInfo>();
 
         IEntityInfo entityInfo;
         while ((entityInfo = reader.Read()) != null)
@@ -52,7 +51,7 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
                     {
                         if (!ignoreReferentialErrors)
                         {
-                            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Way (ID = {0}) references missing node.", entityInfo.ID));
+                            throw new ArgumentException(string.Format("Way (ID = {0}) references missing node.", entityInfo.ID));
                         }
                     }
                     else
@@ -80,7 +79,7 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
                 {
                     if (!ignoreReferentialErrors)
                     {
-                        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Relation (ID = {0}) references missing OSM entity.", memberInfo.Reference));
+                        throw new ArgumentException(string.Format("Relation (ID = {0}) references missing OSM entity.", memberInfo.Reference));
                     }
 
                     db.Relations.Remove(relation);

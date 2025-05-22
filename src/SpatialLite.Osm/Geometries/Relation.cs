@@ -73,7 +73,7 @@ public class Relation : GeometryCollection<RelationMember>, IOsmGeometry
     /// <returns>The Relation object created from RelationInfo or null if referenced entity is missing.</returns>
     public static Relation FromRelationInfo(RelationInfo info, IEntityCollection<IOsmGeometry> entities, bool throwOnMissing)
     {
-        Relation result = new(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
+        Relation result = new Relation(info.ID) { Tags = info.Tags, Metadata = info.Metadata };
 
         result.Geometries.Capacity = info.Members.Count;
         foreach (var memberInfo in info.Members)

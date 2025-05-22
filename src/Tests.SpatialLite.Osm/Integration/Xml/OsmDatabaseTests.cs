@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SpatialLite.Osm;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
 using SpatialLite.Osm.IO;
 using Tests.SpatialLite.Osm.Data;

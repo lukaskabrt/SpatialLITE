@@ -12,7 +12,7 @@ namespace SpatialLite.Osm.IO.Pbf;
 public class StringTable
 {
 
-    private List<byte[]> _s = new();
+    private List<byte[]> _s = new List<byte[]>();
 
     /// <summary>
     /// Gets or sets collection of strings serialized as byte array.

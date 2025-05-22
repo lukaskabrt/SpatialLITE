@@ -137,7 +137,7 @@ public class OsmXmlReader : IOsmReader
             additionalInfo = ReadMetadata();
         }
 
-        NodeInfo result = new(nodeId, nodeLat, nodeLon, new TagsCollection(), additionalInfo);
+        NodeInfo result = new NodeInfo(nodeId, nodeLat, nodeLon, new TagsCollection(), additionalInfo);
 
         if (_xmlReader.IsEmptyElement == false)
         {
@@ -180,7 +180,7 @@ public class OsmXmlReader : IOsmReader
             additionalInfo = ReadMetadata();
         }
 
-        WayInfo way = new(wayId, new TagsCollection(), new List<long>(), additionalInfo);
+        WayInfo way = new WayInfo(wayId, new TagsCollection(), new List<long>(), additionalInfo);
 
         if (_xmlReader.IsEmptyElement == false)
         {
@@ -254,7 +254,7 @@ public class OsmXmlReader : IOsmReader
             additionalInfo = ReadMetadata();
         }
 
-        RelationInfo relation = new(relationId, new TagsCollection(), new List<RelationMemberInfo>(), additionalInfo);
+        RelationInfo relation = new RelationInfo(relationId, new TagsCollection(), new List<RelationMemberInfo>(), additionalInfo);
 
         if (false == _xmlReader.IsEmptyElement)
         {
@@ -362,7 +362,7 @@ public class OsmXmlReader : IOsmReader
     /// <returns>Metadata of the entity read from the reader.</returns>
     private EntityMetadata ReadMetadata()
     {
-        EntityMetadata result = new();
+        EntityMetadata result = new EntityMetadata();
 
         // version
         string attVersion = _xmlReader.GetAttribute("version");
@@ -456,7 +456,7 @@ public class OsmXmlReader : IOsmReader
     /// </summary>
     private void InitializeReader()
     {
-        Sys.XmlReaderSettings xmlReaderSettings = new();
+        Sys.XmlReaderSettings xmlReaderSettings = new Sys.XmlReaderSettings();
         xmlReaderSettings.IgnoreComments = true;
         xmlReaderSettings.IgnoreProcessingInstructions = true;
         xmlReaderSettings.IgnoreWhitespace = true;

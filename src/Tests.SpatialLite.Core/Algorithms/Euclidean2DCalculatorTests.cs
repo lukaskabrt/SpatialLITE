@@ -23,7 +23,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(CoordinatesSameXYOrdinates))]
     public void ComputeDistance_CoordinateCoordinate_ReturnsZeroForPointsWithSameXYCoordinates(Coordinate c1, Coordinate c2)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c1, c2);
 
@@ -44,7 +44,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(CoordinatesDistanceTestData))]
     public void ComputeDistance_CoordinateCoordinate_ReturnsDistanceBetweenCoordinates(Coordinate c1, Coordinate c2, double expectedDistance)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c1, c2);
 
@@ -54,7 +54,7 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeDistance_CoordinateCoordinate_IgnoresZOrdinate()
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(new Coordinate(-1, 0, 100), new Coordinate(1, 0, -100));
 
@@ -64,12 +64,12 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeDistance_CoordinateLineLineSegmentMode_ReturnsDistanceToEndPointsIfPointsProjectionLiesOutsideSegment()
     {
-        Coordinate A = new(1, 1);
-        Coordinate B = new(-1, -1);
-        Coordinate c1 = new(1, 2);
-        Coordinate c2 = new(-1, -2);
+        Coordinate A = new Coordinate(1, 1);
+        Coordinate B = new Coordinate(-1, -1);
+        Coordinate c1 = new Coordinate(1, 2);
+        Coordinate c2 = new Coordinate(-1, -2);
 
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distanceC1 = target.CalculateDistance(c1, A, B, LineMode.LineSegment);
         Assert.Equal(1, distanceC1);
@@ -92,7 +92,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(LineSegmentDistanceTestData))]
     public void ComputeDistance_CoordinateLineLineSegmentMode_ComputesPerpendicularDistanceToLineIfPointsProjectionLiesInside(Coordinate c, Coordinate A, Coordinate B, double expectedDistance)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.LineSegment);
         Assert.Equal(expectedDistance, distance);
@@ -112,7 +112,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(LineSegmentDistanceZeroDistanceTestData))]
     public void ComputeDistance_CoordinateLineLineSegmentMode_ReturnsZeroIfPointLiesOnLineSegment(Coordinate c, Coordinate A, Coordinate B)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.LineSegment);
         Assert.Equal(0, distance);
@@ -121,11 +121,11 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeDistance_CoordinateLineLineSegmentMode_ReturnsPointDistanceIfABAreEquals()
     {
-        Coordinate A = new(1, 1);
-        Coordinate B = new(1, 1);
-        Coordinate c = new(1, 2);
+        Coordinate A = new Coordinate(1, 1);
+        Coordinate B = new Coordinate(1, 1);
+        Coordinate c = new Coordinate(1, 2);
 
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.LineSegment);
         Assert.Equal(1, distance);
@@ -134,11 +134,11 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeDistance_CoordinateLineLineMode_ReturnsPointDistanceIfABAreEquals()
     {
-        Coordinate A = new(1, 1);
-        Coordinate B = new(1, 1);
-        Coordinate c = new(1, 2);
+        Coordinate A = new Coordinate(1, 1);
+        Coordinate B = new Coordinate(1, 1);
+        Coordinate c = new Coordinate(1, 2);
 
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.Line);
         Assert.Equal(1, distance);
@@ -158,7 +158,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(LineDistanceZeroDistanceTestData))]
     public void ComputeDistance_CoordinateLineLineMode_ReturnsZeroIfPointLiesOnLine(Coordinate c, Coordinate A, Coordinate B)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.Line);
         Assert.Equal(0, distance);
@@ -178,7 +178,7 @@ public class Euclidean2DCalculatorTests
     [MemberData(nameof(LineDistanceTestData))]
     public void ComputeDistance_CoordinateLineLineMode_ComputesPerpendicularDistanceToLine(Coordinate c, Coordinate A, Coordinate B, double expectedDistance)
     {
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double distance = target.CalculateDistance(c, A, B, LineMode.Line);
         Assert.Equal(expectedDistance, distance);
@@ -187,9 +187,9 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeArea_ThrowsExceptionIfNumberOfVerticesIsLesserThen3()
     {
-        Mock<ICoordinateList> listM = new();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
         listM.SetupGet(l => l.Count).Returns(2);
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         Assert.Throws<ArgumentException>(() => target.CalculateArea(listM.Object));
     }
@@ -197,17 +197,17 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeArea_ReturnsAreaOfConvexPolygon()
     {
-        Coordinate[] coordinates = new Coordinate[] { new(1, 1), new(2, 0.5), new(3, 1), new(3, 2), new(1, 2) };
+        Coordinate[] coordinates = new Coordinate[] { new Coordinate(1, 1), new Coordinate(2, 0.5), new Coordinate(3, 1), new Coordinate(3, 2), new Coordinate(1, 2) };
         double expectedArea = 2.5;
 
-        Mock<ICoordinateList> listM = new();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
         listM.SetupGet(list => list.Count).Returns(5);
         listM.Setup(list => list[0]).Returns(coordinates[0]);
         listM.Setup(list => list[1]).Returns(coordinates[1]);
         listM.Setup(list => list[2]).Returns(coordinates[2]);
         listM.Setup(list => list[3]).Returns(coordinates[3]);
         listM.Setup(list => list[4]).Returns(coordinates[4]);
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double area = target.CalculateArea(listM.Object);
         Assert.Equal(expectedArea, area);
@@ -216,17 +216,17 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeArea_ReturnsAreaOfConcavePolygon()
     {
-        Coordinate[] coordinates = new Coordinate[] { new(1, 1), new(2, 1.5), new(3, 1), new(3, 2), new(1, 2) };
+        Coordinate[] coordinates = new Coordinate[] { new Coordinate(1, 1), new Coordinate(2, 1.5), new Coordinate(3, 1), new Coordinate(3, 2), new Coordinate(1, 2) };
         double expectedArea = 1.5;
 
-        Mock<ICoordinateList> listM = new();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
         listM.SetupGet(list => list.Count).Returns(5);
         listM.Setup(list => list[0]).Returns(coordinates[0]);
         listM.Setup(list => list[1]).Returns(coordinates[1]);
         listM.Setup(list => list[2]).Returns(coordinates[2]);
         listM.Setup(list => list[3]).Returns(coordinates[3]);
         listM.Setup(list => list[4]).Returns(coordinates[4]);
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double area = target.CalculateArea(listM.Object);
         Assert.Equal(expectedArea, area);
@@ -235,10 +235,10 @@ public class Euclidean2DCalculatorTests
     [Fact]
     public void ComputeArea_ReturnsCorrectAreaIfLastCoordinateIsSameAsFirst()
     {
-        Coordinate[] coordinates = new Coordinate[] { new(1, 1), new(2, 0.5), new(3, 1), new(3, 2), new(1, 2), new(1, 1) };
+        Coordinate[] coordinates = new Coordinate[] { new Coordinate(1, 1), new Coordinate(2, 0.5), new Coordinate(3, 1), new Coordinate(3, 2), new Coordinate(1, 2), new Coordinate(1, 1) };
         double expectedArea = 2.5;
 
-        Mock<ICoordinateList> listM = new();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
         listM.SetupGet(list => list.Count).Returns(6);
         listM.Setup(list => list[0]).Returns(coordinates[0]);
         listM.Setup(list => list[1]).Returns(coordinates[1]);
@@ -246,7 +246,7 @@ public class Euclidean2DCalculatorTests
         listM.Setup(list => list[3]).Returns(coordinates[3]);
         listM.Setup(list => list[4]).Returns(coordinates[4]);
         listM.Setup(list => list[5]).Returns(coordinates[5]);
-        Euclidean2DCalculator target = new();
+        Euclidean2DCalculator target = new Euclidean2DCalculator();
 
         double area = target.CalculateArea(listM.Object);
         Assert.Equal(expectedArea, area);

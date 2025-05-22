@@ -54,7 +54,7 @@ public class GpxDocument
     /// <param name="path">Path to the file.</param>
     public void Save(string path)
     {
-        using (GpxWriter writer = new(path, new GpxWriterSettings() { WriteMetadata = true }))
+        using (GpxWriter writer = new GpxWriter(path, new GpxWriterSettings() { WriteMetadata = true }))
         {
             Save(writer);
         }
@@ -112,9 +112,9 @@ public class GpxDocument
     /// <returns>GpxDocument instance with data from GPX file</returns>
     public static GpxDocument Load(string path)
     {
-        GpxDocument result = new();
+        GpxDocument result = new GpxDocument();
 
-        using (GpxReader reader = new(path, new GpxReaderSettings() { ReadMetadata = true }))
+        using (GpxReader reader = new GpxReader(path, new GpxReaderSettings() { ReadMetadata = true }))
         {
             result.LoadFromReader(reader);
         }
@@ -134,7 +134,7 @@ public class GpxDocument
             throw new ArgumentNullException(nameof(reader));
         }
 
-        GpxDocument result = new();
+        GpxDocument result = new GpxDocument();
         result.LoadFromReader(reader);
         return result;
     }

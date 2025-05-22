@@ -36,7 +36,7 @@ public class OsmXmlWriter : IOsmWriter
         _output = stream;
         _ownsOutputStream = false;
 
-        XmlWriterSettings writerSetting = new();
+        XmlWriterSettings writerSetting = new XmlWriterSettings();
         writerSetting.Indent = true;
 
         _writer = XmlWriter.Create(stream, writerSetting);
@@ -56,7 +56,7 @@ public class OsmXmlWriter : IOsmWriter
         _output = new FileStream(path, FileMode.Create, FileAccess.Write);
         _ownsOutputStream = true;
 
-        XmlWriterSettings writerSetting = new();
+        XmlWriterSettings writerSetting = new XmlWriterSettings();
         writerSetting.Indent = true;
 
         _streamWriter = new StreamWriter(_output, new UTF8Encoding(false));

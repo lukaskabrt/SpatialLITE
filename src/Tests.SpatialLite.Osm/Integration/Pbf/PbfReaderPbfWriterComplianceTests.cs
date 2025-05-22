@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-using Xunit;
-
-using SpatialLite.Osm;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
+using System.Collections.Generic;
+using System.IO;
 using Tests.SpatialLite.Osm.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.Integration.Pbf;
 

@@ -16,8 +16,8 @@ public class WkbWriterTests
     [Fact]
     public void Construcotor_StreamSettings_SetsSettingsAndMakeThemReadOnly()
     {
-        WkbWriterSettings settings = new();
-        using (WkbWriter target = new(new MemoryStream(), settings))
+        WkbWriterSettings settings = new WkbWriterSettings();
+        using (WkbWriter target = new WkbWriter(new MemoryStream(), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -40,8 +40,8 @@ public class WkbWriterTests
     [Fact]
     public void Construcotor_PathSettings_SetsSettingsAndMakeThemReadOnly()
     {
-        WkbWriterSettings settings = new();
-        using (WkbWriter target = new(new MemoryStream(), settings))
+        WkbWriterSettings settings = new WkbWriterSettings();
+        using (WkbWriter target = new WkbWriter(new MemoryStream(), settings))
         {
             Assert.Same(settings, target.Settings);
             Assert.True(settings.IsReadOnly);
@@ -53,8 +53,8 @@ public class WkbWriterTests
     {
         string filename = PathHelper.GetTempFilePath("wkbwriter-constructor-creates-output-test.bin");
 
-        WkbWriterSettings settings = new();
-        using (WkbWriter target = new(filename, settings))
+        WkbWriterSettings settings = new WkbWriterSettings();
+        using (WkbWriter target = new WkbWriter(filename, settings))
         {
             ;
         }
@@ -80,7 +80,7 @@ public class WkbWriterTests
     [Fact]
     public void Constructor_ThrowsExceptionIfEncodingIsSetToBingEndian()
     {
-        MemoryStream stream = new();
+        MemoryStream stream = new MemoryStream();
         Assert.Throws<NotSupportedException>(() => new WkbWriter(stream, new WkbWriterSettings() { Encoding = BinaryEncoding.BigEndian }));
     }
 
@@ -89,19 +89,19 @@ public class WkbWriterTests
     {
         string filename = PathHelper.GetTempFilePath("wkbwriter-closes-output-filestream-test.bin");
 
-        WkbWriterSettings settings = new();
-        WkbWriter target = new(filename, settings);
+        WkbWriterSettings settings = new WkbWriterSettings();
+        WkbWriter target = new WkbWriter(filename, settings);
         target.Dispose();
-        FileStream testStream = new(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
     [Fact]
     public void Dispose_ClosesOutputStreamIfWritingToStream()
     {
-        MemoryStream stream = new();
+        MemoryStream stream = new MemoryStream();
 
-        WkbWriter target = new(stream, new WkbWriterSettings());
+        WkbWriter target = new WkbWriter(stream, new WkbWriterSettings());
         target.Dispose();
 
         Assert.False(stream.CanRead);
@@ -110,8 +110,8 @@ public class WkbWriterTests
     [Fact]
     public void WkbWriter_Write_WritesLittleEndianEncodingByte()
     {
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings() { Encoding = BinaryEncoding.LittleEndian }))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings() { Encoding = BinaryEncoding.LittleEndian }))
         {
             target.Write(new Point());
 
@@ -125,8 +125,8 @@ public class WkbWriterTests
         string wkt = "point empty";
         Point point = (Point)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(point);
 
@@ -140,8 +140,8 @@ public class WkbWriterTests
         string wkt = "point (-10.1 15.5)";
         Point point = (Point)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(point);
 
@@ -155,8 +155,8 @@ public class WkbWriterTests
         string wkt = "point m (-10.1 15.5 1000.5)";
         Point point = (Point)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(point);
 
@@ -170,8 +170,8 @@ public class WkbWriterTests
         string wkt = "point z (-10.1 15.5 100.5)";
         Point point = (Point)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(point);
 
@@ -185,8 +185,8 @@ public class WkbWriterTests
         string wkt = "point zm (-10.1 15.5 100.5 1000.5)";
         Point point = (Point)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(point);
 
@@ -200,8 +200,8 @@ public class WkbWriterTests
         string wkt = "linestring empty";
         LineString linestring = (LineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(linestring);
 
@@ -215,8 +215,8 @@ public class WkbWriterTests
         string wkt = "linestring (-10.1 15.5, 20.2 -25.5, 30.3 35.5)";
         LineString linestring = (LineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(linestring);
 
@@ -230,8 +230,8 @@ public class WkbWriterTests
         string wkt = "linestring m (-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)";
         LineString linestring = (LineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(linestring);
 
@@ -245,8 +245,8 @@ public class WkbWriterTests
         string wkt = "linestring z (-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5)";
         LineString linestring = (LineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(linestring);
 
@@ -260,7 +260,7 @@ public class WkbWriterTests
         string wkt = "linestring zm (-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5)";
         LineString linestring = (LineString)ParseWKT(wkt);
 
-        MemoryStream stream = new(); using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream(); using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(linestring);
 
@@ -274,8 +274,8 @@ public class WkbWriterTests
         string wkt = "polygon empty";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -289,8 +289,8 @@ public class WkbWriterTests
         string wkt = "polygon ((-10.1 15.5, 20.2 -25.5, 30.3 35.5))";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -304,8 +304,8 @@ public class WkbWriterTests
         string wkt = "polygon m ((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5))";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -319,8 +319,8 @@ public class WkbWriterTests
         string wkt = "polygon z ((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5))";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -334,8 +334,8 @@ public class WkbWriterTests
         string wkt = "polygon zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5))";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -349,8 +349,8 @@ public class WkbWriterTests
         string wkt = "polygon zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5),(-1.1 1.5 10.5 100.5, 2.2 -2.5 20.5 200.5, 3.3 3.5 -30.5 -300.5))";
         Polygon polygon = (Polygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(polygon);
 
@@ -364,8 +364,8 @@ public class WkbWriterTests
         string wkt = "multipoint empty";
         MultiPoint multipoint = (MultiPoint)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipoint);
 
@@ -379,8 +379,8 @@ public class WkbWriterTests
         string wkt = "multipoint ((-10.1 15.5),(20.2 -25.5))";
         MultiPoint multipoint = (MultiPoint)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipoint);
 
@@ -394,8 +394,8 @@ public class WkbWriterTests
         string wkt = "multipoint m ((-10.1 15.5 1000.5),(20.2 -25.5 2000.5))";
         MultiPoint multipoint = (MultiPoint)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipoint);
 
@@ -409,8 +409,8 @@ public class WkbWriterTests
         string wkt = "multipoint z ((-10.1 15.5 100.5),(20.2 -25.5 200.5))";
         MultiPoint multipoint = (MultiPoint)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipoint);
 
@@ -424,8 +424,8 @@ public class WkbWriterTests
         string wkt = "multipoint zm ((-10.1 15.5 100.5 1000.5),(20.2 -25.5 200.5 2000.5))";
         MultiPoint multipoint = (MultiPoint)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipoint);
 
@@ -439,8 +439,8 @@ public class WkbWriterTests
         string wkt = "multilinestring empty";
         MultiLineString multilinestring = (MultiLineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multilinestring);
 
@@ -454,8 +454,8 @@ public class WkbWriterTests
         string wkt = "multilinestring ((-10.1 15.5, 20.2 -25.5, 30.3 35.5),(-10.1 15.5, 20.2 -25.5, 30.3 35.5))";
         MultiLineString multilinestring = (MultiLineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multilinestring);
 
@@ -469,8 +469,8 @@ public class WkbWriterTests
         string wkt = "multilinestring m ((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5),(-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5))";
         MultiLineString multilinestring = (MultiLineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multilinestring);
 
@@ -484,8 +484,8 @@ public class WkbWriterTests
         string wkt = "multilinestring z ((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5),(-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5))";
         MultiLineString multilinestring = (MultiLineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multilinestring);
 
@@ -499,8 +499,8 @@ public class WkbWriterTests
         string wkt = "multilinestring zm ((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5),(-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5))";
         MultiLineString multilinestring = (MultiLineString)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multilinestring);
 
@@ -514,8 +514,8 @@ public class WkbWriterTests
         string wkt = "multipolygon empty";
         MultiPolygon multipolygon = (MultiPolygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipolygon);
 
@@ -529,8 +529,8 @@ public class WkbWriterTests
         string wkt = "multipolygon (((-10.1 15.5, 20.2 -25.5, 30.3 35.5)),((-10.1 15.5, 20.2 -25.5, 30.3 35.5)))";
         MultiPolygon multipolygon = (MultiPolygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipolygon);
 
@@ -544,8 +544,8 @@ public class WkbWriterTests
         string wkt = "multipolygon m (((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)),((-10.1 15.5 1000.5, 20.2 -25.5 2000.5, 30.3 35.5 -3000.5)))";
         MultiPolygon multipolygon = (MultiPolygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipolygon);
 
@@ -559,8 +559,8 @@ public class WkbWriterTests
         string wkt = "multipolygon z (((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5)),((-10.1 15.5 100.5, 20.2 -25.5 200.5, 30.3 35.5 -300.5)))";
         MultiPolygon multipolygon = (MultiPolygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipolygon);
 
@@ -574,8 +574,8 @@ public class WkbWriterTests
         string wkt = "multipolygon zm (((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5)),((-10.1 15.5 100.5 1000.5, 20.2 -25.5 200.5 2000.5, 30.3 35.5 -300.5 -3000.5)))";
         MultiPolygon multipolygon = (MultiPolygon)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(multipolygon);
 
@@ -589,8 +589,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection empty";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -604,8 +604,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection (point (-10.1 15.5))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -619,8 +619,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection m (point m (-10.1 15.5 1000.5))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -634,8 +634,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection z (point z (-10.1 15.5 100.5))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -649,8 +649,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection zm (point zm (-10.1 15.5 100.5 1000.5))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -664,8 +664,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection (point (-10.1 15.5),linestring (-10.1 15.5, 20.2 -25.5, 30.3 35.5),polygon ((-10.1 15.5, 20.2 -25.5, 30.3 35.5)))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -679,8 +679,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection (multipoint empty,multilinestring empty,multipolygon empty)";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 
@@ -694,8 +694,8 @@ public class WkbWriterTests
         string wkt = "geometrycollection (geometrycollection (point (-10.1 15.5)))";
         GeometryCollection<Geometry> collection = (GeometryCollection<Geometry>)ParseWKT(wkt);
 
-        MemoryStream stream = new();
-        using (WkbWriter target = new(stream, new WkbWriterSettings()))
+        MemoryStream stream = new MemoryStream();
+        using (WkbWriter target = new WkbWriter(stream, new WkbWriterSettings()))
         {
             target.Write(collection);
 

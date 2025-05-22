@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Xunit;
-
-using SpatialLite.Core.API;
+﻿using SpatialLite.Core.API;
 using SpatialLite.Osm.Geometries;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.Geometries;
 
 public class WayCoordinateListTests
 {
-    List<Node> _nodes = new(new Node[] {
+    private readonly List<Node> _nodes = new(new Node[] {
         new(5, 1.1, 2.2),
         new(6, 10.1, -20.2),
         new(7, -30.1, 40.2) });

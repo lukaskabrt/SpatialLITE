@@ -1,17 +1,15 @@
-﻿using System;
-using System.Linq;
-
-using Xunit;
-using Moq;
-
+﻿using Moq;
 using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
+using System;
+using System.Linq;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm;
 
 public class EntityCollectionTests
 {
-    IOsmGeometry[] _data;
+    private readonly IOsmGeometry[] _data;
 
     public EntityCollectionTests()
     {

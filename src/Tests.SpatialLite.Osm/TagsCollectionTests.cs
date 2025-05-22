@@ -1,22 +1,20 @@
-﻿using System;
+﻿using SpatialLite.Osm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Xunit;
-
-using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm;
 
 public class TagsCollectionTests
 {
-    Tag[] _tags = new Tag[] {
+    private readonly Tag[] _tags = new Tag[] {
         new("test-key-1", "test-value-1"),
         new("test-key-2", "test-value-2"),
         new("test-key-3", "test-value-3")
     };
 
-    Tag[] _tagsDuplicitKeys = new Tag[] {
+    private readonly Tag[] _tagsDuplicitKeys = new Tag[] {
         new("test-key-1", "test-value-1"),
         new("test-key-1", "test-value-2")
     };

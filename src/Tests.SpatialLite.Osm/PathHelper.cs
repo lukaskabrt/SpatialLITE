@@ -2,18 +2,18 @@
 
 namespace Tests.SpatialLite.Osm;
 
-static class PathHelper
+internal static class PathHelper
 {
     private const string TempDirectoryName = "Temp";
 
-    private static string _osmosisPath = Path.GetFullPath(Path.Combine("Utils", "Osmosis", "bin", "osmosis.bat"));
+    private static readonly string _osmosisPath = Path.GetFullPath(Path.Combine("Utils", "Osmosis", "bin", "osmosis.bat"));
     public static string OsmosisPath => _osmosisPath;
 
-    private static string _realXmlFilePath = Path.GetFullPath(Path.Combine("Data", "Xml", "osm-real-file.osm"));
+    private static readonly string _realXmlFilePath = Path.GetFullPath(Path.Combine("Data", "Xml", "osm-real-file.osm"));
     public static string RealXmlFilePath => _realXmlFilePath;
 
 
-    private static string _realPbfFilePath = Path.GetFullPath(Path.Combine("Data", "Pbf", "pbf-real-file.pbf"));
+    private static readonly string _realPbfFilePath = Path.GetFullPath(Path.Combine("Data", "Pbf", "pbf-real-file.pbf"));
     public static string RealPbfFilePath => _realPbfFilePath;
 
     public static string GetTempFilePath(string filename)

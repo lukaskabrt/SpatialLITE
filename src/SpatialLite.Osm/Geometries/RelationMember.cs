@@ -2,7 +2,6 @@
 using SpatialLite.Core.Geometries;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace SpatialLite.Osm.Geometries;
 
@@ -105,7 +104,7 @@ public class RelationMember : Geometry
         {
             if (throwOnMissing)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Referenced Entity (ID = {0}, type = {1}) not found in entities collection.", info.Reference, info.MemberType), "info.Reference");
+                throw new ArgumentException(string.Format("Referenced Entity (ID = {0}, type = {1}) not found in entities collection.", info.Reference, info.MemberType), "info.Reference");
             }
             else
             {
@@ -113,7 +112,7 @@ public class RelationMember : Geometry
             }
         }
 
-        RelationMember result = new(entities[info.Reference, info.MemberType], info.Role) { MemberType = info.MemberType };
+        RelationMember result = new RelationMember(entities[info.Reference, info.MemberType], info.Role) { MemberType = info.MemberType };
         if (result.Member.EntityType != info.MemberType)
         {
             throw new ArgumentException("Type of the referenced entity doesn't match type of the entity in the collection.");

@@ -7,13 +7,13 @@ namespace Tests.SpatialLite.Core.IO;
 
 public class WktTokensBufferTests
 {
-    private readonly WktToken[] _testData = new WktToken[] {new() {Type = TokenType.STRING, Value = "point"}, new() {Type = TokenType.WHITESPACE, Value=" "},
-        new() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
+    private readonly WktToken[] _testData = new WktToken[] {new WktToken() {Type = TokenType.STRING, Value = "point"}, new WktToken() {Type = TokenType.WHITESPACE, Value=" "},
+        new WktToken() {Type = TokenType.LEFT_PARENTHESIS, Value = "("}};
 
     [Fact]
     public void Constructor__CreatesEmptyBuffer()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
 
         Assert.Empty(target);
     }
@@ -21,7 +21,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Constructor_TextReader_CreatesBufferWithSpecificTokens()
     {
-        WktTokensBuffer target = new(_testData);
+        WktTokensBuffer target = new WktTokensBuffer(_testData);
 
         Assert.Equal(_testData.Length, target.Count());
         for (int i = 0; i < _testData.Length; i++)
@@ -33,7 +33,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Count_GetsNumberOfItemsInBufffer()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData);
 
         Assert.Equal(_testData.Length, target.Count);
@@ -42,7 +42,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Add_WktToken_AddsItemToTheCollection()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData[0]);
 
         Assert.Single(target);
@@ -52,7 +52,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Add_IEnumerable_AddsItemsToTheCollection()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData);
 
         Assert.Equal(_testData.Length, target.Count());
@@ -65,7 +65,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Clear_RemovesAllItemsFromCollection()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData);
 
         target.Clear();
@@ -76,7 +76,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Peek_IgnoreWhitespace_GetsNextTokenFromBufferAndLeavesItThere()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData[0]);
 
         var result = target.Peek(false);
@@ -88,7 +88,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Peek_IgnoreWhitespace_IgnoresWhitespacesBeforeTokenIfIgnoreTokenIsTrue()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
         target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
         target.Add(_testData[0]);
@@ -102,8 +102,8 @@ public class WktTokensBufferTests
     [Fact]
     public void Peek_IgnoreWhitespace_ReturnsWhitespaceIfIgnoreWhitespaceIsFalseAndNextTokenIsWhitespace()
     {
-        WktToken whitespaceToken = new() { Type = TokenType.WHITESPACE, Value = " " };
-        WktTokensBuffer target = new();
+        WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(whitespaceToken);
         target.Add(_testData[0]);
 
@@ -116,7 +116,7 @@ public class WktTokensBufferTests
     [Fact]
     public void Peek_IgnoreWhitespace_ReturnsEndOfDataTokenIfNoMoreTokensAreAvailable()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
 
         var result = target.Peek(false);
 
@@ -126,8 +126,8 @@ public class WktTokensBufferTests
     [Fact]
     public void Peek_IgnoreWhitespace_ReturnsEndOfDataTokenIfOnlyWhitespaceTokensAreAvailalbleAndIgnoreWhitespaceIsTrue()
     {
-        WktToken whitespaceToken = new() { Type = TokenType.WHITESPACE, Value = " " };
-        WktTokensBuffer target = new();
+        WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(whitespaceToken);
 
         var result = target.Peek(true);
@@ -138,7 +138,7 @@ public class WktTokensBufferTests
     [Fact]
     public void GetToken_IgnoreWhitespace_GetsNextTokenFromBufferAndRemoveIt()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(_testData[0]);
 
         var result = target.GetToken(false);
@@ -150,7 +150,7 @@ public class WktTokensBufferTests
     [Fact]
     public void GetToken_IgnoreWhitespace_IgnoresWhitespacesBeforeTokenIfIgnoreTokenIsTrue()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
         target.Add(new WktToken() { Type = TokenType.WHITESPACE, Value = " " });
         target.Add(_testData[0]);
@@ -164,8 +164,8 @@ public class WktTokensBufferTests
     [Fact]
     public void GetToken_IgnoreWhitespace_ReturnsWhitespaceIfIgnoreWhitespaceIsFalseAndNextTokenIsWhitespace()
     {
-        WktToken whitespaceToken = new() { Type = TokenType.WHITESPACE, Value = " " };
-        WktTokensBuffer target = new();
+        WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(whitespaceToken);
         target.Add(_testData[0]);
 
@@ -178,7 +178,7 @@ public class WktTokensBufferTests
     [Fact]
     public void GetToken_IgnoreWhitespace_ReturnsEndOfDataTokenIfNoMoreTokensAreAvailable()
     {
-        WktTokensBuffer target = new();
+        WktTokensBuffer target = new WktTokensBuffer();
 
         var result = target.GetToken(false);
 
@@ -188,8 +188,8 @@ public class WktTokensBufferTests
     [Fact]
     public void GetToken_IgnoreWhitespace_ReturnsEndOfDataTokenIfOnlyWhitespaceTokensAreAvailalbleAndIgnoreWhitespaceIsTrue()
     {
-        WktToken whitespaceToken = new() { Type = TokenType.WHITESPACE, Value = " " };
-        WktTokensBuffer target = new();
+        WktToken whitespaceToken = new WktToken() { Type = TokenType.WHITESPACE, Value = " " };
+        WktTokensBuffer target = new WktTokensBuffer();
         target.Add(whitespaceToken);
 
         var result = target.GetToken(true);

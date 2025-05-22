@@ -7,27 +7,27 @@ namespace Tests.SpatialLite.Core.API;
 public class EnvelopeTests
 {
     private readonly Coordinate[] _coordinates = new Coordinate[] {
-            new(1, 10, 100, 1000),
-            new(0, 0, 0, 0),
-            new(-1, -10, -100, -1000)
+            new Coordinate(1, 10, 100, 1000),
+            new Coordinate(0, 0, 0, 0),
+            new Coordinate(-1, -10, -100, -1000)
     };
-    private Coordinate _insideCoordinate = new(0.5, 0.5, 0.5, 0.5);
-    private Coordinate _lowerValues = new(-2, -20, -200, -2000);
-    private Coordinate _higherValues = new(2, 20, 200, 2000);
+    private Coordinate _insideCoordinate = new Coordinate(0.5, 0.5, 0.5, 0.5);
+    private Coordinate _lowerValues = new Coordinate(-2, -20, -200, -2000);
+    private Coordinate _higherValues = new Coordinate(2, 20, 200, 2000);
     private readonly double[] _expectedBounds = new double[] { -1, 1, -10, 10, -100, 100, -1000, 1000 };
 
     public static IEnumerable<object[]> _XYZEnvelopeDifferentBounds
     {
         get
         {
-            yield return new object[] { new Coordinate[] { new(1 + 1, 2, 100, 1000), new(5, 6, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2 + 1, 100, 1000), new(5, 6, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100 + 1, 1000), new(5, 6, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100, 1000 + 1), new(5, 6, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100, 1000), new(5 + 1, 6, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100, 1000), new(5, 6 + 1, 200, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100, 1000), new(5, 6, 200 + 1, 2000) } };
-            yield return new object[] { new Coordinate[] { new(1, 2, 100, 1000), new(5, 6, 200, 2000 + 1) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1 + 1, 2, 100, 1000), new Coordinate(5, 6, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2 + 1, 100, 1000), new Coordinate(5, 6, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100 + 1, 1000), new Coordinate(5, 6, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100, 1000 + 1), new Coordinate(5, 6, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100, 1000), new Coordinate(5 + 1, 6, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100, 1000), new Coordinate(5, 6 + 1, 200, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100, 1000), new Coordinate(5, 6, 200 + 1, 2000) } };
+            yield return new object[] { new Coordinate[] { new Coordinate(1, 2, 100, 1000), new Coordinate(5, 6, 200, 2000 + 1) } };
         }
     }
 
@@ -46,7 +46,7 @@ public class EnvelopeTests
     [Fact]
     public void Constructor__InitializesBoundsToNaNValues()
     {
-        Envelope target = new();
+        Envelope target = new Envelope();
 
         Assert.Equal(double.NaN, target.MinX);
         Assert.Equal(double.NaN, target.MaxX);
@@ -61,7 +61,7 @@ public class EnvelopeTests
     [Fact]
     public void Constructor_Coordinate_InitializesXYZProperties()
     {
-        Envelope target = new(_coordinates[0]);
+        Envelope target = new Envelope(_coordinates[0]);
 
         CheckBoundaries(target, _coordinates[0].X, _coordinates[0].X, _coordinates[0].Y, _coordinates[0].Y, _coordinates[0].Z, _coordinates[0].Z, _coordinates[0].M, _coordinates[0].M);
     }
@@ -69,9 +69,9 @@ public class EnvelopeTests
     [Fact]
     public void Constructor_IEnumerableCoordinate_SetsMinMaxValues()
     {
-        Envelope source = new(_coordinates);
+        Envelope source = new Envelope(_coordinates);
 
-        Envelope target = new(source);
+        Envelope target = new Envelope(source);
 
         CheckBoundaries(target, _expectedBounds[0], _expectedBounds[1], _expectedBounds[2], _expectedBounds[3],
             _expectedBounds[4], _expectedBounds[5], _expectedBounds[6], _expectedBounds[7]);
@@ -80,9 +80,9 @@ public class EnvelopeTests
     [Fact]
     public void Constructor_Envelope_CopiesMinMaxValues()
     {
-        Envelope source = new(_coordinates);
+        Envelope source = new Envelope(_coordinates);
 
-        Envelope target = new(source);
+        Envelope target = new Envelope(source);
 
         CheckBoundaries(target, _expectedBounds[0], _expectedBounds[1], _expectedBounds[2], _expectedBounds[3],
             _expectedBounds[4], _expectedBounds[5], _expectedBounds[6], _expectedBounds[7]);
@@ -91,7 +91,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Coordinate_SetsMinMaxValuesOnEmptyEnvelope()
     {
-        Envelope target = new();
+        Envelope target = new Envelope();
         target.Extend(_coordinates[0]);
 
         CheckBoundaries(target, _coordinates[0].X, _coordinates[0].X, _coordinates[0].Y, _coordinates[0].Y,
@@ -101,7 +101,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Coordinate_DoNothingIfCoordinateIsEmpty()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(Coordinate.Empty);
 
@@ -112,7 +112,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Coordinate_ExtendsEnvelopeToLowerValues()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(_lowerValues);
 
@@ -122,7 +122,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Coordinate_ExtendsEnvelopeToHigherValues()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(_higherValues);
 
@@ -132,7 +132,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Coordinate_DoNothingForCoordinateInsideEnvelope()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(_insideCoordinate);
 
@@ -143,7 +143,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_IEnumerableCoordinate_SetsMinMaxValuesOnEmptyEnvelope()
     {
-        Envelope target = new();
+        Envelope target = new Envelope();
 
         target.Extend(_coordinates);
 
@@ -154,7 +154,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_IEnumerableCoordinate_DoNothingForEmptyCollection()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(new Coordinate[] { });
 
@@ -165,7 +165,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_IEnumerableCoordinate_ExtendsEnvelope()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(new Coordinate[] { _lowerValues, _higherValues });
 
@@ -175,7 +175,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Envelope_SetsMinMaxValuesOnEmptyEnvelope()
     {
-        Envelope target = new();
+        Envelope target = new Envelope();
 
         target.Extend(new Envelope(_coordinates));
 
@@ -186,7 +186,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Envelope_DoNothingIfEnvelopeIsInsideTargetEnvelope()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(new Envelope(_coordinates[1]));
 
@@ -197,7 +197,7 @@ public class EnvelopeTests
     [Fact]
     public void Extend_Envelope_ExtendsEnvelope()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         target.Extend(new Envelope(new Coordinate[] { _lowerValues, _higherValues }));
 
@@ -207,7 +207,7 @@ public class EnvelopeTests
     [Fact]
     public void Equals_ReturnsTrueForSameObjectInstance()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
 
         Assert.True(target.Equals(target));
     }
@@ -215,8 +215,8 @@ public class EnvelopeTests
     [Fact]
     public void Equals_ReturnsTrueForTheEnvelopeWithTheSameBounds()
     {
-        Envelope target = new(_coordinates);
-        Envelope other = new(target);
+        Envelope target = new Envelope(_coordinates);
+        Envelope other = new Envelope(target);
 
         Assert.True(target.Equals(other));
     }
@@ -224,7 +224,7 @@ public class EnvelopeTests
     [Fact]
     public void Equals_ReturnsFalseForNull()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
         object other = null;
 
         Assert.False(target.Equals(other));
@@ -233,7 +233,7 @@ public class EnvelopeTests
     [Fact]
     public void Equals_ReturnsFalseForOtherObjectType()
     {
-        Envelope target = new(_coordinates);
+        Envelope target = new Envelope(_coordinates);
         object other = "string";
 
         Assert.False(target.Equals(other));
@@ -243,8 +243,8 @@ public class EnvelopeTests
     [MemberData(nameof(_XYZEnvelopeDifferentBounds))]
     public void Equals_ReturnsFalseForTheEnvelopeWithDifferentBounds(Coordinate[] corners)
     {
-        Envelope target = new(_coordinates);
-        Envelope other = new(corners);
+        Envelope target = new Envelope(_coordinates);
+        Envelope other = new Envelope(corners);
 
         Assert.False(target.Equals(other));
     }

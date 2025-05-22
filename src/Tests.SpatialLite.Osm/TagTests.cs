@@ -1,8 +1,6 @@
-﻿using System;
-
+﻿using SpatialLite.Osm;
+using System;
 using Xunit;
-
-using SpatialLite.Osm;
 
 namespace Tests.SpatialLite.Osm;
 

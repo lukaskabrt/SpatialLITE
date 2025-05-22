@@ -1,6 +1,5 @@
 ﻿using SpatialLite.Gps.Geometries;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -11,6 +10,9 @@ namespace SpatialLite.Gps.IO;
 /// </summary>
 public class GpxReader : IGpxReader, IDisposable
 {
+
+    private readonly System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+
     private bool _disposed = false;
     private XmlReader _xmlReader;
 
@@ -99,15 +101,15 @@ public class GpxReader : IGpxReader, IDisposable
         string latValue = _xmlReader.GetAttribute("lat");
         if (string.IsNullOrEmpty(latValue))
             throw new InvalidDataException("Requested attribute 'lat' not found.");
-        double lat = double.Parse(latValue, CultureInfo.InvariantCulture);
+        double lat = double.Parse(latValue, _invariantCulture);
 
         string lonValue = _xmlReader.GetAttribute("lon");
         if (string.IsNullOrEmpty(lonValue))
             throw new InvalidDataException("Requested attribute 'lon' not found.");
-        double lon = double.Parse(lonValue, CultureInfo.InvariantCulture);
+        double lon = double.Parse(lonValue, _invariantCulture);
 
         double ele = double.NaN;
-        DateTime timestamp = new();
+        DateTime timestamp = new DateTime();
 
         GpxPointMetadata metadata = null;
         if (Settings.ReadMetadata)
@@ -126,14 +128,14 @@ public class GpxReader : IGpxReader, IDisposable
                 if (_xmlReader.Name == "ele")
                 {
                     string eleValue = _xmlReader.ReadElementContentAsString();
-                    ele = double.Parse(eleValue, CultureInfo.InvariantCulture);
+                    ele = double.Parse(eleValue, _invariantCulture);
                     elementParsed = true;
                 }
 
                 if (_xmlReader.Name == "time")
                 {
                     string timeValue = _xmlReader.ReadElementContentAsString();
-                    timestamp = DateTime.ParseExact(timeValue, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture);
+                    timestamp = DateTime.ParseExact(timeValue, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", _invariantCulture);
                     elementParsed = true;
                 }
 
@@ -150,7 +152,7 @@ public class GpxReader : IGpxReader, IDisposable
         }
         _xmlReader.Skip();
 
-        GpxPoint result = new(lon, lat, ele, timestamp);
+        GpxPoint result = new GpxPoint(lon, lat, ele, timestamp);
         result.Metadata = metadata;
 
         return result;
@@ -162,7 +164,7 @@ public class GpxReader : IGpxReader, IDisposable
     /// <returns>the track parsed form the XmlReader</returns>
     private GpxTrack ReadTrack()
     {
-        GpxTrack result = new();
+        GpxTrack result = new GpxTrack();
 
         if (_xmlReader.IsEmptyElement == false)
         {
@@ -208,7 +210,7 @@ public class GpxReader : IGpxReader, IDisposable
     /// <returns>the track parsed from the XmlReader</returns>
     private GpxTrackSegment ReadTrackSegment()
     {
-        GpxTrackSegment result = new();
+        GpxTrackSegment result = new GpxTrackSegment();
 
         if (_xmlReader.IsEmptyElement == false)
         {
@@ -238,7 +240,7 @@ public class GpxReader : IGpxReader, IDisposable
     /// <returns>the route parsed from the XmlReader</returns>
     private GpxRoute ReadRoute()
     {
-        GpxRoute result = new();
+        GpxRoute result = new GpxRoute();
 
         if (_xmlReader.IsEmptyElement == false)
         {
@@ -283,7 +285,7 @@ public class GpxReader : IGpxReader, IDisposable
     /// </summary>
     private void InitializeReader()
     {
-        XmlReaderSettings xmlReaderSettings = new();
+        XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
         xmlReaderSettings.IgnoreComments = true;
         xmlReaderSettings.IgnoreProcessingInstructions = true;
         xmlReaderSettings.IgnoreWhitespace = true;
@@ -302,7 +304,7 @@ public class GpxReader : IGpxReader, IDisposable
 
                 string version = _xmlReader.GetAttribute("version");
                 if (version == null || (version != "1.0" && version != "1.1"))
-                    throw new InvalidDataException(string.Format(CultureInfo.InvariantCulture, "Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
+                    throw new InvalidDataException(string.Format("Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
 
                 _insideGpx = true;
 
@@ -394,28 +396,28 @@ public class GpxReader : IGpxReader, IDisposable
                 metadata.Links.Add(ReadLink()); return true;
             case "magvar":
                 string magvarValue = _xmlReader.ReadElementContentAsString();
-                metadata.MagVar = double.Parse(magvarValue, CultureInfo.InvariantCulture); return true;
+                metadata.MagVar = double.Parse(magvarValue, _invariantCulture); return true;
             case "geoidheight":
                 string geoidHeightValue = _xmlReader.ReadElementContentAsString();
-                metadata.GeoidHeight = double.Parse(geoidHeightValue, CultureInfo.InvariantCulture); return true;
+                metadata.GeoidHeight = double.Parse(geoidHeightValue, _invariantCulture); return true;
             case "hdop":
                 string HdopValue = _xmlReader.ReadElementContentAsString();
-                metadata.Hdop = double.Parse(HdopValue, CultureInfo.InvariantCulture); return true;
+                metadata.Hdop = double.Parse(HdopValue, _invariantCulture); return true;
             case "vdop":
                 string vdopValue = _xmlReader.ReadElementContentAsString();
-                metadata.Vdop = double.Parse(vdopValue, CultureInfo.InvariantCulture); return true;
+                metadata.Vdop = double.Parse(vdopValue, _invariantCulture); return true;
             case "pdop":
                 string pdopValue = _xmlReader.ReadElementContentAsString();
-                metadata.Pdop = double.Parse(pdopValue, CultureInfo.InvariantCulture); return true;
+                metadata.Pdop = double.Parse(pdopValue, _invariantCulture); return true;
             case "ageofdgpsdata":
                 string ageValue = _xmlReader.ReadElementContentAsString();
-                metadata.AgeOfDgpsData = double.Parse(ageValue, CultureInfo.InvariantCulture); return true;
+                metadata.AgeOfDgpsData = double.Parse(ageValue, _invariantCulture); return true;
             case "sat":
                 string satValue = _xmlReader.ReadElementContentAsString();
-                metadata.SatellitesCount = int.Parse(satValue, CultureInfo.InvariantCulture); return true;
+                metadata.SatellitesCount = int.Parse(satValue, _invariantCulture); return true;
             case "dgpsid":
                 string dgpsidValue = _xmlReader.ReadElementContentAsString();
-                metadata.DgpsId = int.Parse(dgpsidValue, CultureInfo.InvariantCulture); return true;
+                metadata.DgpsId = int.Parse(dgpsidValue, _invariantCulture); return true;
             case "fix":
                 string fixValue = _xmlReader.ReadElementContentAsString();
                 metadata.Fix = GpxFixHelper.ParseGpsFix(fixValue); return true;

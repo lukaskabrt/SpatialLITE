@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-
-using Xunit;
-
-using SpatialLite.Osm;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
-using Tests.SpatialLite.Osm.Data;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using Tests.SpatialLite.Osm.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.Integration.Xml;
 

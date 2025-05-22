@@ -14,23 +14,23 @@ public class WktReaderTests
 {
 
     private readonly Coordinate[] _coordinatesXY = new Coordinate[] {
-            new(-10.1, 15.5), new(20.2, -25.5), new(30.3, 35.5)
+            new Coordinate(-10.1, 15.5), new Coordinate(20.2, -25.5), new Coordinate(30.3, 35.5)
     };
 
     private readonly Coordinate[] _coordinatesXYZ = new Coordinate[] {
-            new(-10.1, 15.5, 100.5), new(20.2, -25.5, 200.5), new(30.3, 35.5, -300.5)
+            new Coordinate(-10.1, 15.5, 100.5), new Coordinate(20.2, -25.5, 200.5), new Coordinate(30.3, 35.5, -300.5)
     };
 
     private readonly Coordinate[] _coordinatesXYM = new Coordinate[] {
-            new(-10.1, 15.5, double.NaN, 1000.5), new(20.2, -25.5, double.NaN, 2000.5), new(30.3, 35.5, double.NaN, -3000.5)
+            new Coordinate(-10.1, 15.5, double.NaN, 1000.5), new Coordinate(20.2, -25.5, double.NaN, 2000.5), new Coordinate(30.3, 35.5, double.NaN, -3000.5)
     };
 
     private readonly Coordinate[] _coordinatesXYZM = new Coordinate[] {
-            new(-10.1, 15.5, 100.5, 1000.5), new(20.2, -25.5, 200.5, 2000.5), new(30.3, 35.5, -300.5, -3000.5)
+            new Coordinate(-10.1, 15.5, 100.5, 1000.5), new Coordinate(20.2, -25.5, 200.5, 2000.5), new Coordinate(30.3, 35.5, -300.5, -3000.5)
     };
 
     private readonly Coordinate[] _coordinates2XYZM = new Coordinate[] {
-            new(-1.1, 1.5, 10.5, 100.5), new(2.2, -2.5, 20.5, 200.5), new(3.3, 3.5, -30.5, -300.5)
+            new Coordinate(-1.1, 1.5, 10.5, 100.5), new Coordinate(2.2, -2.5, 20.5, 200.5), new Coordinate(3.3, 3.5, -30.5, -300.5)
     };
 
     [Fact]
@@ -51,9 +51,9 @@ public class WktReaderTests
     {
         string filename = "../../../Data/IO/wkt-point-3DM.wkt";
 
-        WktReader target = new(filename);
+        WktReader target = new WktReader(filename);
         target.Dispose();
-        FileStream testStream = new(filename, FileMode.Open, FileAccess.ReadWrite);
+        FileStream testStream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite);
         testStream.Dispose();
     }
 
@@ -62,7 +62,7 @@ public class WktReaderTests
     {
         var stream = TestDataReader.Open("wkt-point-3DM.wkt");
 
-        WktReader target = new(stream);
+        WktReader target = new WktReader(stream);
         target.Dispose();
 
         Assert.False(stream.CanRead);
@@ -85,7 +85,7 @@ public class WktReaderTests
     [MemberData(nameof(Read_ReadsAllGeometryTypesTestData))]
     public void Read_ReadsAllGeometryTypes(byte[] data)
     {
-        using (WktReader target = new(new MemoryStream(data)))
+        using (WktReader target = new WktReader(new MemoryStream(data)))
         {
             IGeometry readGeometry = target.Read();
             Assert.NotNull(readGeometry);
@@ -95,7 +95,7 @@ public class WktReaderTests
     [Fact]
     public void Read_ReturnsNullIfStreamIsEmpty()
     {
-        using (WktReader target = new(new MemoryStream()))
+        using (WktReader target = new WktReader(new MemoryStream()))
         {
             IGeometry readGeometry = target.Read();
 
@@ -106,7 +106,7 @@ public class WktReaderTests
     [Fact]
     public void Read_ReturnsNullIfNoMoreGeometriesAreAvailableInInputStream()
     {
-        using (WktReader target = new(TestDataReader.Open("wkt-point-3DM.wkt")))
+        using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt")))
         {
             target.Read();
             IGeometry readGeometry = target.Read();
@@ -118,7 +118,7 @@ public class WktReaderTests
     [Fact]
     public void Read_ReadsMultipleGeometries()
     {
-        using (WktReader target = new(TestDataReader.Open("wkt-point-and-linestring-3DM.wkt")))
+        using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-and-linestring-3DM.wkt")))
         {
             IGeometry readGeometry = target.Read();
             Assert.True(readGeometry is Point);
@@ -131,7 +131,7 @@ public class WktReaderTests
     [Fact]
     public void ReadT_ReadsGeometry()
     {
-        using (WktReader target = new(TestDataReader.Open("wkt-point-3DM.wkt")))
+        using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt")))
         {
             Point read = target.Read<Point>();
             Assert.NotNull(read);
@@ -141,7 +141,7 @@ public class WktReaderTests
     [Fact]
     public void ReadT_ReturnsNullIfStreamIsEmpty()
     {
-        using (WktReader target = new(new MemoryStream()))
+        using (WktReader target = new WktReader(new MemoryStream()))
         {
             IGeometry readGeometry = target.Read<Point>();
 
@@ -152,7 +152,7 @@ public class WktReaderTests
     [Fact]
     public void ReadT_ThrowsExceptionIfWKTDoesNotRepresentGeometryOfSpecificType()
     {
-        using (WktReader target = new(TestDataReader.Open("wkt-point-3DM.wkt")))
+        using (WktReader target = new WktReader(TestDataReader.Open("wkt-point-3DM.wkt")))
         {
             Assert.Throws<WktParseException>(target.Read<LineString>);
         }

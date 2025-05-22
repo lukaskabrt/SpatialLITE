@@ -1,6 +1,4 @@
 ﻿using Xunit;
-
-using SpatialLite.Core;
 using SpatialLite.Core.API;
 using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;

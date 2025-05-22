@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xunit;
-using Moq;
-
-using SpatialLite.Osm.Geometries;
+﻿using Moq;
 using SpatialLite.Osm;
+using SpatialLite.Osm.Geometries;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.Geometries;
 
 public class RelationTests
 {
-    RelationInfo _relationEmptyInfo = new(100, new TagsCollection(), new List<RelationMemberInfo>(), new EntityMetadata());
-    RelationInfo _relationInfo = new(100, new TagsCollection(), new RelationMemberInfo[] { new() { Reference = 1, MemberType = EntityType.Node } }, new EntityMetadata());
+    private readonly RelationInfo _relationEmptyInfo = new(100, new TagsCollection(), new List<RelationMemberInfo>(), new EntityMetadata());
+    private readonly RelationInfo _relationInfo = new(100, new TagsCollection(), new RelationMemberInfo[] { new() { Reference = 1, MemberType = EntityType.Node } }, new EntityMetadata());
 
-    IEntityCollection<IOsmGeometry> _nodesEntityCollection;
+    private readonly IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
     public RelationTests()
     {

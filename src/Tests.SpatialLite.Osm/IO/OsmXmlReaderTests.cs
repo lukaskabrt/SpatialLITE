@@ -1,21 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.IO;
-using System.Xml;
-
-using Xunit;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.IO;
-using SpatialLite.Osm;
+using System;
+using System.IO;
+using System.Linq;
+using System.Xml;
 using Tests.SpatialLite.Osm.Data;
+using Xunit;
 
 namespace Tests.SpatialLite.Osm.IO;
 
 public class OsmXmlReaderTests
 {
-    private EntityMetadata _details;
-    private NodeInfo _node, _nodeTags, _nodeProperties;
-    private WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
-    private RelationInfo _relationNode, _relationWay, _relationRelation, _relationTags, _relationProperties, _relationWithoutMembers;
+    private readonly EntityMetadata _details;
+    private readonly NodeInfo _node, _nodeTags, _nodeProperties;
+    private readonly WayInfo _way, _wayTags, _wayProperties, _wayWithoutNodes;
+    private readonly RelationInfo _relationNode, _relationWay, _relationRelation, _relationTags, _relationProperties, _relationWithoutMembers;
 
     public OsmXmlReaderTests()
     {
