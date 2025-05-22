@@ -1,9 +1,11 @@
-﻿using Xunit;
+﻿
+
 using SpatialLite.Core.API;
 using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
+using Xunit;
 
-namespace Tests.SpatialLite.Osm.Geometry;
+namespace Tests.SpatialLite.Osm.Geometries;
 
 public class NodeTests
 {
