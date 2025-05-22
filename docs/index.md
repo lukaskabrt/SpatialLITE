@@ -1,6 +1,6 @@
 <div class="jumbotron">
   <h1>SpatialLITE</h1>
-  <p>lightweight .NET 8 library for spatial data processing</p>
+  <p>lightweight .NET library for spatial data processing</p>
   <p>
     <a class="btn btn-primary btn-lg" href="articles/index.md" role="button"><span class="glyphicon glyphicon-send"></span> Getting started</a>
     <a class="btn btn-primary btn-lg" href="api/index.md" role="button"><span class="glyphicon glyphicon-book"></span> API reference</a>
