@@ -155,10 +155,16 @@ namespace SpatialLite.Core.IO {
 		private static Coordinate ReadCoordinate(BinaryReader reader, bool is3D, bool isMeasured) {
 			double x = reader.ReadDouble();
 			double y = reader.ReadDouble();
-			double z = is3D ? reader.ReadDouble() : double.NaN;
-			double m = isMeasured ? reader.ReadDouble() : double.NaN;
+			
+			// Skip Z and M coordinates if they exist in the binary data
+			if (is3D) {
+				reader.ReadDouble(); // Skip Z
+			}
+			if (isMeasured) {
+				reader.ReadDouble(); // Skip M
+			}
 
-			return new Coordinate(x, y, z, m);
+			return new Coordinate(x, y);
 		}
 
 		/// <summary>

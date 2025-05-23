@@ -30,28 +30,6 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the this <see cref="GeometryCollection{T}"/>"/> has Z ordinates set.
-		/// </summary>
-		/// <remarks>
-		/// Is3D returns <c>true</c> if any of the geometries contained in this <c>GeometryCollection</c> has Z ordinate set.
-		/// </remarks>
-		public override bool Is3D {
-			get {
-				return _geometries.Any(geometry => geometry.Is3D);
-			}
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="Geometry"/> has M values.
-		/// </summary>
-		/// <remarks>
-		/// IsMeasured returns <c>true</c> if any of the geometries in this <c>GeometryCollection</c> has M value set.
-		/// </remarks>
-		public override bool IsMeasured {
-			get { return _geometries.Any(c => c.IsMeasured); }
-		}
-
-		/// <summary>
 		/// Gets the list of IGeometry objects in this collection
 		/// </summary>
 		public List<T> Geometries {

@@ -4,9 +4,6 @@ namespace SpatialLite.Core.API {
     /// <summary>
     /// Represents a location in the coordinate space.
     /// </summary>
-    /// <remarks>
-    /// A Coordinate may include a M value. The M value allows an application to associate some measure with the <c>Coordinate</c>. 
-    /// </remarks>
     public struct Coordinate : IEquatable<Coordinate> {
 
 		/// <summary>
@@ -15,7 +12,7 @@ namespace SpatialLite.Core.API {
 		/// <remarks>
 		/// The empty coordinate has all coordinates equal to NaN.
 		/// </remarks>
-		public static Coordinate Empty = new Coordinate(double.NaN, double.NaN, double.NaN, double.NaN);
+		public static Coordinate Empty = new Coordinate(double.NaN, double.NaN);
 
 		/// <summary>
 		/// Initializes a new instance of the <c>Coordinate</c> struct with X, Y ordinates.
@@ -25,35 +22,6 @@ namespace SpatialLite.Core.API {
 		public Coordinate(double x, double y) {
 			X = x;
 			Y = y;
-			Z = double.NaN;
-			M = double.NaN;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Coordinate</c> struct with X, Y, Z ordinates.
-		/// </summary>
-		/// <param name="x">X-coordinate value.</param>
-		/// <param name="y">Y-coordinate value.</param>
-		/// <param name="z">Z-coordinate value.</param>
-		public Coordinate(double x, double y, double z) {
-			X = x;
-			Y = y;
-			Z = z;
-			M = double.NaN;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Coordinate</c> struct with X, Y, Z ordinates and M value.
-		/// </summary>
-		/// <param name="x">X-coordinate value.</param>
-		/// <param name="y">Y-coordinate value.</param>
-		/// <param name="z">Z-coordinate value.</param>
-		/// <param name="m">Measured value associated with the Coordinate.</param>
-		public Coordinate(double x, double y, double z, double m) {
-			X = x;
-			Y = y;
-			Z = z;
-			M = m;
 		}
 
         /// <summary>
@@ -65,34 +33,6 @@ namespace SpatialLite.Core.API {
         /// Gets the Y-coordinate
         /// </summary>
         public double Y { get; set; }
-
-        /// <summary>
-        /// Gets the Z-coordinate
-        /// </summary>
-        public double Z { get; set; }
-
-        /// <summary>
-        /// Gets the M value
-        /// </summary>
-        public double M { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this coordinate has assigned <see cref="Coordinate.Z"/> coordinate.
-        /// </summary>
-        public bool Is3D {
-			get {
-				return !double.IsNaN(this.Z);
-			}
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this coordinate has assigned <see cref="Coordinate.M"/> value.
-		/// </summary>
-		public bool IsMeasured {
-			get {
-				return !double.IsNaN(this.M);
-			}
-		}
 
 		/// <summary>
 		/// Determiens whether specific Coordinates values are equal
@@ -119,7 +59,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		/// <returns>A <c>string</c> that represents the current <c>Coordinate</c></returns>
 		public override string ToString() {
-			return string.Format(System.Globalization.CultureInfo.InvariantCulture, "[{0}; {1}; {2}, {3}]", this.X, this.Y, this.Z, this.M);
+			return string.Format(System.Globalization.CultureInfo.InvariantCulture, "[{0}; {1}]", this.X, this.Y);
 		}
 
 		/// <summary>
@@ -143,9 +83,7 @@ namespace SpatialLite.Core.API {
 		/// <returns>true if the specified  <c>Coordinate</c> is equal to the current <c>Coordinate</c>; otherwise, false.</returns>
 		public bool Equals(Coordinate other) {
 			return ((this.X == other.X) || (double.IsNaN(this.X) && double.IsNaN(other.X))) &&
-				((this.Y == other.Y) || (double.IsNaN(this.Y) && double.IsNaN(other.Y))) &&
-				((this.Z == other.Z) || (double.IsNaN(this.Z) && double.IsNaN(other.Z))) &&
-				((this.M == other.M) || (double.IsNaN(this.M) && double.IsNaN(other.M)));
+				((this.Y == other.Y) || (double.IsNaN(this.Y) && double.IsNaN(other.Y)));
 		}
 
 		/// <summary>
@@ -153,7 +91,7 @@ namespace SpatialLite.Core.API {
 		/// </summary>
 		/// <returns>Hash code for current Coordinate value.</returns>
 		public override int GetHashCode() {
-			return X.GetHashCode() + 7 * Y.GetHashCode() + 13 * Z.GetHashCode() + 17 * M.GetHashCode();
+			return X.GetHashCode() + 7 * Y.GetHashCode();
 		}
 
 		/// <summary>

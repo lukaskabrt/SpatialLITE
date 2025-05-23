@@ -28,26 +28,6 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the this <see cref="LineString"/> has Z-coordinates set.
-		/// </summary>
-		/// <remarks>
-		/// Is3D returns <c>true</c> if any of the coordinates in this <c>LineString</c> has Z-coordinate set.
-		/// </remarks>
-		public override bool Is3D {
-			get { return _coordinates.Any(c => c.Is3D); }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="Geometry"/> has M values.
-		/// </summary>
-		/// <remarks>
-		/// IsMeasured returns <c>true</c> if any of the coordinates in this <c>LineString</c> has M value set.
-		/// </remarks>
-		public override bool IsMeasured {
-			get { return _coordinates.Any(c => c.IsMeasured); }
-		}
-
-		/// <summary>
 		/// Gets the list of çoordinates that define this LisneString
 		/// </summary>
 		public virtual ICoordinateList Coordinates {

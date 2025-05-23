@@ -146,14 +146,6 @@ namespace SpatialLite.Core.IO {
 		private static void WriteCoordinate(Coordinate coordinate, BinaryWriter writer) {
 			writer.Write(coordinate.X);
 			writer.Write(coordinate.Y);
-
-			if (coordinate.Is3D) {
-				writer.Write(coordinate.Z);
-			}
-
-			if (coordinate.IsMeasured) {
-				writer.Write(coordinate.M);
-			}
 		}
 
 		/// <summary>
@@ -283,17 +275,7 @@ namespace SpatialLite.Core.IO {
 		/// <param name="baseType">WkbGeometryType for the 2D, non-measured version of the geometry object.</param>
 		/// <returns>The WkbGeometryType of the geometry object.</returns>
 		private static WkbGeometryType AdjustGeometryType(IGeometry geometry, WkbGeometryType baseType) {
-			WkbGeometryType result = baseType;
-
-			if (geometry.Is3D) {
-				result += 1000;
-			}
-
-			if (geometry.IsMeasured) {
-				result += 2000;
-			}
-
-			return result;
+			return baseType;
 		}
 
 		/// <summary>
