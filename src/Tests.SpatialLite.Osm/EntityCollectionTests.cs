@@ -1,201 +1,224 @@
-﻿using System;
-using System.Linq;
-
-using Xunit;
-using Moq;
-
+﻿using Moq;
 using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
+using System;
+using System.Linq;
+using Xunit;
 
-namespace Tests.SpatialLite.Osm {
-    public class EntityCollectionTests {
-		IOsmGeometry[] _data;
+namespace Tests.SpatialLite.Osm;
 
-		public EntityCollectionTests() {
-			_data = new IOsmGeometry[3];
-			_data[0] = new Node(1);
-			_data[1] = new Node(2);
-			_data[2] = new Node(3);
-		}
+public class EntityCollectionTests
+{
+    private readonly IOsmGeometry[] _data;
 
-		[Fact]
-		public void Constructor__CreatesEmptyCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+    public EntityCollectionTests()
+    {
+        _data = new IOsmGeometry[3];
+        _data[0] = new Node(1);
+        _data[1] = new Node(2);
+        _data[2] = new Node(3);
+    }
 
-			Assert.Empty(target);
-		}
+    [Fact]
+    public void Constructor__CreatesEmptyCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        Assert.Empty(target);
+    }
 
-			for (int i = 0; i < _data.Length; i++) {
-				Assert.Contains(_data[i], target);
-			}
-		}
+    [Fact]
+    public void Constructor_IEnumerable_CreatesCollectionWithSpecifiedItems()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Count_ReturnsNumberOfElements() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
-			Mock<IOsmGeometry> entityM = new Mock<IOsmGeometry>();
+        for (int i = 0; i < _data.Length; i++)
+        {
+            Assert.Contains(_data[i], target);
+        }
+    }
 
-			Assert.Equal(_data.Length, target.Count);
-		}
+    [Fact]
+    public void Count_ReturnsNumberOfElements()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
+        Mock<IOsmGeometry> entityM = new();
 
-		[Fact]
-		public void Contains_IOsmGeometry_ReturnsFalseForEmptyCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+        Assert.Equal(_data.Length, target.Count);
+    }
 
-			Assert.DoesNotContain(_data[0], target);
-		}
+    [Fact]
+    public void Contains_IOsmGeometry_ReturnsFalseForEmptyCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Contains_IOsmGeometry_ReturnsFalseForNull() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+        Assert.DoesNotContain(_data[0], target);
+    }
 
-			Assert.DoesNotContain(null, target);
-		}
+    [Fact]
+    public void Contains_IOsmGeometry_ReturnsFalseForNull()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainEntity() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
+        Assert.DoesNotContain(null, target);
+    }
 
-			Assert.DoesNotContain(_data[0], target);
-		}
+    [Fact]
+    public void Contains_IOsmGeometry_ReturnsFalseIfCollectionDoesNotContainEntity()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data.Skip(1));
 
-		[Fact]
-		public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsEntity() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        Assert.DoesNotContain(_data[0], target);
+    }
 
-			Assert.Contains(_data[0], target);
-		}
+    [Fact]
+    public void Contains_IOsmGeometry_ReturnsTrueIfCollectionContainsEntity()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Contains_ID_ReturnsFalseForEmptyCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+        Assert.Contains(_data[0], target);
+    }
 
-			Assert.False(target.Contains(_data[0].ID));
-		}
+    [Fact]
+    public void Contains_ID_ReturnsFalseForEmptyCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainEntity() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
+        Assert.False(target.Contains(_data[0].ID));
+    }
 
-			Assert.False(target.Contains(_data[0].ID));
-		}
+    [Fact]
+    public void Contains_ID_ReturnsFalseIfCollectionDoesNotContainEntity()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data.Skip(1));
 
-		[Fact]
-		public void Contains_ID_ReturnsTrueIfCollectionContainsEntity() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        Assert.False(target.Contains(_data[0].ID));
+    }
 
-			Assert.True(target.Contains(_data[0].ID));
-		}
+    [Fact]
+    public void Contains_ID_ReturnsTrueIfCollectionContainsEntity()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Clear_RemovesAllItemsFromCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
-			target.Clear();
+        Assert.True(target.Contains(_data[0].ID));
+    }
 
-			Assert.Empty(target);
-		}
+    [Fact]
+    public void Clear_RemovesAllItemsFromCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
+        target.Clear();
 
-		[Fact]
-		public void Add_AddsEntityToCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
-			target.Add(_data[0]);
+        Assert.Empty(target);
+    }
 
-			Assert.Contains(_data[0], target);
-		}
+    [Fact]
+    public void Add_AddsEntityToCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new();
+        target.Add(_data[0]);
 
-		[Fact]
-		public void Add_ThrowsArgumentNullExceptionIfItemIsNull() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+        Assert.Contains(_data[0], target);
+    }
 
-			Assert.Throws<ArgumentNullException>(() => target.Add(null));
-		}
+    [Fact]
+    public void Add_ThrowsArgumentNullExceptionIfItemIsNull()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Add_ThrowsExceptionWhenAddingDuplicateID() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        Assert.Throws<ArgumentNullException>(() => target.Add(null));
+    }
 
-			Assert.Throws<ArgumentException>(() => target.Add(_data[0]));
-		}
+    [Fact]
+    public void Add_ThrowsExceptionWhenAddingDuplicateID()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void IsReadOnly_ReturnsFalse() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>();
+        Assert.Throws<ArgumentException>(() => target.Add(_data[0]));
+    }
 
-			Assert.False(target.IsReadOnly);
-		}
+    [Fact]
+    public void IsReadOnly_ReturnsFalse()
+    {
+        EntityCollection<IOsmGeometry> target = new();
 
-		[Fact]
-		public void Remove_IOsmGeometry_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
+        Assert.False(target.IsReadOnly);
+    }
 
-			bool callResult = target.Remove(_data[0]);
+    [Fact]
+    public void Remove_IOsmGeometry_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data.Skip(1));
 
-			Assert.False(callResult);
-			Assert.Contains(_data[1], target);
-			Assert.Contains(_data[2], target);
-		}
+        bool callResult = target.Remove(_data[0]);
 
-		[Fact]
-		public void Remove_IOsmGeometry_ReturnsFalseIfItemIsNull() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
-			
-			bool callResult = target.Remove(null);
+        Assert.False(callResult);
+        Assert.Contains(_data[1], target);
+        Assert.Contains(_data[2], target);
+    }
 
-			Assert.False(callResult);
-		}
+    [Fact]
+    public void Remove_IOsmGeometry_ReturnsFalseIfItemIsNull()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Remove_IOsmGeometry_ReturnsTrueAndRemovesItemFromCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        bool callResult = target.Remove(null);
 
-			bool callResult = target.Remove(_data[0]);
+        Assert.False(callResult);
+    }
 
-			Assert.True(callResult);
-			Assert.DoesNotContain(_data[0], target);
-			Assert.Contains(_data[1], target);
-			Assert.Contains(_data[2], target);
-		}
+    [Fact]
+    public void Remove_IOsmGeometry_ReturnsTrueAndRemovesItemFromCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data.Skip(1));
+        bool callResult = target.Remove(_data[0]);
 
-			bool callResult = target.Remove(_data[0].ID);
+        Assert.True(callResult);
+        Assert.DoesNotContain(_data[0], target);
+        Assert.Contains(_data[1], target);
+        Assert.Contains(_data[2], target);
+    }
 
-			Assert.False(callResult);
-			Assert.Contains(_data[1], target);
-			Assert.Contains(_data[2], target);
-		}
+    [Fact]
+    public void Remove_ID_ReturnsFalseAndDoesntModifyCollectionIfItemIsNotPresent()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data.Skip(1));
 
-		[Fact]
-		public void Remove_ID_ReturnsTrueAndRemovesItemFromCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        bool callResult = target.Remove(_data[0].ID);
 
-			bool callResult = target.Remove(_data[0].ID);
+        Assert.False(callResult);
+        Assert.Contains(_data[1], target);
+        Assert.Contains(_data[2], target);
+    }
 
-			Assert.True(callResult);
-			Assert.DoesNotContain(_data[0], target);
-			Assert.Contains(_data[1], target);
-			Assert.Contains(_data[2], target);
-		}
+    [Fact]
+    public void Remove_ID_ReturnsTrueAndRemovesItemFromCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-		[Fact]
-		public void Item_ReturnsNullIfIDIsNotpResentInCollection() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
+        bool callResult = target.Remove(_data[0].ID);
 
-			Assert.Null(target[1000]);
-		}
+        Assert.True(callResult);
+        Assert.DoesNotContain(_data[0], target);
+        Assert.Contains(_data[1], target);
+        Assert.Contains(_data[2], target);
+    }
 
-		[Fact]
-		public void Item_ReturnsEntityWitSpecificID() {
-			EntityCollection<IOsmGeometry> target = new EntityCollection<IOsmGeometry>(_data);
-			IOsmGeometry entity = target[1];
+    [Fact]
+    public void Item_ReturnsNullIfIDIsNotpResentInCollection()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
 
-			Assert.Equal(1, entity.ID);
-		}
-	}
+        Assert.Null(target[1000]);
+    }
+
+    [Fact]
+    public void Item_ReturnsEntityWitSpecificID()
+    {
+        EntityCollection<IOsmGeometry> target = new(_data);
+        IOsmGeometry entity = target[1];
+
+        Assert.Equal(1, entity.ID);
+    }
 }

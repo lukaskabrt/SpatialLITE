@@ -1,13 +1,14 @@
 ﻿using SpatialLite.Core.API;
 
-namespace SpatialLite.Gps {
+namespace SpatialLite.Gps;
+
+/// <summary>
+/// Defines common properties for all GpxGeometry types
+/// </summary>
+public interface IGpxGeometry : IGeometry
+{
     /// <summary>
-    /// Defines common properties for all GpxGeometry types
+    /// Get the type of geometry
     /// </summary>
-    public interface IGpxGeometry : IGeometry {
-        /// <summary>
-        /// Get the type of geometry
-        /// </summary>
-        GpxGeometryType GeometryType { get; }
-    }
+    GpxGeometryType GeometryType { get; }
 }

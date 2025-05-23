@@ -1,136 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xunit;
-using Xunit.Extensions;
-
-using SpatialLite.Core.IO;
+﻿using SpatialLite.Core.IO;
 using System.IO;
+using System.Linq;
+using Xunit;
 
-namespace Tests.SpatialLite.Core.IO {
-	public class WktTokenizerTests {
+namespace Tests.SpatialLite.Core.IO;
 
-		[Fact]
-		void Tokenize_String_ReturnsEmptyTokenForEmptyString() {
-			string data = string.Empty;
-			var tokens = WktTokenizer.Tokenize(data);
+public class WktTokenizerTests
+{
 
-			Assert.Empty(tokens);
-		}
+    [Fact]
+    private void Tokenize_String_ReturnsEmptyTokenForEmptyString()
+    {
+        string data = string.Empty;
+        var tokens = WktTokenizer.Tokenize(data);
 
-		[Theory]
-		[InlineData("stringTOOKEN", TokenType.STRING)]
-		[InlineData(" ", TokenType.WHITESPACE)]
-		[InlineData("\t", TokenType.WHITESPACE)]
-		[InlineData("\n", TokenType.WHITESPACE)]
-		[InlineData("\r", TokenType.WHITESPACE)]
-		[InlineData("(", TokenType.LEFT_PARENTHESIS)]
-		[InlineData(")", TokenType.RIGHT_PARENTHESIS)]
-		[InlineData(",", TokenType.COMMA)]
-		[InlineData("-123456780.9", TokenType.NUMBER)]
-		void Tokenize_String_CorrectlyRecognizesTokenTypes(string str, TokenType expectedType) {
-			var tokens = WktTokenizer.Tokenize(str).ToArray();
+        Assert.Empty(tokens);
+    }
 
-			Assert.Single(tokens);
+    [Theory]
+    [InlineData("stringTOOKEN", TokenType.STRING)]
+    [InlineData(" ", TokenType.WHITESPACE)]
+    [InlineData("\t", TokenType.WHITESPACE)]
+    [InlineData("\n", TokenType.WHITESPACE)]
+    [InlineData("\r", TokenType.WHITESPACE)]
+    [InlineData("(", TokenType.LEFT_PARENTHESIS)]
+    [InlineData(")", TokenType.RIGHT_PARENTHESIS)]
+    [InlineData(",", TokenType.COMMA)]
+    [InlineData("-123456780.9", TokenType.NUMBER)]
+    private void Tokenize_String_CorrectlyRecognizesTokenTypes(string str, TokenType expectedType)
+    {
+        var tokens = WktTokenizer.Tokenize(str).ToArray();
 
-			WktToken t = tokens.First();
-			Assert.Equal(expectedType, t.Type);
-			Assert.Equal(str, t.Value);
-		}
+        Assert.Single(tokens);
 
-		[Fact]
-		void Tokenize_String_ProcessesComplexText() {
-			string data = "point z (-10 -15 -100.1)";
-			var tokens =WktTokenizer.Tokenize(data).ToArray();
+        WktToken t = tokens.First();
+        Assert.Equal(expectedType, t.Type);
+        Assert.Equal(str, t.Value);
+    }
 
-			Assert.Equal(11, tokens.Length);
+    [Fact]
+    private void Tokenize_String_ProcessesComplexText()
+    {
+        string data = "point z (-10 -15 -100.1)";
+        var tokens = WktTokenizer.Tokenize(data).ToArray();
 
-			WktToken t = tokens[0];
-			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.Value);
+        Assert.Equal(11, tokens.Length);
 
-			t = tokens[1];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        WktToken t = tokens[0];
+        Assert.Equal(TokenType.STRING, t.Type);
+        Assert.Equal("point", t.Value);
 
-			t = tokens[2];
-			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.Value);
+        t = tokens[1];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[3];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[2];
+        Assert.Equal(TokenType.STRING, t.Type);
+        Assert.Equal("z", t.Value);
 
-			t = tokens[4];
-			Assert.Equal(TokenType.LEFT_PARENTHESIS, t.Type);
+        t = tokens[3];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[5];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-10", t.Value);
+        t = tokens[4];
+        Assert.Equal(TokenType.LEFT_PARENTHESIS, t.Type);
 
-			t = tokens[6];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[5];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-10", t.Value);
 
-			t = tokens[7];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-15", t.Value);
+        t = tokens[6];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[8];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[7];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-15", t.Value);
 
-			t = tokens[9];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-100.1", t.Value);
+        t = tokens[8];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[10];
-			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
-		}
+        t = tokens[9];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-100.1", t.Value);
 
-		[Fact]
-		void Tokenize_TextReader_ProcessesComplexText() {
-			StringReader reader = new StringReader("point z (-10 -15 -100.1)");
+        t = tokens[10];
+        Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
+    }
 
-			var tokens = WktTokenizer.Tokenize(reader).ToArray();
+    [Fact]
+    private void Tokenize_TextReader_ProcessesComplexText()
+    {
+        StringReader reader = new StringReader("point z (-10 -15 -100.1)");
 
-			Assert.Equal(11, tokens.Length);
+        var tokens = WktTokenizer.Tokenize(reader).ToArray();
 
-			WktToken t = tokens[0];
-			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("point", t.Value);
+        Assert.Equal(11, tokens.Length);
 
-			t = tokens[1];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        WktToken t = tokens[0];
+        Assert.Equal(TokenType.STRING, t.Type);
+        Assert.Equal("point", t.Value);
 
-			t = tokens[2];
-			Assert.Equal(TokenType.STRING, t.Type);
-			Assert.Equal("z", t.Value);
+        t = tokens[1];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[3];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[2];
+        Assert.Equal(TokenType.STRING, t.Type);
+        Assert.Equal("z", t.Value);
 
-			t = tokens[4];
-			Assert.Equal(TokenType.LEFT_PARENTHESIS, t.Type);
+        t = tokens[3];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[5];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-10", t.Value);
+        t = tokens[4];
+        Assert.Equal(TokenType.LEFT_PARENTHESIS, t.Type);
 
-			t = tokens[6];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[5];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-10", t.Value);
 
-			t = tokens[7];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-15", t.Value);
+        t = tokens[6];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[8];
-			Assert.Equal(TokenType.WHITESPACE, t.Type);
+        t = tokens[7];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-15", t.Value);
 
-			t = tokens[9];
-			Assert.Equal(TokenType.NUMBER, t.Type);
-			Assert.Equal("-100.1", t.Value);
+        t = tokens[8];
+        Assert.Equal(TokenType.WHITESPACE, t.Type);
 
-			t = tokens[10];
-			Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
-		}
-	}
+        t = tokens[9];
+        Assert.Equal(TokenType.NUMBER, t.Type);
+        Assert.Equal("-100.1", t.Value);
+
+        t = tokens[10];
+        Assert.Equal(TokenType.RIGHT_PARENTHESIS, t.Type);
+    }
 }

@@ -1,31 +1,35 @@
-﻿using System;
-using SpatialLite.Gps.IO;
+﻿using SpatialLite.Gps.IO;
+using System;
 using Xunit;
 
-namespace Tests.SpatialLite.Gps.IO {
-    public class GpxWriterSettingsTests {
+namespace Tests.SpatialLite.Gps.IO;
 
-        [Fact]
-        public void Constructor__CreatesSettingsWithDefaultValues() {
-            var target = new GpxWriterSettings();
+public class GpxWriterSettingsTests
+{
 
-            Assert.True(target.WriteMetadata);
-        }
+    [Fact]
+    public void Constructor__CreatesSettingsWithDefaultValues()
+    {
+        var target = new GpxWriterSettings();
 
-        [Fact]
-        public void WriteMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
-            var target = new GpxWriterSettings();
-            target.IsReadOnly = true;
+        Assert.True(target.WriteMetadata);
+    }
 
-            Assert.Throws<InvalidOperationException>(() => target.WriteMetadata = true);
-        }        
+    [Fact]
+    public void WriteMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
+    {
+        var target = new GpxWriterSettings();
+        target.IsReadOnly = true;
 
-        [Fact]
-        public void GeneratorNameSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
-            var target = new GpxWriterSettings();
-            target.IsReadOnly = true;
+        Assert.Throws<InvalidOperationException>(() => target.WriteMetadata = true);
+    }
 
-            Assert.Throws<InvalidOperationException>(() => target.GeneratorName = "TEST");
-        }
+    [Fact]
+    public void GeneratorNameSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
+    {
+        var target = new GpxWriterSettings();
+        target.IsReadOnly = true;
+
+        Assert.Throws<InvalidOperationException>(() => target.GeneratorName = "TEST");
     }
 }

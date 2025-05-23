@@ -1,71 +1,76 @@
-﻿using System;
+﻿using SpatialLite.Osm;
+using SpatialLite.Osm.Geometries;
+using System;
 using System.Collections.Generic;
-
 using Xunit;
 
-using SpatialLite.Osm.Geometries;
-using SpatialLite.Osm;
+namespace Tests.SpatialLite.Osm;
 
-namespace Tests.SpatialLite.Osm {
-    public class WayInfoTests {
+public class WayInfoTests
+{
 
-		[Fact]
-		public void Constructor_PropertiesWithoutEntityDetails_SetsProperties() {
-			int id = 45;
-			TagsCollection tags = new TagsCollection();
-			List<long> nodes = new List<long>();
+    [Fact]
+    public void Constructor_PropertiesWithoutEntityDetails_SetsProperties()
+    {
+        int id = 45;
+        TagsCollection tags = new();
+        List<long> nodes = new();
 
-			WayInfo target = new WayInfo(id, tags, nodes);
+        WayInfo target = new(id, tags, nodes);
 
-			Assert.Equal(EntityType.Way, target.EntityType);
-			Assert.Equal(id, target.ID);
-			Assert.Same(tags, target.Tags);
-			Assert.Same(nodes, target.Nodes);
-			Assert.Null(target.Metadata);
-		}
+        Assert.Equal(EntityType.Way, target.EntityType);
+        Assert.Equal(id, target.ID);
+        Assert.Same(tags, target.Tags);
+        Assert.Same(nodes, target.Nodes);
+        Assert.Null(target.Metadata);
+    }
 
-		[Fact]
-		public void Constructor_Properties_SetsProperties() {
-			int id = 45;
-			TagsCollection tags = new TagsCollection();
-			List<long> nodes = new List<long>();
-			EntityMetadata details = new EntityMetadata();
+    [Fact]
+    public void Constructor_Properties_SetsProperties()
+    {
+        int id = 45;
+        TagsCollection tags = new();
+        List<long> nodes = new();
+        EntityMetadata details = new();
 
-			WayInfo target = new WayInfo(id, tags, nodes, details);
+        WayInfo target = new(id, tags, nodes, details);
 
-			Assert.Equal(EntityType.Way, target.EntityType);
-			Assert.Equal(id, target.ID);
-			Assert.Same(tags, target.Tags);
-			Assert.Same(nodes, target.Nodes);
-			Assert.Same(details, target.Metadata);
-		}
+        Assert.Equal(EntityType.Way, target.EntityType);
+        Assert.Equal(id, target.ID);
+        Assert.Same(tags, target.Tags);
+        Assert.Same(nodes, target.Nodes);
+        Assert.Same(details, target.Metadata);
+    }
 
-		[Fact]
-		public void Constructor_Way_SetsProperties() {
-			Way way = new Way(10, new Node[0], new TagsCollection()) { Metadata = new EntityMetadata() };
+    [Fact]
+    public void Constructor_Way_SetsProperties()
+    {
+        Way way = new(10, new Node[0], new TagsCollection()) { Metadata = new EntityMetadata() };
 
-			WayInfo target = new WayInfo(way);
+        WayInfo target = new(way);
 
-			Assert.Equal(way.ID, target.ID);
-			Assert.Same(way.Tags, target.Tags);
-			Assert.Same(way.Metadata, target.Metadata);
-		}
+        Assert.Equal(way.ID, target.ID);
+        Assert.Same(way.Tags, target.Tags);
+        Assert.Same(way.Metadata, target.Metadata);
+    }
 
-		[Fact]
-		public void Constructor_Way_SetsNodesReferences() {
-			Way way = new Way(10, new Node[] {new Node(1), new Node(2), new Node(3)}, new TagsCollection()) { Metadata = new EntityMetadata() };
+    [Fact]
+    public void Constructor_Way_SetsNodesReferences()
+    {
+        Way way = new(10, new Node[] { new(1), new(2), new(3) }, new TagsCollection()) { Metadata = new EntityMetadata() };
 
-			WayInfo target = new WayInfo(way);
+        WayInfo target = new(way);
 
-			Assert.Equal(way.Nodes.Count, target.Nodes.Count);
-			for (int i = 0; i < way.Nodes.Count; i++) {
-				Assert.Equal(way.Nodes[i].ID, target.Nodes[i]);
-			}
-		}
+        Assert.Equal(way.Nodes.Count, target.Nodes.Count);
+        for (int i = 0; i < way.Nodes.Count; i++)
+        {
+            Assert.Equal(way.Nodes[i].ID, target.Nodes[i]);
+        }
+    }
 
-		[Fact]
-		public void Constructor_Way_ThrowsExceptionIfWayIsNull() {
-			Assert.Throws<ArgumentNullException>(() => new WayInfo(null));
-		}
-	}
+    [Fact]
+    public void Constructor_Way_ThrowsExceptionIfWayIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => new WayInfo(null));
+    }
 }

@@ -17,6 +17,12 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
+    
+    - name: Install dotnet-format
+      run: dotnet tool install -g dotnet-format
+
+    - name: Check code format
+      run: dotnet format --no-restore --verify-no-changes
         
     - name: Restore dependencies
       run: dotnet restore

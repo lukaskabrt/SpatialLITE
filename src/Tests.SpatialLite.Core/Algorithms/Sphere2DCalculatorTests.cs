@@ -1,155 +1,161 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SpatialLite.Core.API;
+﻿using Moq;
 using SpatialLite.Core.Algorithms;
-
+using SpatialLite.Core.API;
+using System;
 using Xunit;
-using Moq;
 
-namespace Tests.SpatialLite.Core.Algorithms {
-	public class Sphere2DCalculatorTests {
+namespace Tests.SpatialLite.Core.Algorithms;
 
-		[Fact]
-		public void CalculateDistance_CoordinateCoordinate_Returns0ForSameCoordinate() {
-			Coordinate c = new Coordinate(10.1, 100.2);
-			Sphere2DCalculator target = new Sphere2DCalculator();
+public class Sphere2DCalculatorTests
+{
 
-			double distance = target.CalculateDistance(c, c);
+    [Fact]
+    public void CalculateDistance_CoordinateCoordinate_Returns0ForSameCoordinate()
+    {
+        Coordinate c = new Coordinate(10.1, 100.2);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.Equal(0, distance);
-		}
+        double distance = target.CalculateDistance(c, c);
 
-		//TODO more test cases
-		[Fact]
-		public void CalculateDistance_CoordinateCoordinate_ReturnsDistanceOf2Points() {
-			Coordinate c1 = new Coordinate(0, 0);
-			Coordinate c2 = new Coordinate(0, 90);
-			Sphere2DCalculator target = new Sphere2DCalculator();
+        Assert.Equal(0, distance);
+    }
 
-			double distance = target.CalculateDistance(c1, c2);
-			double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
+    //TODO more test cases
+    [Fact]
+    public void CalculateDistance_CoordinateCoordinate_ReturnsDistanceOf2Points()
+    {
+        Coordinate c1 = new Coordinate(0, 0);
+        Coordinate c2 = new Coordinate(0, 90);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c1, c2);
+        double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
 
-		[Fact]
-		public void CalculateDsitance_CoordinateCoordinate_CalculateDistancesAcross0DegBoundary() {
-			Coordinate c1 = new Coordinate(-45, 0);
-			Coordinate c2 = new Coordinate(45, 0);
-			Sphere2DCalculator target = new Sphere2DCalculator();
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			double distance = target.CalculateDistance(c1, c2);
-			double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
+    [Fact]
+    public void CalculateDsitance_CoordinateCoordinate_CalculateDistancesAcross0DegBoundary()
+    {
+        Coordinate c1 = new Coordinate(-45, 0);
+        Coordinate c2 = new Coordinate(45, 0);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c1, c2);
+        double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
 
-		[Fact]
-		public void CalculateDsitance_CoordinateCoordinate_CalculateDistancesAcross180DegBoundary() {
-			Coordinate c1 = new Coordinate(-135, 0);
-			Coordinate c2 = new Coordinate(135, 0);
-			Sphere2DCalculator target = new Sphere2DCalculator();
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			double distance = target.CalculateDistance(c1, c2);
-			double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
+    [Fact]
+    public void CalculateDsitance_CoordinateCoordinate_CalculateDistancesAcross180DegBoundary()
+    {
+        Coordinate c1 = new Coordinate(-135, 0);
+        Coordinate c2 = new Coordinate(135, 0);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c1, c2);
+        double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 4;
 
-		[Fact]
-		public void CalculateDistance_LineCoordinate_ReturnsDistanceToInfiniteLine() {
-			Coordinate a = new Coordinate(0, 0);
-			Coordinate b = new Coordinate(90, 0);
-			Coordinate c = new Coordinate(120, 45);
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+    [Fact]
+    public void CalculateDistance_LineCoordinate_ReturnsDistanceToInfiniteLine()
+    {
+        Coordinate a = new Coordinate(0, 0);
+        Coordinate b = new Coordinate(90, 0);
+        Coordinate c = new Coordinate(120, 45);
 
-			double distance = target.CalculateDistance(c, a, b, LineMode.Line);
-			double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 8;
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c, a, b, LineMode.Line);
+        double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 8;
 
-		[Fact]
-		public void CalculateDistance_LineCoordinate_ReturnsDistanceToLineSegment() {
-			Coordinate a = new Coordinate(0, 0);
-			Coordinate b = new Coordinate(90, 0);
-			Coordinate c = new Coordinate(45, 45);
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+    [Fact]
+    public void CalculateDistance_LineCoordinate_ReturnsDistanceToLineSegment()
+    {
+        Coordinate a = new Coordinate(0, 0);
+        Coordinate b = new Coordinate(90, 0);
+        Coordinate c = new Coordinate(45, 45);
 
-			double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
-			double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 8;
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
+        double expectedDistance = Math.PI * 2 * Sphere2DCalculator.EarthRadius / 8;
 
-		[Fact]
-		public void CalculateDistance_LineCoordinate_ReturnsDistanceToEndPointIfPointIsOutsideLineSegment() {
-			Coordinate a = new Coordinate(0, 0);
-			Coordinate b = new Coordinate(90, 0);
-			Coordinate c = new Coordinate(95, 45);
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+    [Fact]
+    public void CalculateDistance_LineCoordinate_ReturnsDistanceToEndPointIfPointIsOutsideLineSegment()
+    {
+        Coordinate a = new Coordinate(0, 0);
+        Coordinate b = new Coordinate(90, 0);
+        Coordinate c = new Coordinate(95, 45);
 
-			double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
-			double expectedDistance = target.CalculateDistance(b, c);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
+        double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
+        double expectedDistance = target.CalculateDistance(b, c);
 
-		[Fact]
-		public void CalculateDistance_LineCoordinate_ReturnsDistanceToEndPointIfPointIsOutsideLineSegment2() {
-			Coordinate a = new Coordinate(0, 0);
-			Coordinate b = new Coordinate(90, 0);
-			Coordinate c = new Coordinate(5, 45);
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+    [Fact]
+    public void CalculateDistance_LineCoordinate_ReturnsDistanceToEndPointIfPointIsOutsideLineSegment2()
+    {
+        Coordinate a = new Coordinate(0, 0);
+        Coordinate b = new Coordinate(90, 0);
+        Coordinate c = new Coordinate(5, 45);
 
-			double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
-			double expectedDistance = target.CalculateDistance(a, c);
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
-		}
-        
-		[Fact]
-		public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointDoesNotEqualLast() {
-			Coordinate[] coordinates = new Coordinate[] { new Coordinate(0, 0), new Coordinate(90, 0), new Coordinate(0, 90) };
+        double distance = target.CalculateDistance(c, a, b, LineMode.LineSegment);
+        double expectedDistance = target.CalculateDistance(a, c);
 
-			Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
-			listM.SetupGet(list => list.Count).Returns(3);
-			listM.Setup(list => list[0]).Returns(coordinates[0]);
-			listM.Setup(list => list[1]).Returns(coordinates[1]);
-			listM.Setup(list => list[2]).Returns(coordinates[2]);
+        Assert.InRange<double>(distance, expectedDistance * 0.995, expectedDistance * 1.005);
+    }
 
-			double expectedArea = 4 * Math.PI * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius / 8;
+    [Fact]
+    public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointDoesNotEqualLast()
+    {
+        Coordinate[] coordinates = new Coordinate[] { new Coordinate(0, 0), new Coordinate(90, 0), new Coordinate(0, 90) };
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
+        listM.SetupGet(list => list.Count).Returns(3);
+        listM.Setup(list => list[0]).Returns(coordinates[0]);
+        listM.Setup(list => list[1]).Returns(coordinates[1]);
+        listM.Setup(list => list[2]).Returns(coordinates[2]);
 
-			double area = target.CalculateArea(listM.Object);
-			Assert.InRange<double>(area, expectedArea * 0.995, expectedArea * 1.005);
-		}
+        double expectedArea = 4 * Math.PI * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius / 8;
 
-		[Fact]
-		public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointEqualsLast() {
-			Coordinate[] coordinates = new Coordinate[] { new Coordinate(0, 0), new Coordinate(90, 0), new Coordinate(0, 90) };
+        Sphere2DCalculator target = new Sphere2DCalculator();
 
-			Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
-			listM.SetupGet(list => list.Count).Returns(4);
-			listM.Setup(list => list[0]).Returns(coordinates[0]);
-			listM.Setup(list => list[1]).Returns(coordinates[1]);
-			listM.Setup(list => list[2]).Returns(coordinates[2]);
-			listM.Setup(list => list[3]).Returns(coordinates[0]);
+        double area = target.CalculateArea(listM.Object);
+        Assert.InRange<double>(area, expectedArea * 0.995, expectedArea * 1.005);
+    }
 
-			double expectedArea = 4 * Math.PI * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius / 8;
+    [Fact]
+    public void CalculateArea_CalculatesAreaOfPolygonPointFirstPointEqualsLast()
+    {
+        Coordinate[] coordinates = new Coordinate[] { new Coordinate(0, 0), new Coordinate(90, 0), new Coordinate(0, 90) };
 
-			Sphere2DCalculator target = new Sphere2DCalculator();
+        Mock<ICoordinateList> listM = new Mock<ICoordinateList>();
+        listM.SetupGet(list => list.Count).Returns(4);
+        listM.Setup(list => list[0]).Returns(coordinates[0]);
+        listM.Setup(list => list[1]).Returns(coordinates[1]);
+        listM.Setup(list => list[2]).Returns(coordinates[2]);
+        listM.Setup(list => list[3]).Returns(coordinates[0]);
 
-			double area = target.CalculateArea(listM.Object);
-			Assert.InRange<double>(area, expectedArea * 0.995, expectedArea * 1.005);
-		}
-	}
+        double expectedArea = 4 * Math.PI * Sphere2DCalculator.EarthRadius * Sphere2DCalculator.EarthRadius / 8;
+
+        Sphere2DCalculator target = new Sphere2DCalculator();
+
+        double area = target.CalculateArea(listM.Object);
+        Assert.InRange<double>(area, expectedArea * 0.995, expectedArea * 1.005);
+    }
 }

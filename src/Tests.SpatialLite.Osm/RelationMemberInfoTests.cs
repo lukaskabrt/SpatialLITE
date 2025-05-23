@@ -1,20 +1,21 @@
-﻿using Xunit;
-
-using SpatialLite.Osm;
+﻿using SpatialLite.Osm;
 using SpatialLite.Osm.Geometries;
+using Xunit;
 
-namespace Tests.SpatialLite.Osm {
-    public class RelationMemberInfoTests {
+namespace Tests.SpatialLite.Osm;
 
-		[Fact]
-		public void Constructor_RelationMember_SetsProperties() {
-			RelationMember member = new RelationMember(new Node(1), "test-role");
+public class RelationMemberInfoTests
+{
 
-			RelationMemberInfo target = new RelationMemberInfo(member);
+    [Fact]
+    public void Constructor_RelationMember_SetsProperties()
+    {
+        RelationMember member = new(new Node(1), "test-role");
 
-			Assert.Equal(member.Member.ID, target.Reference);
-			Assert.Equal(member.MemberType, target.MemberType);
-			Assert.Equal(member.Role, target.Role);
-		}
-	}
+        RelationMemberInfo target = new(member);
+
+        Assert.Equal(member.Member.ID, target.Reference);
+        Assert.Equal(member.MemberType, target.MemberType);
+        Assert.Equal(member.Role, target.Role);
+    }
 }

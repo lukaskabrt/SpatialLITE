@@ -1,15 +1,16 @@
-﻿namespace SpatialLite.Core.IO {
+﻿namespace SpatialLite.Core.IO;
+
+/// <summary>
+/// Specifies byte ordering in multibyte values.
+/// </summary>
+public enum BinaryEncoding : byte
+{
     /// <summary>
-    /// Specifies byte ordering in multibyte values.
+    /// Most significant byte first.
     /// </summary>
-    public enum BinaryEncoding : byte {
-		/// <summary>
-		/// Most significant byte first.
-		/// </summary>
-		BigEndian = 0,
-		/// <summary>
-		/// Least significant byte first.
-		/// </summary>
-		LittleEndian = 1
-	}
+    BigEndian = 0,
+    /// <summary>
+    /// Least significant byte first.
+    /// </summary>
+    LittleEndian = 1
 }

@@ -1,359 +1,404 @@
-﻿using System;
+﻿using SpatialLite.Core.API;
+using SpatialLite.Core.Geometries;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
-using SpatialLite.Core.API;
-using SpatialLite.Core.Geometries;
+namespace SpatialLite.Core.IO;
 
-namespace SpatialLite.Core.IO {
+/// <summary>
+/// Provides functions for reading and parsing geometries from WKB format.
+/// </summary>
+public class WkbReader : IDisposable
+{
+
+    private readonly BinaryReader _inputReader;
+    private readonly FileStream _inputFileStream;
+    private bool _disposed = false;
+
     /// <summary>
-    /// Provides functions for reading and parsing geometries from WKB format.
+    /// Initializes a new instance of the WkbReader class that reads data from specific stream.
     /// </summary>
-    public class WkbReader : IDisposable {
+    /// <param name="input">The stream to read data from.</param>
+    public WkbReader(Stream input)
+    {
+        if (input == null)
+        {
+            throw new ArgumentNullException(nameof(input), "Input stream cannot be null");
+        }
 
-		private BinaryReader _inputReader;
-		private FileStream _inputFileStream;
-		private bool _disposed = false;
+        _inputReader = new BinaryReader(input);
+    }
 
-		/// <summary>
-		/// Initializes a new instance of the WkbReader class that reads data from specific stream.
-		/// </summary>
-		/// <param name="input">The stream to read data from.</param>
-		public WkbReader(Stream input) {
-			if (input == null) {
-				throw new ArgumentNullException("input", "Input stream cannot be null");
-			}
+    /// <summary>
+    /// Initializes a new instance of the WkbReader class that reads data from specific file.
+    /// </summary>
+    /// <param name="path">Path to the file to read data from.</param>
+    public WkbReader(string path)
+    {
+        _inputFileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        _inputReader = new BinaryReader(_inputFileStream);
+    }
 
-			_inputReader = new BinaryReader(input);
-		}
+    /// <summary>
+    /// Parses data from the binnary array.
+    /// </summary>
+    /// <param name="wkb">The binary array with WKB serialized geometry.</param>
+    /// <returns>Parsed geometry.</returns>
+    /// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry.</exception>
+    public static Geometry Parse(byte[] wkb)
+    {
+        if (wkb == null)
+        {
+            throw new ArgumentNullException(nameof(wkb));
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the WkbReader class that reads data from specific file.
-		/// </summary>
-		/// <param name="path">Path to the file to read data from.</param>
-		public WkbReader(string path) {
-			_inputFileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
-			_inputReader = new BinaryReader(_inputFileStream);
-		}
+        using (MemoryStream ms = new(wkb))
+        {
+            using (BinaryReader reader = new(ms))
+            {
+                if (reader.PeekChar() == -1)
+                {
+                    return null;
+                }
 
-		/// <summary>
-		/// Parses data from the binnary array.
-		/// </summary>
-		/// <param name="wkb">The binary array with WKB serialized geometry.</param>
-		/// <returns>Parsed geometry.</returns>
-		/// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry.</exception>
-		public static Geometry Parse(byte[] wkb) {
-			if (wkb == null) {
-				throw new ArgumentNullException("wkb");
-			}
+                try
+                {
+                    BinaryEncoding encoding = (BinaryEncoding)reader.ReadByte();
+                    if (encoding == BinaryEncoding.BigEndian)
+                    {
+                        throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
+                    }
 
-			using (MemoryStream ms = new MemoryStream(wkb)) {
-				using (BinaryReader reader = new BinaryReader(ms)) {
-					if (reader.PeekChar() == -1) {
-						return null;
-					}
+                    Geometry parsed = ReadGeometry(reader);
 
-					try {
-						BinaryEncoding encoding = (BinaryEncoding)reader.ReadByte();
-						if (encoding == BinaryEncoding.BigEndian) {
-							throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
-						}
+                    return parsed;
+                }
+                catch (EndOfStreamException)
+                {
+                    throw new WkbFormatException("End of stream reached before end of valid WKB geometry end.");
+                }
+            }
+        }
+    }
 
-						Geometry parsed = WkbReader.ReadGeometry(reader);
+    /// <summary>
+    /// Parses data from the binary array as given geometry type.
+    /// </summary>
+    /// <typeparam name="T">The Geometry type to be parsed.</typeparam>
+    /// <param name="wkb">The binary array with WKB serialized geometry.</param>
+    /// <returns>Parsed geometry.</returns>
+    /// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
+    public static T Parse<T>(byte[] wkb) where T : Geometry
+    {
+        Geometry parsed = Parse(wkb);
 
-						return parsed;
-					}
-					catch (EndOfStreamException) {
-						throw new WkbFormatException("End of stream reached before end of valid WKB geometry end.");
-					}
-				}
-			}
-		}
+        if (parsed != null)
+        {
+            if (parsed is not T result)
+            {
+                throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
+            }
 
-		/// <summary>
-		/// Parses data from the binary array as given geometry type.
-		/// </summary>
-		/// <typeparam name="T">The Geometry type to be parsed.</typeparam>
-		/// <param name="wkb">The binary array with WKB serialized geometry.</param>
-		/// <returns>Parsed geometry.</returns>
-		/// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
-		public static T Parse<T>(byte[] wkb) where T : Geometry {
-			Geometry parsed = WkbReader.Parse(wkb);
+            return result;
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-			if (parsed != null) {
-				T result = parsed as T;
-				if (result == null) {
-					throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
-				}
+    /// <summary>
+    /// Releases all resources used by the ComponentLibrary.
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-				return result;
-			}
-			else {
-				return null;
-			}
-		}
+    /// <summary>
+    /// Read geometry in WKB format from the input.
+    /// </summary>
+    /// <returns>Parsed geometry or null if no other geometry is available.</returns>
+    public Geometry Read()
+    {
+        if (_inputReader.PeekChar() == -1)
+        {
+            return null;
+        }
 
-		/// <summary>
-		/// Releases all resources used by the ComponentLibrary.
-		/// </summary>
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+        try
+        {
+            BinaryEncoding encoding = (BinaryEncoding)_inputReader.ReadByte();
+            if (encoding == BinaryEncoding.BigEndian)
+            {
+                throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
+            }
 
-		/// <summary>
-		/// Read geometry in WKB format from the input.
-		/// </summary>
-		/// <returns>Parsed geometry or null if no other geometry is available.</returns>
-		public Geometry Read() {
-			if (_inputReader.PeekChar() == -1) {
-				return null;
-			}
+            return ReadGeometry(_inputReader);
+        }
+        catch (EndOfStreamException)
+        {
+            throw new WkbFormatException("End of stream reached before end of valid WKB geometry end.");
+        }
+    }
 
-			try {
-				BinaryEncoding encoding = (BinaryEncoding)_inputReader.ReadByte();
-				if (encoding == BinaryEncoding.BigEndian) {
-					throw new NotSupportedException("Big endian encoding is not supprted in the current version of WkbReader.");
-				}
+    /// <summary>
+    /// Read geometry in WKB format from the input.
+    /// </summary>
+    /// <typeparam name="T">The Geometry type to be parsed.</typeparam>
+    /// <returns>Geometry obejct of specific type read from the input, or null if no other geometry is available.</returns>
+    /// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
+    public T Read<T>() where T : Geometry
+    {
+        Geometry parsed = Read();
 
-				return WkbReader.ReadGeometry(_inputReader);
-			}
-			catch (EndOfStreamException) {
-				throw new WkbFormatException("End of stream reached before end of valid WKB geometry end.");
-			}
-		}
+        if (parsed != null)
+        {
+            if (parsed is not T result)
+            {
+                throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
+            }
 
-		/// <summary>
-		/// Read geometry in WKB format from the input.
-		/// </summary>
-		/// <typeparam name="T">The Geometry type to be parsed.</typeparam>
-		/// <returns>Geometry obejct of specific type read from the input, or null if no other geometry is available.</returns>
-		/// <exception cref="WkbFormatException">Throws exception if wkb array does not contrains valid WKB geometry of specific type.</exception>
-		public T Read<T>() where T : Geometry {
-			Geometry parsed = this.Read();
+            return result;
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-			if (parsed != null) {
-				T result = parsed as T;
-				if (result == null) {
-					throw new WkbFormatException("Input doesn't contain valid WKB representation of the specified geometry type.");
-				}
+    /// <summary>
+    /// Reads Coordinate from the BinaryReader.
+    /// </summary>
+    /// <param name="reader">The reader to read from.</param>
+    /// <param name="is3D">Bool value indicating whether Coordinate has Z value.</param>
+    /// <param name="isMeasured">Bool value indicating whether Coordinate has M value.</param>
+    /// <returns>Parsed Coordinate.</returns>
+    private static Coordinate ReadCoordinate(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        double x = reader.ReadDouble();
+        double y = reader.ReadDouble();
+        double z = is3D ? reader.ReadDouble() : double.NaN;
+        double m = isMeasured ? reader.ReadDouble() : double.NaN;
 
-				return result;
-			}
-			else {
-				return null;
-			}
-		}
+        return new Coordinate(x, y, z, m);
+    }
 
-		/// <summary>
-		/// Reads Coordinate from the BinaryReader.
-		/// </summary>
-		/// <param name="reader">The reader to read from.</param>
-		/// <param name="is3D">Bool value indicating whether Coordinate has Z value.</param>
-		/// <param name="isMeasured">Bool value indicating whether Coordinate has M value.</param>
-		/// <returns>Parsed Coordinate.</returns>
-		private static Coordinate ReadCoordinate(BinaryReader reader, bool is3D, bool isMeasured) {
-			double x = reader.ReadDouble();
-			double y = reader.ReadDouble();
-			double z = is3D ? reader.ReadDouble() : double.NaN;
-			double m = isMeasured ? reader.ReadDouble() : double.NaN;
+    /// <summary>
+    /// Reads a list of coordinates from the BinaryReader.
+    /// </summary>
+    /// <param name="reader">The reader to read from.</param>
+    /// <param name="is3D">Bool value indicating whether coordinates has Z value.</param>
+    /// <param name="isMeasured">Bool value indicating whether coordinates has M value.</param>
+    /// <returns>Parsed Coordinate.</returns>
+    private static IEnumerable<Coordinate> ReadCoordinates(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int pointCount = (int)reader.ReadUInt32();
 
-			return new Coordinate(x, y, z, m);
-		}
+        List<Coordinate> result = new(pointCount);
+        for (int i = 0; i < pointCount; i++)
+        {
+            result.Add(ReadCoordinate(reader, is3D, isMeasured));
+        }
 
-		/// <summary>
-		/// Reads a list of coordinates from the BinaryReader.
-		/// </summary>
-		/// <param name="reader">The reader to read from.</param>
-		/// <param name="is3D">Bool value indicating whether coordinates has Z value.</param>
-		/// <param name="isMeasured">Bool value indicating whether coordinates has M value.</param>
-		/// <returns>Parsed Coordinate.</returns>
-		private static IEnumerable<Coordinate> ReadCoordinates(BinaryReader reader, bool is3D, bool isMeasured) {
-			int pointCount = (int)reader.ReadUInt32();
+        return result;
+    }
 
-			List<Coordinate> result = new List<Coordinate>(pointCount);
-			for (int i = 0; i < pointCount; i++) {
-				result.Add(WkbReader.ReadCoordinate(reader, is3D, isMeasured));
-			}
+    /// <summary>
+    /// Reads Geometry from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <returns>Geometry read from the input.</returns>
+    private static Geometry ReadGeometry(BinaryReader reader)
+    {
+        WkbGeometryType geometryType = (WkbGeometryType)reader.ReadUInt32();
 
-			return result;
-		}
+        bool is3D, isMeasured;
+        WkbGeometryType basicType;
+        GetGeometryTypeDetails(geometryType, out basicType, out is3D, out isMeasured);
 
-		/// <summary>
-		/// Reads Geometry from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <returns>Geometry read from the input.</returns>
-		private static Geometry ReadGeometry(BinaryReader reader) {
-			WkbGeometryType geometryType = (WkbGeometryType)reader.ReadUInt32();
+        switch (basicType)
+        {
+            case WkbGeometryType.Point: return ReadPoint(reader, is3D, isMeasured);
+            case WkbGeometryType.LineString: return ReadLineString(reader, is3D, isMeasured);
+            case WkbGeometryType.Polygon: return ReadPolygon(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiPoint: return ReadMultiPoint(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiLineString: return ReadMultiLineString(reader, is3D, isMeasured);
+            case WkbGeometryType.MultiPolygon: return ReadMultiPolygon(reader, is3D, isMeasured);
+            case WkbGeometryType.GeometryCollection: return ReadGeometryCollection(reader, is3D, isMeasured);
+            default: throw new WkbFormatException("Unknown geometry type.");
+        }
+    }
 
-			bool is3D, isMeasured;
-			WkbGeometryType basicType;
-			WkbReader.GetGeometryTypeDetails(geometryType, out basicType, out is3D, out isMeasured);
+    /// <summary>
+    /// Reads Point from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether point beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether point beeing read has M-value.</param>
+    /// <returns>Point read from the input</returns>
+    private static Point ReadPoint(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        Coordinate position = ReadCoordinate(reader, is3D, isMeasured);
+        return new Point(position);
+    }
 
-			switch (basicType) {
-				case WkbGeometryType.Point: return WkbReader.ReadPoint(reader, is3D, isMeasured);
-				case WkbGeometryType.LineString: return WkbReader.ReadLineString(reader, is3D, isMeasured);
-				case WkbGeometryType.Polygon: return WkbReader.ReadPolygon(reader, is3D, isMeasured);
-				case WkbGeometryType.MultiPoint: return WkbReader.ReadMultiPoint(reader, is3D, isMeasured);
-				case WkbGeometryType.MultiLineString: return WkbReader.ReadMultiLineString(reader, is3D, isMeasured);
-				case WkbGeometryType.MultiPolygon: return WkbReader.ReadMultiPolygon(reader, is3D, isMeasured);
-				case WkbGeometryType.GeometryCollection: return WkbReader.ReadGeometryCollection(reader, is3D, isMeasured);
-				default: throw new WkbFormatException("Unknown geometry type.");
-			}
-		}
+    /// <summary>
+    /// Reads LineString from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether linestring beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether linestring beeing read has M-value.</param>
+    /// <returns>Linestring read from the input.</returns>
+    private static LineString ReadLineString(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        IEnumerable<Coordinate> coordinates = ReadCoordinates(reader, is3D, isMeasured);
+        return new LineString(coordinates);
+    }
 
-		/// <summary>
-		/// Reads Point from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether point beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether point beeing read has M-value.</param>
-		/// <returns>Point read from the input</returns>
-		private static Point ReadPoint(BinaryReader reader, bool is3D, bool isMeasured) {
-			Coordinate position = WkbReader.ReadCoordinate(reader, is3D, isMeasured);
-			return new Point(position);
-		}
+    /// <summary>
+    /// Reads Polygon from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether polygon beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether polygon beeing read has M-value.</param>
+    /// <returns>Polygon read from the input.</returns>
+    private static Polygon ReadPolygon(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int ringsCount = (int)reader.ReadUInt32();
 
-		/// <summary>
-		/// Reads LineString from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether linestring beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether linestring beeing read has M-value.</param>
-		/// <returns>Linestring read from the input.</returns>
-		private static LineString ReadLineString(BinaryReader reader, bool is3D, bool isMeasured) {
-			IEnumerable<Coordinate> coordinates = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
-			return new LineString(coordinates);
-		}
+        if (ringsCount == 0)
+        {
+            return new Polygon();
+        }
 
-		/// <summary>
-		/// Reads Polygon from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether polygon beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether polygon beeing read has M-value.</param>
-		/// <returns>Polygon read from the input.</returns>
-		private static Polygon ReadPolygon(BinaryReader reader, bool is3D, bool isMeasured) {
-			int ringsCount = (int)reader.ReadUInt32();
+        IEnumerable<Coordinate> exterior = ReadCoordinates(reader, is3D, isMeasured);
+        Polygon result = new(new CoordinateList(exterior));
 
-			if (ringsCount == 0) {
-				return new Polygon();
-			}
+        for (int i = 1; i < ringsCount; i++)
+        {
+            IEnumerable<Coordinate> interior = ReadCoordinates(reader, is3D, isMeasured);
+            result.InteriorRings.Add(new CoordinateList(interior));
+        }
 
-			IEnumerable<Coordinate> exterior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
-			Polygon result = new Polygon(new CoordinateList(exterior));
+        return result;
+    }
 
-			for (int i = 1; i < ringsCount; i++) {
-				IEnumerable<Coordinate> interior = WkbReader.ReadCoordinates(reader, is3D, isMeasured);
-				result.InteriorRings.Add(new CoordinateList(interior));
-			}
+    /// <summary>
+    /// Reads MultiLineString from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether multilinestring beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether multilinestring beeing read has M-value.</param>
+    /// <returns>MultiLineString read from the input.</returns>
+    private static MultiPoint ReadMultiPoint(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int pointsCount = (int)reader.ReadUInt32();
 
-			return result;
-		}
+        MultiPoint result = new();
+        for (int i = 0; i < pointsCount; i++)
+        {
+            result.Geometries.Add(ReadPoint(reader, is3D, isMeasured));
+        }
 
-		/// <summary>
-		/// Reads MultiLineString from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether multilinestring beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether multilinestring beeing read has M-value.</param>
-		/// <returns>MultiLineString read from the input.</returns>
-		private static MultiPoint ReadMultiPoint(BinaryReader reader, bool is3D, bool isMeasured) {
-			int pointsCount = (int)reader.ReadUInt32();
+        return result;
+    }
 
-			MultiPoint result = new MultiPoint();
-			for (int i = 0; i < pointsCount; i++) {
-				result.Geometries.Add(WkbReader.ReadPoint(reader, is3D, isMeasured));
-			}
+    /// <summary>
+    /// Reads MultiLineString from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether multilinestring beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether multilinestring beeing read has M-value.</param>
+    /// <returns>MultiLineString read from the input</returns>
+    private static MultiLineString ReadMultiLineString(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int pointsCount = (int)reader.ReadUInt32();
 
-			return result;
-		}
+        MultiLineString result = new();
+        for (int i = 0; i < pointsCount; i++)
+        {
+            result.Geometries.Add(ReadLineString(reader, is3D, isMeasured));
+        }
 
-		/// <summary>
-		/// Reads MultiLineString from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether multilinestring beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether multilinestring beeing read has M-value.</param>
-		/// <returns>MultiLineString read from the input</returns>
-		private static MultiLineString ReadMultiLineString(BinaryReader reader, bool is3D, bool isMeasured) {
-			int pointsCount = (int)reader.ReadUInt32();
+        return result;
+    }
 
-			MultiLineString result = new MultiLineString();
-			for (int i = 0; i < pointsCount; i++) {
-				result.Geometries.Add(WkbReader.ReadLineString(reader, is3D, isMeasured));
-			}
+    /// <summary>
+    /// Reads MultiPolygon from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether MultiPolygon beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether MultiPolygon beeing read has M-value.</param>
+    /// <returns>MultiPolygon read from the input.</returns>
+    private static MultiPolygon ReadMultiPolygon(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int pointsCount = (int)reader.ReadUInt32();
 
-			return result;
-		}
+        MultiPolygon result = new();
+        for (int i = 0; i < pointsCount; i++)
+        {
+            result.Geometries.Add(ReadPolygon(reader, is3D, isMeasured));
+        }
 
-		/// <summary>
-		/// Reads MultiPolygon from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether MultiPolygon beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether MultiPolygon beeing read has M-value.</param>
-		/// <returns>MultiPolygon read from the input.</returns>
-		private static MultiPolygon ReadMultiPolygon(BinaryReader reader, bool is3D, bool isMeasured) {
-			int pointsCount = (int)reader.ReadUInt32();
+        return result;
+    }
 
-			MultiPolygon result = new MultiPolygon();
-			for (int i = 0; i < pointsCount; i++) {
-				result.Geometries.Add(WkbReader.ReadPolygon(reader, is3D, isMeasured));
-			}
+    /// <summary>
+    /// Reads GeometryCollection from the reader.
+    /// </summary>
+    /// <param name="reader">The reader used to read data from input stream.</param>
+    /// <param name="is3D">bool value indicating whether GeometryCollection beeing read has Z-dimension.</param>
+    /// <param name="isMeasured">bool value indicating whether GeometryCollection beeing read has M-value.</param>
+    /// <returns>GeometryCollection read from the input.</returns>
+    private static GeometryCollection<Geometry> ReadGeometryCollection(BinaryReader reader, bool is3D, bool isMeasured)
+    {
+        int pointsCount = (int)reader.ReadUInt32();
 
-			return result;
-		}
+        GeometryCollection<Geometry> result = new();
+        for (int i = 0; i < pointsCount; i++)
+        {
+            result.Geometries.Add(ReadGeometry(reader));
+        }
 
-		/// <summary>
-		/// Reads GeometryCollection from the reader.
-		/// </summary>
-		/// <param name="reader">The reader used to read data from input stream.</param>
-		/// <param name="is3D">bool value indicating whether GeometryCollection beeing read has Z-dimension.</param>
-		/// <param name="isMeasured">bool value indicating whether GeometryCollection beeing read has M-value.</param>
-		/// <returns>GeometryCollection read from the input.</returns>
-		private static GeometryCollection<Geometry> ReadGeometryCollection(BinaryReader reader, bool is3D, bool isMeasured) {
-			int pointsCount = (int)reader.ReadUInt32();
+        return result;
+    }
 
-			GeometryCollection<Geometry> result = new GeometryCollection<Geometry>();
-			for (int i = 0; i < pointsCount; i++) {
-				result.Geometries.Add(WkbReader.ReadGeometry(reader));
-			}
+    /// <summary>
+    /// Gets details form the WkbGeometryType value.
+    /// </summary>
+    /// <param name="type">The value to be examined.</param>
+    /// <param name="basicType">Outputs type striped of dimension information.</param>
+    /// <param name="is3D">Outputs bool value indicating whether type represents 3D geometry.</param>
+    /// <param name="isMeasured">Outputs bool value indicating whether type represents measured geometry.</param>
+    private static void GetGeometryTypeDetails(WkbGeometryType type, out WkbGeometryType basicType, out bool is3D, out bool isMeasured)
+    {
+        is3D = ((int)type > 1000 && (int)type < 2000) || (int)type > 3000;
+        isMeasured = (int)type > 2000;
+        basicType = (WkbGeometryType)((int)type % 1000);
+    }
 
-			return result;
-		}
+    /// <summary>
+    /// Releases the unmanaged resources used by the ComponentLibrary and optionally releases the managed resources.
+    /// </summary>
+    /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+    private void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _inputReader.Dispose();
 
-		/// <summary>
-		/// Gets details form the WkbGeometryType value.
-		/// </summary>
-		/// <param name="type">The value to be examined.</param>
-		/// <param name="basicType">Outputs type striped of dimension information.</param>
-		/// <param name="is3D">Outputs bool value indicating whether type represents 3D geometry.</param>
-		/// <param name="isMeasured">Outputs bool value indicating whether type represents measured geometry.</param>
-		private static void GetGeometryTypeDetails(WkbGeometryType type, out WkbGeometryType basicType, out bool is3D, out bool isMeasured) {
-			is3D = ((int)type > 1000 && (int)type < 2000) || (int)type > 3000;
-			isMeasured = (int)type > 2000;
-			basicType = (WkbGeometryType)((int)type % 1000);
-		}
+                if (_inputFileStream != null)
+                {
+                    _inputFileStream.Dispose();
+                }
+            }
 
-		/// <summary>
-		/// Releases the unmanaged resources used by the ComponentLibrary and optionally releases the managed resources.
-		/// </summary>
-		/// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-		private void Dispose(bool disposing) {
-			if (!this._disposed) {
-				if (disposing) {
-					_inputReader.Dispose();
-
-					if (_inputFileStream != null) {
-						_inputFileStream.Dispose();
-					}
-				}
-
-				_disposed = true;
-			}
-		}
-
-	}
+            _disposed = true;
+        }
+    }
 }

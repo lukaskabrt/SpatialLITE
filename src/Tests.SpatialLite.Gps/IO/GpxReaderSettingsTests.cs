@@ -1,23 +1,26 @@
-﻿using System;
-using SpatialLite.Gps.IO;
+﻿using SpatialLite.Gps.IO;
+using System;
 using Xunit;
 
-namespace Tests.SpatialLite.Gps.IO {
-    public class GpxReaderSettingsTests {
+namespace Tests.SpatialLite.Gps.IO;
 
-        [Fact]
-        public void Constructor__CreatesSettingsWithDefaultValues() {
-            var target = new GpxReaderSettings();
+public class GpxReaderSettingsTests
+{
 
-            Assert.True(target.ReadMetadata);
-        }
+    [Fact]
+    public void Constructor__CreatesSettingsWithDefaultValues()
+    {
+        var target = new GpxReaderSettings();
 
-        [Fact]
-        public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly() {
-            var target = new GpxReaderSettings();
-            target.IsReadOnly = true;
+        Assert.True(target.ReadMetadata);
+    }
 
-            Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);
-        }
+    [Fact]
+    public void ReadMetadataSetter_ThrowInvaldOperationExceptionIfSettingsIsReadOnly()
+    {
+        var target = new GpxReaderSettings();
+        target.IsReadOnly = true;
+
+        Assert.Throws<InvalidOperationException>(() => target.ReadMetadata = true);
     }
 }

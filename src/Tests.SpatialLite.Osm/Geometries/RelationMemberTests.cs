@@ -1,160 +1,177 @@
-﻿using System;
-
-using Xunit;
-using Moq;
-
-using SpatialLite.Osm.Geometries;
+﻿using Moq;
 using SpatialLite.Core.API;
 using SpatialLite.Osm;
+using SpatialLite.Osm.Geometries;
+using System;
+using Xunit;
 
-namespace Tests.SpatialLite.Osm.Geometries {
-    public class RelationMemberTests {
-		IEntityCollection<IOsmGeometry> _nodesEntityCollection;
+namespace Tests.SpatialLite.Osm.Geometries;
 
-		public RelationMemberTests() {
-			Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new Mock<IEntityCollection<IOsmGeometry>>();
-			_nodesCollectionM.SetupGet(c => c[1, EntityType.Node]).Returns(new Node(1, 1.1, 2.2));
-			_nodesCollectionM.Setup(c => c.Contains(1, EntityType.Node)).Returns(true);
-			_nodesEntityCollection = _nodesCollectionM.Object;
-		}
+public class RelationMemberTests
+{
+    private readonly IEntityCollection<IOsmGeometry> _nodesEntityCollection;
 
-		[Fact]
-		public void Constructor_Member_CreatesNewRelationMembeAndSetsMember() {
-			Node member = new Node(11);
-			RelationMember target = new RelationMember(member);
+    public RelationMemberTests()
+    {
+        Mock<IEntityCollection<IOsmGeometry>> _nodesCollectionM = new();
+        _nodesCollectionM.SetupGet(c => c[1, EntityType.Node]).Returns(new Node(1, 1.1, 2.2));
+        _nodesCollectionM.Setup(c => c.Contains(1, EntityType.Node)).Returns(true);
+        _nodesEntityCollection = _nodesCollectionM.Object;
+    }
 
-			Assert.Same(member, target.Member);
-			Assert.True(string.IsNullOrEmpty(target.Role));
-		}
+    [Fact]
+    public void Constructor_Member_CreatesNewRelationMembeAndSetsMember()
+    {
+        Node member = new(11);
+        RelationMember target = new(member);
 
-		[Fact]
-		public void Constructor_Member_ThrowsExceptionIfMemberIsNull() {
-			Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
-		}
+        Assert.Same(member, target.Member);
+        Assert.True(string.IsNullOrEmpty(target.Role));
+    }
 
-		[Fact]
-		public void Constructor_Member_Role_CreatesRelationMemberAndSetsMemberAndRole() {
-			Node member = new Node(11);
-			string role = "role";
-			RelationMember target = new RelationMember(member, role);
+    [Fact]
+    public void Constructor_Member_ThrowsExceptionIfMemberIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
+    }
 
-			Assert.Same(member, target.Member);
-			Assert.Equal(role, target.Role);
-		}
+    [Fact]
+    public void Constructor_Member_Role_CreatesRelationMemberAndSetsMemberAndRole()
+    {
+        Node member = new(11);
+        string role = "role";
+        RelationMember target = new(member, role);
 
-		[Fact]
-		public void Constructor_Member_Role_ThrowsExceptionIfMemberIsNull() {
-			Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
-		}
+        Assert.Same(member, target.Member);
+        Assert.Equal(role, target.Role);
+    }
 
-		[Fact]
-		public void FromRelationMemberInfo_ThrowExceptionIfTypeIsUnknown() {
-			RelationMemberInfo info = new RelationMemberInfo() { Reference = 1, MemberType = EntityType.Unknown, Role = "role" };
+    [Fact]
+    public void Constructor_Member_Role_ThrowsExceptionIfMemberIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => new RelationMember(null));
+    }
 
-			Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
-		}
+    [Fact]
+    public void FromRelationMemberInfo_ThrowExceptionIfTypeIsUnknown()
+    {
+        RelationMemberInfo info = new() { Reference = 1, MemberType = EntityType.Unknown, Role = "role" };
 
-		[Fact]
-		public void FromRelationMemberInfo_CreatesRelationMember() {
-			RelationMemberInfo info = new RelationMemberInfo() { Reference = 1, MemberType = EntityType.Node, Role = "role" };
-			RelationMember target = RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true);
+        Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
+    }
 
-			Assert.Equal(info.Reference, target.Member.ID);
-			Assert.Equal(info.Role, target.Role);
-			Assert.Equal(info.MemberType, target.MemberType);
-		}
+    [Fact]
+    public void FromRelationMemberInfo_CreatesRelationMember()
+    {
+        RelationMemberInfo info = new() { Reference = 1, MemberType = EntityType.Node, Role = "role" };
+        RelationMember target = RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true);
 
-		[Fact]
-		public void FromRelationMemberInfo_ThrowExceptionIfReferencedEntityIsNotAvailable() {
-			RelationMemberInfo info = new RelationMemberInfo() { Reference = 10000, MemberType = EntityType.Node, Role = "role" };
+        Assert.Equal(info.Reference, target.Member.ID);
+        Assert.Equal(info.Role, target.Role);
+        Assert.Equal(info.MemberType, target.MemberType);
+    }
 
-			Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
-		}
+    [Fact]
+    public void FromRelationMemberInfo_ThrowExceptionIfReferencedEntityIsNotAvailable()
+    {
+        RelationMemberInfo info = new() { Reference = 10000, MemberType = EntityType.Node, Role = "role" };
 
-		[Fact]
-		public void FromRelationMemberInfo_ReturnsNullIfReferencedEntityIsNotAvailableAndThrowOnMissingIsFalse() {
-			RelationMemberInfo info = new RelationMemberInfo() { Reference = 10000, MemberType = EntityType.Node, Role = "role" };
+        Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
+    }
 
-			Assert.Null(RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, false));
-		}
+    [Fact]
+    public void FromRelationMemberInfo_ReturnsNullIfReferencedEntityIsNotAvailableAndThrowOnMissingIsFalse()
+    {
+        RelationMemberInfo info = new() { Reference = 10000, MemberType = EntityType.Node, Role = "role" };
 
-		[Fact]
-		public void FromRelationMemberInfo_ThrowExceptionIfReferencedEntityTypeDoesntMatchMemberType() {
-			RelationMemberInfo info = new RelationMemberInfo() { Reference = 1, MemberType = EntityType.Way, Role = "role" };
+        Assert.Null(RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, false));
+    }
 
-			Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
-		}
+    [Fact]
+    public void FromRelationMemberInfo_ThrowExceptionIfReferencedEntityTypeDoesntMatchMemberType()
+    {
+        RelationMemberInfo info = new() { Reference = 1, MemberType = EntityType.Way, Role = "role" };
 
-		[Fact]
-		public void Is3D_GetsTrueFor3DMember() {
-			Mock<Node> memberM = new Mock<Node>(11);
-			memberM.SetupGet(property => property.Is3D).Returns(true);
+        Assert.Throws<ArgumentException>(() => RelationMember.FromRelationMemberInfo(info, _nodesEntityCollection, true));
+    }
 
-			RelationMember target = new RelationMember(memberM.Object);
+    [Fact]
+    public void Is3D_GetsTrueFor3DMember()
+    {
+        Mock<Node> memberM = new(11);
+        memberM.SetupGet(property => property.Is3D).Returns(true);
 
-			Assert.Equal(memberM.Object.Is3D, target.Is3D);
-		}
+        RelationMember target = new(memberM.Object);
 
-		[Fact]
-		public void Is3D_GetsFalseFor2DMember() {
-			Mock<Node> memberM = new Mock<Node>(11);
-			memberM.SetupGet(property => property.Is3D).Returns(false);
+        Assert.Equal(memberM.Object.Is3D, target.Is3D);
+    }
 
-			RelationMember target = new RelationMember(memberM.Object);
+    [Fact]
+    public void Is3D_GetsFalseFor2DMember()
+    {
+        Mock<Node> memberM = new(11);
+        memberM.SetupGet(property => property.Is3D).Returns(false);
 
-			Assert.Equal(memberM.Object.Is3D, target.Is3D);
-		}
+        RelationMember target = new(memberM.Object);
 
-		[Fact]
-		public void IsMeasured_GetsTrueForMeasuredMember() {
-			Mock<Node> memberM = new Mock<Node>(11);
-			memberM.SetupGet(property => property.IsMeasured).Returns(true);
+        Assert.Equal(memberM.Object.Is3D, target.Is3D);
+    }
 
-			RelationMember target = new RelationMember(memberM.Object);
+    [Fact]
+    public void IsMeasured_GetsTrueForMeasuredMember()
+    {
+        Mock<Node> memberM = new(11);
+        memberM.SetupGet(property => property.IsMeasured).Returns(true);
 
-			Assert.Equal(memberM.Object.IsMeasured, target.IsMeasured);
-		}
+        RelationMember target = new(memberM.Object);
 
-		[Fact]
-		public void IsMeasured_GetFalseForNonMeasuredMember() {
-			Mock<Node> memberM = new Mock<Node>(11);
-			memberM.SetupGet(property => property.IsMeasured).Returns(false);
+        Assert.Equal(memberM.Object.IsMeasured, target.IsMeasured);
+    }
 
-			RelationMember target = new RelationMember(memberM.Object);
+    [Fact]
+    public void IsMeasured_GetFalseForNonMeasuredMember()
+    {
+        Mock<Node> memberM = new(11);
+        memberM.SetupGet(property => property.IsMeasured).Returns(false);
 
-			Assert.Equal(memberM.Object.IsMeasured, target.IsMeasured);
-		}
+        RelationMember target = new(memberM.Object);
 
-		[Fact]
-		public void MemberType_ReturnsCorrectValueForNode() {
-			RelationMember target = new RelationMember(new Node(11));
+        Assert.Equal(memberM.Object.IsMeasured, target.IsMeasured);
+    }
 
-			Assert.Equal(EntityType.Node, target.MemberType);
-		}
+    [Fact]
+    public void MemberType_ReturnsCorrectValueForNode()
+    {
+        RelationMember target = new(new Node(11));
 
-		[Fact]
-		public void MemberType_ReturnsCorrectValueForWay() {
-			RelationMember target = new RelationMember(new Way(11));
+        Assert.Equal(EntityType.Node, target.MemberType);
+    }
 
-			Assert.Equal(EntityType.Way, target.MemberType);
-		}
+    [Fact]
+    public void MemberType_ReturnsCorrectValueForWay()
+    {
+        RelationMember target = new(new Way(11));
 
-		[Fact]
-		public void MemberType_ReturnsCorrectValueForRelation() {
-			RelationMember target = new RelationMember(new Relation(11));
+        Assert.Equal(EntityType.Way, target.MemberType);
+    }
 
-			Assert.Equal(EntityType.Relation, target.MemberType);
-		}
+    [Fact]
+    public void MemberType_ReturnsCorrectValueForRelation()
+    {
+        RelationMember target = new(new Relation(11));
 
-		[Fact]
-		public void GetEnvelopeReturnsMembersEnvelope() {
-			Envelope expectedEnvelope = new Envelope(new Coordinate(1.1, 2.2));
-			Mock<Way> member = new Mock<Way>(11);
-			member.Setup(function => function.GetEnvelope()).Returns(expectedEnvelope);
+        Assert.Equal(EntityType.Relation, target.MemberType);
+    }
 
-			RelationMember target = new RelationMember(member.Object);
+    [Fact]
+    public void GetEnvelopeReturnsMembersEnvelope()
+    {
+        Envelope expectedEnvelope = new(new Coordinate(1.1, 2.2));
+        Mock<Way> member = new(11);
+        member.Setup(function => function.GetEnvelope()).Returns(expectedEnvelope);
 
-			Assert.Same(expectedEnvelope, target.GetEnvelope());
-		}
-	}
+        RelationMember target = new(member.Object);
+
+        Assert.Same(expectedEnvelope, target.GetEnvelope());
+    }
 }
