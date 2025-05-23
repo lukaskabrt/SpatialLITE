@@ -227,7 +227,7 @@ public class OsmXmlWriter : IOsmWriter
             _writer.WriteStartElement("member");
             _writer.WriteAttributeString("ref", info.Members[i].Reference.ToString(_culture));
             _writer.WriteAttributeString("role", info.Members[i].Role);
-            _writer.WriteAttributeString("type", info.Members[i].MemberType.ToString().ToLower());
+            _writer.WriteAttributeString("type", info.Members[i].MemberType.ToString().ToLower(_culture));
             _writer.WriteEndElement();
         }
 
@@ -265,8 +265,8 @@ public class OsmXmlWriter : IOsmWriter
             _writer.WriteAttributeString("user", medatata.User);
         }
 
-        _writer.WriteAttributeString("visible", medatata.Visible.ToString().ToLower());
-        _writer.WriteAttributeString("timestamp", medatata.Timestamp.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+        _writer.WriteAttributeString("visible", medatata.Visible.ToString().ToLower(_culture));
+        _writer.WriteAttributeString("timestamp", medatata.Timestamp.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", _culture));
     }
 
     /// <summary>

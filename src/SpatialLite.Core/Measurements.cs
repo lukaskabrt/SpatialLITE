@@ -10,16 +10,16 @@ namespace SpatialLite.Core;
 public class Measurements
 {
 
-    private static readonly Measurements _euclidean2D;
-    private static readonly Measurements _sphere2D;
+    private static readonly Measurements euclidean2DInstance;
+    private static readonly Measurements sphere2DInstance;
 
     /// <summary>
     /// Initializes static members of the Measurements class.
     /// </summary>
     static Measurements()
     {
-        _euclidean2D = new Measurements(new Euclidean2DCalculator());
-        _sphere2D = new Measurements(new Sphere2DCalculator());
+        euclidean2DInstance = new Measurements(new Euclidean2DCalculator());
+        sphere2DInstance = new Measurements(new Sphere2DCalculator());
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class Measurements
     {
         get
         {
-            return _euclidean2D;
+            return euclidean2DInstance;
         }
     }
 
@@ -49,7 +49,7 @@ public class Measurements
     {
         get
         {
-            return _sphere2D;
+            return sphere2DInstance;
         }
     }
 

@@ -104,7 +104,7 @@ public class RelationMember : Geometry
         {
             if (throwOnMissing)
             {
-                throw new ArgumentException(string.Format("Referenced Entity (ID = {0}, type = {1}) not found in entities collection.", info.Reference, info.MemberType), "info.Reference");
+                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Referenced Entity (ID = {0}, type = {1}) not found in entities collection.", info.Reference, info.MemberType), "info.Reference");
             }
             else
             {

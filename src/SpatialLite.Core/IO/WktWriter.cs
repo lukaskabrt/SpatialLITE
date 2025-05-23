@@ -11,7 +11,7 @@ namespace SpatialLite.Core.IO;
 public class WktWriter : IDisposable
 {
 
-    private static readonly System.Globalization.CultureInfo _invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+    private static readonly System.Globalization.CultureInfo InvariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
     private bool _disposed = false;
     private readonly TextWriter _writer;
@@ -103,33 +103,33 @@ public class WktWriter : IDisposable
     /// <param name="writer">The output Stream the Geometry will be written to.</param>
     protected static void Write(IGeometry geometry, TextWriter writer)
     {
-        if (geometry is IPoint)
+        if (geometry is IPoint point)
         {
-            AppendPointTaggedText((IPoint)geometry, writer);
+            AppendPointTaggedText(point, writer);
         }
-        else if (geometry is ILineString)
+        else if (geometry is ILineString lineString)
         {
-            AppendLineStringTaggedText((ILineString)geometry, writer);
+            AppendLineStringTaggedText(lineString, writer);
         }
-        else if (geometry is IPolygon)
+        else if (geometry is IPolygon polygon)
         {
-            AppendPolygonTaggedText((IPolygon)geometry, writer);
+            AppendPolygonTaggedText(polygon, writer);
         }
-        else if (geometry is IMultiPoint)
+        else if (geometry is IMultiPoint multiPoint)
         {
-            AppendMultiPointTaggedText((IMultiPoint)geometry, writer);
+            AppendMultiPointTaggedText(multiPoint, writer);
         }
-        else if (geometry is IMultiLineString)
+        else if (geometry is IMultiLineString multiLineString)
         {
-            AppendMultiLineStringTaggedText((IMultiLineString)geometry, writer);
+            AppendMultiLineStringTaggedText(multiLineString, writer);
         }
-        else if (geometry is IMultiPolygon)
+        else if (geometry is IMultiPolygon multiPolygon)
         {
-            AppendMultiPolygonTaggetText((IMultiPolygon)geometry, writer);
+            AppendMultiPolygonTaggetText(multiPolygon, writer);
         }
-        else if (geometry is IGeometryCollection<IGeometry>)
+        else if (geometry is IGeometryCollection<IGeometry> geometryCollection)
         {
-            AppendGeometryCollectionTaggedText((IGeometryCollection<IGeometry>)geometry, writer);
+            AppendGeometryCollectionTaggedText(geometryCollection, writer);
         }
     }
 
@@ -140,20 +140,20 @@ public class WktWriter : IDisposable
     /// <param name="writer">The output Stream to Appent WKT representation to.</param>
     private static void AppendCoordinate(Coordinate coordinate, TextWriter writer)
     {
-        writer.Write(coordinate.X.ToString(_invariantCulture));
+        writer.Write(coordinate.X.ToString(InvariantCulture));
         writer.Write(' ');
-        writer.Write(coordinate.Y.ToString(_invariantCulture));
+        writer.Write(coordinate.Y.ToString(InvariantCulture));
 
         if (coordinate.Is3D)
         {
             writer.Write(' ');
-            writer.Write(coordinate.Z.ToString(_invariantCulture));
+            writer.Write(coordinate.Z.ToString(InvariantCulture));
         }
 
         if (coordinate.IsMeasured)
         {
             writer.Write(' ');
-            writer.Write(coordinate.M.ToString(_invariantCulture));
+            writer.Write(coordinate.M.ToString(InvariantCulture));
         }
     }
 

@@ -99,5 +99,4 @@ public class TagTests
 
         Assert.False(target.Equals(other));
     }
-
 }

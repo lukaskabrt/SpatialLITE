@@ -109,7 +109,7 @@ public class Way : LineString, IOsmGeometry
             {
                 if (throwOnMissing)
                 {
-                    throw new ArgumentException(string.Format("Referenced Node (ID = {0}) not found in entities collection.", nodeID), "info.ID");
+                    throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Referenced Node (ID = {0}) not found in entities collection.", nodeID), "info.ID");
                 }
 
                 return null;

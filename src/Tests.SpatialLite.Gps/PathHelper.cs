@@ -6,8 +6,8 @@ internal static class PathHelper
 {
     private const string TempDirectoryName = "Temp";
 
-    private static readonly string _realGpxFilePath = Path.GetFullPath(Path.Combine("Data", "Gpx", "gpx-real-file.gpx"));
-    public static string RealGpxFilePath => _realGpxFilePath;
+    private static readonly string RealGpxFilePathValue = Path.GetFullPath(Path.Combine("Data", "Gpx", "gpx-real-file.gpx"));
+    public static string RealGpxFilePath => RealGpxFilePathValue;
 
     public static string GetTempFilePath(string filename)
     {

@@ -464,5 +464,4 @@ public class OsmDatabaseTests
             Assert.Same(_data[i], array[i]);
         }
     }
-
 }

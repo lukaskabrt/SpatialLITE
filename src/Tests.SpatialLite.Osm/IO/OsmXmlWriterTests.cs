@@ -457,7 +457,7 @@ public class OsmXmlWriterTests
         }
 
         Assert.Equal(expected.Count, actual.Count);
-        Assert.True(expected.All(tag => actual.Contains(tag)));
+        Assert.True(expected.All(actual.Contains));
     }
 
     private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual)

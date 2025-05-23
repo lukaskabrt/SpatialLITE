@@ -92,7 +92,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-tag-without-key.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     //Tested only on Nodes - code for parsing Tags is shared among functions parsing Node, Way and Relation
@@ -101,14 +101,14 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-tag-without-value.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
     public void Read_ThrowsExceptionIPieceOffMetadataIsMissingAndStrictModeIsTrue()
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-missing-timestamp.osm"), new OsmXmlReaderSettings() { ReadMetadata = true, StrictMode = true });
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -131,7 +131,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-lat.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-node-without-lon.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -194,7 +194,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-way-nd-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -247,7 +247,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-without-id.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -255,7 +255,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-member-without-ref.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -263,7 +263,7 @@ public class OsmXmlReaderTests
     {
         OsmXmlReader target = new(TestDataReader.OpenXml("osm-relation-member-without-type.osm"), new OsmXmlReaderSettings() { ReadMetadata = false });
 
-        Assert.Throws<XmlException>(() => target.Read());
+        Assert.Throws<XmlException>(target.Read);
     }
 
     [Fact]
@@ -386,7 +386,7 @@ public class OsmXmlReaderTests
         }
 
         Assert.Equal(expected.Count, actual.Count);
-        Assert.True(expected.All(tag => actual.Contains(tag)));
+        Assert.True(expected.All(actual.Contains));
     }
 
     private void CompareEntityDetails(EntityMetadata expected, EntityMetadata actual)

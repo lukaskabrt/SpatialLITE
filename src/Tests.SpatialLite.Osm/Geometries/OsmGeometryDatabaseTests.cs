@@ -164,7 +164,7 @@ public class OsmGeometryDatabaseTests
         List<IOsmGeometry> written = new();
         Mock<IOsmWriter> writerM = new();
 
-        writerM.Setup(w => w.Write(It.IsAny<IOsmGeometry>())).Callback<IOsmGeometry>((e) => written.Add(e));
+        writerM.Setup(w => w.Write(It.IsAny<IOsmGeometry>())).Callback<IOsmGeometry>(written.Add);
 
         OsmGeometryDatabase target = new(_data);
         target.Save(writerM.Object);

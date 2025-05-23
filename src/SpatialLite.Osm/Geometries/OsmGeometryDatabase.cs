@@ -51,7 +51,7 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
                     {
                         if (!ignoreReferentialErrors)
                         {
-                            throw new ArgumentException(string.Format("Way (ID = {0}) references missing node.", entityInfo.ID));
+                            throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Way (ID = {0}) references missing node.", entityInfo.ID));
                         }
                     }
                     else
@@ -79,7 +79,7 @@ public class OsmGeometryDatabase : OsmDatabase<IOsmGeometry, Node, Way, Relation
                 {
                     if (!ignoreReferentialErrors)
                     {
-                        throw new ArgumentException(string.Format("Relation (ID = {0}) references missing OSM entity.", memberInfo.Reference));
+                        throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Relation (ID = {0}) references missing OSM entity.", memberInfo.Reference));
                     }
 
                     db.Relations.Remove(relation);

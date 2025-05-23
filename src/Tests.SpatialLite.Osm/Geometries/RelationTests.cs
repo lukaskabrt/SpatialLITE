@@ -111,5 +111,4 @@ public class RelationTests
 
         Assert.Equal(EntityType.Relation, target.EntityType);
     }
-
 }

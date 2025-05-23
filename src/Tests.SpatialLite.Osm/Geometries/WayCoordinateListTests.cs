@@ -86,6 +86,6 @@ public class WayCoordinateListTests
     {
         WayCoordinateList target = new(_nodes);
 
-        Assert.Throws<NotSupportedException>(() => target.Clear());
+        Assert.Throws<NotSupportedException>(target.Clear);
     }
 }

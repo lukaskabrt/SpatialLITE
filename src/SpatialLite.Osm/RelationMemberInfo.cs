@@ -11,17 +11,17 @@ public struct RelationMemberInfo
     /// <summary>
     /// The type of the member (node, way, relation)
     /// </summary>
-    public EntityType MemberType;
+    public EntityType MemberType { get; set; }
 
     /// <summary>
     /// The role of the member in relation
     /// </summary>
-    public string Role;
+    public string Role { get; set; }
 
     /// <summary>
     /// The ID of the member entity
     /// </summary>
-    public long Reference;
+    public long Reference { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the RelationMemberInfo structure with values from specific RelationMember.

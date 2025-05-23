@@ -147,7 +147,7 @@ public class WayTests
     {
         int id = 11;
         Way way = new(id, _nodes);
-        LineString target = (LineString)way;
+        LineString target = way;
 
         Assert.Equal(_nodes.Count, target.Coordinates.Count);
         for (int i = 0; i < _nodes.Count; i++)

@@ -304,7 +304,7 @@ public class GpxReader : IGpxReader, IDisposable
 
                 string version = _xmlReader.GetAttribute("version");
                 if (version == null || (version != "1.0" && version != "1.1"))
-                    throw new InvalidDataException(string.Format("Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
+                    throw new InvalidDataException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Invalid version of GPX document. Expected '1.0' or '1.1' found {0}.", version));
 
                 _insideGpx = true;
 

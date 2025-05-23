@@ -248,7 +248,7 @@ public class PbfReader : IOsmReader
         {
             if (supportedFeatures.Contains(required) == false)
             {
-                throw new NotSupportedException(string.Format("Processing specified PBF file requires '{0}' feature which isn't supported by PbfReader.", required));
+                throw new NotSupportedException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Processing specified PBF file requires '{0}' feature which isn't supported by PbfReader.", required));
             }
         }
     }

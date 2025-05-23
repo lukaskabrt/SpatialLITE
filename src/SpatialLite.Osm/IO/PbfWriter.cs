@@ -83,7 +83,7 @@ public class PbfWriter : IOsmWriter
 
             if (entity.Metadata.User == null)
             {
-                throw new ArgumentNullException("Entity.Metadata.User cannot be null.");
+                throw new ArgumentNullException(nameof(entity), "Entity.Metadata.User cannot be null.");
             }
         }
 

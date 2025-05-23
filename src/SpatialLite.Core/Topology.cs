@@ -10,14 +10,14 @@ namespace SpatialLite.Core;
 public class Topology
 {
 
-    private static readonly Topology _euclidean2D;
+    private static readonly Topology euclidean2DInstance;
 
     /// <summary>
     /// Initializes static members of the Topology class.
     /// </summary>
     static Topology()
     {
-        _euclidean2D = new Topology(new Euclidean2DLocator());
+        euclidean2DInstance = new Topology(new Euclidean2DLocator());
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class Topology
     {
         get
         {
-            return _euclidean2D;
+            return euclidean2DInstance;
         }
     }
 
