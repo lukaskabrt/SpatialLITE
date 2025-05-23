@@ -6,16 +6,6 @@ namespace SpatialLite.Core.API {
     /// </summary>
     public interface IGeometry {
 		/// <summary>
-		/// Gets a value indicating whether the <c>IGeometry</c> object has Z coordinates.
-		/// </summary>
-		bool Is3D { get; }
-
-		/// <summary>
-		/// Gets a value indicating whether the <c>IGeometry</c> object has M values.
-		/// </summary>
-		bool IsMeasured { get; }
-
-		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
 		/// <returns>

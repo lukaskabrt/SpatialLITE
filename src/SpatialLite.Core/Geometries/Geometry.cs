@@ -9,16 +9,6 @@ namespace SpatialLite.Core.Geometries {
     public abstract class Geometry : IGeometry {
 
 		/// <summary>
-		/// Gets a value indicating whether this <see cref="Geometry"/> has Z-coordinates.
-		/// </summary>
-		public abstract bool Is3D { get; }
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="Geometry"/> has M values.
-		/// </summary>
-		public abstract bool IsMeasured { get; }
-
-		/// <summary>
 		/// Computes envelope of the <c>IGeometry</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
 		/// <returns>

@@ -8,7 +8,7 @@ namespace SpatialLite.Core.Algorithms {
     /// </summary>
     /// <remarks>
     /// <para>
-    /// All calulations ignore <see cref="Coordinate.Z"/> coordinate.
+    /// All calculations use only X and Y coordinates.
     /// </para>
     /// All coordinate are expected to be a long/lat pairs in degrees.
     /// </remarks>

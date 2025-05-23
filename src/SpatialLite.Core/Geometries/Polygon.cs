@@ -51,22 +51,6 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the this <see cref="Polygon"/> has Z-coordinate set.
-		/// </summary>
-		public override bool Is3D {
-			//TODO consider using InteriorRings as well
-			get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.Is3D); }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="Geometry"/> has M values.
-		/// </summary>
-		public override bool IsMeasured {
-			//TODO consider using InteriorRings as well
-			get { return this.ExteriorRing != null && this.ExteriorRing.Any(c => c.IsMeasured); }
-		}
-
-		/// <summary>
 		/// Computes envelope of the <c>Polygon</c> object. The envelope is defined as a minimal bounding box for a geometry.
 		/// </summary>
 		/// <returns>

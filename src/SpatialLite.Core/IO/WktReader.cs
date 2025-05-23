@@ -236,24 +236,18 @@ namespace SpatialLite.Core.IO {
 			t = WktReader.Expect(TokenType.NUMBER, tokens);
 			double y = double.Parse(t.Value, _invarianCulture);
 
-			double z = double.NaN;
-			double m = double.NaN;
-
+			// Skip Z and M values if they exist in the WKT data
 			if (is3D) {
 				WktReader.Expect(TokenType.WHITESPACE, tokens);
-
-				t = WktReader.Expect(TokenType.NUMBER, tokens);
-				z = double.Parse(t.Value, _invarianCulture);
+				WktReader.Expect(TokenType.NUMBER, tokens); // Skip Z
 			}
 
 			if (isMeasured) {
 				WktReader.Expect(TokenType.WHITESPACE, tokens);
-
-				t = WktReader.Expect(TokenType.NUMBER, tokens);
-				m = double.Parse(t.Value, _invarianCulture);
+				WktReader.Expect(TokenType.NUMBER, tokens); // Skip M
 			}
 
-			return new Coordinate(x, y, z, m);
+			return new Coordinate(x, y);
 		}
 
 		/// <summary>

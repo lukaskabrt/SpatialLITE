@@ -128,16 +128,6 @@ namespace SpatialLite.Core.IO {
 			writer.Write(coordinate.X.ToString(_invariantCulture));
 			writer.Write(' ');
 			writer.Write(coordinate.Y.ToString(_invariantCulture));
-
-			if (coordinate.Is3D) {
-				writer.Write(' ');
-				writer.Write(coordinate.Z.ToString(_invariantCulture));
-			}
-
-			if (coordinate.IsMeasured) {
-				writer.Write(' ');
-				writer.Write(coordinate.M.ToString(_invariantCulture));
-			}
 		}
 
 		/// <summary>
@@ -443,14 +433,6 @@ namespace SpatialLite.Core.IO {
 		/// <returns>The string representing dimension of the geometry - empty string for 2D geometry, 'm' for measured geometry, 'z' for 3D geometry.</returns>
 		private static string GetDimensionText(IGeometry geometry) {
 			string dimension = string.Empty;
-
-			if (geometry.Is3D) {
-				dimension += "z";
-			}
-
-			if (geometry.IsMeasured) {
-				dimension += "m";
-			}
 
 			return dimension;
 		}

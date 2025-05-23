@@ -28,29 +28,6 @@ namespace SpatialLite.Core.Geometries {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class with specified X, Y and Z coordinates in WSG84 coordinate reference system.
-		/// </summary>
-		/// <param name="x">The X-coordinate of the <c>Point</c></param>
-		/// <param name="y">The Y-coordinate of the <c>Point</c></param>
-		/// <param name="z">The Z-coordinate of the <c>Point</c></param>
-		public Point(double x, double y, double z)
-			: base() {
-			_position = new Coordinate(x, y, z);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class with specified X, Y, Z coordinates and M value in WSG84 coordinate reference system.
-		/// </summary>
-		/// <param name="x">The X-coordinate of the <c>Point</c></param>
-		/// <param name="y">The Y-coordinate of the <c>Point</c></param>
-		/// <param name="z">The Z-coordinate of the <c>Point</c></param>
-		/// <param name="m">The measured value of the <c>Point</c></param>
-		public Point(double x, double y, double z, double m)
-			: base() {
-			_position = new Coordinate(x, y, z, m);
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <c>Point</c> class with specific <c>Position</c> in WSG84 coordinate reference system.
 		/// </summary>
 		/// <param name="position">The position of this <c>Point</c></param>
@@ -70,20 +47,6 @@ namespace SpatialLite.Core.Geometries {
 			set {
 				_position = value;
 			}
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether the this <c>Point</c> has Z-coordinate set.
-		/// </summary>
-		public override bool Is3D {
-			get { return _position.Is3D; }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether the this <c>Point</c> has M value set.
-		/// </summary>
-		public override bool IsMeasured {
-			get { return _position.IsMeasured; }
 		}
 
         /// <summary>
