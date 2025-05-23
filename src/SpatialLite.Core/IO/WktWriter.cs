@@ -1,5 +1,6 @@
 ﻿using SpatialLite.Core.API;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -10,8 +11,6 @@ namespace SpatialLite.Core.IO;
 /// </summary>
 public class WktWriter : IDisposable
 {
-
-    private static readonly System.Globalization.CultureInfo InvariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 
     private bool _disposed = false;
     private readonly TextWriter _writer;
@@ -90,7 +89,7 @@ public class WktWriter : IDisposable
     /// <returns>The WKT representation of the Geometry.</returns>
     public static string WriteToString(IGeometry geometry)
     {
-        StringWriter tw = new(System.Globalization.CultureInfo.InvariantCulture);
+        StringWriter tw = new(CultureInfo.InvariantCulture);
         Write(geometry, tw);
 
         return tw.ToString();
@@ -140,20 +139,20 @@ public class WktWriter : IDisposable
     /// <param name="writer">The output Stream to Appent WKT representation to.</param>
     private static void AppendCoordinate(Coordinate coordinate, TextWriter writer)
     {
-        writer.Write(coordinate.X.ToString(InvariantCulture));
+        writer.Write(coordinate.X.ToString(CultureInfo.InvariantCulture));
         writer.Write(' ');
-        writer.Write(coordinate.Y.ToString(InvariantCulture));
+        writer.Write(coordinate.Y.ToString(CultureInfo.InvariantCulture));
 
         if (coordinate.Is3D)
         {
             writer.Write(' ');
-            writer.Write(coordinate.Z.ToString(InvariantCulture));
+            writer.Write(coordinate.Z.ToString(CultureInfo.InvariantCulture));
         }
 
         if (coordinate.IsMeasured)
         {
             writer.Write(' ');
-            writer.Write(coordinate.M.ToString(InvariantCulture));
+            writer.Write(coordinate.M.ToString(CultureInfo.InvariantCulture));
         }
     }
 

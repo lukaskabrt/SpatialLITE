@@ -4,6 +4,7 @@ using SpatialLite.Osm.IO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace Benchmark.SpatialLite.Osm;
@@ -42,7 +43,7 @@ public class Program
                 foreach (var benchmark in benchmarks)
                 {
                     long avgTime = avgTime = DoTest(benchmark.Item2, benchmark.Item1);
-                    tw.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} ms \t\t{1}", avgTime, benchmark.Item1));
+                    tw.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} ms \t\t{1}", avgTime, benchmark.Item1));
                 }
             }
         }
@@ -50,12 +51,12 @@ public class Program
 
     private static long DoTest(Action testAction, string testName)
     {
-        Console.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Starting benchmark '{0}'", testName));
+        Console.WriteLine(string.Format(CultureInfo.InvariantCulture, "Starting benchmark '{0}'", testName));
 
         long totalTime = 0;
         for (int i = 0; i < 10; i++)
         {
-            Console.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Run ({0}/{1}) ...", i + 1, 10));
+            Console.Write(string.Format(CultureInfo.InvariantCulture, "Run ({0}/{1}) ...", i + 1, 10));
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
@@ -63,7 +64,7 @@ public class Program
 
             watch.Stop();
             totalTime += watch.ElapsedMilliseconds;
-            Console.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "\t\t({0} ms)", watch.ElapsedMilliseconds));
+            Console.WriteLine(string.Format(CultureInfo.InvariantCulture, "\t\t({0} ms)", watch.ElapsedMilliseconds));
         }
 
         Console.WriteLine();
