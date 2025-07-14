@@ -127,7 +127,9 @@ namespace SpatialLite.Osm.IO {
 		/// </summary>
 		private void StartDocument() {
 			_writer.WriteStartElement("osm");
-			if (string.IsNullOrEmpty(this.Settings.ProgramName) == false) {
+			_writer.WriteAttributeString("version", "0.6");
+
+            if (string.IsNullOrEmpty(this.Settings.ProgramName) == false) {
 				_writer.WriteAttributeString("generator", this.Settings.ProgramName);
 			}
 
