@@ -2,6 +2,7 @@
 using SpatialLite.Gpx.Geometries;
 
 namespace SpatialLite.UnitTests.Gpx.Geometries;
+
 public class GpxRouteTests
 {
     [Fact]
