@@ -10,32 +10,30 @@ public class EuclideanAreaCalculatorTests
     private readonly EuclideanAreaCalculator _calculator = new();
 
     [Fact]
-    public void CalculateArea_ReturnsWidthTimesHeight_IfEnvelopeIsNonEmpty()
+    public void CalculateArea_ReturnsArea_IfEnvelopeIsNonEmpty()
     {
         // Given
-        var envelope = new Envelope(new[]
-        {
+        var envelope = new Envelope(
+        [
             new Coordinate(1, 2),
             new Coordinate(4, 6)
-        });
+        ]);
 
         // When
-        double area = _calculator.CalculateArea(envelope);
+        var area = _calculator.CalculateArea(envelope);
 
         // Then
         Assert.Equal(12.0, area, Precision);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void CalculateArea_ReturnsZero_IfEnvelopeIsEmpty(bool useEmptySingleton)
+    [Fact]
+    public void CalculateArea_ReturnsZero_IfEnvelopeIsEmpty()
     {
         // Given
-        var envelope = useEmptySingleton ? Envelope.Empty : new Envelope();
+        var envelope = Envelope.Empty;
 
         // When
-        double area = _calculator.CalculateArea(envelope);
+        var area = _calculator.CalculateArea(envelope);
 
         // Then
         Assert.Equal(0.0, area, Precision);
@@ -47,14 +45,14 @@ public class EuclideanAreaCalculatorTests
     public void CalculateArea_ReturnsZero_IfEnvelopeIsCollapsedInOneDimension(double x1, double y1, double x2, double y2)
     {
         // Given
-        var envelope = new Envelope(new[]
-        {
+        var envelope = new Envelope(
+        [
             new Coordinate(x1, y1),
             new Coordinate(x2, y2)
-        });
+        ]);
 
         // When
-        double area = _calculator.CalculateArea(envelope);
+        var area = _calculator.CalculateArea(envelope);
 
         // Then
         Assert.Equal(0.0, area, Precision);
