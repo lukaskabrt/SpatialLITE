@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\SpatialLite.Contracts\SpatialLite.Contracts.csproj" />
     <ProjectReference Include="..\..\SpatialLite.Core\SpatialLite.Core.csproj" />
     <ProjectReference Include="..\..\SpatialLite.Gpx\SpatialLite.Gpx.csproj" />
+    <ProjectReference Include="..\..\SpatialLite.H3\SpatialLite.H3.csproj" />
     <ProjectReference Include="..\..\SpatialLite.Osm\SpatialLite.Osm.csproj" />
   </ItemGroup>
 

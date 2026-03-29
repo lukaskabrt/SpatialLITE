@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.Gpx", "SpatialL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.H3", "SpatialLite.H3\SpatialLite.H3.csproj", "{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SpatialLite.H3", "Tests\Tests.SpatialLite.H3\Tests.SpatialLite.H3.csproj", "{77DD7C1E-389F-40B2-8071-EF1292DEA61B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,10 +59,6 @@ Global
 		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77DD7C1E-389F-40B2-8071-EF1292DEA61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DD7C1E-389F-40B2-8071-EF1292DEA61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77DD7C1E-389F-40B2-8071-EF1292DEA61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77DD7C1E-389F-40B2-8071-EF1292DEA61B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,7 +66,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1FDBC285-F5BD-484E-B65F-1B946A456F06} = {0EE87ACB-A363-47E9-8076-229687774B62}
 		{53531CF1-738B-47B7-86A9-89D42E1EF39B} = {0EE87ACB-A363-47E9-8076-229687774B62}
-		{77DD7C1E-389F-40B2-8071-EF1292DEA61B} = {0EE87ACB-A363-47E9-8076-229687774B62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8BFFD21-112B-4D11-AE3F-715877CC3706}
