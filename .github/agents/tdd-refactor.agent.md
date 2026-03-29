@@ -35,9 +35,12 @@ The coordinator pre-fills all this context. If a field is missing and you cannot
 - **Design patterns** — apply patterns where they genuinely reduce complexity, not for their own sake
 
 ### For test code
+
+**Always invoke the `unit-tests-author` skill before editing test files.**
+
 - **Remove duplication** — extract shared setup into helper methods or constructor; use `[Theory]` to consolidate similar cases
-- **Improve naming** — test method names must read as specifications; follow `MethodName_ExpectedBehavior_IfScenario`
-- **Improve clarity** — Given/When/Then sections must be clearly delimited; intent must be immediately obvious
+- **Improve naming** — use nested classes per public method; name test methods `<ExpectedBehavior>_<Scenario>` within them
+- **Improve clarity** — Given/When/Then sections must be clearly delimited with comments; intent must be immediately obvious
 - **Keep tests independent** — no shared mutable state between tests
 - **Do not change test logic** — you may restructure, rename, extract helpers, but assertions and test inputs must stay the same
 
