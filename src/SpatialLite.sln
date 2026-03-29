@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.IntegrationTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.Gpx", "SpatialLite.Gpx\SpatialLite.Gpx.csproj", "{3B80F259-72CA-4537-A1DB-EDB410DB3020}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialLite.H3", "SpatialLite.H3\SpatialLite.H3.csproj", "{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{3B80F259-72CA-4537-A1DB-EDB410DB3020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B80F259-72CA-4537-A1DB-EDB410DB3020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B80F259-72CA-4537-A1DB-EDB410DB3020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE410D1D-BB8A-42B1-A0C9-C82C6EA186EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

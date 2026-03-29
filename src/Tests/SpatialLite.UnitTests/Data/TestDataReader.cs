@@ -85,4 +85,9 @@ public class TestDataReader
     /// TestDataReader for GPX test data.
     /// </summary>
     public static readonly TestDataReader Gpx = new(Path.Combine("Gpx"));
+
+    /// <summary>
+    /// TestDataReader for H3 compatibility test data.
+    /// </summary>
+    public static readonly TestDataReader H3 = new("H3");
 }
