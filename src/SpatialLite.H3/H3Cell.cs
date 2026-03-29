@@ -1,3 +1,4 @@
+using SpatialLite.H3.Internals;
 using System.Globalization;
 
 namespace SpatialLite.H3;
@@ -141,6 +142,38 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     public override int GetHashCode() => _value.GetHashCode();
 
     // ── Static factory methods ──────────────────────────────────────────────
+
+    /// <summary>
+    /// Converts a WGS-84 latitude/longitude coordinate (in degrees) to the H3 cell
+    /// that contains that point at the given resolution (0–15).
+    /// </summary>
+    /// <param name="lat">Latitude in degrees (–90 to 90).</param>
+    /// <param name="lng">Longitude in degrees (–180 to 180).</param>
+    /// <param name="resolution">H3 resolution (0–15).</param>
+    /// <returns>The <see cref="H3Cell"/> containing the given point at <paramref name="resolution"/>.</returns>
+    /// <exception cref="ArgumentException">
+    /// Thrown when <paramref name="lat"/> or <paramref name="lng"/> is not a finite number (NaN or Infinity).
+    /// </exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="resolution"/> is less than 0 or greater than 15.
+    /// </exception>
+    public static H3Cell LatLngToCell(double lat, double lng, int resolution)
+    {
+        if (!double.IsFinite(lat))
+        {
+            throw new ArgumentException("Value must be finite.", nameof(lat));
+        }
+
+        if (!double.IsFinite(lng))
+        {
+            throw new ArgumentException("Value must be finite.", nameof(lng));
+        }
+
+        ArgumentOutOfRangeException.ThrowIfLessThan(resolution, 0, nameof(resolution));
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(resolution, 15, nameof(resolution));
+
+        return new(LatLngConverter.LatLngToCell(lat, lng, resolution));
+    }
 
     /// <summary>Parses a lowercase hex H3 address string into an <see cref="H3Cell"/>.</summary>
     /// <param name="s">The lowercase hexadecimal H3 address string (e.g. <c>"85283473fffffff"</c>).</param>
