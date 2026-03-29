@@ -78,7 +78,7 @@ public readonly struct H3Cell : IEquatable<H3Cell>
                 return false;
             }
 
-            var res = (int)((_value >> ResolutionBitShift) & ResolutionMask);
+            var res = GetResolution();
             var baseCell = (int)((_value >> BaseCellBitShift) & BaseCellMask);
 
             if (baseCell > MaxBaseCell)
@@ -150,7 +150,7 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     {
         if (s is null || !ulong.TryParse(s, NumberStyles.HexNumber, null, out var v))
         {
-            throw new ArgumentException("Invalid H3 address.", nameof(s));
+            throw new ArgumentException($"'{s}' is not a valid H3 address.", nameof(s));
         }
 
         return new H3Cell(v);

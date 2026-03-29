@@ -77,6 +77,20 @@ public partial class H3CellTests
         }
 
         [Fact]
+        public void EqualityOperator_ReturnsFalse_IfDifferentValues()
+        {
+            // Given
+            var a = new H3Cell(0x085283473fffffffUL);
+            var b = new H3Cell(0x0821c37fffffffffUL);
+
+            // When
+            var result = a == b;
+
+            // Then
+            result.Should().BeFalse();
+        }
+
+        [Fact]
         public void InequalityOperator_ReturnsTrue_IfDifferentValues()
         {
             // Given
@@ -88,6 +102,20 @@ public partial class H3CellTests
 
             // Then
             result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void InequalityOperator_ReturnsFalse_IfSameValue()
+        {
+            // Given
+            var a = new H3Cell(0x085283473fffffffUL);
+            var b = new H3Cell(0x085283473fffffffUL);
+
+            // When
+            var result = a != b;
+
+            // Then
+            result.Should().BeFalse();
         }
 
         [Fact]
@@ -103,6 +131,21 @@ public partial class H3CellTests
 
             // Then
             hashCodeA.Should().Be(hashCodeB);
+        }
+
+        [Fact]
+        public void GetHashCode_ReturnsDifferentHashCode_IfDifferentValues()
+        {
+            // Given
+            var a = new H3Cell(0x085283473fffffffUL);
+            var b = new H3Cell(0x0821c37fffffffffUL);
+
+            // When
+            var hashCodeA = a.GetHashCode();
+            var hashCodeB = b.GetHashCode();
+
+            // Then
+            hashCodeA.Should().NotBe(hashCodeB);
         }
     }
 }

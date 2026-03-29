@@ -11,7 +11,7 @@ public partial class H3CellTests
         [InlineData(0x0821c37fffffffffUL, 2)]
         [InlineData(0x08001fffffffffffUL, 0)]
         [InlineData(0x08f2830828052d25UL, 15)]
-        public void ReturnsExpectedResolution_IfKnownCell(ulong rawValue, int expectedResolution)
+        public void ReturnsExpectedResolution(ulong rawValue, int expectedResolution)
         {
             // Given
             var cell = new H3Cell(rawValue);
@@ -27,7 +27,7 @@ public partial class H3CellTests
     public new class ToString
     {
         [Fact]
-        public void ReturnsSameValueAsH3ToString_IfValidCell()
+        public void ReturnsHexRepresentationOfValue()
         {
             // Given
             var cell = new H3Cell(0x085283473fffffffUL);
