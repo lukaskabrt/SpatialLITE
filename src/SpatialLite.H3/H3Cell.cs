@@ -128,11 +128,8 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     /// <summary>Returns the H3 resolution (0-15) encoded in bits 55-52.</summary>
     public int GetResolution() => (int)((_value >> ResolutionBitShift) & ResolutionMask);
 
-    /// <summary>Returns the lowercase hex string representation of this cell (no zero-padding).</summary>
-    public string H3ToString() => _value.ToString("x", CultureInfo.InvariantCulture);
-
     /// <inheritdoc/>
-    public override string ToString() => H3ToString();
+    public override string ToString() => _value.ToString("x", CultureInfo.InvariantCulture);
 
     /// <inheritdoc/>
     public bool Equals(H3Cell other) => _value == other._value;
@@ -146,24 +143,18 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     // ── Static factory methods ──────────────────────────────────────────────
 
     /// <summary>Parses a lowercase hex H3 address string into an <see cref="H3Cell"/>.</summary>
-    /// <param name="h3Address">The lowercase hexadecimal H3 address string (e.g. <c>"85283473fffffff"</c>).</param>
-    /// <returns>The <see cref="H3Cell"/> whose value corresponds to <paramref name="h3Address"/>.</returns>
-    /// <exception cref="ArgumentException">Thrown when <paramref name="h3Address"/> is <c>null</c> or not a valid hexadecimal string.</exception>
-    public static H3Cell StringToH3(string h3Address)
+    /// <param name="s">The lowercase hexadecimal H3 address string (e.g. <c>"85283473fffffff"</c>).</param>
+    /// <returns>The <see cref="H3Cell"/> whose value corresponds to <paramref name="s"/>.</returns>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="s"/> is <c>null</c> or not a valid hexadecimal string.</exception>
+    public static H3Cell Parse(string s)
     {
-        if (h3Address is null || !ulong.TryParse(h3Address, NumberStyles.HexNumber, null, out var v))
+        if (s is null || !ulong.TryParse(s, NumberStyles.HexNumber, null, out var v))
         {
-            throw new ArgumentException("Invalid H3 address.", nameof(h3Address));
+            throw new ArgumentException("Invalid H3 address.", nameof(s));
         }
 
         return new H3Cell(v);
     }
-
-    /// <summary>Parses a lowercase hex H3 address string into an <see cref="H3Cell"/>. Alias for <see cref="StringToH3"/>.</summary>
-    /// <param name="s">The lowercase hexadecimal H3 address string (e.g. <c>"85283473fffffff"</c>).</param>
-    /// <returns>The <see cref="H3Cell"/> whose value corresponds to <paramref name="s"/>.</returns>
-    /// <exception cref="ArgumentException">Thrown when <paramref name="s"/> is <c>null</c> or not a valid hexadecimal string.</exception>
-    public static H3Cell Parse(string s) => StringToH3(s);
 
     /// <summary>
     /// Attempts to parse a hex H3 address string into an <see cref="H3Cell"/> without throwing on failure.

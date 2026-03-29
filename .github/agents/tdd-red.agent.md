@@ -18,6 +18,10 @@ You receive a `[TDD-RED]` context block from the coordinator containing:
 
 The coordinator pre-fills all this context. If a field is missing or ambiguous and you cannot proceed, you may search the codebase or use web search to resolve it — but this should be the exception, not the rule.
 
+## Test authoring conventions
+
+**Always invoke the `unit-tests-author` skill before writing any tests.
+
 ## What you must produce
 
 For every behaviour listed in `### Behaviors to Test`:

@@ -21,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="AwesomeAssertions" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="AwesomeAssertions" />
     <Using Include="Xunit" />
   </ItemGroup>
 
