@@ -75,7 +75,7 @@ internal static class LatLngConverter
         var minSqd = 5.0;
         for (var f = 0; f < 20; f++)
         {
-            var sqd = H3IndexData.FaceCenterPoint[f].SquareDist(in p);
+            var sqd = H3IndexData.FaceCenterPoint[f].SquareDistance(in p);
             if (sqd < minSqd)
             {
                 face = f;
@@ -95,7 +95,7 @@ internal static class LatLngConverter
         // Theta: CCW from CII i-axis
         var (fcLat, fcLng) = H3IndexData.FaceCenterGeo[face];
         var theta = PosAngleRads(
-            H3IndexData.FaceAxesAzRadsCii[face, 0] - PosAngleRads(GeoAzimuthRads(fcLat, fcLng, latRad, lngRad)));
+            H3IndexData.FaceAxesAzimuthsRadsCII[face, 0] - PosAngleRads(GeoAzimuthRads(fcLat, fcLng, latRad, lngRad)));
 
         if (res % 2 == 1) // Class III
         {
@@ -112,7 +112,7 @@ internal static class LatLngConverter
         v = new Vec2d(r * Math.Cos(theta), r * Math.Sin(theta));
     }
 
-    private static void Hex2dToCoordIjk(in Vec2d v, out CoordIJK h)
+    private static void Hex2dToCoordIjk(in Vec2d v, out IJKCoordinate h)
     {
         // Port of H3's _hex2dToCoordIJK from coordijk.c
         var a1 = Math.Abs(v.X);
@@ -204,7 +204,7 @@ internal static class LatLngConverter
         h.Normalize();
     }
 
-    private static ulong FaceIjkToH3(int face, ref CoordIJK ijk, int res)
+    private static ulong FaceIjkToH3(int face, ref IJKCoordinate ijk, int res)
     {
         // Initialize: mode=1, res=res, all digits=7 (INVALID)
         var h = H3Init;
@@ -231,7 +231,7 @@ internal static class LatLngConverter
         for (var r = res - 1; r >= 0; r--)
         {
             var lastIjk = faceIjk;
-            CoordIJK lastCenter;
+            IJKCoordinate lastCenter;
 
             if ((r + 1) % 2 == 1) // Class III
             {
@@ -246,7 +246,7 @@ internal static class LatLngConverter
                 lastCenter.DownAp7r();
             }
 
-            var diff = CoordIJK.Subtract(in lastIjk, in lastCenter);
+            var diff = IJKCoordinate.Subtract(in lastIjk, in lastCenter);
             diff.Normalize();
             var digit = diff.ToDigit();
 

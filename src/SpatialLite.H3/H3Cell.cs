@@ -141,11 +141,9 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     /// <inheritdoc/>
     public override int GetHashCode() => _value.GetHashCode();
 
-    // ── Static factory methods ──────────────────────────────────────────────
-
     /// <summary>
-    /// Converts a WGS-84 latitude/longitude coordinate (in degrees) to the H3 cell
-    /// that contains that point at the given resolution (0–15).
+    /// Converts a WGS-84 latitude/longitude coordinate (in degrees) to the H3 cell that contains that point at the
+    /// given resolution (0–15).
     /// </summary>
     /// <param name="lat">Latitude in degrees (–90 to 90).</param>
     /// <param name="lng">Longitude in degrees (–180 to 180).</param>
