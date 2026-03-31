@@ -129,6 +129,14 @@ public readonly struct H3Cell : IEquatable<H3Cell>
     /// <summary>Returns the H3 resolution (0-15) encoded in bits 55-52.</summary>
     public int GetResolution() => (int)((_value >> ResolutionBitShift) & ResolutionMask);
 
+    /// <summary>
+    /// Returns the geographic polygon boundary of this H3 cell as a list of vertices.
+    /// Hexagonal cells return 6 vertices; pentagon cells return 5.
+    /// Each <see cref="Coordinate"/> has X=longitude and Y=latitude in degrees.
+    /// </summary>
+    public IReadOnlyList<Coordinate> GetBoundary() =>
+        Internals.BoundaryConverter.CellToBoundary(_value, GetResolution(), IsPentagon);
+
     /// <inheritdoc/>
     public override string ToString() => _value.ToString("x", CultureInfo.InvariantCulture);
 
