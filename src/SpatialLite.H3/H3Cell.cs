@@ -1,4 +1,5 @@
 using System.Globalization;
+using SpatialLite.Contracts;
 
 namespace SpatialLite.H3;
 
@@ -174,6 +175,18 @@ public readonly struct H3Cell : IEquatable<H3Cell>
 
         cell = default;
         return false;
+    }
+
+    /// <summary>
+    /// Converts a geographic coordinate to the containing H3 cell index at the given resolution.
+    /// </summary>
+    /// <param name="lat">Latitude in degrees.</param>
+    /// <param name="lng">Longitude in degrees.</param>
+    /// <param name="resolution">H3 resolution level (0–15).</param>
+    /// <returns>The <see cref="H3Cell"/> that contains the specified coordinate.</returns>
+    public static H3Cell FromLatLng(double lat, double lng, int resolution)
+    {
+        return new H3Cell(SpatialLite.H3.Internals.LatLngConverter.LatLngToCell(lat, lng, resolution));
     }
 
     // ── Operator overloads ──────────────────────────────────────────────────
